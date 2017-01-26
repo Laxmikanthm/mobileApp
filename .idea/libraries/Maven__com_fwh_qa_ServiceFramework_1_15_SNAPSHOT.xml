@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.fwh.qa:ServiceFramework:1.15-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/fwh/qa/ServiceFramework/1.15-SNAPSHOT/ServiceFramework-1.15-20161021.164817-3.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/fwh/qa/ServiceFramework/1.15-SNAPSHOT/ServiceFramework-1.15-20161021.164817-3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/fwh/qa/ServiceFramework/1.15-SNAPSHOT/ServiceFramework-1.15-20161021.164817-3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

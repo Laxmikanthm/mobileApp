@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.fwh.qa:automationFramework:2.2.30-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/fwh/qa/automationFramework/2.2.30-SNAPSHOT/automationFramework-2.2.30-20170117.201928-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/fwh/qa/automationFramework/2.2.30-SNAPSHOT/automationFramework-2.2.30-20170117.201928-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/fwh/qa/automationFramework/2.2.30-SNAPSHOT/automationFramework-2.2.30-20170117.201928-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
