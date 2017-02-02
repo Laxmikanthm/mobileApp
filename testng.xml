@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Browser">
+    <test name="single">
+        <parameter name="platform" value="${platform}"></parameter>
+        <parameter name="browserOrDevice" value="${deviceName}"></parameter>
+        <parameter name="version" value="${platformVersions}"></parameter>
+        <parameter name="os" value="Mac"></parameter>
+        <parameter name="driverName" value="${driverName}"></parameter>
+        <parameter name="appPaths" value="${appURL}"></parameter>
+        <parameter name="projectName" value="${driverName}"></parameter>
+        <classes>
+
+            <class name="SampleTest"/>
+        </classes>
+    </test>
+
+</suite>
