@@ -1,18 +1,26 @@
 package pages.LoginPage;
 
+import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
+import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import pojos.MobileUser;
 
 /**
  * Created by test-user on 2/2/17.
  */
-public class LoginPage<T extends AppiumDriver> extends MobileBasePage {
+public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public LoginPage(AppiumDriver driver){
         super(driver);
     }
+
+    abstract MobileTextBox getUserName() throws Exception;
+    abstract MobileTextBox getPassword() throws Exception;
+    abstract MobileButton getLogin() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -37,5 +45,16 @@ public class LoginPage<T extends AppiumDriver> extends MobileBasePage {
             default:
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
+    }
+
+    public void login() throws Exception {
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+        mobileUser.createMobileUser(false, Country.UnitedStates);
+        mobileUser.setEmailAddress("tarun.sujit@gmail.com");
+        mobileUser.setPassword("Sub@1234");
+        getUserName().setText(mobileUser.getEmailAddress());
+        getPassword().setText(mobileUser.getPassword());
+        getLogin().tap();
+
     }
 }

@@ -9,16 +9,44 @@
     <version>1.0-SNAPSHOT</version>
     <url>http://maven.apache.org</url>
     <dependencies>
-
-            <dependency>
-                <groupId>com.fwh.qa</groupId>
-                <artifactId>automationFramework</artifactId>
-                <version>2.2.38-SNAPSHOT</version>
-            </dependency>
-    <dependency>
+        <dependency>
+            <groupId>com.fwh.qa</groupId>
+            <artifactId>automationFramework</artifactId>
+            <version>2.2.40-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>LATEST</version>
+            <version>1.2.22-SNAPSHOT</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>4.3.1.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>4.3.1.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-beans -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>4.3.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.9.10</version>
         </dependency>
 
     </dependencies>
@@ -35,20 +63,18 @@
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <Environment>Local</Environment>
-                        <PlatformVersion>9.3</PlatformVersion>
+                        <PlatformVersion>6.0.1</PlatformVersion>
                         <Language>en</Language>
-                        <Country>US</Country>
-                        <PlatformName>iOS</PlatformName>
-                        <DeviceName>iPhone6</DeviceName>
+                        <country>US</country>
+                        <PlatformName>Android</PlatformName>
+                        <DeviceName>Nexus5</DeviceName>
                         <AppiumVersion>1.5.3</AppiumVersion>
                         <DeviceType>phone</DeviceType>
                         <DeviceOrientation>portrait</DeviceOrientation>
                         <AppPath></AppPath>
                         <BrowserName></BrowserName>
                         <driverName>MobileApp</driverName>
-                        <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey></testObjectApiKey>
-                        <testObjectDevice></testObjectDevice>
+                        <appURL>/Users/test-user/Downloads/subwayStagingDebug448.apk</appURL>
                         <appName></appName>
                     </systemPropertyVariables>
                     <properties>

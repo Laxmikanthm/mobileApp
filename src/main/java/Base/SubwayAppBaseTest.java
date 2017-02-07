@@ -15,7 +15,7 @@ public class SubwayAppBaseTest extends BaseTest {
     String driverName;
     @BeforeSuite(alwaysRun = true)
     public void setupSuite1(ITestContext testContext) throws Exception {
-        context = new FileSystemXmlApplicationContext("src/test/resources/MobileAppBeans.xml");
+        context = new FileSystemXmlApplicationContext("src/test/MobileAppBeans.xml");
         executors = (Executors) context.getBean("executors");
         driverName = testContext.getCurrentXmlTest().getParameter("driverName");
         BaseTest.EXPLICIT_WAIT_TIME = 300;
