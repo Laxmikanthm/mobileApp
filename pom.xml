@@ -61,7 +61,7 @@
 
                     <systemPropertyVariables>
                         <projectName></projectName>
-                        <spring.profiles.active>Local</spring.profiles.active>
+                        <spring.profiles.active>testObject</spring.profiles.active>
                         <!--<language>en</language>-->
                         <country>US</country>
                         <language>us</language>
@@ -78,19 +78,29 @@
                         <!-- driverName can be MobileApp/WebApp -->
                         <driverName>MobileApp</driverName>
                         <browserOrDevice>Nexus5</browserOrDevice>
-                        <app>/Users/test-user/Downloads/subwayStagingDebug448.apk</app>
+                        <app>/Users/nikesh/Downloads/subwayStagingDebug497.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
-                        <appiumVersion>1.5.3</appiumVersion>
+
                         <!--<appURL>${appURL}</appURL>-->
                         <!--End Mobile-->
 
                         <executionPlatform></executionPlatform>
-                        <udid>064b8ecaf0d4e289</udid>
+                        <appName>Subway</appName>
+
+                        <!--Test Object-->
+                        <spring.profiles.active>testObject</spring.profiles.active>
+                        <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
-                        <newCommandTimeout>120</newCommandTimeout>
-                        <buildNumber></buildNumber>
-                        <appName>mobileApp</appName>
+                        <testObjectUser>dias_p</testObjectUser>
+                        <testObjectApiKey>7C89E3533A064841AA509FA8EF4D0F39</testObjectApiKey>
+                        <testObjectDevice>HTC_One_M8_real</testObjectDevice>
+                        <app>/Users/nikesh/Downloads/subwayStagingDebug497.apk</app>
+                        <appPackage>com.subway.mobile.subwayapp03</appPackage>
+                        <appName>Subway</appName>
+                        <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>
+
+
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->
