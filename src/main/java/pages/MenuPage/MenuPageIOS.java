@@ -13,10 +13,5 @@ public class MenuPageIOS extends MenuPage {
         super(driver);
     }
 
-    public IOSButton getLoginButton() throws Exception {
 
-        IOSButton menuButton = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
-
-        return menuButton;
-    }
 }

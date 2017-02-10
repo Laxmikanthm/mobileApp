@@ -17,7 +17,7 @@ public abstract class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         super(driver);
     }
 
-    abstract MobileButton getLoginButton() throws Exception;
+
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -43,12 +43,4 @@ public abstract class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         }
     }
 
-    public LoginPage gotoLogInPage() throws Exception {
-        try{
-            this.getLoginButton().tap();
-            return LoginPage.get((AppiumDriver) driver);
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-    }
 }

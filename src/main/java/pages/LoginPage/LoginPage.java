@@ -3,6 +3,7 @@ package pages.LoginPage;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
+import base.gui.controls.mobile.generic.PasswordTextBox;
 import base.pages.mobile.MobileBasePage;
 import enums.Country;
 import io.appium.java_client.AppiumDriver;
@@ -19,7 +20,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     }
 
     abstract MobileTextBox getUserName() throws Exception;
-    abstract MobileTextBox getPassword() throws Exception;
+    abstract PasswordTextBox getPassword() throws Exception;
     abstract MobileButton getLogin() throws Exception;
 
     @Override
@@ -49,12 +50,13 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     public void login() throws Exception {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
-        mobileUser.createMobileUser(false, Country.UnitedStates);
+        //mobileUser.createMobileUser(false, Country.UnitedStates);
         mobileUser.setEmailAddress("tarun.sujit@gmail.com");
         mobileUser.setPassword("Sub@1234");
+        getUserName().isReady();
         getUserName().setText(mobileUser.getEmailAddress());
         getPassword().setText(mobileUser.getPassword());
-        getLogin().tap();
+        getLogin().click();
 
     }
 }

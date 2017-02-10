@@ -7,7 +7,7 @@
         <parameter name="version" value="${platformVersions}"></parameter>
         <parameter name="os" value="Mac"></parameter>
         <parameter name="driverName" value="${driverName}"></parameter>
-        <parameter name="appPaths" value="${appURL}"></parameter>
+        <parameter name="appPaths" value="${app}"></parameter>
         <parameter name="projectName" value="${driverName}"></parameter>
         <classes>
 

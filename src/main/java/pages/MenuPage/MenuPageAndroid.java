@@ -13,10 +13,5 @@ public class MenuPageAndroid extends MenuPage {
         super(driver);
     }
 
-    public AndroidButton getLoginButton() throws Exception {
 
-        AndroidButton menuButton = new AndroidButton((AndroidDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
-
-        return menuButton;
-    }
 }

@@ -12,12 +12,12 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>2.2.40-SNAPSHOT</version>
+            <version>2.2.56-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>1.2.22-SNAPSHOT</version>
+            <version>1.2.23-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -58,51 +58,67 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile></suiteXmlFile>
-                    </suiteXmlFiles>
+
                     <systemPropertyVariables>
-                        <Environment>Local</Environment>
-                        <PlatformVersion>6.0.1</PlatformVersion>
-                        <Language>en</Language>
+                        <projectName></projectName>
+                        <spring.profiles.active>Local</spring.profiles.active>
+                        <!--<language>en</language>-->
                         <country>US</country>
-                        <PlatformName>Android</PlatformName>
-                        <DeviceName>Nexus5</DeviceName>
-                        <AppiumVersion>1.5.3</AppiumVersion>
-                        <DeviceType>phone</DeviceType>
-                        <DeviceOrientation>portrait</DeviceOrientation>
-                        <AppPath></AppPath>
-                        <BrowserName></BrowserName>
+                        <language>us</language>
+                        <locale>us_EN</locale>
+                        <ExplicitWaitTime>60</ExplicitWaitTime>
+                        <!--Override the values of the Maven properties below on command line by using
+                         the -D switch; if we do not override its value, it will use
+                          the value we have set in the POM as a default.-->
+                        <!--Mobile-->
+                        <mobilePlatform>Android</mobilePlatform>
+                        <platformVersions>6.0.1</platformVersions>
+                        <deviceName>Nexus5</deviceName>
+                        <platformName>Android</platformName>
+                        <!-- driverName can be MobileApp/WebApp -->
                         <driverName>MobileApp</driverName>
-                        <appURL>/Users/test-user/Downloads/subwayStagingDebug448.apk</appURL>
-                        <appName></appName>
+                        <browserOrDevice>Nexus5</browserOrDevice>
+                        <app>/Users/test-user/Downloads/subwayStagingDebug448.apk</app>
+                        <appPackage>com.subway.mobile.subwayapp03</appPackage>
+                        <deviceOrientation>portrait</deviceOrientation>
+                        <appiumVersion>1.5.3</appiumVersion>
+                        <!--<appURL>${appURL}</appURL>-->
+                        <!--End Mobile-->
+
+                        <executionPlatform></executionPlatform>
+                        <udid>064b8ecaf0d4e289</udid>
+                        <platform>mobile</platform>
+                        <newCommandTimeout>120</newCommandTimeout>
+                        <buildNumber></buildNumber>
+                        <appName>mobileApp</appName>
                     </systemPropertyVariables>
-                    <properties>
-                        <property>
-                            <name>usedefaultlisteners</name>
-                            <value>false</value>
-                        </property>
-                        <property>
-                            <name>listener</name>
-                            <value>com.subway.qa.Util.ExtentReporterNG</value>
-                            <value>org.testng.reporters.EmailableReporter</value>
-                        </property>
-                        <workingDirectory>target/</workingDirectory>
-                    </properties>
+                    <suiteXmlFiles>
+                        <!-- TestNG suite XML files -->
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+
 
                 </configuration>
+                <!--<executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>-
+                </executions>
+                <inherited>true</inherited> --> <!-- this perticular config is for all kids...(profiles) -->
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <encoding>iso-8859-1</encoding>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
     <distributionManagement>
         <snapshotRepository>
             <id>automationFramework</id>

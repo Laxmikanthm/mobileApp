@@ -17,11 +17,18 @@ public class HomePageIOS extends SubwayAppHomePage{
         super(driver);
     }
 
-    public IOSButton getMenuButton() throws Exception {
+    public IOSButton getLoginButton() throws Exception {
 
-        IOSButton menuButton = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("MenuButton")), "Menu button");
+        IOSButton button = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
 
-        return menuButton;
+        return button;
+    }
+
+    public IOSButton getRegistrationButton() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("RegisterButton")), "Register button");
+
+        return button;
     }
 
 }
