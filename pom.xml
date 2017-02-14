@@ -60,8 +60,9 @@
                 <configuration>
 
                     <systemPropertyVariables>
+
                         <projectName></projectName>
-                        <spring.profiles.active>testObject</spring.profiles.active>
+                        <spring.profiles.active>local</spring.profiles.active>
                         <!--<language>en</language>-->
                         <country>US</country>
                         <language>us</language>
@@ -73,14 +74,19 @@
                         <!--Mobile-->
                         <mobilePlatform>Android</mobilePlatform>
                         <platformVersions>6.0.1</platformVersions>
-                        <deviceName>Nexus5</deviceName>
-                        <platformName>Android</platformName>
+                        <deviceName>Subway</deviceName>
+                        <platform>mobile</platform>
                         <!-- driverName can be MobileApp/WebApp -->
                         <driverName>MobileApp</driverName>
-                        <browserOrDevice>Nexus5</browserOrDevice>
-                        <app>/Users/nikesh/Downloads/subwayStagingDebug497.apk</app>
+                        <appiumVersion>1.5.3</appiumVersion>
+                        <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
+                        <browserOrDevice>Subway</browserOrDevice>
+                        <appURL>/Users/nikesh/Downloads/subwayStagingDebug497.apk</appURL>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
+                        <newCommandTimeout>600</newCommandTimeout>
+                        <operatingSystem>Mac</operatingSystem>
+                        <udid></udid>
 
                         <!--<appURL>${appURL}</appURL>-->
                         <!--End Mobile-->
@@ -98,7 +104,7 @@
                         <app>/Users/nikesh/Downloads/subwayStagingDebug497.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <appName>Subway</appName>
-                        <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>
+                        <!--<appiumVersion>1.5.2-updated-chromedriver</appiumVersion>-->
 
 
                     </systemPropertyVariables>

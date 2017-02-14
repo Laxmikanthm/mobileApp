@@ -11,7 +11,11 @@
         <parameter name="projectName" value="${driverName}"></parameter>
         <classes>
 
-            <class name="SampleTest"/>
+            <class name="SampleTest">
+                <methods>
+                    <include name="createUser"> </include>
+                </methods>
+            </class>
         </classes>
     </test>
 
