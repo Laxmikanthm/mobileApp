@@ -11,7 +11,7 @@ import org.openqa.selenium.By;
  */
 public class HomePageAndroid extends SubwayAppHomePage {
 
-    public HomePageAndroid(AndroidDriver driver){
+    public HomePageAndroid(AndroidDriver driver) throws Exception {
         super(driver);
     }
 
@@ -29,4 +29,5 @@ public class HomePageAndroid extends SubwayAppHomePage {
 
         return button;
     }
+
 }

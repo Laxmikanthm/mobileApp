@@ -1,38 +1,43 @@
 package pages.RegistrationPage;
 
+import base.gui.controls.browser.Button;
+import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient;
-import cardantApiFramework.serviceUtilities.mailinatorClient.dto.Message;
-import cardantApiFramework.serviceUtilities.mailinatorClient.dto.Messages;
 import enums.Country;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import pojos.MobileUser;
+import utils.Logz;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by test-user on 2/9/17.
  */
 public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBasePage {
+    protected Map<String, By> bys;
+    Button goButton;
+
 
     public RegistrationPage(AppiumDriver driver) {
         super(driver);
     }
 
-    public static RegistrationPage get(AppiumDriver driver) throws Exception{
+    public static RegistrationPage get(AppiumDriver driver) throws Exception {
 
         String platform = driver.getCapabilities().getCapability("platformName").toString();
 
-        switch (platform){
+        switch (platform) {
             case "iOS":
                 return new RegistrationPageIOS((IOSDriver) driver);
             case "Android":
@@ -53,21 +58,28 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
     }
 
     abstract MobileTextBox getFirstName() throws Exception;
+
     abstract MobileTextBox getLastName() throws Exception;
+
     abstract MobileTextBox getPhone() throws Exception;
+
     abstract MobileButton getNextButton() throws Exception;
+
     abstract MobileTextBox getEmail() throws Exception;
+
     abstract MobileTextBox getPassword() throws Exception;
+
     abstract MobileTextBox getConfirmPasswrod() throws Exception;
+
     abstract MobileButton getSignUpButton() throws Exception;
 
-
     public void signUp() throws Exception {
-        try{
+        try {
             MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
             getFirstName().isReady();
             getFirstName().setText(mobileUser.getFirstName());
             getLastName().setText(mobileUser.getLastName());
+            getDriver().hideKeyboard();
             getPhone().setText(mobileUser.getPhoneTenDigits());
             getNextButton().click();
             getEmail().isReady();
@@ -78,7 +90,7 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
             getSignUpButton().isReady();
             enterCode(getVerificationCode(mobileUser));
             getSignUpButton().click();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new Exception(ex);
 
         }
@@ -86,16 +98,20 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
 
     public String getVerificationCode(MobileUser mobileUser) throws Exception {
         //Logic for fetching the code from Email.
-        String jsonBody =MailinatorClient.getEmailBySecondsAgoAndSubject(5000, "Subway", mobileUser.getEmailAddress());
+        String jsonBody = MailinatorClient.getEmailBySecondsAgoAndSubject(5000, "Subway", mobileUser.getEmailAddress());
         String ind[] = jsonBody.split("Your code is: ");
-        return ind[1].substring(0,6);
+        return ind[1].substring(0, 6);
     }
 
-    public void enterCode(String code){
-        List<MobileElement> codes = ((AppiumDriver)driver).findElements(By.xpath("//*[@resource-id='"+ BaseTest.bundle.getString("VerificaitonCode")+"']/android.widget.EditText"));
+    public void enterCode(String code) {
+        List<MobileElement> codes = ((AppiumDriver) driver).findElements(By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("VerificaitonCode") + "']/android.widget.EditText"));
         char[] number = code.toCharArray();
-        for(int i =0; i<codes.size(); i++){
+        for (int i = 0; i < codes.size(); i++) {
             codes.get(0).sendKeys(String.valueOf(number[i]));
         }
     }
+
+
 }
+
+
