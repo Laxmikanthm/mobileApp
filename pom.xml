@@ -81,7 +81,7 @@
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <appURL>/Users/nikesh/Downloads/subwayStagingDebug497.apk</appURL>
+                        <app>/Users/nikesh/Downloads/subwayStagingDebug515.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
@@ -101,7 +101,7 @@
                         <testObjectUser>dias_p</testObjectUser>
                         <testObjectApiKey>7C89E3533A064841AA509FA8EF4D0F39</testObjectApiKey>
                         <testObjectDevice>HTC_One_M8_real</testObjectDevice>
-                        <app>/Users/nikesh/Downloads/subwayStagingDebug497.apk</app>
+                        <appURL>/Users/nikesh/Downloads/subwayStagingDebug515.apk</appURL>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <appName>Subway</appName>
                         <!--<appiumVersion>1.5.2-updated-chromedriver</appiumVersion>-->
