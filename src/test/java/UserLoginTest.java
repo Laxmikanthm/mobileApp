@@ -1,4 +1,5 @@
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.AppUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;
 import pages.HomePage.SubwayAppHomePage;
@@ -9,7 +10,7 @@ import pages.RegistrationPage.RegistrationPage;
  * Created by Sujit on 1/26/17.
  */
 @ContextConfiguration("classpath:MobileAppBeans.xml")
-public class SampleTest extends SubwayAppBaseTest {
+public class UserLoginTest extends SubwayAppBaseTest {
 
 
     @Test

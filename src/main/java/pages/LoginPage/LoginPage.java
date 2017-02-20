@@ -5,6 +5,7 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.PasswordTextBox;
 import base.pages.mobile.MobileBasePage;
+import cardantApiFramework.pojos.AppUser;
 import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -18,6 +19,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public LoginPage(AppiumDriver driver){
         super(driver);
     }
+    AppUser appUser =null;
 
     abstract MobileTextBox getUserName() throws Exception;
     abstract PasswordTextBox getPassword() throws Exception;
@@ -48,6 +50,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         }
     }
 
+
     public void login() throws Exception {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
         //mobileUser.createMobileUser(false, Country.UnitedStates);
@@ -59,4 +62,16 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         getLogin().click();
 
     }
+    /*public LoginPage login() throws Exception {
+        appUser=AppUser.createAppUser(false, Country.UnitedStates);
+        //mobileUser.createMobileUser(false, Country.UnitedStates);
+        appUser.setEmailAddress(appUser.getEmailAddress());
+        appUser.setPassword(appUser.getPassword());
+        getUserName().isReady();
+        getUserName().setText(appUser.getEmailAddress());
+        getPassword().setText(appUser.getPassword());
+        getLogin().click();
+        return LoginPage.get((AppiumDriver) driver);
+
+    }*/
 }

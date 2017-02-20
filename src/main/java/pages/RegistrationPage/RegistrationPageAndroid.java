@@ -1,5 +1,6 @@
 package pages.RegistrationPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.android.AndroidPasswordTextBox;
 import base.gui.controls.mobile.android.AndroidTextBox;
@@ -66,4 +67,5 @@ public class RegistrationPageAndroid extends RegistrationPage {
         return button;
     }
 
-}
+    }
+
