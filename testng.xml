@@ -13,7 +13,7 @@
 
             <class name="UserLoginTest">
                 <methods>
-                    <include name="userLogin"> </include>
+                    <include name="userLogout"> </include>
                 </methods>
             </class>
         </classes>

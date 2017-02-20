@@ -10,6 +10,8 @@ import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import pages.HomePage.SubwayAppHomePage;
+import pages.SubWayPage.SubWayPage;
 import pojos.MobileUser;
 
 /**

@@ -4,6 +4,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;
 import pages.HomePage.SubwayAppHomePage;
 import pages.LoginPage.LoginPage;
+import pages.MenuPage.MenuPage;
 import pages.RegistrationPage.RegistrationPage;
 
 /**
@@ -25,5 +26,14 @@ public class UserLoginTest extends SubwayAppBaseTest {
         SubwayAppHomePage homePage = goToHomePage(SubwayAppHomePage.getHomepageClass(), "MobileApp");
         RegistrationPage registrationPage = homePage.gotoRegistrationPage();
         registrationPage.signUp();
+    }
+
+    @Test
+    public void userLogout() throws Exception {
+        SubwayAppHomePage homePage = goToHomePage(SubwayAppHomePage.getHomepageClass(), "MobileApp");
+        LoginPage loginPage = homePage.gotoLogInPage();
+        loginPage.login();
+        MenuPage menuPage= homePage.openMenuPage();
+        menuPage.logOutFromApp();
     }
 }

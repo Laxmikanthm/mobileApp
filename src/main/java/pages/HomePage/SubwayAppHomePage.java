@@ -11,12 +11,18 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import pages.LoginPage.LoginPage;
+import pages.MenuPage.MenuPage;
 import pages.RegistrationPage.RegistrationPage;
+
+import java.util.Map;
 
 /**
  * Created by test-user on 2/2/17.
  */
 public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBasePage {
+
+    private pages.HomePage.SubwayAppHomePage SubwayAppHomePage;
+    protected Map<String, By> bys;
 
     public SubwayAppHomePage(AppiumDriver driver) throws Exception {
         super(driver);
@@ -25,6 +31,7 @@ public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBa
 
     abstract MobileButton getLoginButton() throws Exception;
     Button skipButton;
+    Button menuPageButton;
 
     abstract MobileButton getRegistrationButton() throws Exception;
 
@@ -75,4 +82,21 @@ public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBa
         return skipButton;
     }
 
+    public MenuPage openMenuPage() throws Exception {
+        try {
+            this.getMenuPageButton().click();
+            return MenuPage.get((AppiumDriver) driver);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+    public Button getMenuPageButton() throws Exception {
+        if (menuPageButton == null) {
+            menuPageButton = new Button(driver, bys.get("MenuBtnBy"), "Menu button");
+        }
+        return menuPageButton;
+    }
+
 }
+
+

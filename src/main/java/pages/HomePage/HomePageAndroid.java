@@ -6,13 +6,17 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 
+import java.util.HashMap;
+
 /**
  * Created by test-user on 2/2/17.
  */
 public class HomePageAndroid extends SubwayAppHomePage {
 
+
     public HomePageAndroid(AndroidDriver driver) throws Exception {
         super(driver);
+        setBys();
     }
 
 
@@ -30,4 +34,9 @@ public class HomePageAndroid extends SubwayAppHomePage {
         return button;
     }
 
+    private void setBys() {
+
+        bys = new HashMap<String, By>();
+        bys.put("MenuBtnBy", By.id("com.subway.mobile.subwayapp03:id/profile"));
+    }
 }
