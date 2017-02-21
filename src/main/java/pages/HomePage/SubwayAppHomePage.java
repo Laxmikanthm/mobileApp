@@ -33,8 +33,8 @@ public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBa
     abstract MobileButton getLoginButton() throws Exception;
     Button skipButton;
     Button menuPageButton;
-    Button logOutButton;
-    Button confirmLogOutButton;
+    Button orderButton;
+    Button findButton;
 
     abstract MobileButton getRegistrationButton() throws Exception;
 
@@ -101,6 +101,21 @@ public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBa
         }
         return menuPageButton;
     }
+
+    public Button getOrderButton() throws Exception {
+        if (orderButton == null) {
+            orderButton = new Button (driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("OrderButton") + "']"), "");
+        }
+        return orderButton;
+    }
+
+    public Button getFindButton() throws Exception {
+        if (findButton == null) {
+            findButton = new Button (driver, By.xpath("//android.widget.TextView[@text='" + BaseTest.bundle.getString("FindButton") + "']"), "");
+        }
+        return findButton;
+    }
+
     }
 
 
