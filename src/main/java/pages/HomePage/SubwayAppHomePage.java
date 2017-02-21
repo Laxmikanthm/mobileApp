@@ -4,6 +4,7 @@ import base.gui.controls.browser.Button;
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
@@ -32,6 +33,8 @@ public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBa
     abstract MobileButton getLoginButton() throws Exception;
     Button skipButton;
     Button menuPageButton;
+    Button logOutButton;
+    Button confirmLogOutButton;
 
     abstract MobileButton getRegistrationButton() throws Exception;
 
@@ -82,7 +85,8 @@ public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBa
         return skipButton;
     }
 
-    public MenuPage openMenuPage() throws Exception {
+
+    public MenuPage gotoMenuPage() throws Exception {
         try {
             this.getMenuPageButton().click();
             return MenuPage.get((AppiumDriver) driver);
@@ -90,13 +94,14 @@ public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBa
             throw new Exception(ex);
         }
     }
+
     public Button getMenuPageButton() throws Exception {
         if (menuPageButton == null) {
             menuPageButton = new Button(driver, bys.get("MenuBtnBy"), "Menu button");
         }
         return menuPageButton;
     }
+    }
 
-}
 
 

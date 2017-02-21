@@ -1,6 +1,7 @@
 package pages.MenuPage;
 
 import base.gui.controls.browser.Button;
+import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
@@ -10,21 +11,23 @@ import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import pages.HomePage.SubwayAppHomePage;
 
+import java.util.Map;
+
 /**
  * Created by test-user on 2/2/17.
  */
 public abstract class MenuPage<T extends AppiumDriver> extends MobileBasePage {
+    protected Map<String, By> bys;
 
     public MenuPage(AppiumDriver driver) throws Exception {
         super(driver);
-        logOut();
     }
-
-    protected abstract void menuPageButton();
 
     private MenuPage MenuPage;
     private SubwayAppHomePage SubwayAppHomePage;
+    Button menuPageButton;
     Button logOutButton;
+    Button confirmLogOutButton;
 
 
     @Override
@@ -50,25 +53,24 @@ public abstract class MenuPage<T extends AppiumDriver> extends MobileBasePage {
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
-
-    public MenuPage logOutFromApp() throws Exception {
-        MenuPage = SubwayAppHomePage.openMenuPage();
-        MenuPage = MenuPage.logOut();
-        return MenuPage;
-    }
-
-    public pages.MenuPage.MenuPage logOut() throws Exception
-
-    {
-        getLogOutButton().click();
+    public MenuPage openMenuPage() throws Exception {
+        this.getLogOutButton().click();
+        this.getConfirmLogOutButton().click();
         return null;
     }
 
     public Button getLogOutButton() throws Exception {
         if (logOutButton == null) {
-            logOutButton = new Button(driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+            logOutButton = new Button(driver, bys.get("LogoutBtnBy"), "Logout button");
         }
         return logOutButton;
+    }
+
+    public Button getConfirmLogOutButton() throws Exception {
+        if (confirmLogOutButton == null) {
+            confirmLogOutButton = new Button (driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("ConfirmLogOutButton") + "']"), "");
+        }
+        return confirmLogOutButton;
     }
 }
 

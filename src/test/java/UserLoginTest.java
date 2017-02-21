@@ -33,7 +33,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
         SubwayAppHomePage homePage = goToHomePage(SubwayAppHomePage.getHomepageClass(), "MobileApp");
         LoginPage loginPage = homePage.gotoLogInPage();
         loginPage.login();
-        MenuPage menuPage= homePage.openMenuPage();
-        menuPage.logOutFromApp();
+        MenuPage menuPage= homePage.gotoMenuPage();
+        menuPage.openMenuPage();
     }
 }
