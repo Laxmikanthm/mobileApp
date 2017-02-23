@@ -11,9 +11,9 @@
         <parameter name="projectName" value="${driverName}"></parameter>
         <classes>
 
-            <class name="UserLoginTest">
+            <class name="UpdateProfileTest">
                 <methods>
-                    <include name="userLogout"> </include>
+                    <include name="updateProfile"> </include>
                 </methods>
             </class>
         </classes>

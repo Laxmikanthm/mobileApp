@@ -10,8 +10,7 @@ import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import pages.HomePage.SubwayAppHomePage;
-import pages.SubWayPage.SubWayPage;
+import pages.FindYourSubWayPage.FindYourSubWayPage;
 import pojos.MobileUser;
 
 /**
@@ -35,6 +34,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     @Override
     protected void waitForPageToLoad() throws Exception {
 
+
     }
 
 
@@ -53,15 +53,30 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     }
 
 
-    public void login() throws Exception {
+    public FindYourSubWayPage login() throws Exception {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
         //mobileUser.createMobileUser(false, Country.UnitedStates);
-        mobileUser.setEmailAddress("tarun.sujit@gmail.com");
-        mobileUser.setPassword("Sub@1234");
-        getUserName().isReady();
-        getUserName().setText(mobileUser.getEmailAddress());
-        getPassword().setText(mobileUser.getPassword());
-        getLogin().click();
+
+
+        try{
+
+            mobileUser.setEmailAddress("tarun.sujit@gmail.com");
+
+            mobileUser.setPassword("Sub@1234");
+            getUserName().isReady();
+
+            getUserName().setText(mobileUser.getEmailAddress());
+
+            getPassword().setText(mobileUser.getPassword());
+            HideKeyboard();
+            getPassword().getControl().getLocation();
+            getLogin().click();
+            return FindYourSubWayPage.get((AppiumDriver)driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+
+
 
     }
     /*public LoginPage login() throws Exception {
@@ -76,4 +91,14 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         return LoginPage.get((AppiumDriver) driver);
 
     }*/
+
+
+    public void HideKeyboard()
+    {
+
+        AppiumDriver d=(AppiumDriver) driver;
+        d.hideKeyboard();
+    }
+
+
 }

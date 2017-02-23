@@ -32,7 +32,8 @@ public class LoginPageAndroid extends LoginPage {
 
     public AndroidButton getLogin() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-desc='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
+        //AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-des='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
 
         return button;
     }

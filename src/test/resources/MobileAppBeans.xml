@@ -16,7 +16,7 @@
         <bean id="localMobileExecutor" class="execution.platform.local.LocalMobileExecutor"></bean>
     </beans>
 
-    <beans profile="testObject">
+   <!-- <beans profile="testObject">
         <bean id="executors" class="execution.platform.Executors">
 
             <property name="executors">
@@ -26,5 +26,5 @@
             </property>
         </bean>
         <bean id="testObjectMobileExecutor" class="execution.platform.TestObject.TestObjectMobileExecutor"></bean>
-    </beans>
+    </beans>-->
     </beans>

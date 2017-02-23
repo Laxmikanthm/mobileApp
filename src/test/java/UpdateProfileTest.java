@@ -27,19 +27,25 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
     @Test
     public void updateProfile()throws Exception
     {
-        FindYourSubWayPage homePage = goToHomePage(FindYourSubWayPage.getHomepageClass(), "MobileApp");
-        SubWayPage subWayPage= homePage.navigateToUserProfile();
+        SubwayAppHomePage homePage = goToHomePage(SubwayAppHomePage.getHomepageClass(), "MobileApp");
+        LoginPage loginPage = homePage.gotoLogInPage();
+        FindYourSubWayPage SubWayhomePage=loginPage.login();
+        Thread.sleep(15000);
+        SubWayPage subWayPage= SubWayhomePage.getUserDetails();
         ContactInformationPage contactInforPage= subWayPage.getContactInformation();
         NamePage namepage= contactInforPage.getNameField();
         ContactInformationPage contactInforPage1=namepage.updateFirstNameLastName();
-        NamePage namepage1= contactInforPage.getPasswordField();
+        contactInforPage1.selectBackButton();
+        subWayPage.logout();
+        subWayPage.logOutInpopupButton();
+      /*  NamePage namepage1= contactInforPage.getPasswordField();
         PhonePage namepage2= contactInforPage.getPhoneField();
         ContactInformationPage contactInforPage2= namepage2.updatePhoneNumber();
         SubWayPage subWayPage1= contactInforPage2.selectBackButton();
         String AfirstNameLastName=  subWayPage1.getUserInformation();
         String EfirstNameLastName=namepage1.getFirstNameLastName();
         Assert.assertEquals(AfirstNameLastName,EfirstNameLastName);
-
+*/
 
     }
 }

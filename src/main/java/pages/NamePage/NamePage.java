@@ -58,8 +58,9 @@ public abstract class NamePage<T extends AppiumDriver> extends MobileBasePage {
     public ContactInformationPage updateFirstNameLastName() throws Exception
     {
         try{
-            firstName=  this.getFirstName().getControl().getText();
-            lastName =  this.getLastName().getControl().getText();
+            Thread.sleep(15000);
+//            firstName=  this.getFirstName().getControl().getText();
+//            lastName =  this.getLastName().getControl().getText();
             getSave().click();
 
             return ContactInformationPage.get((AppiumDriver) driver);

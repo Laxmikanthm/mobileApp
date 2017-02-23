@@ -27,6 +27,7 @@ public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBa
 
     public SubwayAppHomePage(AppiumDriver driver) throws Exception {
         super(driver);
+        Thread.sleep(15000);
         skip();
     }
 
@@ -74,14 +75,16 @@ public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBa
 
     public void skip() throws Exception
 
-    {
-        getSkipButton().click();
+   {
+       getSkipButton().click();
     }
 
     public Button getSkipButton() throws Exception {
         if (skipButton == null) {
             skipButton = new Button (driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("SkipButton") + "']"), "");
-        }
+
+            //skipButton = new Button (driver, By.id("android:id/button2"), "");
+    }
         return skipButton;
     }
 

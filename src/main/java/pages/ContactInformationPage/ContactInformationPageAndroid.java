@@ -19,7 +19,7 @@ public class ContactInformationPageAndroid extends ContactInformationPage
 
     public AndroidButton getName() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("Name")+"']"), "Name button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("Name")+"']"), "Name button");
 
         return button;
     }

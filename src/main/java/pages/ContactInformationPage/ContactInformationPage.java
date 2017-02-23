@@ -54,7 +54,8 @@ public abstract  class ContactInformationPage<T extends AppiumDriver> extends Mo
     public NamePage getNameField()  throws Exception
     {
         try{
-
+            Thread.sleep(15000);
+            getName().click();
             return NamePage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);
@@ -84,7 +85,9 @@ public abstract  class ContactInformationPage<T extends AppiumDriver> extends Mo
     public SubWayPage selectBackButton()  throws Exception
     {
         try{
-            this.getPhone().click();
+            Thread.sleep(10000);
+            getBackButton();
+            //this.getPhone().click();
             return SubWayPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);

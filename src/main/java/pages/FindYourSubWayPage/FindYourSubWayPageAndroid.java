@@ -19,7 +19,8 @@ public class FindYourSubWayPageAndroid extends  FindYourSubWayPage {
 
     public AndroidButton getUserProfile() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("UserProfile")+"']"), "UserProfile button");
+       // AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("UserProfile")+"']"), "UserProfile button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/profile"), "UserProfile button");
 
         return button;
     }

@@ -1,11 +1,14 @@
 package pages.SubWayPage;
 
+import base.gui.controls.browser.Button;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
+import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
 import pages.ContactInformationPage.ContactInformationPage;
 
 /**
@@ -17,8 +20,11 @@ public abstract  class SubWayPage<T extends AppiumDriver> extends MobileBasePage
         super(driver);
     }
 
+    abstract MobileButton getLogOut() throws Exception;
     abstract MobileButton getContactInfo() throws Exception;
     abstract MobileButton getUserInfo() throws Exception;
+    abstract MobileButton getLogOutButtonInPopUp() throws Exception;
+    //abstract MobileButton getLogOutButton() throws Exception;
 
     public static SubWayPage get(AppiumDriver driver) throws Exception{
 
@@ -47,6 +53,7 @@ public abstract  class SubWayPage<T extends AppiumDriver> extends MobileBasePage
     public ContactInformationPage getContactInformation() throws Exception
     {
         try{
+            Thread.sleep(15000);
             this.getContactInfo().click();
             return ContactInformationPage.get((AppiumDriver) driver);
         }catch(Exception ex){
@@ -66,4 +73,22 @@ public abstract  class SubWayPage<T extends AppiumDriver> extends MobileBasePage
 
 
     }
+
+    public void logout() throws Exception
+
+    {
+        Thread.sleep(10000);
+        getLogOut().click();
+    }
+
+
+    public void logOutInpopupButton() throws Exception
+
+    {
+        Thread.sleep(10000);
+        getLogOutButtonInPopUp().click();
+    }
+
+
 }
+

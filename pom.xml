@@ -74,18 +74,18 @@
                         <!--Mobile-->
                         <mobilePlatform>Android</mobilePlatform>
                         <platformVersions>6.0.1</platformVersions>
-                        <deviceName>Subway</deviceName>
+                        <deviceName>samsung</deviceName>
                         <platform>mobile</platform>
                         <!-- driverName can be MobileApp/WebApp -->
                         <driverName>MobileApp</driverName>
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
-                        <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/nikesh/Downloads/subwayStagingDebug515.apk</app>
+                        <browserOrDevice>samsung</browserOrDevice>
+                        <app>C:/Subway/SubWayApps/Feb22nd/subwayStagingDebug532.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
-                        <operatingSystem>Mac</operatingSystem>
+                        <operatingSystem>Windows</operatingSystem>
                         <udid></udid>
 
                         <!--<appURL>${appURL}</appURL>-->
@@ -95,7 +95,7 @@
                         <appName>Subway</appName>
 
                         <!--Test Object-->
-                        <spring.profiles.active>testObject</spring.profiles.active>
+                        <!--<spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
@@ -103,7 +103,7 @@
                         <testObjectDevice>HTC_One_M8_real</testObjectDevice>
                         <appURL>/Users/nikesh/Downloads/subwayStagingDebug515.apk</appURL>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
-                        <appName>Subway</appName>
+                        <appName>Subway</appName>-->
                         <!--<appiumVersion>1.5.2-updated-chromedriver</appiumVersion>-->
 
 

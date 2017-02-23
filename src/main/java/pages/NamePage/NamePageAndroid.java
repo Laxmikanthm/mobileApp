@@ -34,7 +34,7 @@ public class NamePageAndroid extends  NamePage {
 
     public AndroidButton getSave() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("Save") + "']"), "Save button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='SAVE']" ), "Save button");
 
         return button;
     }

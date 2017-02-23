@@ -44,15 +44,15 @@ public abstract  class FindYourSubWayPage<T extends AppiumDriver> extends Mobile
 
     }
 
-    public static LoginPage get(AppiumDriver driver) throws Exception{
+    public static FindYourSubWayPage get(AppiumDriver driver) throws Exception{
 
         String platform = driver.getCapabilities().getCapability("platformName").toString();
 
         switch (platform){
             case "iOS":
-                return new LoginPageIOS((IOSDriver) driver);
+                return new FindYourSubWayPageIOS((IOSDriver) driver);
             case "Android":
-                return new LoginPageAndroid((AndroidDriver) driver);
+                return new FindYourSubWayPageAndroid((AndroidDriver) driver);
             default:
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
@@ -61,6 +61,7 @@ public abstract  class FindYourSubWayPage<T extends AppiumDriver> extends Mobile
     public SubWayPage getUserDetails() throws Exception
     {
         try{
+            Thread.sleep(10000);
             this.getUserProfile().click();
             return SubWayPage.get((AppiumDriver)driver);
         }catch(Exception ex){
