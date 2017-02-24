@@ -66,10 +66,12 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
             getUserName().isReady();
 
             getUserName().setText(mobileUser.getEmailAddress());
-
+            getPassword().isReady();
             getPassword().setText(mobileUser.getPassword());
             HideKeyboard();
+            getPassword().isReady();
             getPassword().getControl().getLocation();
+            getLogin().waitForClickable();
             getLogin().click();
             return FindYourSubWayPage.get((AppiumDriver)driver);
         }catch(Exception ex){

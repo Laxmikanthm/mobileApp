@@ -30,7 +30,6 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
         SubwayAppHomePage homePage = goToHomePage(SubwayAppHomePage.getHomepageClass(), "MobileApp");
         LoginPage loginPage = homePage.gotoLogInPage();
         FindYourSubWayPage SubWayhomePage=loginPage.login();
-        Thread.sleep(15000);
         SubWayPage subWayPage= SubWayhomePage.getUserDetails();
         ContactInformationPage contactInforPage= subWayPage.getContactInformation();
         NamePage namepage= contactInforPage.getNameField();
