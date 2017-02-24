@@ -61,7 +61,7 @@ public abstract  class FindYourSubWayPage<T extends AppiumDriver> extends Mobile
     public SubWayPage getUserDetails() throws Exception
     {
         try{
-            Thread.sleep(10000);
+            this.getUserProfile().waitForClickable();
             this.getUserProfile().click();
             return SubWayPage.get((AppiumDriver)driver);
         }catch(Exception ex){

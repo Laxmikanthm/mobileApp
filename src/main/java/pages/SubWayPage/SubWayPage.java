@@ -53,7 +53,7 @@ public abstract  class SubWayPage<T extends AppiumDriver> extends MobileBasePage
     public ContactInformationPage getContactInformation() throws Exception
     {
         try{
-            Thread.sleep(15000);
+            this.getContactInfo().waitForClickable();
             this.getContactInfo().click();
             return ContactInformationPage.get((AppiumDriver) driver);
         }catch(Exception ex){
@@ -77,7 +77,7 @@ public abstract  class SubWayPage<T extends AppiumDriver> extends MobileBasePage
     public void logout() throws Exception
 
     {
-        Thread.sleep(10000);
+        getLogOut().waitForClickable();
         getLogOut().click();
     }
 
@@ -85,7 +85,7 @@ public abstract  class SubWayPage<T extends AppiumDriver> extends MobileBasePage
     public void logOutInpopupButton() throws Exception
 
     {
-        Thread.sleep(10000);
+        getLogOutButtonInPopUp().waitForClickable();
         getLogOutButtonInPopUp().click();
     }
 
