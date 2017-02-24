@@ -7,6 +7,7 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
+import cardantApiFramework.pojos.AppUser;
 import cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient;
 import enums.Country;
 import io.appium.java_client.AppiumDriver;
@@ -14,6 +15,7 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.apache.tools.ant.taskdefs.email.EmailAddress;
 import org.openqa.selenium.By;
 import pojos.MobileUser;
 import utils.Logz;
@@ -21,12 +23,17 @@ import utils.Logz;
 import java.util.List;
 import java.util.Map;
 
+import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.generateEmailAddress;
+import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.getEmail;
+import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.getVerificationCode;
+
 /**
  * Created by test-user on 2/9/17.
  */
 public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBasePage {
     protected Map<String, By> bys;
     Button goButton;
+    AppUser appUser = null;
 
 
     public RegistrationPage(AppiumDriver driver) {
@@ -75,20 +82,21 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
 
     public void signUp() throws Exception {
         try {
-            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+            appUser = AppUser.createRandomUser(false, Country.UnitedStates);
             getFirstName().isReady();
-            getFirstName().setText(mobileUser.getFirstName());
-            getLastName().setText(mobileUser.getLastName());
+            getFirstName().setText(appUser.getFirstName());
+            getLastName().setText(appUser.getLastName());
             getDriver().hideKeyboard();
-            getPhone().setText(mobileUser.getPhoneTenDigits());
+            getPhone().setText(appUser.getPhoneTenDigits());
             getNextButton().click();
             getEmail().isReady();
-            getEmail().setText(mobileUser.getEmailAddress());
-            getPassword().setText(mobileUser.getPassword());
-            getConfirmPasswrod().setText(mobileUser.getPassword());
+            getEmail().setText(appUser.getEmailAddress());
+            getPassword().setText(appUser.getPassword());
+            getConfirmPasswrod().setText(appUser.getPassword());
+            getDriver().hideKeyboard();
             getNextButton().click();
             getSignUpButton().isReady();
-            enterCode(getVerificationCode(mobileUser));
+            enterCode(getVerificationCode(appUser.getEmailAddress()));
             getSignUpButton().click();
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -96,18 +104,13 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
         }
     }
 
-    public String getVerificationCode(MobileUser mobileUser) throws Exception {
-        //Logic for fetching the code from Email.
-        String jsonBody = MailinatorClient.getEmailBySecondsAgoAndSubject(5000, "Subway", mobileUser.getEmailAddress());
-        String ind[] = jsonBody.split("Your code is: ");
-        return ind[1].substring(0, 6);
-    }
 
     public void enterCode(String code) {
+
         List<MobileElement> codes = ((AppiumDriver) driver).findElements(By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("VerificaitonCode") + "']/android.widget.EditText"));
         char[] number = code.toCharArray();
         for (int i = 0; i < codes.size(); i++) {
-            codes.get(0).sendKeys(String.valueOf(number[i]));
+            codes.get(i).sendKeys(String.valueOf(number[i]));
         }
     }
 
