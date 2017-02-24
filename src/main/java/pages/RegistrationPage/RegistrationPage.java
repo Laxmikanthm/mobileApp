@@ -108,9 +108,8 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
     public void enterCode(String code) {
 
         List<MobileElement> codes = ((AppiumDriver) driver).findElements(By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("VerificaitonCode") + "']/android.widget.EditText"));
-        char[] number = code.toCharArray();
-        for (int i = 0; i < codes.size(); i++) {
-            codes.get(i).sendKeys(String.valueOf(number[i]));
+         {
+             codes.get(0).sendKeys(code);
         }
     }
 
