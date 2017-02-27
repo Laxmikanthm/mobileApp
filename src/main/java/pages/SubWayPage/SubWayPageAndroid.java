@@ -26,8 +26,8 @@ public class SubWayPageAndroid extends SubWayPage {
 
     public AndroidButton getUserInfo() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("UserInfo")+"']"), "UserInformation text");
-
+        //AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("UserInfo")+"']"), "UserInformation text");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/user_name"), "UserProfile button");
         return button;
     }
     public AndroidButton getLogOut() throws Exception {

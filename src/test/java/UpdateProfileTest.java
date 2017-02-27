@@ -31,20 +31,25 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
         LoginPage loginPage = homePage.gotoLogInPage();
         FindYourSubWayPage SubWayhomePage=loginPage.login();
         SubWayPage subWayPage= SubWayhomePage.getUserDetails();
-        ContactInformationPage contactInforPage= subWayPage.getContactInformation();
-        NamePage namepage= contactInforPage.getNameField();
-        ContactInformationPage contactInforPage1=namepage.updateFirstNameLastName();
-        contactInforPage1.selectBackButton();
+        ContactInformationPage contactInformationPage= subWayPage.getContactInformation();
+        NamePage namepage= contactInformationPage.getNameField();
+        contactInformationPage=namepage.updateFirstNameLastName();
+        String eFirstNameLastName=namepage.getFirstNameLastName();
+
+        //namepage = contactInformationPage.getPasswordField();
+        PhonePage phonePage= contactInformationPage.getPhoneField();
+        contactInformationPage= phonePage.updatePhoneNumber();
+        // subWayPage= contactInformationPage.selectBackButton();
+//        String AfirstNameLastName=  subWayPage.getUserInformation();
+//        String EfirstNameLastName= namepage.getFirstNameLastName();
+
+        String aFirstNameLastName=subWayPage.getUserInformation();
+
+        System.out.println(eFirstNameLastName+"--"+aFirstNameLastName);
+        Assert.assertEquals(namepage.getFirstNameLastName(),subWayPage.getUserInformation());
         subWayPage.logout();
         subWayPage.logOutInpopupButton();
-      /*  NamePage namepage1= contactInforPage.getPasswordField();
-        PhonePage namepage2= contactInforPage.getPhoneField();
-        ContactInformationPage contactInforPage2= namepage2.updatePhoneNumber();
-        SubWayPage subWayPage1= contactInforPage2.selectBackButton();
-        String AfirstNameLastName=  subWayPage1.getUserInformation();
-        String EfirstNameLastName=namepage1.getFirstNameLastName();
-        Assert.assertEquals(AfirstNameLastName,EfirstNameLastName);
-*/
+
 
     }
 }

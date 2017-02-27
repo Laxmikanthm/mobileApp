@@ -17,14 +17,17 @@ public class PhonePageAndroid extends  PhonePage {
 
     public AndroidPasswordTextBox getPhoneNumber() throws Exception {
 
-        AndroidPasswordTextBox phoneNumberTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+ BaseTest.bundle.getString("PhoneNumber")+"']"), "PhoneNumber text field");
+        //AndroidPasswordTextBox phoneNumberTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+ BaseTest.bundle.getString("PhoneNumber")+"']"), "PhoneNumber text field");
 
+        AndroidPasswordTextBox phoneNumberTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/phone"), "UserProfile button");
         return phoneNumberTextBox;
     }
 
     public AndroidButton getSave() throws Exception {
 
-        AndroidButton savebutton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+ BaseTest.bundle.getString("Save")+"']"), "Save button");
+       // AndroidButton savebutton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+ BaseTest.bundle.getString("Save")+"']"), "Save button");
+
+        AndroidButton savebutton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='SAVE']" ), "Save button");
 
         return savebutton;
     }

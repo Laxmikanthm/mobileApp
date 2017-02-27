@@ -31,13 +31,15 @@ public class ContactInformationPageAndroid extends ContactInformationPage
     }
     public AndroidButton getPhone() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PHONE")+"']"), "Phone button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("PHONE")+"']"), "Phone button");
 
         return button;
     }
     public AndroidButton getBackButton() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("BackButton")+"']"), "Back button");
+        //AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("BackButton")+"']"), "Back button");
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.className("android.widget.ImageButton"), "Back button");
 
         return button;
     }

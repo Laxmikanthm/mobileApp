@@ -4,12 +4,14 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
+import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.ContactInformationPage.ContactInformationPage;
 import pages.ContactInformationPage.ContactInformationPageAndroid;
 import pages.ContactInformationPage.ContactInformationPageIOS;
+import pojos.MobileUser;
 
 /**
  * Created by e002243 on 17-02-2017.
@@ -54,7 +56,10 @@ public abstract class PhonePage <T extends AppiumDriver> extends MobileBasePage 
     public ContactInformationPage updatePhoneNumber() throws Exception
     {
         try{
-            phoneNumber  =  this.getPhoneNumber().getControl().getText();
+            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+            getPhoneNumber().getControl().clear();
+            getPhoneNumber().setText(mobileUser.getPhoneNumber());
+           // phoneNumber  =  this.getPhoneNumber().getControl().getAttribute("value");
 
             getSave().click();
 

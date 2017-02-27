@@ -60,9 +60,9 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
         try{
 
-            mobileUser.setEmailAddress("tarun.sujit@gmail.com");
+            mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
 
-            mobileUser.setPassword("Sub@1234");
+            mobileUser.setPassword("Subway1234");
             getUserName().isReady();
 
             getUserName().setText(mobileUser.getEmailAddress());

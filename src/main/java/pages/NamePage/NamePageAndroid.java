@@ -20,14 +20,18 @@ public class NamePageAndroid extends  NamePage {
 
     public AndroidTextBox getFirstName() throws Exception {
 
-        AndroidTextBox userNameTextbox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("Firstname") + "']"), "FirstName text field");
+        //AndroidTextBox userNameTextbox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("Firstname") + "']"), "FirstName text field");
 
+        AndroidTextBox userNameTextbox = new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/first_name"), "FirstName text field");
         return userNameTextbox;
     }
 
     public AndroidTextBox getLastName() throws Exception {
 
-        AndroidTextBox passwordTextBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("Lastname") + "']"), "LastName text field");
+        //AndroidTextBox passwordTextBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("Lastname") + "']"), "LastName text field");
+
+        AndroidTextBox passwordTextBox = new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/last_name"), "LastName text field");
+
 
         return passwordTextBox;
     }

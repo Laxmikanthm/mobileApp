@@ -4,6 +4,7 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
+import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -12,6 +13,9 @@ import pages.LoginPage.LoginPage;
 import pages.SubWayPage.SubWayPage;
 import pages.SubWayPage.SubWayPageAndroid;
 import pages.SubWayPage.SubWayPageIOS;
+import pojos.MobileUser;
+
+import java.util.Random;
 
 /**
  * Created by e002243 on 17-02-2017.
@@ -58,10 +62,25 @@ public abstract class NamePage<T extends AppiumDriver> extends MobileBasePage {
     public ContactInformationPage updateFirstNameLastName() throws Exception
     {
         try{
-            getSave().waitForClickable();
-//            firstName=  this.getFirstName().getControl().getText();
-//            lastName =  this.getLastName().getControl().getText();
-            getSave().click();
+            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+            getFirstName().isReady();
+            getFirstName().getControl().clear();
+            getFirstName().isReady();
+            firstName=mobileUser.getFirstName();
+           getFirstName().setText(firstName);
+            getFirstName().isReady();
+           //firstName=getFirstName().getControl().getAttribute("value");
+
+           Thread.sleep(10000);
+            getLastName().isReady();
+           getLastName().getControl().clear();
+            getLastName().isReady();
+            lastName=mobileUser.getLastName();
+           getLastName().setText(lastName);
+            getLastName().isReady();
+
+           getSave().waitForClickable();
+           getSave().click();
 
             return ContactInformationPage.get((AppiumDriver) driver);
         }catch(Exception ex){
