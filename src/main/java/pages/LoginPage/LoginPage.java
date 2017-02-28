@@ -21,7 +21,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public LoginPage(AppiumDriver driver){
         super(driver);
     }
-    AppUser appUser =null;
+    public AppUser appUser =null;
 
     abstract MobileTextBox getUserName() throws Exception;
     abstract PasswordTextBox getPassword() throws Exception;
@@ -55,46 +55,14 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     }
 
 
-    public FindYourSubWayPage login() throws Exception {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+    public LoginPage login(AppUser appUser) throws Exception {
         //mobileUser.createMobileUser(false, Country.UnitedStates);
-
-
-        try{
-
-            mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
-
-            mobileUser.setPassword("Subway1234");
-            getUserName().isReady();
-
-            getUserName().setText(mobileUser.getEmailAddress());
-            getPassword().isReady();
-            getPassword().setText(mobileUser.getPassword());
-            HideKeyboard();
-            getPassword().isReady();
-            getPassword().getControl().getLocation();
-            getLogin().waitForClickable();
-            getLogin().click();
-            return FindYourSubWayPage.get((AppiumDriver)driver);
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-
-
-
-    }
-    /*public LoginPage login() throws Exception {
-        appUser=AppUser.createAppUser(false, Country.UnitedStates);
-        //mobileUser.createMobileUser(false, Country.UnitedStates);
-        appUser.setEmailAddress(appUser.getEmailAddress());
-        appUser.setPassword(appUser.getPassword());
-        getUserName().isReady();
         getUserName().setText(appUser.getEmailAddress());
         getPassword().setText(appUser.getPassword());
         getLogin().click();
         return LoginPage.get((AppiumDriver) driver);
 
-    }*/
+    }
 
 
     public void HideKeyboard()
@@ -118,12 +86,9 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     }
 
     public FindYourSubWayPage loginAfterResetPassoword(String password) throws Exception {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
-        //mobileUser.createMobileUser(false, Country.UnitedStates);
-
+        appUser = AppUser.updateRandomUser(appUser);
         try {
-            mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
-            getUserName().setText(mobileUser.getEmailAddress());
+            getUserName().setText(appUser.getEmailAddress());
             getPassword().isReady();
             getPassword().setText(password);
             HideKeyboard();

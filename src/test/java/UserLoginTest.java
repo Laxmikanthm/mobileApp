@@ -17,8 +17,12 @@ public class UserLoginTest extends SubwayAppBaseTest {
     @Test
     public void userLogin() throws Exception {
         SubwayAppHomePage homePage = goToHomePage(SubwayAppHomePage.getHomepageClass(), "MobileApp");
+        RegistrationPage registrationPage = homePage.gotoRegistrationPage();
+        registrationPage.signUp();
+        MenuPage menuPage= homePage.gotoMenuPage();
+        menuPage.openMenuPage();
         LoginPage loginPage = homePage.gotoLogInPage();
-        loginPage.login();
+        loginPage.login(registrationPage.appUser);
     }
 
     @Test
@@ -31,8 +35,8 @@ public class UserLoginTest extends SubwayAppBaseTest {
     @Test
     public void userLogout() throws Exception {
         SubwayAppHomePage homePage = goToHomePage(SubwayAppHomePage.getHomepageClass(), "MobileApp");
-        LoginPage loginPage = homePage.gotoLogInPage();
-        loginPage.login();
+        RegistrationPage registrationPage = homePage.gotoRegistrationPage();
+        registrationPage.signUp();
         MenuPage menuPage= homePage.gotoMenuPage();
         menuPage.openMenuPage();
     }
