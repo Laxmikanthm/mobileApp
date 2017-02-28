@@ -1,0 +1,112 @@
+package pages.ForgotPasswordPage;
+
+import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileLabel;
+import base.gui.controls.mobile.generic.MobileTextBox;
+import base.pages.mobile.MobileBasePage;
+import base.test.BaseTest;
+import cardantApiFramework.pojos.AppUser;
+import enums.Country;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
+import pages.HomePage.SubwayAppHomePage;
+import playground.fakeBrowserPages.browser.HomePage;
+import pojos.MobileUser;
+
+
+import java.util.List;
+
+import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.getVerificationCode;
+
+/**
+ * Created by E003705 on 28-02-2017.
+ */
+public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends MobileBasePage {
+    public ForgotYourPasswordPage(AppiumDriver driver) {
+        super(driver);
+    }
+
+
+    abstract MobileTextBox getEmailAddress() throws Exception;
+    abstract MobileButton getNextButton() throws Exception;
+    abstract MobileButton getResetButton() throws Exception;
+    abstract MobileTextBox getPassword() throws Exception;
+    abstract MobileTextBox getConfirmPassword() throws Exception;
+    abstract MobileButton getSetPassword() throws Exception;
+    abstract MobileButton getLoginAgainPopUp() throws Exception;
+    String password = null;
+
+    public SubwayAppHomePage forgotPassword() throws Exception {
+        try {
+
+            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+
+
+
+            getEmailAddress().isReady();
+            getEmailAddress().getControl().clear();
+            //getEmailAddress().setText(mobileUser.getEmailAddress());
+            getEmailAddress().setText("gopal.boyinag@gmail.com");
+            getNextButton().click();
+            enterCode(getVerificationCode(mobileUser.getEmailAddress()));
+            getResetButton().click();
+            getPassword().isReady();
+            password = mobileUser.getPassword();
+            getPassword().setText("SubSub");
+            getConfirmPassword().setText("SubSub");
+            getSetPassword().click();
+            getOKButton();
+            return SubwayAppHomePage.get((AppiumDriver)driver);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+
+        }
+    }
+    @Override
+    public MobileLabel getPageLabel() throws Exception {
+        return null;
+    }
+
+    @Override
+    protected void waitForPageToLoad() throws Exception {
+
+    }
+
+    public static ForgotYourPasswordPage get(AppiumDriver driver) throws Exception {
+
+        String platform = driver.getCapabilities().getCapability("platformName").toString();
+
+        switch (platform) {
+            case "iOS":
+                return new ForgotYourPasswordPageIOS((IOSDriver) driver);
+            case "Android":
+                return new ForgotYourPasswordPageAndroid((AndroidDriver) driver);
+            default:
+                throw new Exception("Unable to get Find A Store page for platform " + platform);
+        }
+    }
+
+    public void getOKButton() throws Exception
+
+    {
+        getLoginAgainPopUp().waitForClickable();
+        getLoginAgainPopUp().click();
+    }
+
+    public void enterCode(String code) {
+
+        List<MobileElement> codes = ((AppiumDriver) driver).findElements(By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("VerificaitonCode") + "']/android.widget.EditText"));
+        {
+            codes.get(0).sendKeys(code);
+        }
+    }
+
+    public String getPasswordString()
+    {
+        return password;
+    }
+
+}
