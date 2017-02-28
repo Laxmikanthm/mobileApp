@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * Created by e002243 on 16-02-2017.
  */
-public class FindYourSubWayPageAndroid extends  FindYourSubWayPage {
+public class FindYourSubWayPageAndroid extends FindYourSubWayPage {
 
     public FindYourSubWayPageAndroid(AndroidDriver driver){
         super(driver);
@@ -29,6 +29,14 @@ public class FindYourSubWayPageAndroid extends  FindYourSubWayPage {
 
         bys = new HashMap<String, By>();
         bys.put("SearchBtnBy", By.id("com.subway.mobile.subwayapp03:id/search_mylocation_layout"));
+    }
+
+    public AndroidButton getFindYourSubWay() throws Exception {
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("FindYourSubWay")+"']"), "FindYourSubWay button");
+
+
+        return button;
     }
 }
 

@@ -12,7 +12,7 @@ import io.appium.java_client.ios.IOSDriver;
  */
 public class LoginPageIOS extends LoginPage {
 
-    public LoginPageIOS(IOSDriver driver){
+    public LoginPageIOS(IOSDriver driver) {
         super(driver);
     }
 
@@ -22,15 +22,24 @@ public class LoginPageIOS extends LoginPage {
 
         return menuButton;
     }
+
     public IOSPasswordTextBox getPassword() throws Exception {
 
         IOSPasswordTextBox menuButton = new IOSPasswordTextBox((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
 
         return menuButton;
     }
+
     public IOSButton getLogin() throws Exception {
 
         IOSButton menuButton = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
+
+        return menuButton;
+    }
+
+    public IOSButton getForgotPassword() throws Exception {
+
+        IOSButton menuButton = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("ForgotPassword")), "Forgot Password button");
 
         return menuButton;
     }

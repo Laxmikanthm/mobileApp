@@ -30,6 +30,7 @@ public abstract  class FindYourSubWayPage<T extends AppiumDriver> extends Mobile
     }
 
     abstract MobileButton getUserProfile() throws Exception;
+    abstract  MobileButton getFindYourSubWay()throws Exception;
     Button searchButton;
     Button selectRestButton;
     protected Map<String, By> bys;
@@ -92,5 +93,14 @@ public abstract  class FindYourSubWayPage<T extends AppiumDriver> extends Mobile
             selectRestButton = new Button (driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("SelectRestButton") + "']"), "");
         }
         return selectRestButton;
+    }
+
+    public boolean findYourSubWayButton() throws Exception
+    {
+        try{
+           return getFindYourSubWay().getControl().isDisplayed();
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
     }
 }

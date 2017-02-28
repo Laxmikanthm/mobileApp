@@ -10,7 +10,11 @@ import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
+import pages.ForgotPasswordPage.ForgotYourPasswordPage;
+import pages.ForgotPasswordPage.ForgotYourPasswordPageAndroid;
+import pages.ForgotPasswordPage.ForgotYourPasswordPageIOS;
 import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.RegistrationPage.RegistrationPage;
@@ -29,6 +33,20 @@ public abstract class SubwayAppHomePage<T extends AppiumDriver> extends MobileBa
         super(driver);
         Thread.sleep(15000);
         skip();
+    }
+
+    public static SubwayAppHomePage get(AppiumDriver driver) throws Exception {
+
+        String platform = driver.getCapabilities().getCapability("platformName").toString();
+
+        switch (platform) {
+            case "iOS":
+                return new HomePageIOS((IOSDriver) driver);
+            case "Android":
+                return new HomePageAndroid((AndroidDriver) driver);
+            default:
+                throw new Exception("Unable to get Find A Store page for platform " + platform);
+        }
     }
 
     abstract MobileButton getLoginButton() throws Exception;

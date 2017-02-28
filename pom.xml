@@ -74,19 +74,19 @@
                         <!--Mobile-->
                         <mobilePlatform>Android</mobilePlatform>
                         <platformVersions>6.0.1</platformVersions>
-                        <deviceName>Nexus 5</deviceName>
+                        <deviceName>samsung</deviceName>
                         <platform>mobile</platform>
                         <!-- driverName can be MobileApp/WebApp -->
                         <driverName>MobileApp</driverName>
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
-                        <browserOrDevice>Nexus 5</browserOrDevice>
-                        <app>C:/Subway/SubWayApps/Feb25th/subwayStagingDebug532.apk</app>
+                        <browserOrDevice>samsung</browserOrDevice>
+                        <app>C:/Subway/SubWayApps/Feb28th/subwayStagingDebug532.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
-                        <operatingSystem>Mac</operatingSystem>
-                        <udid>03fcfef3e0783bb9</udid>
+                        <operatingSystem>Windows</operatingSystem>
+                        <udid>1e7245ec</udid>
 
                         <!--<appURL>${appURL}</appURL>-->
                         <!--End Mobile-->

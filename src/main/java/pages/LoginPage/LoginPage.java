@@ -5,6 +5,7 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.PasswordTextBox;
 import base.pages.mobile.MobileBasePage;
+import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import cardantApiFramework.pojos.AppUser;
 import enums.Country;
 import io.appium.java_client.AppiumDriver;
@@ -25,6 +26,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileTextBox getUserName() throws Exception;
     abstract PasswordTextBox getPassword() throws Exception;
     abstract MobileButton getLogin() throws Exception;
+    abstract MobileButton getForgotPassword() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -102,5 +104,37 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         d.hideKeyboard();
     }
 
+    public ForgotYourPasswordPage forgotPassword() throws Exception
+    {
+        try{
+            getForgotPassword().click();
 
+            return ForgotYourPasswordPage.get((AppiumDriver)driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+
+
+    }
+
+    public FindYourSubWayPage loginAfterResetPassoword(String password) throws Exception {
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+        //mobileUser.createMobileUser(false, Country.UnitedStates);
+
+        try {
+            mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
+            getUserName().setText(mobileUser.getEmailAddress());
+            getPassword().isReady();
+            getPassword().setText(password);
+            HideKeyboard();
+            getPassword().isReady();
+            getPassword().getControl().getLocation();
+            getLogin().waitForClickable();
+            getLogin().click();
+            return FindYourSubWayPage.get((AppiumDriver) driver);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+
+    }
 }
