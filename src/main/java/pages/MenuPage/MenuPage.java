@@ -7,6 +7,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.ContactInformationPage.ContactInformationPage;
+import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.NamePage.NamePage;
 import pages.PhonePage.PhonePage;
 import pojos.MobileUser;
