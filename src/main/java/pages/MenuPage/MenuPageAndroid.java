@@ -46,6 +46,14 @@ public class MenuPageAndroid extends MenuPage {
         return button;
     }
 
+    public AndroidButton getPaymentMethods() throws Exception {
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return button;
+    }
+
+
 
 
 }

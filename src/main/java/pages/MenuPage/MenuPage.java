@@ -24,6 +24,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getContactInfo() throws Exception;
     abstract MobileLabel getUserInfo() throws Exception;
     abstract MobileButton getLogOutButtonInPopUp() throws Exception;
+    abstract MobileButton getPaymentMethods() throws Exception;
     //abstract MobileButton getLogOutButton() throws Exception;
 
     public static MenuPage get(AppiumDriver driver) throws Exception{
@@ -102,6 +103,16 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
 //        String EfirstNameLastName= namepage.getFirstNameLastName();
 
         return MenuPage.get((AppiumDriver) driver);
+    }
+
+    public void navigateToPamentMethods() throws Exception
+    {
+        try{
+            getPaymentMethods().click();
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+
     }
 
 }
