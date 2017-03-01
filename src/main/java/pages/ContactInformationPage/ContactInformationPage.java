@@ -6,6 +6,7 @@ package pages.ContactInformationPage;
         import io.appium.java_client.AppiumDriver;
         import io.appium.java_client.android.AndroidDriver;
         import io.appium.java_client.ios.IOSDriver;
+        import pages.ForgotPasswordPage.ForgotYourPasswordPage;
         import pages.MenuPage.MenuPage;
         import pages.NamePage.NamePage;
         import pages.PhonePage.PhonePage;
@@ -62,11 +63,11 @@ public abstract  class ContactInformationPage<T extends AppiumDriver> extends Mo
         }
     }
 
-    public NamePage getPasswordField()  throws Exception
+    public ForgotYourPasswordPage getPasswordField()  throws Exception
     {
         try{
-            this.getPhone().click();
-            return NamePage.get((AppiumDriver) driver);
+            this.getPassWord().click();
+            return ForgotYourPasswordPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);
         }
