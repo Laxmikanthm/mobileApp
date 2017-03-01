@@ -17,6 +17,8 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.tools.ant.taskdefs.email.EmailAddress;
 import org.openqa.selenium.By;
+import pages.FindYourSubWayPage.FindYourSubWayPage;
+import pages.HomePage.HomePage;
 import pojos.MobileUser;
 import utils.Logz;
 
@@ -80,7 +82,7 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
 
     abstract MobileButton getSignUpButton() throws Exception;
 
-    public void signUp() throws Exception {
+    public HomePage signUp() throws Exception {
         try {
             appUser = AppUser.createRandomUser(false, Country.UnitedStates);
             getFirstName().isReady();
@@ -95,10 +97,12 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
             getConfirmPasswrod().setText(appUser.getPassword());
             getDriver().hideKeyboard();
             getNextButton().click();
-            getSignUpButton().isReady();
+            getSignUpButton().waitForClickable();
             enterCode(getVerificationCode(appUser.getEmailAddress()));
             getSignUpButton().click();
+            return HomePage.get((AppiumDriver) driver);
         } catch (Exception ex) {
+            Logz.step("");
             throw new Exception(ex);
 
         }

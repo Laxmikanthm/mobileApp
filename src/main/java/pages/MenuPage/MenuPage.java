@@ -1,34 +1,44 @@
 package pages.MenuPage;
 
-import base.gui.controls.browser.Button;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
-import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.openqa.selenium.By;
-import pages.HomePage.SubwayAppHomePage;
-
-import java.util.Map;
+import pages.ContactInformationPage.ContactInformationPage;
+import pages.NamePage.NamePage;
+import pages.PhonePage.PhonePage;
+import pojos.MobileUser;
 
 /**
- * Created by test-user on 2/2/17.
+ * Created by e002243 on 16-02-2017.
  */
-public abstract class MenuPage<T extends AppiumDriver> extends MobileBasePage {
-    protected Map<String, By> bys;
+public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
 
-    public MenuPage(AppiumDriver driver) throws Exception {
+    public MenuPage(AppiumDriver driver){
         super(driver);
     }
 
-    private MenuPage MenuPage;
-    private SubwayAppHomePage SubwayAppHomePage;
-    Button menuPageButton;
-    Button logOutButton;
-    Button confirmLogOutButton;
+    abstract MobileButton getLogOut() throws Exception;
+    abstract MobileButton getContactInfo() throws Exception;
+    abstract MobileLabel getUserInfo() throws Exception;
+    abstract MobileButton getLogOutButtonInPopUp() throws Exception;
+    //abstract MobileButton getLogOutButton() throws Exception;
 
+    public static MenuPage get(AppiumDriver driver) throws Exception{
+
+        String platform = driver.getCapabilities().getCapability("platformName").toString();
+
+        switch (platform){
+            case "iOS":
+                return new MenuPageIOS((IOSDriver) driver);
+            case "Android":
+                return new MenuPageAndroid((AndroidDriver) driver);
+            default:
+                throw new Exception("Unable to get Find A Store page for platform " + platform);
+        }
+    }
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -40,38 +50,59 @@ public abstract class MenuPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-    public static MenuPage get(AppiumDriver driver) throws Exception {
-
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
-
-        switch (platform) {
-            case "iOS":
-                return new MenuPageIOS((IOSDriver) driver);
-            case "Android":
-                return new MenuPageAndroid((AndroidDriver) driver);
-            default:
-                throw new Exception("Unable to get Find A Store page for platform " + platform);
+    public ContactInformationPage getContactInformation() throws Exception
+    {
+        try{
+            this.getContactInfo().waitForClickable();
+            this.getContactInfo().click();
+            return ContactInformationPage.get((AppiumDriver) driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
         }
-    }
-    public MenuPage openMenuPage() throws Exception {
-        this.getLogOutButton().click();
-        this.getConfirmLogOutButton().click();
-        return null;
+
     }
 
-    public Button getLogOutButton() throws Exception {
-        if (logOutButton == null) {
-            logOutButton = new Button(driver, bys.get("LogoutBtnBy"), "Logout button");
+    public String getUserInformation() throws Exception
+    {
+        try{
+            return getUserInfo().getText();
+        }catch(Exception ex){
+            throw new Exception(ex);
         }
-        return logOutButton;
+
+
     }
 
-    public Button getConfirmLogOutButton() throws Exception {
-        if (confirmLogOutButton == null) {
-            confirmLogOutButton = new Button (driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("ConfirmLogOutButton") + "']"), "");
-        }
-        return confirmLogOutButton;
+    public void logout() throws Exception
+
+    {
+        getLogOut().waitForClickable();
+        getLogOut().click();
+        logOutInpopupButton();
     }
+
+
+    public void logOutInpopupButton() throws Exception
+
+    {
+        getLogOutButtonInPopUp().waitForClickable();
+        getLogOutButtonInPopUp().click();
+    }
+
+
+    public MenuPage updateProfileInfo(MobileUser mobileUser) throws Exception {
+
+        ContactInformationPage contactInformationPage =  getContactInformation();
+        NamePage namepage= contactInformationPage.getNameField();
+        contactInformationPage=namepage.updateFirstNameLastName(mobileUser);
+        PhonePage phonePage= contactInformationPage.getPhoneField();
+        contactInformationPage= phonePage.updatePhoneNumber();
+        // menuPage= contactInformationPage.selectBackButton();
+//        String AfirstNameLastName=  menuPage.getUserInformation();
+//        String EfirstNameLastName= namepage.getFirstNameLastName();
+
+        return MenuPage.get((AppiumDriver) driver);
+    }
+
 }
-
 

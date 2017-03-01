@@ -6,9 +6,9 @@ package pages.ContactInformationPage;
         import io.appium.java_client.AppiumDriver;
         import io.appium.java_client.android.AndroidDriver;
         import io.appium.java_client.ios.IOSDriver;
+        import pages.MenuPage.MenuPage;
         import pages.NamePage.NamePage;
         import pages.PhonePage.PhonePage;
-        import pages.SubWayPage.SubWayPage;
 
 /**
  * Created by e002243 on 17-02-2017.
@@ -82,13 +82,13 @@ public abstract  class ContactInformationPage<T extends AppiumDriver> extends Mo
         }
     }
 
-    public SubWayPage selectBackButton()  throws Exception
+    public MenuPage selectBackButton()  throws Exception
     {
         try{
             getBackButton().waitForClickable();
             getBackButton().click();
             //this.getPhone().click();
-            return SubWayPage.get((AppiumDriver) driver);
+            return MenuPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);
         }

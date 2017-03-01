@@ -5,15 +5,14 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
-import cardantApiFramework.pojos.AppUser;
 import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
-import pages.HomePage.SubwayAppHomePage;
-import playground.fakeBrowserPages.browser.HomePage;
+import pages.HomePage.HomePage;
+import pages.LoginPage.LoginPage;
 import pojos.MobileUser;
 
 
@@ -37,29 +36,21 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
     abstract MobileTextBox getConfirmPassword() throws Exception;
     abstract MobileButton getSetPassword() throws Exception;
     abstract MobileButton getLoginAgainPopUp() throws Exception;
-    String password = null;
 
-    public SubwayAppHomePage forgotPassword() throws Exception {
+    public LoginPage setNewPassword(MobileUser mobileUser) throws Exception {
         try {
-
-            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
-
-
-
             getEmailAddress().isReady();
             getEmailAddress().getControl().clear();
-            //getEmailAddress().setText(mobileUser.getEmailAddress());
             getEmailAddress().setText("gopal.boyinag@gmail.com");
             getNextButton().click();
             enterCode(getVerificationCode(mobileUser.getEmailAddress()));
             getResetButton().click();
             getPassword().isReady();
-            password = mobileUser.getPassword();
-            getPassword().setText("SubSub");
-            getConfirmPassword().setText("SubSub");
+            getPassword().setText(mobileUser.getPassword());
+            getConfirmPassword().setText(mobileUser.getPassword());
             getSetPassword().click();
             getOKButton();
-            return SubwayAppHomePage.get((AppiumDriver)driver);
+            return LoginPage.get((AppiumDriver)driver);
         } catch (Exception ex) {
             throw new Exception(ex);
 
@@ -103,10 +94,4 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
             codes.get(0).sendKeys(code);
         }
     }
-
-    public String getPasswordString()
-    {
-        return password;
-    }
-
 }

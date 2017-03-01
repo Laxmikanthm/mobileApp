@@ -1,33 +1,38 @@
 package pages.HomePage;
 
-import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.ios.IOSButton;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
 
 /**
  * Created by test-user on 2/2/17.
  */
-public class HomePageIOS extends SubwayAppHomePage{
+public class HomePageIOS extends HomePage {
 
     public HomePageIOS(AppiumDriver driver) throws Exception {
         super(driver);
     }
 
-    public IOSButton getLoginButton() throws Exception {
-
-        IOSButton button = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
-
-        return button;
+    public MobileButton getMenu() throws Exception {
+        IOSButton menuPageButton = new IOSButton((IOSDriver) driver, By.id(BaseTest.bundle.getString("MenuBtnBy")), "Menu button");
+        return menuPageButton;
     }
 
-    public IOSButton getRegistrationButton() throws Exception {
+    public MobileButton getOrderButton() throws Exception {
+        IOSButton orderButton = new IOSButton ((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("OrderButton") + "']"), "Order Button");
+        return orderButton;
+    }
 
-        IOSButton button = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("RegisterButton")), "Register button");
+    public MobileButton getFindButton() throws Exception {
+        IOSButton findButton = new IOSButton ((IOSDriver) driver, By.xpath("//android.widget.TextView[@text='" + BaseTest.bundle.getString("FindButton") + "']"), "Find Button");
+        return findButton;
+    }
 
+    public MobileButton getFindYourSubWay() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("FindYourSubWay")+"']"), "FindYourSubWay button");
         return button;
     }
 

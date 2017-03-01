@@ -12,7 +12,9 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.FindYourSubWayPage.FindYourSubWayPage;
+import pages.HomePage.HomePage;
 import pojos.MobileUser;
+import utils.Logz;
 
 /**
  * Created by test-user on 2/2/17.
@@ -21,8 +23,6 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public LoginPage(AppiumDriver driver){
         super(driver);
     }
-    public AppUser appUser =null;
-
     abstract MobileTextBox getUserName() throws Exception;
     abstract PasswordTextBox getPassword() throws Exception;
     abstract MobileButton getLogin() throws Exception;
@@ -55,12 +55,20 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     }
 
 
-    public LoginPage login(AppUser appUser) throws Exception {
-        //mobileUser.createMobileUser(false, Country.UnitedStates);
-        getUserName().setText(appUser.getEmailAddress());
-        getPassword().setText(appUser.getPassword());
-        getLogin().click();
-        return LoginPage.get((AppiumDriver) driver);
+    public HomePage login(MobileUser mobileUser) throws Exception {
+        try {
+            //mobileUser.createMobileUser(false, Country.UnitedStates);
+            mobileUser.setEmailAddress("tarun.sujit@gmail.com");
+            mobileUser.setPassword("Sub@1234");
+            getUserName().isReady();
+            getUserName().setText(mobileUser.getEmailAddress());
+            getPassword().setText(mobileUser.getPassword());
+            getLogin().click();
+        }catch (Exception ex){
+            Logz.step("Unable to Login");
+            throw new Exception("unable to Login");
+        }
+        return HomePage.get((AppiumDriver) driver);
 
     }
 
@@ -85,18 +93,17 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-    public FindYourSubWayPage loginAfterResetPassoword(String password) throws Exception {
-        appUser = AppUser.updateRandomUser(appUser);
+    public HomePage loginAfterResetPassoword(MobileUser mobileUser) throws Exception {
         try {
-            getUserName().setText(appUser.getEmailAddress());
+            getUserName().setText(mobileUser.getEmailAddress());
             getPassword().isReady();
-            getPassword().setText(password);
+            getPassword().setText(mobileUser.getPassword());
             HideKeyboard();
             getPassword().isReady();
             getPassword().getControl().getLocation();
             getLogin().waitForClickable();
             getLogin().click();
-            return FindYourSubWayPage.get((AppiumDriver) driver);
+            return HomePage.get((AppiumDriver) driver);
         } catch (Exception ex) {
             throw new Exception(ex);
         }

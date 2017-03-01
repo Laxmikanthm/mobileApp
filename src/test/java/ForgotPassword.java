@@ -1,14 +1,13 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.Test;
-import pages.HomePage.SubwayAppHomePage;
-import pages.LoginPage.LoginPage;
-
-import pages.ForgotPasswordPage.ForgotYourPasswordPage;
-import pages.FindYourSubWayPage.FindYourSubWayPage;
 import org.testng.Assert;
-import playground.fakeBrowserPages.browser.HomePage;
+import org.testng.annotations.Test;
+import pages.FindYourSubWayPage.FindYourSubWayPage;
+import pages.ForgotPasswordPage.ForgotYourPasswordPage;
+import pages.HomePage.HomePage;
+import pages.LandingPage.LandingPage;
+import pages.LoginPage.LoginPage;
 import pojos.MobileUser;
 
 /**
@@ -21,12 +20,12 @@ public class ForgotPassword extends SubwayAppBaseTest  {
     @Test
     public void forgotPassword()throws Exception
     {
-
-        SubwayAppHomePage homePage = goToHomePage(SubwayAppHomePage.getHomepageClass(), "MobileApp");
-        LoginPage loginPage = homePage.gotoLogInPage();
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+        LandingPage landingPage = goToHomePage(HomePage.class, "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
         ForgotYourPasswordPage forgotPasswordPage= loginPage.forgotPassword();
-        homePage= forgotPasswordPage.forgotPassword();
-        FindYourSubWayPage findYourSubWayPage= loginPage.loginAfterResetPassoword(forgotPasswordPage.getPasswordString());
-        Assert.assertTrue(findYourSubWayPage.findYourSubWayButton(),"Verified Forgot Password");
+        mobileUser.setPassword("Sub@123");
+        loginPage = forgotPasswordPage.setNewPassword(mobileUser);
+        loginPage.loginAfterResetPassoword(mobileUser);
     }
 }

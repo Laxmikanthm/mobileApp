@@ -1,9 +1,8 @@
 package pages.FindYourSubWayPage;
 
-import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.ios.IOSButton;
 import base.test.BaseTest;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 
@@ -16,17 +15,13 @@ public class FindYourSubWayPageIOS extends  FindYourSubWayPage {
     public FindYourSubWayPageIOS(IOSDriver driver){
         super(driver);
     }
-    public IOSButton getUserProfile() throws Exception {
-
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
-
-        return button;
+    public MobileButton getSearchButton() throws Exception {
+        IOSButton searchButton = new IOSButton((IOSDriver) driver, By.xpath("SearchBtnBy"), "Search button");
+        return searchButton;
     }
-    public IOSButton getFindYourSubWay() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("FindYourSubWay")+"']"), "FindYourSubWay button");
-
-
-        return button;
+    public MobileButton getSelectRestButton() throws Exception {
+        IOSButton selectRestButton = new IOSButton ((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("SelectRestButton") + "']"), "Select Restaurant button");
+        return selectRestButton;
     }
 }
