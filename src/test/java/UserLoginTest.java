@@ -16,35 +16,24 @@ import pojos.MobileUser;
 public class UserLoginTest extends SubwayAppBaseTest {
 
 
-    /*@Test
-    public void userLogin() throws Exception {
-        HomePage homePage = goToHomePage(HomePage.getHomepageClass(), "MobileApp");
-        RegistrationPage registrationPage = homePage.gotoRegistrationPage();
-        registrationPage.signUp();
-        MenuPage menuPage= homePage.gotoMenuPage();
-        menuPage.openMenuPage();
-        LoginPage loginPage = homePage.gotoLogInPage();
-        loginPage.login(registrationPage.appUser);
-    }*/
-
     @Test
     public void userLogin() throws Exception {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
-        LandingPage landingPage = goToHomePage(HomePage.class, "MobileApp");
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         loginPage.login(mobileUser);
     }
 
     @Test
     public void createUser() throws Exception{
-        LandingPage landingPage = goToHomePage(HomePage.class, "MobileApp");
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
         registrationPage.signUp();
     }
 
     @Test
     public void userLogout() throws Exception {
-        LandingPage landingPage = goToHomePage(HomePage.class, "MobileApp");
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
         HomePage homePage = registrationPage.signUp();
         MenuPage menuPage= homePage.gotoMenuPage();

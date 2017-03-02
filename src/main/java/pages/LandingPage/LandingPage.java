@@ -29,19 +29,21 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     protected void waitForPageToLoad() throws Exception {
 
     }
-    public static LandingPage get(AppiumDriver driver) throws Exception {
 
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+    /*public static LandingPage get(AppiumDriver driver) throws Exception {
 
-        switch (platform) {
+      String platform = driver.getCapabilities().getCapability("mobilePlatform").toString();
+
+       switch (platform) {
             case "iOS":
                 return new LandingPageIOS((IOSDriver) driver);
-            case "Android":
+           case "Android":
                 return new LandingPageAndroid((AndroidDriver) driver);
             default:
-                throw new Exception("Unable to get Find A Store page for platform " + platform);
-        }
-    }
+                throw new Exception("Unable to get Find A Store page for platform " + platform)
+                        }
+    }*/
+    
     abstract MobileButton getLoginButton() throws Exception;
     abstract MobileButton getRegistrationButton() throws Exception;
     abstract MobileButton getSkipButton() throws Exception;
@@ -67,7 +69,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
     public static Class getLandingPageClass(){
 
-        String mobilePlatform = "Android";
+        String mobilePlatform = System.getProperty("mobilePlatform");
 
         if(mobilePlatform.equalsIgnoreCase("IOS")) {
             return LandingPageIOS.class;

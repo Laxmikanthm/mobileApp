@@ -10,7 +10,7 @@ import io.appium.java_client.ios.IOSDriver;
  * Created by test-user on 3/1/17.
  */
 public class LandingPageIOS extends LandingPage {
-    public LandingPageIOS(AppiumDriver driver) throws Exception{
+    public LandingPageIOS(IOSDriver driver) throws Exception{
         super(driver);
     }
 
