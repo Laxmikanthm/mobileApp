@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
-import pages.FindYourSubWayPage.FindYourSubWayPage;
 import pages.MenuPage.MenuPage;
 import pojos.MobileUser;
 
@@ -22,7 +21,7 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
     public void updateProfile()throws Exception
     {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
-        LandingPage landingPage = goToHomePage(HomePage.class, "MobileApp");
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
@@ -30,7 +29,7 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
         mobileUser.setFirstName(mobUser.getFirstName());
         mobileUser.setLastName(mobUser.getLastName());
         menuPage= menuPage.updateProfileInfo(mobileUser);
-        Assert.assertEquals(mobileUser.getFirstName()+mobileUser.getLastName(), menuPage.getUserInformation());
+        Assert.assertEquals(mobileUser.getFirstName()+" "+mobileUser.getLastName(), menuPage.getUserInformation());
         menuPage.logout();
     }
 }

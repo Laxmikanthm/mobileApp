@@ -78,6 +78,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     public void logout() throws Exception
 
     {
+        HideKeyboard();
         getLogOut().waitForClickable();
         getLogOut().click();
         logOutInpopupButton();
@@ -99,7 +100,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         contactInformationPage=namepage.updateFirstNameLastName(mobileUser);
         PhonePage phonePage= contactInformationPage.getPhoneField();
         contactInformationPage= phonePage.updatePhoneNumber();
-        // menuPage= contactInformationPage.selectBackButton();
+        contactInformationPage.selectBackButton();
 //        String AfirstNameLastName=  menuPage.getUserInformation();
 //        String EfirstNameLastName= namepage.getFirstNameLastName();
 
@@ -114,6 +115,13 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             throw new Exception(ex);
         }
 
+    }
+
+    public void HideKeyboard()
+    {
+
+        AppiumDriver d=(AppiumDriver) driver;
+        d.hideKeyboard();
     }
 
 }

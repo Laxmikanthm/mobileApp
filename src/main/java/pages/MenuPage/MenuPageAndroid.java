@@ -34,7 +34,9 @@ public class MenuPageAndroid extends MenuPage {
     }
     public AndroidButton getLogOut() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+       // AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/logout"), "LogOut button");
 
         return button;
     }

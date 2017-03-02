@@ -10,7 +10,7 @@ import org.openqa.selenium.By;
  * Created by test-user on 3/1/17.
  */
 public class LandingPageAndroid extends LandingPage{
-    public LandingPageAndroid(AppiumDriver driver) throws Exception{
+    public LandingPageAndroid(AndroidDriver driver) throws Exception{
         super(driver);
     }
 

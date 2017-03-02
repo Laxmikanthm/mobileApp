@@ -58,8 +58,9 @@ public abstract class PhonePage <T extends AppiumDriver> extends MobileBasePage 
         try{
             MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
             getPhoneNumber().getControl().clear();
-            getPhoneNumber().setText(mobileUser.getPhoneNumber());
-           // phoneNumber  =  this.getPhoneNumber().getControl().getAttribute("value");
+          //  getPhoneNumber().setText(mobileUser.getPhoneNumber());
+
+            getPhoneNumber().setText("8978987682");
 
             getSave().click();
 

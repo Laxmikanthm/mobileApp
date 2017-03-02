@@ -50,6 +50,8 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.1.3" level="project" />
     <orderEntry type="library" name="Maven: com.fwh.qa:automationFramework:2.2.30-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.fwh.qa:ServiceFramework:1.15-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: io.appium:java-client:5.0.0-BETA3" level="project" />
+    <orderEntry type="library" name="Maven: com.twilio.sdk:twilio:7.5.0" level="project" />
     <orderEntry type="library" name="Maven: com.fwh.qa:automationFramework:2.2.68-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.5" level="project" />
@@ -189,7 +191,7 @@
     <orderEntry type="library" name="Maven: io.netty:netty:3.5.7.Final" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-support:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.codeborne:phantomjsdriver:1.3.0" level="project" />
-    <orderEntry type="library" name="Maven: io.appium:java-client:5.0.0-BETA3" level="project" />
+    <orderEntry type="library" name="Maven: io.appium:java-client:5.0.0-BETA4" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:20.0" level="project" />
     <orderEntry type="library" name="Maven: cglib:cglib:3.2.4" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm:5.1" level="project" />
@@ -251,7 +253,7 @@
     <orderEntry type="library" name="Maven: org.eclipse.persistence:org.eclipse.persistence.asm:2.5.2" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:org.eclipse.persistence.antlr:2.5.2" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.2.11" level="project" />
-    <orderEntry type="library" name="Maven: com.twilio.sdk:twilio:7.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.twilio.sdk:twilio:7.6.0" level="project" />
     <orderEntry type="library" name="Maven: io.jsonwebtoken:jjwt:0.4" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.3" level="project" />

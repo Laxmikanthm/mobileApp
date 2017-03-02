@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+        <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="UserLoginTest">
-    <test name="single">
-        <parameter name="platform" value="${platform}"></parameter>
-        <parameter name="browserOrDevice" value="${deviceName}"></parameter>
-        <parameter name="version" value="${platformVersions}"></parameter>
-        <parameter name="os" value="Mac"></parameter>
-        <parameter name="driverName" value="${driverName}"></parameter>
-        <parameter name="appPaths" value="${app}"></parameter>
-        <parameter name="projectName" value="${driverName}"></parameter>
-        <classes>
+<test name="single">
+    <parameter name="platform" value="${platform}"></parameter>
+    <parameter name="browserOrDevice" value="${deviceName}"></parameter>
+    <parameter name="version" value="${platformVersions}"></parameter>
+    <parameter name="os" value="Windows"></parameter>
+    <parameter name="driverName" value="${driverName}"></parameter>
+    <parameter name="appPaths" value="${app}"></parameter>
+    <parameter name="projectName" value="${driverName}"></parameter>
+    <classes>
 
-            <class name="ForgotPassword">
-                <methods>
-                    <include name="forgotPassword"> </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
+        <class name="UpdateProfileTest">
+            <methods>
+                <include name="updateProfile"> </include>
+            </methods>
+        </class>
+    </classes>
+</test>
 
 </suite>
