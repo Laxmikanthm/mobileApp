@@ -93,7 +93,9 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
             getNextButton().click();
             getEmail().isReady();
             getEmail().setText(appUser.getEmailAddress());
+            String password =appUser.getPassword();
             getPassword().setText(appUser.getPassword());
+            String password1 =appUser.getPassword();
             getConfirmPasswrod().setText(appUser.getPassword());
             getDriver().hideKeyboard();
             getNextButton().click();

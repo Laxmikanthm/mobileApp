@@ -22,9 +22,10 @@ public class ForgotPassword extends SubwayAppBaseTest  {
     {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
         ForgotYourPasswordPage forgotPasswordPage= loginPage.forgotPassword();
-        mobileUser.setPassword("Sub@123");
+        //mobileUser.setPassword("Sub@123");
         loginPage = forgotPasswordPage.setNewPassword(mobileUser);
         loginPage.loginAfterResetPassoword(mobileUser);
     }

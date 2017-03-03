@@ -3,13 +3,17 @@ package pages.MenuPage;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
+import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import pages.AddCardPage.AddCardPage;
+import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
 import pages.ContactInformationPage.ContactInformationPage;
 import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.NamePage.NamePage;
 import pages.PhonePage.PhonePage;
+import pages.SubwayPage.SubwayPage;
 import pojos.MobileUser;
 
 /**
@@ -78,7 +82,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     public void logout() throws Exception
 
     {
-        HideKeyboard();
+
         getLogOut().waitForClickable();
         getLogOut().click();
         logOutInpopupButton();
@@ -107,15 +111,6 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         return MenuPage.get((AppiumDriver) driver);
     }
 
-    public void navigateToPamentMethods() throws Exception
-    {
-        try{
-            getPaymentMethods().click();
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-
-    }
 
     public void HideKeyboard()
     {
@@ -124,5 +119,31 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         d.hideKeyboard();
     }
 
+    public void addCreditCard() throws  Exception
+    {
+        try{
+            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+            SubwayPage subwayPage=  addPaymentMethods();
+            ChoosePaymentMethodPage choosePaymentMethodPage= subwayPage.addPaymentMethod();
+            AddCardPage addCardPage= choosePaymentMethodPage.ChoosePaymentMethodCredictCard();
+            addCardPage.addCardDetails(mobileUser);
+
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
+    public SubwayPage addPaymentMethods() throws  Exception
+    {
+        try{
+            getPaymentMethods().click();
+            return SubwayPage.get((AppiumDriver) driver);
+
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
 }
+
 

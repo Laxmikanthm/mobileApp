@@ -40,8 +40,10 @@ public class LoginPageAndroid extends LoginPage {
 
     public AndroidButton getForgotPassword() throws Exception {
 
-        AndroidButton forgotPasswordButton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("ForgotPassword")+"']"), "Forgot password button");
+        //AndroidButton forgotPasswordButton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("ForgotPassword")+"']"), "Forgot password button");
+       // AndroidButton forgotPasswordButton = new AndroidButton((AndroidDriver) driver, By.id("custom-forgotPassword"), "Forgot password button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-desc='Forgot password?']"), "Forgot password button");
 
-        return forgotPasswordButton;
+        return button;
     }
 }

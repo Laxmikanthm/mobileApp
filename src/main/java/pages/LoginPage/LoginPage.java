@@ -83,6 +83,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public ForgotYourPasswordPage forgotPassword() throws Exception
     {
         try{
+            getForgotPassword().waitForClickable();
             getForgotPassword().click();
 
             return ForgotYourPasswordPage.get((AppiumDriver)driver);

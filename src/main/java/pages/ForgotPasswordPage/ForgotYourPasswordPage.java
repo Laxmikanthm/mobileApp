@@ -43,10 +43,13 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
             getEmailAddress().getControl().clear();
             getEmailAddress().setText("gopal.boyinag@gmail.com");
             getNextButton().click();
-            enterCode(getVerificationCode(mobileUser.getEmailAddress()));
+          // enterCode(getVerificationCode(mobileUser.getEmailAddress()));
             getResetButton().click();
             getPassword().isReady();
+            getPassword().getControl().clear();
+            mobileUser.setPassword("Subway12345");
             getPassword().setText(mobileUser.getPassword());
+            getConfirmPassword().getControl().clear();
             getConfirmPassword().setText(mobileUser.getPassword());
             getSetPassword().click();
             getOKButton();

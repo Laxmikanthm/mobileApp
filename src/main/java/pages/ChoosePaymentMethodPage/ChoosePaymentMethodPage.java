@@ -6,6 +6,8 @@ import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import pages.AddCardPage.AddCardPage;
+import pages.MenuPage.MenuPage;
 import pages.SubwayPage.SubwayPage;
 import pages.SubwayPage.SubwayPageAndroid;
 import pages.SubwayPage.SubwayPageIOS;
@@ -41,5 +43,17 @@ public abstract class ChoosePaymentMethodPage<T extends AppiumDriver> extends Mo
     @Override
     protected void waitForPageToLoad() throws Exception {
 
+    }
+
+    public AddCardPage ChoosePaymentMethodCredictCard()throws  Exception
+    {
+        try{
+            getCreditCard().click();
+
+            return AddCardPage.get((AppiumDriver) driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
+
+    }
     }
 }

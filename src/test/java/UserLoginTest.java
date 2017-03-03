@@ -20,6 +20,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
     public void userLogin() throws Exception {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
         loginPage.login(mobileUser);
     }
@@ -27,6 +28,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
     @Test
     public void createUser() throws Exception{
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.skip();
         RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
         registrationPage.signUp();
     }
@@ -34,9 +36,15 @@ public class UserLoginTest extends SubwayAppBaseTest {
     @Test
     public void userLogout() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
+      /*  RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
         HomePage homePage = registrationPage.signUp();
-        MenuPage menuPage= homePage.gotoMenuPage();
+        MenuPage menuPage= homePage.gotoMenuPage();*/
+
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+        landingPage.skip();
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage= loginPage.login(mobileUser);
+        MenuPage menuPage = homePage.getUserDetails();
         menuPage.logout();
     }
 }

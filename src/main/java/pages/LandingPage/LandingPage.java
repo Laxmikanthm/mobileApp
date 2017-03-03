@@ -16,8 +16,8 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public LandingPage(T driver) throws Exception {
         super(driver);
-        Thread.sleep(15000);
-        skip();
+       // Thread.sleep(15000);
+        //skip();
     }
 
     @Override
