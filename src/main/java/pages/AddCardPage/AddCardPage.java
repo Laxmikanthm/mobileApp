@@ -10,7 +10,7 @@ import io.appium.java_client.ios.IOSDriver;
 import pages.MenuPage.MenuPage;
 import pages.MenuPage.MenuPageAndroid;
 import pages.MenuPage.MenuPageIOS;
-import pojos.MobileUser;
+import pojos.user.MobileUser;
 
 /**
  * Created by e002243 on 01-03-2017.

@@ -7,7 +7,7 @@ import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.RegistrationPage.RegistrationPage;
-import pojos.MobileUser;
+import pojos.user.MobileUser;
 
 /**
  * Created by Sujit on 1/26/17.
@@ -18,7 +18,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
 
     @Test
     public void userLogin() throws Exception {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
@@ -40,7 +40,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
         HomePage homePage = registrationPage.signUp();
         MenuPage menuPage= homePage.gotoMenuPage();*/
 
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage= loginPage.login(mobileUser);

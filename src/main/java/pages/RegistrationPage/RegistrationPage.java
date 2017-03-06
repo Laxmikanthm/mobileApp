@@ -8,6 +8,7 @@ import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.AppUser;
+import cardantApiFramework.pojos.StringUtils;
 import cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient;
 import enums.Country;
 import io.appium.java_client.AppiumDriver;
@@ -19,12 +20,13 @@ import org.apache.tools.ant.taskdefs.email.EmailAddress;
 import org.openqa.selenium.By;
 import pages.FindYourSubWayPage.FindYourSubWayPage;
 import pages.HomePage.HomePage;
-import pojos.MobileUser;
+import pojos.user.MobileUser;
 import utils.Logz;
 
 import java.util.List;
 import java.util.Map;
 
+import static cardantApiFramework.pojos.StringUtils.getRandomString;
 import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.generateEmailAddress;
 import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.getEmail;
 import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.getVerificationCode;
@@ -34,8 +36,6 @@ import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorCl
  */
 public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBasePage {
     protected Map<String, By> bys;
-    Button goButton;
-    AppUser appUser = null;
 
 
     public RegistrationPage(AppiumDriver driver) {
@@ -84,23 +84,22 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
 
     public HomePage signUp() throws Exception {
         try {
-            appUser = AppUser.createRandomUser(false, Country.UnitedStates);
+            MobileUser user  = new MobileUser(false, Country.UnitedStates, 54588);
+            user.setEmailAddress(getRandomString(10)+"@mailinator.com");
             getFirstName().isReady();
-            getFirstName().setText(appUser.getFirstName());
-            getLastName().setText(appUser.getLastName());
+            getFirstName().setText(user.getFirstName());
+            getLastName().setText(user.getLastName());
             getDriver().hideKeyboard();
-            getPhone().setText(appUser.getPhoneTenDigits());
+            getPhone().setText(user.getPhoneTenDigits());
             getNextButton().click();
             getEmail().isReady();
-            getEmail().setText(appUser.getEmailAddress());
-            String password =appUser.getPassword();
-            getPassword().setText(appUser.getPassword());
-            String password1 =appUser.getPassword();
-            getConfirmPasswrod().setText(appUser.getPassword());
+            getEmail().setText(user.getEmailAddress());
+            getPassword().setText(user.getPassword());
+            getConfirmPasswrod().setText(user.getPassword());
             getDriver().hideKeyboard();
             getNextButton().click();
             getSignUpButton().waitForClickable();
-            enterCode(getVerificationCode(appUser.getEmailAddress()));
+            enterCode(getVerificationCode(user.getEmailAddress()));
             getSignUpButton().click();
             return HomePage.get((AppiumDriver) driver);
         } catch (Exception ex) {

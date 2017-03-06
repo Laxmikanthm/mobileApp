@@ -11,7 +11,7 @@ import io.appium.java_client.ios.IOSDriver;
 import pages.ContactInformationPage.ContactInformationPage;
 import pages.ContactInformationPage.ContactInformationPageAndroid;
 import pages.ContactInformationPage.ContactInformationPageIOS;
-import pojos.MobileUser;
+import pojos.user.MobileUser;
 
 /**
  * Created by e002243 on 17-02-2017.
@@ -56,7 +56,7 @@ public abstract class PhonePage <T extends AppiumDriver> extends MobileBasePage 
     public ContactInformationPage updatePhoneNumber() throws Exception
     {
         try{
-            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
             getPhoneNumber().getControl().clear();
           //  getPhoneNumber().setText(mobileUser.getPhoneNumber());
 

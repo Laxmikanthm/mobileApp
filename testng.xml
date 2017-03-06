@@ -11,10 +11,7 @@
     <parameter name="projectName" value="${driverName}"></parameter>
     <classes>
 
-        <class name="UpdateProfileTest">
-            <methods>
-                <include name="updateProfile"> </include>
-            </methods>
+        <class name="ForgotPassword">
         </class>
     </classes>
 </test>

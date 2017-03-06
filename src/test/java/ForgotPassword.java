@@ -8,7 +8,7 @@ import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
-import pojos.MobileUser;
+import pojos.user.MobileUser;
 
 /**
  * Created by E003705 on 28-02-2017.
@@ -20,12 +20,12 @@ public class ForgotPassword extends SubwayAppBaseTest  {
     @Test
     public void forgotPassword()throws Exception
     {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
         ForgotYourPasswordPage forgotPasswordPage= loginPage.forgotPassword();
-        //mobileUser.setPassword("Sub@123");
+        mobileUser.setPassword("Subway12345");
         loginPage = forgotPasswordPage.setNewPassword(mobileUser);
         loginPage.loginAfterResetPassoword(mobileUser);
     }

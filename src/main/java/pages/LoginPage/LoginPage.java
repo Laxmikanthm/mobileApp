@@ -5,15 +5,12 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.PasswordTextBox;
 import base.pages.mobile.MobileBasePage;
-import pages.ForgotPasswordPage.ForgotYourPasswordPage;
-import cardantApiFramework.pojos.AppUser;
-import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import pages.FindYourSubWayPage.FindYourSubWayPage;
+import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.HomePage.HomePage;
-import pojos.MobileUser;
+import pojos.user.MobileUser;
 import utils.Logz;
 
 /**

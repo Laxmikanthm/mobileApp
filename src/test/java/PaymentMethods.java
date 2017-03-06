@@ -6,7 +6,7 @@ import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
-import pojos.MobileUser;
+import pojos.user.MobileUser;
 
 /**
  * Created by e002243 on 03-03-2017.
@@ -18,7 +18,7 @@ public class PaymentMethods extends SubwayAppBaseTest  {
     @Test
     public void addCreditCard() throws Exception
     {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);

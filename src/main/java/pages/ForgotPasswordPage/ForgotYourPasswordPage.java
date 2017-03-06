@@ -13,7 +13,7 @@ import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import pages.HomePage.HomePage;
 import pages.LoginPage.LoginPage;
-import pojos.MobileUser;
+import pojos.user.MobileUser;
 
 
 import java.util.List;
@@ -41,13 +41,13 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
         try {
             getEmailAddress().isReady();
             getEmailAddress().getControl().clear();
-            getEmailAddress().setText("gopal.boyinag@gmail.com");
+            getEmailAddress().setText("gmuhqd8wf4@mailinator.com");
             getNextButton().click();
-          // enterCode(getVerificationCode(mobileUser.getEmailAddress()));
+            enterCode(getVerificationCode("gmuhqd8wf4@mailinator.com"));
             getResetButton().click();
             getPassword().isReady();
             getPassword().getControl().clear();
-            mobileUser.setPassword("Subway12345");
+            //mobileUser.setPassword("Subway12345");
             getPassword().setText(mobileUser.getPassword());
             getConfirmPassword().getControl().clear();
             getConfirmPassword().setText(mobileUser.getPassword());

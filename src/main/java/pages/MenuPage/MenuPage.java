@@ -14,7 +14,7 @@ import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.NamePage.NamePage;
 import pages.PhonePage.PhonePage;
 import pages.SubwayPage.SubwayPage;
-import pojos.MobileUser;
+import pojos.user.MobileUser;
 
 /**
  * Created by e002243 on 16-02-2017.
@@ -122,7 +122,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     public void addCreditCard() throws  Exception
     {
         try{
-            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates);
+            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
             SubwayPage subwayPage=  addPaymentMethods();
             ChoosePaymentMethodPage choosePaymentMethodPage= subwayPage.addPaymentMethod();
             AddCardPage addCardPage= choosePaymentMethodPage.ChoosePaymentMethodCredictCard();
