@@ -16,7 +16,6 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.apache.tools.ant.taskdefs.email.EmailAddress;
 import org.openqa.selenium.By;
 import pages.FindYourSubWayPage.FindYourSubWayPage;
 import pages.HomePage.HomePage;
