@@ -21,7 +21,6 @@ import pages.FindYourSubWayPage.FindYourSubWayPage;
 import pages.HomePage.HomePage;
 import pojos.user.MobileUser;
 import utils.Logz;
-
 import java.util.List;
 import java.util.Map;
 
@@ -84,7 +83,7 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
     public HomePage signUp() throws Exception {
         try {
             MobileUser user  = new MobileUser(false, Country.UnitedStates, 54588);
-            user.setEmailAddress(getRandomString(10)+"@mailinator.com");
+            user.setEmailAddress(getRandomString(10)+"@qasubway.com");
             getFirstName().isReady();
             getFirstName().setText(user.getFirstName());
             getLastName().setText(user.getLastName());

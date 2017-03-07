@@ -22,6 +22,7 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
     {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();

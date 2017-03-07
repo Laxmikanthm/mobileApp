@@ -36,10 +36,6 @@ public class UserLoginTest extends SubwayAppBaseTest {
     @Test
     public void userLogout() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-      /*  RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
-        HomePage homePage = registrationPage.signUp();
-        MenuPage menuPage= homePage.gotoMenuPage();*/
-
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
