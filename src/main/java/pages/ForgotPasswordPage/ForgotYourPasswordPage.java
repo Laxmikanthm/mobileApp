@@ -18,6 +18,7 @@ import pojos.user.MobileUser;
 
 import java.util.List;
 
+import static cardantApiFramework.pojos.StringUtils.getRandomString;
 import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.getVerificationCode;
 
 /**
@@ -41,13 +42,13 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
         try {
             getEmailAddress().isReady();
             getEmailAddress().getControl().clear();
-            getEmailAddress().setText("gmuhqd8wf4@mailinator.com");
+            getEmailAddress().setText(mobileUser.getEmailAddress());
             getNextButton().click();
-            enterCode(getVerificationCode("gmuhqd8wf4@mailinator.com"));
+            enterCode(getVerificationCode(mobileUser.getEmailAddress()));
             getResetButton().click();
             getPassword().isReady();
             getPassword().getControl().clear();
-            //mobileUser.setPassword("Subway12345");
+            mobileUser.setPassword("Subway12345");
             getPassword().setText(mobileUser.getPassword());
             getConfirmPassword().getControl().clear();
             getConfirmPassword().setText(mobileUser.getPassword());
