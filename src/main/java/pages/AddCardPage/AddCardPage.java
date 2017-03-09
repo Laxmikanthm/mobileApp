@@ -64,6 +64,25 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             throw new Exception(ex);
         }
     }
+
+    public void addSubwayCardDetails() throws Exception
+    {
+        try{
+            getCardNumber().isReady();
+            getCardNumber().setText("");
+            getPin().setText("");
+            getSavePaymentMethod().click();
+        }catch(Exception ex)
+        {
+            throw new Exception(ex);
+        }
+    }
+
+    public void HideKeyboard()
+    {
+        AppiumDriver d = (AppiumDriver)driver;
+        d.hideKeyboard();
+    }
 }
 
 

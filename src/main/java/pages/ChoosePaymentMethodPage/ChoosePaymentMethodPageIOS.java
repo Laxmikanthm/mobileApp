@@ -19,4 +19,24 @@ public class ChoosePaymentMethodPageIOS extends ChoosePaymentMethodPage{
 
         return button;
     }
+    public MobileButton getDebitCard() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return button;
+    }
+
+    public MobileButton getGiftCard() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return button;
+    }
+
+    public MobileButton getPayPal() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return button;
+    }
 }

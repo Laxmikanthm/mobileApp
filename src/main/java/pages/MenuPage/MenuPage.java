@@ -125,7 +125,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
             SubwayPage subwayPage=  addPaymentMethods();
             ChoosePaymentMethodPage choosePaymentMethodPage= subwayPage.addPaymentMethod();
-            AddCardPage addCardPage= choosePaymentMethodPage.ChoosePaymentMethodCredictCard();
+            AddCardPage addCardPage= choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
             addCardPage.addCardDetails(mobileUser);
 
         }catch(Exception ex){

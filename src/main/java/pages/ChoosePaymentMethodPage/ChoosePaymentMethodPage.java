@@ -20,6 +20,9 @@ public abstract class ChoosePaymentMethodPage<T extends AppiumDriver> extends Mo
     public ChoosePaymentMethodPage(AppiumDriver driver) { super(driver); }
 
     abstract MobileButton getCreditCard() throws Exception;
+    abstract MobileButton getDebitCard() throws Exception;
+    abstract MobileButton getGiftCard() throws Exception;
+    abstract MobileButton getPayPal() throws Exception;
 
     public static ChoosePaymentMethodPage get(AppiumDriver driver) throws Exception{
 
@@ -45,7 +48,7 @@ public abstract class ChoosePaymentMethodPage<T extends AppiumDriver> extends Mo
 
     }
 
-    public AddCardPage ChoosePaymentMethodCredictCard()throws  Exception
+    public AddCardPage ChoosePaymentMethodCreditCard()throws  Exception
     {
         try{
             getCreditCard().click();
@@ -54,6 +57,45 @@ public abstract class ChoosePaymentMethodPage<T extends AppiumDriver> extends Mo
         }catch(Exception ex){
             throw new Exception(ex);
 
+        }
     }
+
+    public AddCardPage ChoosePaymentMethodDebitCard()throws  Exception
+    {
+        try{
+            getDebitCard().click();
+
+            return AddCardPage.get((AppiumDriver) driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
+
+        }
     }
+
+    public AddCardPage ChoosePaymentMethodGiftCard()throws  Exception
+    {
+        try{
+            getGiftCard().click();
+
+            return AddCardPage.get((AppiumDriver) driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
+
+        }
+    }
+
+    public AddCardPage ChoosePaymentMethodPayPalCard()throws  Exception
+    {
+        try{
+            getPayPal().click();
+
+            return AddCardPage.get((AppiumDriver) driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
+
+        }
+    }
+
+
+
 }

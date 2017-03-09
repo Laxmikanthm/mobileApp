@@ -17,4 +17,24 @@ public class ChoosePaymentMethodPageAndroid extends  ChoosePaymentMethodPage {
 
         return button;
     }
+    public AndroidButton getDebitCard() throws Exception {
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='" + BaseTest.bundle.getString("DebitCard") + "']"), "DebitCard button");
+
+        return button;
+    }
+
+    public AndroidButton getGiftCard() throws Exception {
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='" + BaseTest.bundle.getString("GiftCard") + "']"), "GiftCard button");
+
+        return button;
+    }
+
+    public AndroidButton getPayPal() throws Exception {
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='" + BaseTest.bundle.getString("PayPal") + "']"), "PayPal button");
+
+        return button;
+    }
 }
