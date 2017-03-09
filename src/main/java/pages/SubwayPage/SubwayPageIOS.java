@@ -18,7 +18,7 @@ public class SubwayPageIOS extends SubwayPage {
         super(driver);
     }
 
-    public MobileButton getaddPaymentMethod() throws Exception {
+    public MobileButton getAddPaymentMethod() throws Exception {
 
         AndroidButton addPaymentMethodButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
 

@@ -7,9 +7,7 @@ import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import pages.MenuPage.MenuPage;
-import pages.MenuPage.MenuPageAndroid;
-import pages.MenuPage.MenuPageIOS;
+import pages.PaymentMethodsPage.PaymentMethodsPage;
 import pojos.user.MobileUser;
 
 /**
@@ -18,14 +16,17 @@ import pojos.user.MobileUser;
 public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePage {
 
     public AddCardPage(AppiumDriver driver){ super(driver);}
-
     abstract MobileTextBox getCardNumber() throws Exception;
     abstract MobileTextBox getExpiresOn() throws Exception;
     abstract MobileTextBox getCCV() throws Exception;
     abstract MobileTextBox getPin() throws Exception;
     abstract MobileTextBox getNameOnCard() throws Exception;
     abstract MobileButton getNextButton() throws  Exception;
+    abstract MobileTextBox getBillingStreetAddress() throws Exception;
+    abstract MobileTextBox getBillingZipCode() throws Exception;
+    abstract MobileButton getReviewDetails() throws  Exception;
     abstract MobileButton getSavePaymentMethod() throws  Exception;
+    abstract MobileButton getGiftCardSavePayment() throws  Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -50,7 +51,35 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
         }
     }
 
-    public void addCardDetails(MobileUser mobileUser) throws Exception
+    public PaymentMethodsPage addCardDetails(MobileUser mobileUser) throws Exception
+    {
+        try{
+            getCardNumber().isReady();
+            getCardNumber().setText("4111111111111111");
+            HideKeyboard();
+            getNameOnCard().setText(mobileUser.getFirstName()+mobileUser.getLastName());
+            HideKeyboard();
+
+            getNextButton().click();
+            getExpiresOn().setText("12/20");
+            getCCV().setText("123");
+            HideKeyboard();
+            getNextButton().click();
+            getBillingStreetAddress().isReady();
+            getBillingStreetAddress().setText(mobileUser.getStreetAddresss());
+            getBillingZipCode().setText(mobileUser.getPostalCode());
+            getReviewDetails().click();
+            HideKeyboard();
+            getSavePaymentMethod().click();
+            return PaymentMethodsPage.get((AppiumDriver) driver);
+
+        }catch(Exception ex)
+        {
+            throw new Exception(ex);
+        }
+    }
+
+   /* public PaymentMethodsPage addCardsDetails(MobileUser mobileUser) throws Exception
     {
         try{
             getCardNumber().setText("");
@@ -59,19 +88,21 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             getExpiresOn().setText("");
             getCCV().setText("");
             getNextButton().click();
-        }catch(Exception ex)
-        {
+            return PaymentMethodsPage.get((AppiumDriver) driver);
+        }catch(Exception ex){
             throw new Exception(ex);
-        }
-    }
+    }*/
 
-    public void addSubwayCardDetails() throws Exception
+    public PaymentMethodsPage addSubwayCardDetails() throws Exception
     {
         try{
             getCardNumber().isReady();
-            getCardNumber().setText("");
-            getPin().setText("");
-            getSavePaymentMethod().click();
+            getCardNumber().setText("6299449900967908");
+            HideKeyboard();
+            getPin().setText("37103637");
+            HideKeyboard();
+            getGiftCardSavePayment().click();
+            return PaymentMethodsPage.get((AppiumDriver) driver);
         }catch(Exception ex)
         {
             throw new Exception(ex);
@@ -83,6 +114,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
         AppiumDriver d = (AppiumDriver)driver;
         d.hideKeyboard();
     }
+
 }
 
 

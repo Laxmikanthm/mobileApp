@@ -8,6 +8,8 @@ import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
+import pages.PayPalPage.PayPalPage;
+import pages.PaymentMethodsPage.PaymentMethodsPage;
 import pages.SubwayPage.SubwayPage;
 import pojos.user.MobileUser;
 
@@ -24,13 +26,14 @@ public class PaymentMethods extends SubwayAppBaseTest {
     {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
-        addCardPage.addCardDetails(mobileUser);
+        PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
 
     }
 
@@ -39,13 +42,14 @@ public class PaymentMethods extends SubwayAppBaseTest {
     {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodDebitCard();
-        addCardPage.addCardDetails(mobileUser);
+        PaymentMethodsPage paymentMethodsPage=  addCardPage.addCardDetails(mobileUser);
 
     }
 
@@ -54,13 +58,29 @@ public class PaymentMethods extends SubwayAppBaseTest {
     {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodGiftCard();
-        addCardPage.addSubwayCardDetails();
+        PaymentMethodsPage paymentMethodsPage=  addCardPage.addSubwayCardDetails();
 
+    }
+
+    @Test
+    public void addPayPal() throws Exception
+    {
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.skip();
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage = loginPage.login(mobileUser);
+        MenuPage menuPage = homePage.getUserDetails();
+        SubwayPage subwayPage = menuPage.addPaymentMethods();
+        ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
+        PayPalPage payPalPage = choosePaymentMethodPage.ChoosePaymentMethodPayPalCard();
+        payPalPage.addPaypalDetails(mobileUser);
     }
 }

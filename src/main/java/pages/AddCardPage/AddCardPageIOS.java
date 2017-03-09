@@ -52,10 +52,40 @@ public class AddCardPageIOS extends AddCardPage {
 
         return nextButton;
     }
+
+    public IOSTextBox getBillingStreetAddress() throws Exception {
+
+        IOSTextBox InputBox = new IOSTextBox((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return InputBox;
+    }
+
+    public IOSTextBox getBillingZipCode() throws Exception {
+
+        IOSTextBox InputBox = new IOSTextBox((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return InputBox;
+    }
+
+    public IOSButton getReviewDetails() throws Exception {
+
+        IOSButton reviewButton = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return reviewButton;
+    }
+
     public IOSButton getSavePaymentMethod() throws Exception {
 
         IOSButton savePaymentMethod = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
 
         return savePaymentMethod;
     }
+
+    public IOSButton getGiftCardSavePayment() throws Exception {
+
+        IOSButton savePaymentMethod = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return savePaymentMethod;
+    }
+
 }

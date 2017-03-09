@@ -5,7 +5,15 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
+import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
+import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPageAndroid;
+import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPageIOS;
 import pojos.user.MobileUser;
+
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by e002243 on 08-03-2017.
@@ -32,9 +40,34 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
+    public static PayPalPage get(AppiumDriver driver) throws Exception{
+
+        String platform = driver.getCapabilities().getCapability("platformName").toString();
+
+        switch (platform){
+            case "iOS":
+                return new PayPalPageIOS((IOSDriver) driver);
+            case "Android":
+                return new PayPalPageAndroid((AndroidDriver) driver);
+            default:
+                throw new Exception("Unable to get Find A Store page for platform " + platform);
+        }
+    }
+
     public void addPaypalDetails(MobileUser mobileUser)throws Exception {
         try {
-                  ((AppiumDriver) driver).context("WEB_VIEW");
+            AppiumDriver d = (AppiumDriver)driver;
+
+            Set contextNames = d.getContextHandles();
+
+
+            Iterator itr= contextNames.iterator();
+          Object obj= itr.next();
+          Object obj1 = itr.next();
+
+                d.context(obj1.toString());
+
+                    getPaypalUserName().wait(10000);
                     getPaypalUserName().isReady();
                     getPaypalUserName().setText(mobileUser.getEmailAddress());
                     getPaypalPassword().setText(mobileUser.getPassword());

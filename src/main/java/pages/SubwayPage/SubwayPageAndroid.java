@@ -14,11 +14,13 @@ public class SubwayPageAndroid extends SubwayPage {
     {
         super(driver);
     }
-    public AndroidButton getaddPaymentMethod() throws Exception {
+    public AndroidButton getAddPaymentMethod() throws Exception {
 
-        AndroidButton addPaymentMethodButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+      //  AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("AddPaymentMethod") + "']"), "");
 
-        return addPaymentMethodButton;
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='ADD PAYMENT METHOD']"), "Add Payment Method Button");
+
+        return button;
     }
 }
 
