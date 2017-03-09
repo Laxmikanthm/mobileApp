@@ -8,6 +8,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.AddCardPage.AddCardPage;
 import pages.MenuPage.MenuPage;
+import pages.PayPalPage.PayPalPage;
 import pages.SubwayPage.SubwayPage;
 import pages.SubwayPage.SubwayPageAndroid;
 import pages.SubwayPage.SubwayPageIOS;
@@ -84,12 +85,12 @@ public abstract class ChoosePaymentMethodPage<T extends AppiumDriver> extends Mo
         }
     }
 
-    public AddCardPage ChoosePaymentMethodPayPalCard()throws  Exception
+    public PayPalPage ChoosePaymentMethodPayPalCard()throws  Exception
     {
         try{
             getPayPal().click();
 
-            return AddCardPage.get((AppiumDriver) driver);
+            return PayPalPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);
 

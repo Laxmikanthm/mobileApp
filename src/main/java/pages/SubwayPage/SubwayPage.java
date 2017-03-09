@@ -19,7 +19,7 @@ public abstract class SubwayPage<T extends AppiumDriver> extends MobileBasePage 
         super(driver);
     }
 
-    abstract MobileButton getaddPaymentMethod() throws Exception;
+    abstract MobileButton getAddPaymentMethod() throws Exception;
 
     public static SubwayPage get(AppiumDriver driver) throws Exception{
 
@@ -47,7 +47,7 @@ public abstract class SubwayPage<T extends AppiumDriver> extends MobileBasePage 
     public ChoosePaymentMethodPage addPaymentMethod() throws Exception
     {
         try{
-            getaddPaymentMethod().click();
+            getAddPaymentMethod().click();
 
             return ChoosePaymentMethodPage.get((AppiumDriver) driver);
         }catch(Exception ex){
