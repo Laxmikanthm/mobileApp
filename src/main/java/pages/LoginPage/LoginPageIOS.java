@@ -6,6 +6,7 @@ import base.gui.controls.mobile.ios.IOSTextBox;
 import base.test.BaseTest;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
 
 /**
  * Created by test-user on 2/2/17.
@@ -18,29 +19,29 @@ public class LoginPageIOS extends LoginPage {
 
     public IOSTextBox getUserName() throws Exception {
 
-        IOSTextBox menuButton = new IOSTextBox((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
+        IOSTextBox userNameTextbox  = new IOSTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("UserNameiOS")+"']"), "username text field");
 
-        return menuButton;
+        return userNameTextbox;
     }
 
     public IOSPasswordTextBox getPassword() throws Exception {
 
-        IOSPasswordTextBox menuButton = new IOSPasswordTextBox((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
+        IOSPasswordTextBox passwordTextBox = new IOSPasswordTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("PasswordiOS")+"']"), "password text field");
 
-        return menuButton;
+        return passwordTextBox;
     }
 
     public IOSButton getLogin() throws Exception {
 
-        IOSButton menuButton = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
 
-        return menuButton;
+        return Button;
     }
 
     public IOSButton getForgotPassword() throws Exception {
 
-        IOSButton menuButton = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("ForgotPassword")), "Forgot Password button");
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAButton[@label='"+BaseTest.bundle.getString("ForgotPasswordiOS")), "Forgot Password button");
 
-        return menuButton;
+        return Button;
     }
 }

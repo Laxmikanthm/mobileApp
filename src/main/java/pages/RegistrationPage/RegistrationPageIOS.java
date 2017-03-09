@@ -19,56 +19,56 @@ public class RegistrationPageIOS extends RegistrationPage {
 
     public IOSTextBox getFirstName() throws Exception {
 
-        IOSTextBox userNameTextbox = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("FirstName") + "']"), "FirstName text field");
+        IOSTextBox firstNameTextbox = new IOSTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+ BaseTest.bundle.getString("FirstNameiOS") + "']"), "FirstName text field");
 
-        return userNameTextbox;
+        return firstNameTextbox;
     }
 
     public IOSTextBox getLastName() throws Exception {
 
-        IOSTextBox userNameTextbox = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("LastName") + "']"), "LastName text field");
+        IOSTextBox lastNameTextbox = new IOSTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='" + BaseTest.bundle.getString("LastNameiOS") + "']"), "LastName text field");
 
-        return userNameTextbox;
+        return lastNameTextbox;
     }
 
     public IOSTextBox getPhone() throws Exception {
 
-        IOSTextBox userNameTextbox = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("Phone") + "']"), "Phone number field");
+        IOSTextBox phoneTextbox = new IOSTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='" + BaseTest.bundle.getString("PhoneiOS") + "']"), "Phone number field");
 
-        return userNameTextbox;
+        return phoneTextbox;
     }
 
     public IOSButton getNextButton() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@content-desc='" + BaseTest.bundle.getString("NextButton") + "']"), "Next button");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAButton[@label='" + BaseTest.bundle.getString("NextButton") + "']"), "Next button");
 
         return button;
     }
 
     public IOSTextBox getEmail() throws Exception {
 
-        IOSTextBox userNameTextbox = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("Email") + "']"), "Email text field");
+        IOSTextBox userNameTextbox = new IOSTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='" + BaseTest.bundle.getString("EmailiOS") + "']"), "Email text field");
 
         return userNameTextbox;
     }
 
     public IOSPasswordTextBox getPassword() throws Exception {
 
-        IOSPasswordTextBox passwordTextBox = new IOSPasswordTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("NewPassword") + "']"), "password text field");
+        IOSPasswordTextBox passwordTextBox = new IOSPasswordTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='" + BaseTest.bundle.getString("NewPasswordiOS") + "']"), "password text field");
 
         return passwordTextBox;
     }
 
     public IOSPasswordTextBox getConfirmPasswrod() throws Exception {
 
-        IOSPasswordTextBox passwordTextBox = new IOSPasswordTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("ConfirmPassword") + "']"), "Confirm password text field");
+        IOSPasswordTextBox passwordTextBox = new IOSPasswordTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='" + BaseTest.bundle.getString("ConfirmPasswordiOS") + "']"), "Confirm password text field");
 
         return passwordTextBox;
     }
 
     public IOSButton getSignUpButton() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@content-desc='" + BaseTest.bundle.getString("GetStarted") + "']"), "Get Started button");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAButton[@label='" + BaseTest.bundle.getString("GetStarted") + "']"), "Get Started button");
 
         return button;
     }
