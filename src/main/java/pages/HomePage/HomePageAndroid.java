@@ -35,4 +35,10 @@ public class HomePageAndroid extends HomePage {
         return button;
     }
 
+    public MobileButton getFindYourAnotherSubWay() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("FindYouAnotherSubWay")+"']"), "FindYourAnother SubWay button");
+        return button;
+    }
+
+
 }

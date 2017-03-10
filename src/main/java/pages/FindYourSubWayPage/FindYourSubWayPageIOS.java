@@ -24,4 +24,8 @@ public class FindYourSubWayPageIOS extends  FindYourSubWayPage {
         IOSButton selectRestButton = new IOSButton ((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("SelectRestButton") + "']"), "Select Restaurant button");
         return selectRestButton;
     }
+    public MobileButton getFindSubwayButton() throws Exception {
+        IOSButton selectRestButton = new IOSButton ((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("SelectRestButton") + "']"), "Select Restaurant button");
+        return selectRestButton;
+    }
 }

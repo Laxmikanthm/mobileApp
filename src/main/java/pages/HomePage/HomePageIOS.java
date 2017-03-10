@@ -35,5 +35,9 @@ public class HomePageIOS extends HomePage {
         IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("FindYourSubWay")+"']"), "FindYourSubWay button");
         return button;
     }
+    public MobileButton getFindYourAnotherSubWay() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("FindYourSubWay")+"']"), "FindYourSubWay button");
+        return button;
+    }
 
 }

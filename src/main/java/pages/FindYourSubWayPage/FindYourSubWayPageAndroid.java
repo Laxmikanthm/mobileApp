@@ -24,5 +24,9 @@ public class FindYourSubWayPageAndroid extends FindYourSubWayPage {
         AndroidButton selectRestButton = new AndroidButton ((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("SelectRestButton") + "']"), "Select Restaurant button");
         return selectRestButton;
     }
+    public MobileButton getFindSubwayButton() throws Exception {
+        AndroidButton findSubwayButton = new AndroidButton ((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("SelectRestButton") + "']"), "Select Restaurant button");
+        return findSubwayButton;
+    }
 }
 

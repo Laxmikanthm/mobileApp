@@ -7,6 +7,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.MenuPage.MenuPage;
+import pages.OrdersPage.OrdersPage;
 
 /**
  * Created by test-user on 2/2/17.
@@ -35,6 +36,8 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getOrderButton() throws Exception;
     abstract MobileButton getFindButton() throws Exception;
     abstract MobileButton getFindYourSubWay()throws Exception;
+    abstract MobileButton getFindYourAnotherSubWay()throws Exception;
+
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -71,6 +74,16 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     {
         try{
             return getFindYourSubWay().getControl().isDisplayed();
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+    public OrdersPage findYourSubWay() throws Exception
+    {
+        try{
+            getFindYourAnotherSubWay().click();
+
+            return OrdersPage.get((AppiumDriver)driver);
         }catch(Exception ex){
             throw new Exception(ex);
         }

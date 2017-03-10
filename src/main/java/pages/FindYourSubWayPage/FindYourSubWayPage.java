@@ -20,6 +20,7 @@ public abstract  class FindYourSubWayPage<T extends AppiumDriver> extends Mobile
 
     abstract MobileButton getSearchButton() throws Exception;
     abstract MobileButton getSelectRestButton() throws Exception;
+    abstract MobileButton getFindSubwayButton() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
