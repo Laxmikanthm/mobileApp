@@ -54,9 +54,6 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     public HomePage login(MobileUser mobileUser) throws Exception {
         try {
-            //mobileUser.createMobileUser(false, Country.UnitedStates);
-            mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
-            mobileUser.setPassword("Subway1234");
             getUserName().isReady();
             getUserName().setText(mobileUser.getEmailAddress());
             getPassword().setText(mobileUser.getPassword());

@@ -83,7 +83,6 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
     public HomePage signUp() throws Exception {
         try {
             MobileUser user  = new MobileUser(false, Country.UnitedStates, 54588);
-            user.setEmailAddress(getRandomString(10)+"@qasubway.com");
             getFirstName().isReady();
             getFirstName().setText(user.getFirstName());
             getLastName().setText(user.getLastName());

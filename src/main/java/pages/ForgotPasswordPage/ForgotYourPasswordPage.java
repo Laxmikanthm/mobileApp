@@ -48,7 +48,6 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
             getResetButton().click();
             getPassword().isReady();
             getPassword().getControl().clear();
-            mobileUser.setPassword("Subway12345");
             getPassword().setText(mobileUser.getPassword());
             getConfirmPassword().getControl().clear();
             getConfirmPassword().setText(mobileUser.getPassword());

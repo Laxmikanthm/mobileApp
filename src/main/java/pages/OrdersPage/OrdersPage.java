@@ -10,10 +10,10 @@ import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import pojos.Orders.Order;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import java.util.List;
-import pojos.Orders.Order;
-import pages.HomePage.HomePage;
 
 /**
  * Created by e002243 on 10-03-2017.
@@ -58,15 +58,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void placeRandomOrder(Order order, MobileUser mobileUser, String storeName,String xpathAddressValue, String xpathCategoryValue, String xpathSubCategoryValue ) throws Exception
+    public void placeRandomOrder(Order order, MobileUser mobileUser, String storeName ) throws Exception
     {
         try{
             findYourStore(mobileUser);
-            searchStore("",storeName);
+            searchStore(storeName);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
-            orderCategoryItem(order,xpathCategoryValue);
-            orderSubCategoryItem(order,xpathSubCategoryValue);
+            orderCategoryItem(order);
+            orderSubCategoryItem(order);
             getAddToBag().click();
             }
             catch(Exception ex){
@@ -97,11 +97,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
-    public List<WebElement> getCategoryItems(String xpathAddressValue) throws Exception
+    public List<WebElement> getCategoryItems() throws Exception
     {
         try{
             AppiumDriver dr=(AppiumDriver) driver;
-            List<WebElement> allAddress= dr.findElements(By.xpath(xpathAddressValue));
+            List<WebElement> allAddress= dr.findElements(By.name(""));
 
             return allAddress;
         }catch(Exception ex){
@@ -109,10 +109,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void searchStore(String xpathAddressValue, String storeName) throws Exception
+    public void searchStore(String storeName) throws Exception
     {
         try{
-
             List<WebElement> allStores= getStores("");
             for(int i=0; i<allStores.size(); i++)
             {
@@ -149,13 +148,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void orderCategoryItem(Order order, String xpathCategoryValue) throws Exception
+    public void orderCategoryItem(Order order) throws Exception
     {
         try{
-            List<WebElement> allCategoryItems= getCategoryItems(xpathCategoryValue);
+            List<WebElement> allCategoryItems= getCategoryItems();
             for(int i=0; i<allCategoryItems.size(); i++)
             {
-                if(allCategoryItems.get(i).getText().equals(order.getCart().getProductDetail().getName()))
+                if(allCategoryItems.get(i).getText().equals(order.getCart().getProductDetail().getProductGroup().getName()))
                 {
                     allCategoryItems.get(i).click();
                 }
@@ -165,13 +164,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void orderSubCategoryItem(Order order, String xpathSubCategoryValue) throws Exception
+    public void orderSubCategoryItem(Order order) throws Exception
     {
         try{
-            List<WebElement> allSubCategoryItems= getCategoryItems(xpathSubCategoryValue);
+            List<WebElement> allSubCategoryItems= getCategoryItems();
             for(int i=0; i<allSubCategoryItems.size(); i++)
             {
-                if(allSubCategoryItems.get(i).getText().equals(order.getCart().getProductDetail().getName()))
+                if(allSubCategoryItems.get(i).getText().equals(order.getCart().getProductDetail().getProductClass().getName()))
                 {
                     allSubCategoryItems.get(i).click();
                 }

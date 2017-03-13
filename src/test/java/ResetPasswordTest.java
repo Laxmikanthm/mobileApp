@@ -19,13 +19,13 @@ public class ResetPasswordTest extends SubwayAppBaseTest {
     @Test
     public void resetPassword()throws Exception {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser.registerNewUserHeadless(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.gotoMenuPage();
         ContactInformationPage contactInformation= menuPage.getContactInformation();
         ForgotYourPasswordPage forgotYourPasswordPage = contactInformation.getPasswordField();
-        mobileUser.setEmailAddress("sksushmakamlakar@gmail.com");
         mobileUser.setPassword("Subway12345");
         loginPage = forgotYourPasswordPage.setNewPassword(mobileUser);
         loginPage.loginAfterResetPassoword(mobileUser);

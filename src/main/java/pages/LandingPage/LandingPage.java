@@ -50,6 +50,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public LoginPage gotoLogInPage() throws Exception {
         try {
+
             this.getLoginButton().click();
             return LoginPage.get((AppiumDriver) driver);
         } catch (Exception ex) {

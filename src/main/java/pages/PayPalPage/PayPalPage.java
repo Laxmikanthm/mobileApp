@@ -56,25 +56,16 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void addPaypalDetails(MobileUser mobileUser)throws Exception {
         try {
-            AppiumDriver d = (AppiumDriver)driver;
-
-            Set contextNames = d.getContextHandles();
-
-
+            Set contextNames = ((AppiumDriver)driver).getContextHandles();
             Iterator itr= contextNames.iterator();
-          Object obj= itr.next();
-          Object obj1 = itr.next();
-
-                d.context(obj1.toString());
-
-                    getPaypalUserName().wait(10000);
-                    getPaypalUserName().isReady();
-                    getPaypalUserName().setText(mobileUser.getEmailAddress());
-                    getPaypalPassword().setText(mobileUser.getPassword());
-                    getLogIn().click();
-                    getAgreeAndContinue().click();
-
-
+            itr.next();
+            Object obj1 = itr.next();
+            ((AppiumDriver)driver).context(obj1.toString());
+            getPaypalUserName().isReady();
+            getPaypalUserName().setText(mobileUser.getPayPalEmailAddress());
+            getPaypalPassword().setText(mobileUser.getPayPalPassword());
+            getLogIn().click();
+            getAgreeAndContinue().click();
                 }catch(Exception ex)
                 {
                     throw new Exception(ex);

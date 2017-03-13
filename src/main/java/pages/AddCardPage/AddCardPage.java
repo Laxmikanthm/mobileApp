@@ -55,14 +55,13 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     {
         try{
             getCardNumber().isReady();
-            getCardNumber().setText("4111111111111111");
+            getCardNumber().setText(mobileUser.getCreditCards().get(0).getCardNumber());
             HideKeyboard();
             getNameOnCard().setText(mobileUser.getFirstName()+mobileUser.getLastName());
             HideKeyboard();
-
             getNextButton().click();
-            getExpiresOn().setText("12/20");
-            getCCV().setText("123");
+            getExpiresOn().setText(mobileUser.getCreditCards().get(0).getExpirationDate());
+            getCCV().setText(mobileUser.getCreditCards().get(0).getCsvCode());
             HideKeyboard();
             getNextButton().click();
             getBillingStreetAddress().isReady();
@@ -93,13 +92,13 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             throw new Exception(ex);
     }*/
 
-    public PaymentMethodsPage addSubwayCardDetails() throws Exception
+    public PaymentMethodsPage addSubwayCardDetails(MobileUser mobileUser) throws Exception
     {
         try{
             getCardNumber().isReady();
-            getCardNumber().setText("6299449900967908");
+            getCardNumber().setText(mobileUser.getSubwayCards().get(0).getCardNumber());
             HideKeyboard();
-            getPin().setText("37103637");
+            getPin().setText(mobileUser.getSubwayCards().get(0).getCode());
             HideKeyboard();
             getGiftCardSavePayment().click();
             return PaymentMethodsPage.get((AppiumDriver) driver);

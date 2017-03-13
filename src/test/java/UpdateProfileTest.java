@@ -21,16 +21,15 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
     public void updateProfile()throws Exception
     {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser.registerNewUserHeadless(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         MobileUser mobUser = new MobileUser(false, Country.UnitedStates, 54588);
-        mobileUser.setFirstName(mobUser.getFirstName());
-        mobileUser.setLastName(mobUser.getLastName());
-        menuPage= menuPage.updateProfileInfo(mobileUser);
-        Assert.assertEquals(mobileUser.getFirstName()+" "+mobileUser.getLastName(), menuPage.getUserInformation());
+        menuPage= menuPage.updateProfileInfo(mobUser);
+        Assert.assertEquals(mobUser.getFirstName()+" "+mobUser.getLastName(), menuPage.getUserInformation());
         menuPage.logout();
     }
 }
