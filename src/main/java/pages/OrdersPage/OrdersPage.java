@@ -58,16 +58,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void placeRandomOrder(Order order, MobileUser mobileUser, String storeName ) throws Exception
+    public void placeRandomOrder( MobileUser mobileUser, String storeName ) throws Exception
     {
         try{
             findYourStore(mobileUser);
             searchStore(storeName);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
-            orderCategoryItem(order);
-            orderSubCategoryItem(order);
-            getAddToBag().click();
+//            orderCategoryItem(order);
+//            orderSubCategoryItem(order);
+//            getAddToBag().click();
             }
             catch(Exception ex){
             throw new Exception(ex);
@@ -85,6 +85,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
+
 
     public List<WebElement> getStores(String xpathAddressValue) throws Exception
     {
@@ -124,23 +125,28 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
-    public void deny() throws Exception
+    public void denyPopUp() throws Exception
     {
         try{
-            if(getDenyButton().getControl().isDisplayed())
+            int d=((AndroidDriver)driver).findElements(By.xpath("//*[@text='Deny']")).size();
+            if(d>0)
             {
-                getDenyButton().click();
+                //getDenyButton().click();
+
+                ((AndroidDriver)driver).findElement(By.xpath("//*[@text='Deny']")).click();
             }
         }catch(Exception ex){
             throw new Exception(ex);
         }
     }
-    public void ok() throws Exception
+    public void okPopUp() throws Exception
     {
         try{
-            if(getOkPopupButton().getControl().isDisplayed())
+            int d=((AndroidDriver)driver).findElements(By.xpath("//*[@text='OK']")).size();
+            if(d>0)
             {
-                getOkPopupButton().click();
+               // getOkPopupButton().click();
+                ((AndroidDriver)driver).findElement(By.xpath("//*[@text='OK']")).click();
             }
         }catch(Exception ex){
             throw new Exception(ex);
@@ -183,8 +189,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void findYourStore(MobileUser mobileUser) throws Exception
     {
         try{
-            getOkPopupButton().click();
-            getDenyButton().click();
+            okPopUp();
+            denyPopUp();
             searchStoreByZipCode(mobileUser);
 
         }catch(Exception ex){

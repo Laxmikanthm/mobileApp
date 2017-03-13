@@ -21,7 +21,7 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getSearchButton() throws Exception {
-        AndroidButton searchButton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("SearchInputBox")+"']"), "Search Input Box");
+        AndroidButton searchButton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='com.subway.mobile.subwayapp03:id/search']"), "Search Button");
 
         return searchButton;
     }

@@ -24,13 +24,16 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         int store = 54588;
         String storeName = "CT Turpike West SouthBound 2";
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        // mobileUser.registerNewUserHeadless(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         landingPage.skip();
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         OrdersPage ordersPage = homePage.findYourSubWay();
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        ordersPage.placeRandomOrder(remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches"), mobileUser, storeName);
+       /* RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        ordersPage.placeRandomOrder(remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches"), mobileUser, storeName);*/
+
+        ordersPage.placeRandomOrder(mobileUser,storeName);
+
     }
 }

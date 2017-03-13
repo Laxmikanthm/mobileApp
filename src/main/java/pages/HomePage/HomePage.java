@@ -70,18 +70,10 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-    public boolean findYourSubWayButton() throws Exception
-    {
-        try{
-            return getFindYourSubWay().getControl().isDisplayed();
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-    }
     public OrdersPage findYourSubWay() throws Exception
     {
         try{
-            getFindYourAnotherSubWay().click();
+            getFindYourSubWay().click();
 
             return OrdersPage.get((AppiumDriver)driver);
         }catch(Exception ex){
