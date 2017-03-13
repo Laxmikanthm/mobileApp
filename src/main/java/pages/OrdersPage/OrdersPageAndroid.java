@@ -60,5 +60,30 @@ public class OrdersPageAndroid extends OrdersPage {
 
         return startOrder;
     }
+    public MobileButton getOkPopupButton() throws Exception {
+
+        AndroidButton okButton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("OkButton")+"']"), "Ok button");
+
+        return okButton;
+    }
+    public MobileButton getCatagoryItem() throws Exception {
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("OkButton")+"']"), "Ok button");
+
+        return button;
+    }
+    public MobileButton getAddToBag() throws Exception {
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("OkButton")+"']"), "Ok button");
+
+        return button;
+    }
+    public MobileButton getPlaceOrder() throws Exception {
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("OkButton")+"']"), "Ok button");
+
+        return button;
+    }
+
 
 }

@@ -10,9 +10,10 @@ import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import pojos.Orders.Order;
 import pojos.user.MobileUser;
 import java.util.List;
+import pojos.Orders.Order;
+import pages.HomePage.HomePage;
 
 /**
  * Created by e002243 on 10-03-2017.
@@ -28,6 +29,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getStartOrderButton() throws Exception;
     abstract MobileButton getDenyButton() throws Exception;
     abstract MobileButton getCatagoryItem() throws Exception;
+    abstract MobileButton getOkPopupButton() throws Exception;
+    abstract MobileButton getAddToBag() throws Exception;
+    abstract MobileButton getPlaceOrder() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -54,12 +58,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void placeRandomOrder(Order order, MobileUser mobileUser, String storeName,String xpathAddressValue) throws Exception
+    public void placeRandomOrder(Order order, MobileUser mobileUser, String storeName,String xpathAddressValue, String xpathCategoryValue, String xpathSubCategoryValue ) throws Exception
     {
         try{
-            searchStoreByZipCode(mobileUser);
+            findYourStore(mobileUser);
             searchStore("",storeName);
             getSelectRestaurantButton().click();
+            getStartOrderButton().click();
+            orderCategoryItem(order,xpathCategoryValue);
+            orderSubCategoryItem(order,xpathSubCategoryValue);
+            getAddToBag().click();
             }
             catch(Exception ex){
             throw new Exception(ex);
@@ -128,6 +136,18 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
+    public void ok() throws Exception
+    {
+        try{
+            if(getOkPopupButton().getControl().isDisplayed())
+            {
+                getOkPopupButton().click();
+            }
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
 
     public void orderCategoryItem(Order order, String xpathCategoryValue) throws Exception
     {
@@ -161,5 +181,17 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
+    public void findYourStore(MobileUser mobileUser) throws Exception
+    {
+        try{
+            getOkPopupButton().click();
+            getDenyButton().click();
+            searchStoreByZipCode(mobileUser);
+
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
 
 }
+

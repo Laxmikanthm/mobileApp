@@ -16,7 +16,7 @@ public class LandingPageAndroid extends LandingPage{
 
     public AndroidButton getLoginButton() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("LoginButton")), "Login button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SignInButton")), "Login button");
 
         return button;
     }

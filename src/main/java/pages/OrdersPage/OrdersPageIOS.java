@@ -58,5 +58,30 @@ public class OrdersPageIOS extends OrdersPage {
 
         return startOrderbutton;
     }
+    public IOSButton getCatagoryItem() throws Exception {
+
+        IOSButton startOrderbutton = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return startOrderbutton;
+    }
+    public IOSButton getOkPopupButton() throws Exception {
+
+        IOSButton okPopupButton = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return okPopupButton;
+    }
+    public IOSButton getAddToBag() throws Exception {
+
+        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return addToBag;
+    }
+    public IOSButton getPlaceOrder() throws Exception {
+
+        IOSButton placeOrder = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return placeOrder;
+    }
+
 
 }
