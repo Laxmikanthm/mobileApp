@@ -16,14 +16,14 @@ public class AddCardPageAndroid extends  AddCardPage {
     public AndroidTextBox getCardNumber() throws Exception {
 
        // AndroidTextBox cardNumberInputBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("CardNumber")+"']"), "CardNumber field");
-        AndroidTextBox cardNumberInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/card_number"), "Card Number field");
+        AndroidTextBox cardNumberInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("card_number"), "Card Number field");
 
         return cardNumberInputBox;
     }
     public AndroidTextBox getNameOnCard() throws Exception {
 
         //AndroidTextBox nameOnCardInputBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("NameOnCard")+"']"), "NameOnCard field");
-        AndroidTextBox nameOnCardInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/full_name"), "Full Name field");
+        AndroidTextBox nameOnCardInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("full_name"), "Full Name field");
 
         return nameOnCardInputBox;
     }
@@ -31,7 +31,7 @@ public class AddCardPageAndroid extends  AddCardPage {
     public AndroidTextBox getCCV() throws Exception {
 
         //AndroidTextBox cCVInputBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("CCV")+"']"), "CCV field");
-        AndroidTextBox cCVInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/ccv"), "CCV field");
+        AndroidTextBox cCVInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("ccv"), "CCV field");
 
         return cCVInputBox;
     }
@@ -39,7 +39,7 @@ public class AddCardPageAndroid extends  AddCardPage {
     public AndroidTextBox getExpiresOn() throws Exception {
 
         //AndroidTextBox expiresOnInputBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("ExpiresOn") + "']"), "ExpiresOn field");
-        AndroidTextBox expiresOnInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/expiration"), "ExpiresOn field");
+        AndroidTextBox expiresOnInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("expiration"), "ExpiresOn field");
 
         return expiresOnInputBox;
     }
@@ -47,7 +47,7 @@ public class AddCardPageAndroid extends  AddCardPage {
     public AndroidTextBox getBillingStreetAddress() throws Exception {
 
         //AndroidTextBox InputBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("BillingStreetAddress")+"']"), "BillingStreetAddress field");
-        AndroidTextBox InputBox = new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/address"), "BillingStreetAddress field");
+        AndroidTextBox InputBox = new AndroidTextBox((AndroidDriver) driver, By.id("address"), "BillingStreetAddress field");
 
         return InputBox;
     }
@@ -55,7 +55,7 @@ public class AddCardPageAndroid extends  AddCardPage {
     public AndroidTextBox getBillingZipCode() throws Exception {
 
         //AndroidTextBox InputBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("BillingZipCode")+"']"), "BillingZipCode field");
-        AndroidTextBox InputBox = new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/zip"), "BillingZipCode field");
+        AndroidTextBox InputBox = new AndroidTextBox((AndroidDriver) driver, By.id("zip"), "BillingZipCode field");
 
         return InputBox;
     }
@@ -63,14 +63,14 @@ public class AddCardPageAndroid extends  AddCardPage {
     public AndroidTextBox getPin() throws Exception {
 
         //AndroidTextBox pinInputBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("Pin")+"']"), "Pin field");
-        AndroidTextBox pinInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/pin"), "Pin field");
+        AndroidTextBox pinInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("pin"), "Pin field");
 
         return pinInputBox;
     }
     public AndroidButton getNextButton() throws Exception {
 
         //AndroidButton nextButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("NextButton") + "']"), "Next Button");
-        AndroidButton nextButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='NEXT']"), "Next Button");
+        AndroidButton nextButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='"+BaseTest.bundle.getString("Next")+"']"), "Next Button");
 
         return nextButton;
     }
@@ -78,7 +78,7 @@ public class AddCardPageAndroid extends  AddCardPage {
     public AndroidButton getReviewDetails() throws Exception {
 
         //AndroidButton reviewButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("ReviewDetails") + "']"), "ReviewDetails Button");
-        AndroidButton reviewButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/review_details"), "ReviewDetails Button");
+        AndroidButton reviewButton = new AndroidButton((AndroidDriver) driver, By.id("review_details"), "ReviewDetails Button");
 
         return reviewButton;
     }
@@ -86,7 +86,7 @@ public class AddCardPageAndroid extends  AddCardPage {
     public AndroidButton getSavePaymentMethod() throws Exception {
 
        // AndroidButton savePaymentMethodButtoon = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("SavePaymentMethod") + "']"), "SavePaymentMethod button");
-        AndroidButton savePaymentMethodButtoon = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/summary_save_payment"), "ReviewDetails Button");
+        AndroidButton savePaymentMethodButtoon = new AndroidButton((AndroidDriver) driver, By.id("summary_save_payment"), "ReviewDetails Button");
 
         return savePaymentMethodButtoon;
     }
@@ -94,7 +94,7 @@ public class AddCardPageAndroid extends  AddCardPage {
     public AndroidButton getGiftCardSavePayment() throws Exception {
 
         // AndroidButton savePaymentMethodButtoon = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("SavePaymentMethod") + "']"), "SavePaymentMethod button");
-        AndroidButton savePaymentButtoon = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/save_button"), "ReviewDetails Button");
+        AndroidButton savePaymentButtoon = new AndroidButton((AndroidDriver) driver, By.id("save_button"), "ReviewDetails Button");
 
         return savePaymentButtoon;
     }

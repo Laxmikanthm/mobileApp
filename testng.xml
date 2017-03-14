@@ -11,7 +11,11 @@
     <parameter name="projectName" value="${driverName}"></parameter>
     <classes>
 
-        <class name="ForgotPassword">
+        <class name="PlaceRandomOrder">
+            <methods>
+
+                <include name="placeOrder"/>
+            </methods>
         </class>
     </classes>
 </test>

@@ -6,6 +6,7 @@ import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -14,6 +15,7 @@ import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import java.util.List;
+import org.openqa.selenium.Dimension;
 
 /**
  * Created by e002243 on 10-03-2017.
@@ -32,6 +34,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getOkPopupButton() throws Exception;
     abstract MobileButton getAddToBag() throws Exception;
     abstract MobileButton getPlaceOrder() throws Exception;
+    abstract MobileButton getGotIt() throws Exception;
+    abstract MobileButton getCategory(String Category) throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -58,16 +62,20 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void placeRandomOrder( MobileUser mobileUser, String storeName ) throws Exception
+    public void placeRandomOrder( Order order, MobileUser mobileUser, String storeName) throws Exception
     {
         try{
             findYourStore(mobileUser);
             searchStore(storeName);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
+            selectCategory(order.getCart().getProductDetail().getProductGroup().getName());
+            selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
 //            orderCategoryItem(order);
 //            orderSubCategoryItem(order);
-//            getAddToBag().click();
+            getAddToBag().click();
+            getPlaceOrder().click();
+            getGotIt().click();
             }
             catch(Exception ex){
             throw new Exception(ex);
@@ -78,34 +86,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     {
         try{
             getSearchButton().click();
-            getSearchByZipCode().setText(mobileUser.getPostalCode());
-            getSearchByZipCode().getControl().sendKeys(Keys.ENTER);
+            //getSearchByZipCode().setText(mobileUser.getPostalCode());
+            getSearchByZipCode().isReady();
+            getSearchByZipCode().getControl().clear();
+            getSearchByZipCode().setText("06460");
             }
             catch(Exception ex){
-            throw new Exception(ex);
-        }
-    }
-
-
-    public List<WebElement> getStores(String xpathAddressValue) throws Exception
-    {
-        try{
-            AppiumDriver dr=(AppiumDriver) driver;
-           List<WebElement> allAddress= dr.findElements(By.xpath(xpathAddressValue));
-
-           return allAddress;
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-    }
-    public List<WebElement> getCategoryItems() throws Exception
-    {
-        try{
-            AppiumDriver dr=(AppiumDriver) driver;
-            List<WebElement> allAddress= dr.findElements(By.name(""));
-
-            return allAddress;
-        }catch(Exception ex){
             throw new Exception(ex);
         }
     }
@@ -113,25 +99,66 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void searchStore(String storeName) throws Exception
     {
         try{
-            List<WebElement> allStores= getStores("");
-            for(int i=0; i<allStores.size(); i++)
-            {
-                if(allStores.get(i).getText().equals(storeName))
-                {
-                    allStores.get(i).click();
-                }
-            }
+            //Get the size of screen.
+            Dimension  size = ((AndroidDriver)driver).manage().window().getSize();
+            System.out.println(size);
+
+            //Find swipe start and end point from screen's with and height.
+            //Find starty point which is at bottom side of screen.
+            int starty = (int) (size.height * 0.80);
+            //Find endy point which is at top side of screen.
+            int endy = (int) (size.height * 0.20);
+            //Find horizontal point where you wants to swipe. It is in middle of screen width.
+            int startx = size.width / 2;
+            System.out.println("starty = " + starty + " ,endy = " + endy + " , startx = " + startx);
+
+            //Swipe from Top to Bottom.
+           ((AndroidDriver)driver).swipe(startx, 2300, startx, 1725, 3000);
+
+
+            ((AndroidDriver)driver).findElement(By.xpath("//*[@text='"+storeName+"']")).click(); ;
         }catch(Exception ex){
             throw new Exception(ex);
         }
     }
+
+    public void selectCategory(String categoryName ) throws Exception
+    {
+        try{
+            getCategory(categoryName).click(); ;
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+    public void selectSubCategory(String subCategoryName ) throws Exception
+    {
+        try{
+
+            ((AndroidDriver)driver).findElement(By.xpath("//*[@text='"+subCategoryName+"']")).click(); ;
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+    public void placeOrder(String subCategoryName ) throws Exception
+    {
+        try{
+
+            getPlaceOrder().click();
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
+
+
+
     public void denyPopUp() throws Exception
     {
         try{
             int d=((AndroidDriver)driver).findElements(By.xpath("//*[@text='Deny']")).size();
             if(d>0)
             {
-                //getDenyButton().click();
+              //getDenyButton().click();
 
                 ((AndroidDriver)driver).findElement(By.xpath("//*[@text='Deny']")).click();
             }
@@ -145,41 +172,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             int d=((AndroidDriver)driver).findElements(By.xpath("//*[@text='OK']")).size();
             if(d>0)
             {
-               // getOkPopupButton().click();
-                ((AndroidDriver)driver).findElement(By.xpath("//*[@text='OK']")).click();
-            }
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-    }
-
-
-    public void orderCategoryItem(Order order) throws Exception
-    {
-        try{
-            List<WebElement> allCategoryItems= getCategoryItems();
-            for(int i=0; i<allCategoryItems.size(); i++)
-            {
-                if(allCategoryItems.get(i).getText().equals(order.getCart().getProductDetail().getProductGroup().getName()))
-                {
-                    allCategoryItems.get(i).click();
-                }
-            }
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-    }
-
-    public void orderSubCategoryItem(Order order) throws Exception
-    {
-        try{
-            List<WebElement> allSubCategoryItems= getCategoryItems();
-            for(int i=0; i<allSubCategoryItems.size(); i++)
-            {
-                if(allSubCategoryItems.get(i).getText().equals(order.getCart().getProductDetail().getProductClass().getName()))
-                {
-                    allSubCategoryItems.get(i).click();
-                }
+                getOkPopupButton().click();
+               // ((AndroidDriver)driver).findElement(By.xpath("//*[@text='OK']")).click();
             }
         }catch(Exception ex){
             throw new Exception(ex);

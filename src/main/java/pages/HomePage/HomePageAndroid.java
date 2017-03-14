@@ -16,7 +16,7 @@ public class HomePageAndroid extends HomePage {
         super(driver);
     }
     public MobileButton getMenu() throws Exception {
-        AndroidButton menuPageButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/profile"), "UserProfile button");
+        AndroidButton menuPageButton = new AndroidButton((AndroidDriver) driver, By.id("profile"), "UserProfile button");
         return menuPageButton;
     }
 

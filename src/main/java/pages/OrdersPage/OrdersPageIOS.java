@@ -5,6 +5,7 @@ import base.gui.controls.mobile.ios.IOSButton;
 import base.gui.controls.mobile.ios.IOSLabel;
 import base.gui.controls.mobile.ios.IOSTextBox;
 import base.test.BaseTest;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 
@@ -82,6 +83,17 @@ public class OrdersPageIOS extends OrdersPage {
 
         return placeOrder;
     }
+    public IOSButton getGotIt() throws Exception {
 
+        IOSButton placeOrder = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return placeOrder;
+    }
+    public IOSButton getCategory(String category) throws Exception {
+
+        IOSButton placeOrder = new IOSButton((IOSDriver) driver, (MobileBy.AccessibilityId(category)), "Category Item button");
+
+        return placeOrder;
+    }
 
 }

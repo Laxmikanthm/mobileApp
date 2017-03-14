@@ -88,12 +88,12 @@
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/nikesh/Downloads/subwayStagingDebug553.apk</app>
+                        <app>C:/SubWayApps/March 14th/subwayStagingDebug571.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
                         <operatingSystem>Mac</operatingSystem>
-                        <udid></udid>
+                        <udid>1e7245ec</udid>
 
                         <!--<appURL>${appURL}</appURL>-->
                         <!--End Mobile-->
