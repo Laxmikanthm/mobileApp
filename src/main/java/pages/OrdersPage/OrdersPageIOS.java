@@ -91,9 +91,15 @@ public class OrdersPageIOS extends OrdersPage {
     }
     public IOSButton getCategory(String category) throws Exception {
 
-        IOSButton placeOrder = new IOSButton((IOSDriver) driver, (MobileBy.AccessibilityId(category)), "Category Item button");
+        IOSButton categoryItem = new IOSButton((IOSDriver) driver, (MobileBy.AccessibilityId(category)), "Category Item button");
 
-        return placeOrder;
+        return categoryItem;
+    }
+    public IOSButton getSubCategory(String subCategory) throws Exception {
+
+        IOSButton subCategoryItem = new IOSButton((IOSDriver) driver, (MobileBy.AccessibilityId(subCategory)), "Sub Category Item button");
+
+        return subCategoryItem;
     }
 
 }

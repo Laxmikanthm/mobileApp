@@ -36,6 +36,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getPlaceOrder() throws Exception;
     abstract MobileButton getGotIt() throws Exception;
     abstract MobileButton getCategory(String Category) throws Exception;
+    abstract MobileButton getSubCategory(String Category) throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -89,7 +90,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             //getSearchByZipCode().setText(mobileUser.getPostalCode());
             getSearchByZipCode().isReady();
             getSearchByZipCode().getControl().clear();
-            getSearchByZipCode().setText("06460");
+         //   getSearchByZipCode().setText("06460");
+            ((AndroidDriver)driver).findElement(By.xpath("//*[@text='Search by Zip Code']")).sendKeys("06460");
             }
             catch(Exception ex){
             throw new Exception(ex);
