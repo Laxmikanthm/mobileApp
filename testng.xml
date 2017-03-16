@@ -14,7 +14,7 @@
         <class name="PlaceRandomOrder">
             <methods>
 
-                <include name="placeOrder"/>
+                <include name="placeOrderSubwayFreshFit"/>
             </methods>
         </class>
     </classes>
