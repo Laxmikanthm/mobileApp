@@ -79,14 +79,14 @@ public class OrdersPageAndroid extends OrdersPage {
     }
     public MobileButton getAddToBag() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("AddToBag")+"']"), "Ok button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("AddToBag")+"']"), "Add to bag button");
       //  AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='Add to Bag']"), "Add To Bag");
 
         return button;
     }
     public MobileButton getPlaceOrder() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("PlaceOrder")+"']"), "Place Order Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PlaceOrder")+"']"), "Place Order button");
         //AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='com.subway.mobile.subwayapp03:id/submit_order']"), "Place Order button");
 
         return button;
@@ -94,7 +94,7 @@ public class OrdersPageAndroid extends OrdersPage {
     public MobileButton getGotIt() throws Exception {
 
         // AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("OkButton")+"']"), "Ok button");
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='com.subway.mobile.subwayapp03:id/got_it']"), "Got It button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("GotIt")+"']"), "GotIt button");
 
         return button;
     }

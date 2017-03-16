@@ -76,6 +76,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 //            orderSubCategoryItem(order);
             getAddToBag().click();
             getPlaceOrder().click();
+            //Return and assert the order item
             getGotIt().click();
             }
             catch(Exception ex){
