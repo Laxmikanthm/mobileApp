@@ -11,10 +11,10 @@
     <parameter name="projectName" value="${driverName}"></parameter>
     <classes>
 
-        <class name="PlaceRandomOrder">
+        <class name="PaymentMethods">
             <methods>
 
-                <include name="placeOrderSubwayFreshFit"/>
+                <include name="addCreditCard"/>
             </methods>
         </class>
     </classes>

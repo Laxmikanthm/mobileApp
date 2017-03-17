@@ -37,6 +37,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getGotIt() throws Exception;
     abstract MobileButton getCategory(String Category) throws Exception;
     abstract MobileButton getSubCategory(String Category) throws Exception;
+    abstract MobileButton getCustomize() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -169,6 +170,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
+
     public void okPopUp() throws Exception
     {
         try{
@@ -189,6 +191,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             okPopUp();
             denyPopUp();
             searchStoreByZipCode(mobileUser);
+
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
+    public void customizeItems() throws Exception
+    {
+        try{
+            getCustomize().click();
 
         }catch(Exception ex){
             throw new Exception(ex);

@@ -114,5 +114,20 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     }
 
+    @Test
+    public void placeOrderSides() throws Exception
+    {
+        int store = 54588;
+        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
+        mobileUser.registerNewUserHeadless(mobileUser);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage=loginPage.login(mobileUser);
+        OrdersPage ordersPage = homePage.findYourSubWay();
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        ordersPage.placeRandomOrder(remoteOrder.placeRandomOrderWithSpecificProduct("Sides"), mobileUser, storeName);
+
+    }
 
 }

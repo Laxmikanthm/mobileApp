@@ -79,11 +79,20 @@ public class OrdersPageAndroid extends OrdersPage {
     }
     public MobileButton getAddToBag() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("AddToBag")+"']"), "Add to bag button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+BaseTest.bundle.getString("AddToBag")+"']"), "Add to bag button");
       //  AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='Add to Bag']"), "Add To Bag");
 
         return button;
     }
+
+    public MobileButton getCustomize() throws Exception {
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+BaseTest.bundle.getString("Customize")+"']"), "Customize button");
+        //  AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='Add to Bag']"), "Add To Bag");
+
+        return button;
+    }
+
     public MobileButton getPlaceOrder() throws Exception {
 
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PlaceOrder")+"']"), "Place Order button");

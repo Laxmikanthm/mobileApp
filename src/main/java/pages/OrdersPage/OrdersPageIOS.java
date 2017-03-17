@@ -77,6 +77,14 @@ public class OrdersPageIOS extends OrdersPage {
 
         return addToBag;
     }
+
+    public IOSButton getCustomize() throws Exception {
+
+        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return addToBag;
+    }
+
     public IOSButton getPlaceOrder() throws Exception {
 
         IOSButton placeOrder = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
