@@ -88,4 +88,11 @@ public class AddCardPageIOS extends AddCardPage {
         return savePaymentMethod;
     }
 
+    public IOSButton getBackButton() throws Exception {
+
+        IOSButton backButton = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return backButton;
+    }
+
 }

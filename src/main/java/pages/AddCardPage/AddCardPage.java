@@ -7,6 +7,7 @@ import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import pages.MenuPage.MenuPage;
 import pages.PaymentMethodsPage.PaymentMethodsPage;
 import pojos.user.MobileUser;
 
@@ -27,6 +28,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     abstract MobileButton getReviewDetails() throws  Exception;
     abstract MobileButton getSavePaymentMethod() throws  Exception;
     abstract MobileButton getGiftCardSavePayment() throws  Exception;
+    abstract MobileButton getBackButton() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -77,7 +79,9 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             getReviewDetails().click();
             //HideKeyboard();
             getSavePaymentMethod().click();
+            selectBackButton();
             return PaymentMethodsPage.get((AppiumDriver) driver);
+
 
         }catch(Exception ex)
         {
@@ -119,6 +123,14 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     {
         AppiumDriver d = (AppiumDriver)driver;
         d.hideKeyboard();
+    }
+
+    public void selectBackButton()  throws Exception
+    {
+
+        getBackButton().waitForClickable();
+        getBackButton().click();
+
     }
 
 }

@@ -19,14 +19,14 @@ public class PayPalPageAndroid extends PayPalPage {
 
     public AndroidTextBox getPaypalUserName() throws Exception {
 
-        AndroidTextBox userNameTextbox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+ BaseTest.bundle.getString("UserName")+"']"), "username text field");
+        AndroidTextBox userNameTextbox = new AndroidTextBox ((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalEmail")+"']"), "username text field" );
 
         return userNameTextbox;
     }
 
     public AndroidPasswordTextBox getPaypalPassword() throws Exception {
 
-        AndroidPasswordTextBox passwordTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("Password")+"']"), "password text field");
+        AndroidPasswordTextBox passwordTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "password text field");
 
         return passwordTextBox;
     }

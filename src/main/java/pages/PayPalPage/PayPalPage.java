@@ -29,7 +29,8 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileTextBox getPaypalPassword() throws Exception;
     abstract MobileButton getLogIn() throws Exception;
     abstract MobileButton getAgreeAndContinue() throws Exception;
-
+    public String payPalEmailAddress="upadhyaya_s@subway.com";
+    public String payPalPassword="Subway1965";
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -62,8 +63,8 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
             Object obj1 = itr.next();
             ((AppiumDriver)driver).context(obj1.toString());
             getPaypalUserName().isReady();
-            getPaypalUserName().setText(mobileUser.getPayPalEmailAddress());
-            getPaypalPassword().setText(mobileUser.getPayPalPassword());
+            getPaypalUserName().setText(payPalEmailAddress);
+            getPaypalPassword().setText(payPalPassword);
             getLogIn().click();
             getAgreeAndContinue().click();
                 }catch(Exception ex)

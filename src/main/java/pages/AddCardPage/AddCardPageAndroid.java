@@ -98,4 +98,13 @@ public class AddCardPageAndroid extends  AddCardPage {
 
         return savePaymentButtoon;
     }
+
+    public AndroidButton getBackButton() throws Exception {
+
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.className("android.widget.ImageButton"), "Back button");
+
+        return button;
+    }
+
 }

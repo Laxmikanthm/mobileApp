@@ -30,6 +30,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileLabel getUserInfo() throws Exception;
     abstract MobileButton getLogOutButtonInPopUp() throws Exception;
     abstract MobileButton getPaymentMethods() throws Exception;
+    abstract MobileButton getGoHome() throws Exception;
     //abstract MobileButton getLogOutButton() throws Exception;
 
     public static MenuPage get(AppiumDriver driver) throws Exception{
@@ -143,6 +144,14 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             throw new Exception(ex);
         }
     }
+
+    public void goHome() throws Exception
+
+    {
+        getGoHome().waitForClickable();
+        getGoHome().click();
+    }
+
 
 }
 

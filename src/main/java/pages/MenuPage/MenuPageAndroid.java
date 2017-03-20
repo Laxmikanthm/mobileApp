@@ -56,6 +56,15 @@ public class MenuPageAndroid extends MenuPage {
         return button;
     }
 
+    public AndroidButton getGoHome() throws Exception {
+
+
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.className("android.widget.ImageButton"), "Back button");
+
+        return button;
+    }
+
+
 
 }
 
