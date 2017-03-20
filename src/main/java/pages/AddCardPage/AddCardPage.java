@@ -61,7 +61,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             HideKeyboard();
             getNextButton().click();
             String date = mobileUser.getCreditCards().get(0).getExpirationDate();
-            String cardExpiryDate = date.substring(1,2)+"/"+date.substring(8,10);
+            String cardExpiryDate = date.substring(0,3)+date.substring(8,10);
             /*String[] expiryDate = date.split("/");
             String yearFormatInyyyy = expiryDate[2];
             String month = expiryDate[0];

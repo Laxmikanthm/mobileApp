@@ -12,12 +12,12 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>2.2.71-SNAPSHOT</version>
+            <version>2.2.75-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>2.2.6-SNAPSHOT</version>
+            <version>2.2.9-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -88,12 +88,12 @@
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>C:/Subway/SubWayApps/Mar17th/subwayStagingDebug571.apk</app>
+                        <app>/Users/nikesh/Downloads/subwayStagingDebug571.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
-                        <operatingSystem>Windows</operatingSystem>
-                        <udid>03157df375270435</udid>
+                        <operatingSystem>Mac</operatingSystem>
+                        <udid></udid>
 
                         <!--<appURL>${appURL}</appURL>-->
                         <!--End Mobile-->

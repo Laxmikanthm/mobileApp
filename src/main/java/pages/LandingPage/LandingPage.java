@@ -59,6 +59,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public RegistrationPage gotoRegistrationPage() throws Exception {
+        skip();
         getRegistrationButton().click();
         return RegistrationPage.get((AppiumDriver) driver);
     }
