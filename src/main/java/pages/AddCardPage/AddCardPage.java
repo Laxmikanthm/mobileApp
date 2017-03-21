@@ -89,20 +89,6 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
         }
     }
 
-   /* public PaymentMethodsPage addCardsDetails(MobileUser mobileUser) throws Exception
-    {
-        try{
-            getCardNumber().setText("");
-            getNameOnCard().setText(mobileUser.getFirstName()+mobileUser.getLastName());
-            getNextButton().click();
-            getExpiresOn().setText("");
-            getCCV().setText("");
-            getNextButton().click();
-            return PaymentMethodsPage.get((AppiumDriver) driver);
-        }catch(Exception ex){
-            throw new Exception(ex);
-    }*/
-
     public PaymentMethodsPage addSubwayCardDetails(MobileUser mobileUser) throws Exception
     {
         try{
