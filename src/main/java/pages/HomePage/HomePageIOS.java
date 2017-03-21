@@ -39,5 +39,13 @@ public class HomePageIOS extends HomePage {
         IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("FindYourSubWay")+"']"), "FindYourSubWay button");
         return button;
     }
+    public MobileButton getAllowLocation() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("AllowLocation")+"']"), "AllowLocation button");
+        return button;
+    }
 
+    public MobileButton getStoreView() throws Exception {
+        IOSButton storeViewButton = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toggle_view"), "StoreView button");
+        return storeViewButton;
+    }
 }

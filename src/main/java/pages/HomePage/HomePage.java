@@ -37,6 +37,8 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getFindButton() throws Exception;
     abstract MobileButton getFindYourSubWay()throws Exception;
     abstract MobileButton getFindYourAnotherSubWay()throws Exception;
+    abstract MobileButton getAllowLocation()throws Exception;
+    abstract MobileButton getStoreView()throws Exception;
 
 
     @Override
@@ -73,13 +75,16 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     public OrdersPage findYourSubWay() throws Exception
     {
         try{
-            getFindYourSubWay().click();
 
+            getFindYourSubWay().click();
+            getAllowLocation().click();
+            getStoreView().click();
             return OrdersPage.get((AppiumDriver)driver);
         }catch(Exception ex){
             throw new Exception(ex);
         }
     }
+
 
 }
 
