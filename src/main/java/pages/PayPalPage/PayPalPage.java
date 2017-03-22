@@ -10,6 +10,7 @@ import io.appium.java_client.ios.IOSDriver;
 import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
 import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPageAndroid;
 import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPageIOS;
+import pages.PaymentMethodsPage.PaymentMethodsPage;
 import pojos.user.MobileUser;
 
 import java.util.Iterator;
@@ -29,8 +30,7 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileTextBox getPaypalPassword() throws Exception;
     abstract MobileButton getLogIn() throws Exception;
     abstract MobileButton getAgreeAndContinue() throws Exception;
-    public String payPalEmailAddress="upadhyaya_s@subway.com";
-    public String payPalPassword="Subway1965";
+
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -55,21 +55,13 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void addPaypalDetails(MobileUser mobileUser)throws Exception {
-        try {
-            Set contextNames = ((AppiumDriver)driver).getContextHandles();
-            Iterator itr= contextNames.iterator();
-            itr.next();
-            Object obj1 = itr.next();
-            ((AppiumDriver)driver).context(obj1.toString());
-            getPaypalUserName().isReady();
-            getPaypalUserName().setText(payPalEmailAddress);
-            getPaypalPassword().setText(payPalPassword);
+    public PaymentMethodsPage addPaypalDetails(MobileUser mobileUser)throws Exception {
+         {
+            getPaypalUserName().setText(mobileUser.getPayPalEmailAddress());
+            getPaypalPassword().setText(mobileUser.getPayPalPassword());
             getLogIn().click();
             getAgreeAndContinue().click();
-                }catch(Exception ex)
-                {
-                    throw new Exception(ex);
+            return PaymentMethodsPage.get((AppiumDriver) driver);
                 }
             }
 

@@ -19,14 +19,14 @@ public class PayPalPageAndroid extends PayPalPage {
 
     public AndroidTextBox getPaypalUserName() throws Exception {
 
-        AndroidTextBox userNameTextbox = new AndroidTextBox ((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalEmail")+"']"), "username text field" );
+        AndroidTextBox userNameTextbox = new AndroidTextBox ((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalEmail")+"']"), "PayPal email" );
 
         return userNameTextbox;
     }
 
-    public AndroidPasswordTextBox getPaypalPassword() throws Exception {
+    public AndroidTextBox getPaypalPassword() throws Exception {
 
-        AndroidPasswordTextBox passwordTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "password text field");
+        AndroidTextBox passwordTextBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "PayPal password");
 
         return passwordTextBox;
     }
@@ -34,13 +34,13 @@ public class PayPalPageAndroid extends PayPalPage {
     public AndroidButton getLogIn() throws Exception {
 
         //AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-des='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("PayPalLogin")+"']"), "Login button");
 
         return button;
     }
     public AndroidButton getAgreeAndContinue() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("AgreeBtn")+"']"), "Agree button");
 
         return button;
     }

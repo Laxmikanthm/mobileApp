@@ -6,6 +6,7 @@ import base.gui.controls.mobile.ios.IOSTextBox;
 import base.test.BaseTest;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
 
 /**
  * Created by e002243 on 08-03-2017.
@@ -19,30 +20,30 @@ public class PayPalPageIOS extends  PayPalPage{
 
     public IOSTextBox getPaypalUserName() throws Exception {
 
-        IOSTextBox menuButton = new IOSTextBox((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
+        IOSTextBox userNameTextbox = new IOSTextBox ((IOSDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalEmail")+"']"), "PayPal email" );
 
-        return menuButton;
+        return userNameTextbox;
     }
 
-    public IOSPasswordTextBox getPaypalPassword() throws Exception {
+    public IOSTextBox getPaypalPassword() throws Exception {
+        IOSTextBox passwordTextBox = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "PayPal password");
 
-        IOSPasswordTextBox menuButton = new IOSPasswordTextBox((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
-
-        return menuButton;
+        return passwordTextBox;
     }
 
     public IOSButton getLogIn() throws Exception {
 
-        IOSButton menuButton = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
+        //AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-des='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("PayPalLogin")+"']"), "Login button");
 
-        return menuButton;
+        return button;
     }
     public IOSButton getAgreeAndContinue() throws Exception {
 
-        IOSButton menuButton = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("AgreeBtn")+"']"), "Agree button");
 
-        return menuButton;
+        return button;
     }
-
-
 }
+
+
