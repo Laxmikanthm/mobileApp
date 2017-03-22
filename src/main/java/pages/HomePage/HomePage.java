@@ -77,8 +77,8 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         try{
 
             getFindYourSubWay().click();
-            getAllowLocation().click();
-            getStoreView().click();
+           // getAllowLocation().click();
+            //getStoreView().click();
             return OrdersPage.get((AppiumDriver)driver);
         }catch(Exception ex){
             throw new Exception(ex);

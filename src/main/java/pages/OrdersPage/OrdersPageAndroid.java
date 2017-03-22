@@ -118,4 +118,20 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
 
+    public MobileButton getMakeItAMeal() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("MakeItAMeal")+"']"), "Make It a Meal Button");
+        return button;
+    }
+
+    public MobileButton getDrinks() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.RelativeLayout[@resource-id='"+BaseTest.bundle.getString("Drinks")+"']"), "Drinks Button");
+        return button;
+    }
+    public MobileButton  getDrinksAddToBag() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+BaseTest.bundle.getString("DrinksAddToBag")+"']"), "Drinks Button");
+        return button;
+    }
+
+
+
 }

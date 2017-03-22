@@ -54,6 +54,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     abstract MobileButton getCustomize() throws Exception;
 
+    abstract MobileButton getMakeItAMeal() throws Exception;
+
+    abstract MobileButton getDrinks() throws Exception;
+
+    abstract MobileButton getDrinksAddToBag() throws Exception;
+
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -98,9 +104,29 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
+    public void placeRandomOrderAMeal( Order order,MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            searchStoreByZipCode(mobileUser);
+          //  searchStore(storeName);
+            getSelectRestaurantButton().click();
+            getStartOrderButton().click();
+         //  selectCategory(order.getCart().getProductDetail().getProductGroup().getName());
+           //
+            // selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
+            getAddToBag().click();
+            getMakeItAMeal().click();
+            getDrinks().click();
+            getDrinksAddToBag().click();
+            getPlaceOrder().click();
+            getGotIt().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
     public void searchStoreByZipCode(MobileUser mobileUser) throws Exception {
         try {
-            getSearchButton().click();
+           // getSearchButton().click();
             getSearchByZipCode().isReady();
             getSearchByZipCode().getControl().clear();
             ((AndroidDriver) driver).findElement(By.xpath("//*[@text='Search by Zip Code']")).sendKeys("06460");

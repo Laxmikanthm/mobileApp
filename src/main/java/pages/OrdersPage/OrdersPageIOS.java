@@ -110,4 +110,24 @@ public class OrdersPageIOS extends OrdersPage {
         return subCategoryItem;
     }
 
+
+    public IOSButton getMakeItAMeal() throws Exception {
+
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return Button;
+    }
+    public IOSButton getDrinks() throws Exception {
+
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return Button;
+    }
+    public IOSButton getDrinksAddToBag() throws Exception {
+
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return Button;
+    }
+
 }
