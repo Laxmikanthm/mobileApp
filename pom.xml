@@ -69,7 +69,7 @@
                     <systemPropertyVariables>
 
                         <projectName>SubwayMobileApp</projectName>
-                        <spring.profiles.active>local</spring.profiles.active>
+                        <spring.profiles.active>testObject</spring.profiles.active>
                         <!--<language>en</language>-->
                         <country>US</country>
                         <language>us</language>
@@ -81,17 +81,17 @@
                         <!--Mobile-->
                         <mobilePlatform>Android</mobilePlatform>
                         <platformVersions>6.0.1</platformVersions>
-                        <deviceName>Subway</deviceName>
+                        <deviceName>Subway1</deviceName>
                         <platform>mobile</platform>
                         <!-- driverName can be MobileApp/WebApp -->
                         <driverName>MobileApp</driverName>
                         <appiumVer>1.5.3</appiumVer>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
-                        <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/nikesh/Downloads/subwayStagingDebug571.apk</app>
+                        <browserOrDevice>Subway1</browserOrDevice>
+                        <appURL>/Users/nikesh/Downloads/subwayStagingDebug571.apk</appURL>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
-                        <newCommandTimeout>600</newCommandTimeout>
+                        <newCommandTimeout>9000</newCommandTimeout>
                         <operatingSystem>Mac</operatingSystem>
                         <udid></udid>
 
@@ -99,19 +99,19 @@
                         <!--End Mobile-->
 
                         <executionPlatform></executionPlatform>
-                        <appName>Subway</appName>
+                        <appName>Subway1</appName>
 
                         <!--Test Object-->
-                        <!--<spring.profiles.active>testObject</spring.profiles.active>
+                        <spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>7C89E3533A064841AA509FA8EF4D0F39</testObjectApiKey>
+                        <testObjectApiKey>4974E96CF28D44CB85DD78AD3D5B2F54</testObjectApiKey>
                         <testObjectDevice>HTC_One_M8_real</testObjectDevice>
-                        <appURL>/Users/nikesh/Downloads/subwayStagingDebug515.apk</appURL>
+                        <app>/Users/nikesh/Downloads/subwayStagingDebug571.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
-                        <appName>Subway</appName>-->
-                        <!--<appiumVersion>1.5.2-updated-chromedriver</appiumVersion>-->
+                        <appName>Subway1</appName>
+                        <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>
 
 
                     </systemPropertyVariables>
