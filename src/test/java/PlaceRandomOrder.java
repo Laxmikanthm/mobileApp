@@ -10,6 +10,7 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.PaymentMethodsPage.PaymentMethodsPage;
+import pages.SearchStore.SearchStore;
 import pages.SubwayPage.SubwayPage;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
@@ -40,7 +41,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
         PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
         menuPage.goHome();
-        OrdersPage ordersPage = homePage.findYourSubWay();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.placeRandomOrder(remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches"), mobileUser, storeName);
 
@@ -62,7 +64,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
         PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
         menuPage.goHome();
-        OrdersPage ordersPage = homePage.findYourSubWay();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.placeRandomOrder(remoteOrder.placeRandomOrderWithSpecificProduct("SUBWAY Fresh Fit™"), mobileUser, storeName);
 
@@ -83,7 +86,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
         PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
         menuPage.goHome();
-        OrdersPage ordersPage = homePage.findYourSubWay();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.placeRandomOrder(remoteOrder.placeRandomOrderWithSpecificProduct("Breakfast"), mobileUser, storeName);
 
@@ -105,7 +109,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
         PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
         menuPage.goHome();
-        OrdersPage ordersPage = homePage.findYourSubWay();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.placeRandomOrder(remoteOrder.placeRandomOrderWithSpecificProduct("Personal Pizza"), mobileUser, storeName);
 
@@ -127,7 +132,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
         PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
         menuPage.goHome();
-        OrdersPage ordersPage = homePage.findYourSubWay();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.placeRandomOrder(remoteOrder.placeRandomOrderWithSpecificProduct("Chopped Salads"), mobileUser, storeName);
 
@@ -149,7 +155,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
         PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
         menuPage.goHome();
-        OrdersPage ordersPage = homePage.findYourSubWay();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.placeRandomOrder(remoteOrder.placeRandomOrderWithSpecificProduct("SUBWAY Fresh Fit for Kids®"), mobileUser, storeName);
 
@@ -171,7 +178,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
         PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
         menuPage.goHome();
-        OrdersPage ordersPage = homePage.findYourSubWay();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.placeRandomOrder(remoteOrder.placeRandomOrderWithSpecificProduct("Sides"), mobileUser, storeName);
 
@@ -188,7 +196,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        OrdersPage ordersPage = homePage.findYourSubWay();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.placeRandomOrderAMeal(remoteOrder.placeRandomOrderWithSpecificProduct("Sides"), mobileUser, storeName);
     }

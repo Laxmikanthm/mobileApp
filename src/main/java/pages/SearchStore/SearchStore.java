@@ -6,7 +6,12 @@ import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
+import pages.HomePage.HomePage;
+import pages.OrdersPage.OrdersPage;
+import pages.OrdersPage.OrdersPageAndroid;
+import pages.OrdersPage.OrdersPageIOS;
 import pojos.user.MobileUser;
 
 /**
@@ -37,6 +42,19 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     @Override
     protected void waitForPageToLoad() throws Exception {
 
+    }
+    public static SearchStore get(AppiumDriver driver) throws Exception {
+
+        String platform = driver.getCapabilities().getCapability("platformName").toString();
+
+        switch (platform) {
+            case "iOS":
+                return new SearchStoreIOS((IOSDriver) driver);
+            case "Android":
+                return new SearchStoreAndroid((AndroidDriver) driver);
+            default:
+                throw new Exception("Unable to get Find A Store page for platform " + platform);
+        }
     }
 
     public void searchStoreByZipCode(MobileUser mobileUser) throws Exception
@@ -92,14 +110,14 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-    public void findYourStore(MobileUser mobileUser) throws Exception
+    public OrdersPage findYourStore(MobileUser mobileUser) throws Exception
     {
         try{
             okPopUp();
             allowPopUp();
             toggleView();
             searchStoreByZipCode(mobileUser);
-
+            return OrdersPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);
         }

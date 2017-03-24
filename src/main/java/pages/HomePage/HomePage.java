@@ -8,6 +8,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
+import pages.SearchStore.SearchStore;
 
 /**
  * Created by test-user on 2/2/17.
@@ -72,14 +73,14 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-    public OrdersPage findYourSubWay() throws Exception
+    public SearchStore findYourSubWay() throws Exception
     {
         try{
 
             getFindYourSubWay().click();
            // getAllowLocation().click();
             //getStoreView().click();
-            return OrdersPage.get((AppiumDriver)driver);
+            return SearchStore.get((AppiumDriver)driver);
         }catch(Exception ex){
             throw new Exception(ex);
         }
