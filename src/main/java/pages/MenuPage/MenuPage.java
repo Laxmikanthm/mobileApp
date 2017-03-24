@@ -31,6 +31,11 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getLogOutButtonInPopUp() throws Exception;
     abstract MobileButton getPaymentMethods() throws Exception;
     abstract MobileButton getGoHome() throws Exception;
+    abstract MobileButton getEmailPreferences() throws Exception;
+    abstract MobileButton getMobileOrderHistory() throws Exception;
+    abstract MobileButton getHelp() throws Exception;
+    abstract MobileButton getAbout() throws Exception;
+
     //abstract MobileButton getLogOutButton() throws Exception;
 
     public static MenuPage get(AppiumDriver driver) throws Exception{
@@ -76,8 +81,6 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         }catch(Exception ex){
             throw new Exception(ex);
         }
-
-
     }
 
     public void logout() throws Exception
@@ -152,6 +155,50 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         getGoHome().click();
     }
 
+    public ContactInformationPage getEmailPref() throws Exception
+    {
+        try{
+            this.getEmailPreferences().waitForClickable();;
+            this.getEmailPreferences().click();
+            return ContactInformationPage.get((AppiumDriver) driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+
+    }
+
+    public ContactInformationPage getOrderHistory() throws Exception
+    {
+        try{
+            this.getMobileOrderHistory().waitForClickable();
+            this.getMobileOrderHistory().click();
+            return ContactInformationPage.get((AppiumDriver) driver);
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
+    public ContactInformationPage gethelp() throws Exception
+    {
+        try{
+            this.getHelp().waitForClickable();
+            this.getHelp().click();
+            return ContactInformationPage.get((AppiumDriver) driver);
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
+    public ContactInformationPage getabout() throws Exception
+    {
+        try{
+            this.getAbout().waitForClickable();
+            this.getHelp().click();
+            return ContactInformationPage.get((AppiumDriver) driver);
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }
+    }
 
 }
 

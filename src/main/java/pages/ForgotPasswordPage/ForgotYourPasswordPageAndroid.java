@@ -16,51 +16,37 @@ public class ForgotYourPasswordPageAndroid extends ForgotYourPasswordPage {
 
 
     public AndroidTextBox getEmailAddress() throws Exception {
-
-        AndroidTextBox emailTextbox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+ BaseTest.bundle.getString("Email")+"']"), "Email text field");
-
+        AndroidTextBox emailTextbox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@resource-id='"+ BaseTest.bundle.getString("Email")+"']"), "Email text field");
         return emailTextbox;
     }
 
     public AndroidButton getNextButton() throws Exception {
-
-        AndroidButton nextButton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-desc='"+BaseTest.bundle.getString("NextButton")+"']"), "Next button");
-
+        AndroidButton nextButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("NextButton")+"']"), "Next button");
         return nextButton;
     }
 
     public AndroidButton getResetButton() throws Exception {
-
-        AndroidButton resetButton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-desc='"+BaseTest.bundle.getString("ResetPassword")+"']"), "Reset Password button");
-
+        AndroidButton resetButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("ResetPassword")+"']"), "Reset Password button");
         return resetButton;
     }
 
     public AndroidTextBox getPassword() throws Exception{
-
-        AndroidTextBox passwordField = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+ BaseTest.bundle.getString("NewPassword")+"']"), "Password text field");
-
+        AndroidTextBox passwordField = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@resource-id='"+ BaseTest.bundle.getString("NewPassword")+"']"), "Password text field");
         return passwordField;
     }
 
     public AndroidTextBox getConfirmPassword() throws Exception{
-
-        AndroidTextBox conPasswordField = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+ BaseTest.bundle.getString("ConfirmPassword")+"']"), "Confirm Password text field");
-
+        AndroidTextBox conPasswordField = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@resource-id='"+ BaseTest.bundle.getString("ConfirmPassword")+"']"), "Confirm Password text field");
         return conPasswordField;
     }
 
     public AndroidButton getSetPassword() throws Exception {
-
-        AndroidButton setButton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-desc='"+BaseTest.bundle.getString("SetPassword")+"']"), "Set Password button");
-
+        AndroidButton setButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("SetPassword")+"']"), "Set Password button");
         return setButton;
     }
 
     public AndroidButton getLoginAgainPopUp() throws Exception {
-
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LoginAgainOkButton") + "']"), "Login Again Pop Up");
-
         return button;
     }
 }

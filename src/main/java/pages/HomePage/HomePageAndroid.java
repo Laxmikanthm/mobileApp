@@ -16,7 +16,7 @@ public class HomePageAndroid extends HomePage {
         super(driver);
     }
     public MobileButton getMenu() throws Exception {
-        AndroidButton menuPageButton = new AndroidButton((AndroidDriver) driver, By.id("profile"), "UserProfile button");
+        AndroidButton menuPageButton = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("UserProfile")), "UserProfile field");
         return menuPageButton;
     }
 
@@ -36,7 +36,7 @@ public class HomePageAndroid extends HomePage {
     }
 
     public MobileButton getFindYourSubWay() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("FindYourSubWay")+"']"), "FindYourSubWay button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("FindYourSubWay")+"']"), "FindYourSubWay button");
         return button;
     }
 
@@ -53,4 +53,5 @@ public class HomePageAndroid extends HomePage {
         AndroidButton storeViewButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toggle_view"), "StoreView button");
         return storeViewButton;
     }
+
 }

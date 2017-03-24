@@ -19,13 +19,6 @@ public class OrdersPageIOS extends OrdersPage {
         super(driver);
     }
 
-    public IOSTextBox getSearchByZipCode() throws Exception {
-
-        IOSTextBox userNameTextbox  = new IOSTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+ BaseTest.bundle.getString("UserNameiOS")+"']"), "username text field");
-
-        return userNameTextbox;
-    }
-
     public MobileLabel getStoreNames() throws Exception {
 
         IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
@@ -33,12 +26,6 @@ public class OrdersPageIOS extends OrdersPage {
         return button;
     }
 
-    public IOSButton getSearchButton() throws Exception {
-
-        IOSButton searchButton = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
-
-        return searchButton;
-    }
     public IOSButton getSelectRestaurantButton() throws Exception {
 
         IOSButton selectRestaurantButton = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
@@ -53,24 +40,13 @@ public class OrdersPageIOS extends OrdersPage {
         return startOrderbutton;
     }
 
-    public IOSButton getDenyButton() throws Exception {
-
-        IOSButton startOrderbutton = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
-
-        return startOrderbutton;
-    }
     public IOSButton getCatagoryItem() throws Exception {
 
         IOSButton startOrderbutton = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
 
         return startOrderbutton;
     }
-    public IOSButton getOkPopupButton() throws Exception {
 
-        IOSButton okPopupButton = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
-
-        return okPopupButton;
-    }
     public IOSButton getAddToBag() throws Exception {
 
         IOSButton addToBag = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
@@ -110,7 +86,6 @@ public class OrdersPageIOS extends OrdersPage {
         return subCategoryItem;
     }
 
-
     public IOSButton getMakeItAMeal() throws Exception {
 
         IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
@@ -123,7 +98,15 @@ public class OrdersPageIOS extends OrdersPage {
 
         return Button;
     }
+
     public IOSButton getDrinksAddToBag() throws Exception {
+
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return Button;
+    }
+
+    public IOSButton getChange() throws Exception {
 
         IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
 

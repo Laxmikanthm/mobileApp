@@ -58,4 +58,32 @@ public class MenuPageIOS extends MenuPage {
 
         return button;
     }
+
+    public MobileButton getEmailPreferences() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+
+        return button;
+    }
+
+    public MobileButton getMobileOrderHistory() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+
+        return button;
+    }
+
+    public MobileButton getHelp() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+
+        return button;
+    }
+
+    public MobileButton getAbout() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+
+        return button;
+    }
 }

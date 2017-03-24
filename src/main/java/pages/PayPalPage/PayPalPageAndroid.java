@@ -18,30 +18,21 @@ public class PayPalPageAndroid extends PayPalPage {
     }
 
     public AndroidTextBox getPaypalUserName() throws Exception {
-
-        AndroidTextBox userNameTextbox = new AndroidTextBox ((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalEmail")+"']"), "PayPal email" );
-
+        AndroidTextBox userNameTextbox = new AndroidTextBox ((AndroidDriver) driver, By.xpath("//android.view.View[@resource-id='"+BaseTest.bundle.getString("PayPalEmail")+"']"), "PayPal email" );
         return userNameTextbox;
     }
 
     public AndroidTextBox getPaypalPassword() throws Exception {
-
-        AndroidTextBox passwordTextBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "PayPal password");
-
+        AndroidTextBox passwordTextBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.view.View[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "PayPal password");
         return passwordTextBox;
     }
 
     public AndroidButton getLogIn() throws Exception {
-
-        //AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-des='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("PayPalLogin")+"']"), "Login button");
-
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+BaseTest.bundle.getString("PayPalLogin")+"']"), "PayPal login" );
         return button;
     }
     public AndroidButton getAgreeAndContinue() throws Exception {
-
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("AgreeBtn")+"']"), "Agree button");
-
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("AgreeBtn")+"']"), "AgreeBtn button");
         return button;
     }
 }

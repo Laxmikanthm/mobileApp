@@ -14,12 +14,9 @@ public class SubwayPageAndroid extends SubwayPage {
     {
         super(driver);
     }
+
     public AndroidButton getAddPaymentMethod() throws Exception {
-
-      //  AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("AddPaymentMethod") + "']"), "");
-
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='ADD PAYMENT METHOD']"), "Add Payment Method Button");
-
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("AddPaymet") + "']"), "AddPaymentMethod Button");
         return button;
     }
 }

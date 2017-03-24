@@ -26,39 +26,19 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         super(driver);
     }
 
-    abstract MobileButton getSearchButton() throws Exception;
-
-    abstract MobileTextBox getSearchByZipCode() throws Exception;
-
     abstract MobileLabel getStoreNames() throws Exception;
-
     abstract MobileButton getSelectRestaurantButton() throws Exception;
-
     abstract MobileButton getStartOrderButton() throws Exception;
-
-    abstract MobileButton getDenyButton() throws Exception;
-
-    abstract MobileButton getCatagoryItem() throws Exception;
-
-    abstract MobileButton getOkPopupButton() throws Exception;
-
     abstract MobileButton getAddToBag() throws Exception;
-
     abstract MobileButton getPlaceOrder() throws Exception;
-
     abstract MobileButton getGotIt() throws Exception;
-
     abstract MobileButton getCategory(String Category) throws Exception;
-
     abstract MobileButton getSubCategory(String Category) throws Exception;
-
     abstract MobileButton getCustomize() throws Exception;
-
     abstract MobileButton getMakeItAMeal() throws Exception;
-
     abstract MobileButton getDrinks() throws Exception;
-
     abstract MobileButton getDrinksAddToBag() throws Exception;
+    abstract MobileButton getChange() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -87,14 +67,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void placeRandomOrder(Order order, MobileUser mobileUser, String storeName) throws Exception {
         try {
-            searchStoreByZipCode(mobileUser);
             searchStore(storeName);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
             selectCategory(order.getCart().getProductDetail().getProductGroup().getName());
             selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
-//            orderCategoryItem(order);
-//            orderSubCategoryItem(order);
             getAddToBag().click();
             getPlaceOrder().click();
             //Return and assert the order item
@@ -106,13 +83,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void placeRandomOrderAMeal( Order order,MobileUser mobileUser, String storeName) throws Exception {
         try {
-            searchStoreByZipCode(mobileUser);
-          //  searchStore(storeName);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
-         //  selectCategory(order.getCart().getProductDetail().getProductGroup().getName());
-           //
-            // selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
             getAddToBag().click();
             getMakeItAMeal().click();
             getDrinks().click();
@@ -124,17 +96,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void searchStoreByZipCode(MobileUser mobileUser) throws Exception {
-        try {
-           // getSearchButton().click();
-            getSearchByZipCode().isReady();
-            getSearchByZipCode().getControl().clear();
-            ((AndroidDriver) driver).findElement(By.xpath("//*[@text='Search by Zip Code']")).sendKeys("06460");
-            ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_SEARCH);
-        } catch (Exception ex) {
-            throw new Exception(ex);
-        }
-    }
 
     public void searchStore(String storeName) throws Exception {
         try {

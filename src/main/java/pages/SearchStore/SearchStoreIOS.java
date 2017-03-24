@@ -89,4 +89,18 @@ public class SearchStoreIOS extends SearchStore {
 
         return button;
     }
+
+    public IOSButton getRecentlyVisited() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getPreviousSearches() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
 }

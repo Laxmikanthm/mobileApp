@@ -26,6 +26,8 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     abstract MobileButton getDriveThru() throws Exception;
     abstract MobileButton getServesBreakfast() throws Exception;
     abstract MobileButton getOpenHours() throws Exception;
+    abstract MobileButton getRecentlyVisited() throws Exception;
+    abstract MobileButton getPreviousSearches() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {

@@ -22,49 +22,54 @@ public class MenuPageAndroid extends MenuPage {
 
     public AndroidButton getContactInfo() throws Exception {
 
-       // AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("ContactInfo")+"']"), "ContactInfo button");
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("ContactInfo")+"']"), "contact information");
+        // AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("ContactInfo")+"']"), "ContactInfo button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("ContactInfo")+"']"), "contact information");
         return button;
     }
 
     public MobileLabel getUserInfo() throws Exception {
-
-        AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.id("com.subway.mobile.subwayapp03:id/user_name"), "UserProfile button");
+        AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("UserInfo")+"']"), "User Information");
         return label;
     }
     public AndroidButton getLogOut() throws Exception {
-
-       // AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
-
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/logout"), "LogOut button");
-
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+ BaseTest.bundle.getString("LogOut")+"']"), "LogOut button");
         return button;
     }
 
     public AndroidButton getLogOutButtonInPopUp() throws Exception {
-
-        //AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("android:id/button1"), "LogOut button");
-
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+ BaseTest.bundle.getString("LogoutBtn")+"']"), "LogOut button in Popup");
         return button;
     }
 
     public AndroidButton getPaymentMethods() throws Exception {
-
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, (By.id("com.subway.mobile.subwayapp03:id/payment_methods")), "Payment methods");
-
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Paymentmethods")+"']"), "Payment Methods button");
         return button;
     }
 
     public AndroidButton getGoHome() throws Exception {
-
-
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.className("android.widget.ImageButton"), "Back button");
-
         return button;
     }
 
+    public AndroidButton getEmailPreferences() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("EmailPref")+"']"), "EmailPreferences button");
+        return button;
+    }
 
+    public AndroidButton getMobileOrderHistory() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("MobileOrderHistory")+"']"), "MobileOrderHistory button");
+        return button;
+    }
+
+    public AndroidButton getHelp() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Help")+"']"), "Help button");
+        return button;
+    }
+
+    public AndroidButton getAbout() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("About")+"']"), "About button");
+        return button;
+    }
 
 }
 

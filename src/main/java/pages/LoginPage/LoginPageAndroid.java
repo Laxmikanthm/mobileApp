@@ -17,33 +17,22 @@ public class LoginPageAndroid extends LoginPage {
     }
 
     public AndroidTextBox getUserName() throws Exception {
-
-        AndroidTextBox userNameTextbox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("UserName")+"']"), "username text field");
-
+        AndroidTextBox userNameTextbox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@resource-id='"+BaseTest.bundle.getString("UserName")+"']"), "username text field");
         return userNameTextbox;
     }
 
     public AndroidPasswordTextBox getPassword() throws Exception {
-
-        AndroidPasswordTextBox passwordTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("Password")+"']"), "password text field");
-
+        AndroidPasswordTextBox passwordTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@resource-id='"+BaseTest.bundle.getString("Password")+"']"), "password text field");
         return passwordTextBox;
     }
 
     public AndroidButton getLogin() throws Exception {
-
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-desc='LOG IN']"), "Login button");
-       // AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@class='android.widget.Button' and index='3']"), "Login button");
-
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
         return button;
     }
 
     public AndroidButton getForgotPassword() throws Exception {
-
-        //AndroidButton forgotPasswordButton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("ForgotPassword")+"']"), "Forgot password button");
-       // AndroidButton forgotPasswordButton = new AndroidButton((AndroidDriver) driver, By.id("custom-forgotPassword"), "Forgot password button");
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@content-desc='Forgot password?']"), "Forgot password button");
-
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.view.View[@content-desc='"+BaseTest.bundle.getString("Forgotpassword")+"']"), "ForgotPassword button");
         return button;
     }
 }
