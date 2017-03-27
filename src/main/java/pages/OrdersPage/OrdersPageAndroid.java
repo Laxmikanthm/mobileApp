@@ -55,7 +55,7 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getCategory(String category) throws Exception{
-        AndroidButton button = new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+category+"']"),"Category Item");
+        AndroidButton button = new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+category+"']"),"Category Item: "+category);
         return button;
     }
 
@@ -82,6 +82,13 @@ public class OrdersPageAndroid extends OrdersPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Change")), "Change field");
         return button;
     }
+
+    public AndroidTextBox getSpecialInstructions() throws Exception {
+        AndroidTextBox specialInstructions = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("MakeItAMeal")+"']"), "Make It a Meal Button");
+        return specialInstructions;
+    }
+
+
 
 
 }

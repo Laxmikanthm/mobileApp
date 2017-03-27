@@ -57,7 +57,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-    public void searchStoreByZipCode(MobileUser mobileUser) throws Exception
+    public void searchStoreByZipCode(String store) throws Exception
     {
         try{
             getSearchButton().click();
@@ -110,13 +110,13 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-    public OrdersPage findYourStore(MobileUser mobileUser) throws Exception
+    public OrdersPage findYourStore(String store) throws Exception
     {
         try{
             okPopUp();
             allowPopUp();
             toggleView();
-            searchStoreByZipCode(mobileUser);
+            searchStoreByZipCode(store);
             return OrdersPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);

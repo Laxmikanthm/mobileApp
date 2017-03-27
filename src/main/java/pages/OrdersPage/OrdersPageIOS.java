@@ -113,4 +113,12 @@ public class OrdersPageIOS extends OrdersPage {
         return Button;
     }
 
+    public IOSTextBox getSpecialInstructions() throws Exception {
+
+        IOSTextBox specialInstructions = new IOSTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return specialInstructions;
+    }
+
+
 }

@@ -31,9 +31,9 @@ public class PaymentMethods extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         SubwayPage subwayPage = menuPage.addPaymentMethods();
-        ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
-        AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
-        PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
+        AddCardPage addCardPage=subwayPage.getAddCardPageInstance();
+        addCardPage.addCreditorDebitCard(subwayPage,mobileUser);
+
         //Assert
 
     }
@@ -48,9 +48,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         SubwayPage subwayPage = menuPage.addPaymentMethods();
-        ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
-        AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodDebitCard();
-        PaymentMethodsPage paymentMethodsPage=  addCardPage.addCardDetails(mobileUser);
+        AddCardPage addCardPage=subwayPage.getAddCardPageInstance();
+        addCardPage.addCreditorDebitCard(subwayPage,mobileUser);
         //Assert
 
     }
@@ -65,9 +64,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         SubwayPage subwayPage = menuPage.addPaymentMethods();
-        ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
-        AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodGiftCard();
-        PaymentMethodsPage paymentMethodsPage=  addCardPage.addSubwayCardDetails(mobileUser);
+        AddCardPage addCardPage=subwayPage.getAddCardPageInstance();
+        addCardPage.addGiftCard(subwayPage,mobileUser);
         //Assert
 
     }
@@ -83,9 +81,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         SubwayPage subwayPage = menuPage.addPaymentMethods();
-        ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
-        PayPalPage payPalPage = choosePaymentMethodPage.ChoosePaymentMethodPayPalCard();
-        payPalPage.addPaypalDetails(mobileUser);
+        AddCardPage addCardPage=subwayPage.getAddCardPageInstance();
+        addCardPage.addPayPal(subwayPage,mobileUser);
         //Assert
     }
 }

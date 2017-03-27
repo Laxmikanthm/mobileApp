@@ -10,6 +10,7 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.PaymentMethodsPage.PaymentMethodsPage;
+import pages.SearchStore.SearchStore;
 import pages.SubwayPage.SubwayPage;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
@@ -38,10 +39,9 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
         PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
         menuPage.goHome();
-        OrdersPage ordersPage = homePage.findYourSubWay();
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        ordersPage.placeRandomOrderSpecialInstructions(remoteOrder.placeRandomOrderWithSpecificProduct("Sides"), mobileUser, storeName,specialInstructions);
-
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore("06460");
+        ordersPage.placeRandomOrderSpecialInstructions("Sides", mobileUser, storeName,specialInstructions);
 
     }
 }

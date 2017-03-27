@@ -12,6 +12,7 @@ import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import pojos.Orders.Order;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import java.util.List;
 import utils.*;
@@ -27,18 +28,32 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     abstract MobileLabel getStoreNames() throws Exception;
+
     abstract MobileButton getSelectRestaurantButton() throws Exception;
+
     abstract MobileButton getStartOrderButton() throws Exception;
+
     abstract MobileButton getAddToBag() throws Exception;
+
     abstract MobileButton getPlaceOrder() throws Exception;
+
     abstract MobileButton getGotIt() throws Exception;
+
     abstract MobileButton getCategory(String Category) throws Exception;
+
     abstract MobileButton getSubCategory(String Category) throws Exception;
+
     abstract MobileButton getCustomize() throws Exception;
+
     abstract MobileButton getMakeItAMeal() throws Exception;
+
     abstract MobileButton getDrinks() throws Exception;
+
     abstract MobileButton getDrinksAddToBag() throws Exception;
+
     abstract MobileButton getChange() throws Exception;
+
+    abstract MobileTextBox getSpecialInstructions() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -65,8 +80,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void placeRandomOrder(Order order, MobileUser mobileUser, String storeName) throws Exception {
+    public void placeRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             searchStore(storeName);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
@@ -81,7 +98,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void placeRandomOrderAMeal( Order order,MobileUser mobileUser, String storeName) throws Exception {
+    public void placeRandomOrderAMeal(Order order, MobileUser mobileUser, String storeName) throws Exception {
         try {
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
@@ -149,9 +166,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     /* Need to find better Solution*/
     public static void getStoreList(RemoteWebDriver driver) throws Exception {
-        List<WebElement> list= driver.findElements((By.xpath("//*[@resource-id='com.subway.mobile.subwayapp03:id/stores_list']//android.widget.RelativeLayout")));
+        List<WebElement> list = driver.findElements((By.xpath("//*[@resource-id='com.subway.mobile.subwayapp03:id/stores_list']//android.widget.RelativeLayout")));
         //for(WebElement ele : list){
-        if(list.get(1).findElement(By.id("com.subway.mobile.subwayapp03:id/address")).getText().contains("1365 Boston Post Road, Milford, CT 06460")){
+        if (list.get(1).findElement(By.id("com.subway.mobile.subwayapp03:id/address")).getText().contains("1365 Boston Post Road, Milford, CT 06460")) {
             System.out.println(list.get(1).getLocation().getY());
             int x = list.get(1).getLocation().getX();
             int y1 = list.get(1).getLocation().getY();
@@ -161,8 +178,26 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
+    public void placeRandomOrderSpecialInstructions(String menuItem, MobileUser mobileUser, String storeName, String specialInstructions) throws Exception {
+        try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            searchStore(storeName);
+            getSelectRestaurantButton().click();
+            getStartOrderButton().click();
+            selectCategory(order.getCart().getProductDetail().getProductGroup().getName());
+            selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
+            getAddToBag().click();
+            getPlaceOrder().click();
+            getSpecialInstructions().setText(specialInstructions);
+            getGotIt().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
 
+        }
+    }
 }
+
 
 
 
