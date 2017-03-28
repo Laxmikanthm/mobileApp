@@ -27,7 +27,7 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
     {
         int store = 54588;
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        String specialInstructions =this.getClass().getSimpleName();
+        String specialInstructions ="Required more salt";
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
         mobileUser.registerNewUserHeadless(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

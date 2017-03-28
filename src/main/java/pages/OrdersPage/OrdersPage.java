@@ -189,7 +189,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
             getAddToBag().click();
             getPlaceOrder().click();
-            getSpecialInstructions().setText(specialInstructions);
+           // remoteOrder.addRandomInstructions(specialInstructions);
+
             getGotIt().click();
         } catch (Exception ex) {
             throw new Exception(ex);
