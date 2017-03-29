@@ -42,7 +42,7 @@ public class MenuPageAndroid extends MenuPage {
     }
 
     public AndroidButton getPaymentMethods() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Paymentmethods")+"']"), "Payment Methods button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(("com.subway.mobile.subwayapp03:id/payment_methods")), "Payment methods");
         return button;
     }
 
