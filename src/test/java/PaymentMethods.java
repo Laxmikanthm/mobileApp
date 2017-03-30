@@ -1,4 +1,7 @@
 import Base.SubwayAppBaseTest;
+
+import azureApi.pojos.User;
+import azureApi.serviceUtils.AzureClient;
 import azureApi.serviceUtils.AzureIdentityApi;
 import enums.Country;
 import org.openqa.selenium.internal.Lock;
@@ -15,7 +18,12 @@ import pages.PaymentMethodsPage.PaymentMethodsPage;
 import pages.SubwayPage.SubwayPage;
 import pojos.tenders.SubwayCard;
 import pojos.user.MobileUser;
+import pojos.user.RemoteOrderCustomer;
 import snaplogicApi.serviceUtils.RegisterUser;
+
+import java.util.List;
+
+import java.util.List;
 
 /**
  * Created by e002243 on 03-03-2017.
@@ -23,6 +31,7 @@ import snaplogicApi.serviceUtils.RegisterUser;
 
 @ContextConfiguration("classpath:MobileAppBeans.xml")
 public class PaymentMethods extends SubwayAppBaseTest {
+    List<SubwayCard> cards =null;
     MobileUser mobileUser;
 
 
@@ -57,8 +66,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
 
     }
 
-    //works fine but have open question
-   /* @Test
+    @Test
     public void addGiftCard() throws Exception {
         try
 
@@ -66,6 +74,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
             mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
             //mobileUser.registerNewUserHeadless(mobileUser);
             mobileUser = RegisterUser.registerAUser(mobileUser);
+            cards.add(0,SubwayCard.getSubwayCardFromDB(pojos.enums.Lock.TRUE));
+            mobileUser.setSubwayCards(cards);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
             LoginPage loginPage = landingPage.gotoLogInPage();
             HomePage homePage = loginPage.login(mobileUser);
@@ -81,10 +91,10 @@ public class PaymentMethods extends SubwayAppBaseTest {
             new SubwayCard().lockSubwayCard(mobileUser, pojos.enums.Lock.FALSE);
             AzureIdentityApi.deleteUserFromAzure(mobileUser.getEmailAddress());
         }
-    }*/
+    }
 
 
-        @Test
+    @Test
         public void addPayPal () throws Exception{
 
             MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
@@ -96,7 +106,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
             SubwayPage subwayPage = menuPage.addPaymentMethods();
             AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
             addCardPage.addPayPal(subwayPage, mobileUser);
-            //Assert
+
         }
     }
 
