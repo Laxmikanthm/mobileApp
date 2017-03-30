@@ -88,7 +88,60 @@ public class OrdersPageAndroid extends OrdersPage {
         return specialInstructions;
     }
 
+    public MobileButton getAddIngredient() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("AddIngredient")), "Add Ingredient button");
+        return button;
+    }
 
+    public MobileButton getAddBag() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+BaseTest.bundle.getString("AddToBagInIngredient")+"']"), "AddToBagInIngredient Button");
+        return button;
+    }
+
+    public MobileButton getModify() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Modify")+"']"), "Modify button");
+        return button;
+    }
+
+    public MobileButton getDone() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='"+BaseTest.bundle.getString("Done")+"']"), "Done button");
+        return button;
+    }
+
+    public MobileButton getLess() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.LinearLayout[@resource-id='"+BaseTest.bundle.getString("Less")+"']"), "Less Button");
+        return button;
+    }
+
+    public MobileButton getMore() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.LinearLayout[@resource-id='"+BaseTest.bundle.getString("More")+"']"), "More Button");
+        return button;
+    }
+
+    public MobileButton getRegularInSauce() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.LinearLayout[@resource-id='"+BaseTest.bundle.getString("RegularSauce")+"']"), "Regular In sauce Button");
+        return button;
+    }
+
+    public MobileButton getRegular() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Regular")), "Regular button");
+        return button;
+    }
+
+    public MobileButton getRegularCheeseOrDeluxe() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("RegularCheeseOrDeluxe")), "RegularCheeseOrDeluxe button");
+        return button;
+    }
+
+    public MobileButton getExtraCheeseOrDoubleMeat() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ExtraCheeseOrDoubleMeat")), "ExtraCheeseOrDoubleMeat button");
+        return button;
+    }
+
+    public MobileButton getToastIt() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ToastIt")), "ToastIt button");
+        return button;
+    }
 
 
 }

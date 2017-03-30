@@ -4,11 +4,14 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
+import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.OptionItem;
+import com.thoughtworks.selenium.condition.Text;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
+import org.apache.log4j.lf5.viewer.categoryexplorer.CategoryElement;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import pojos.Orders.Order;
@@ -27,33 +30,33 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         super(driver);
     }
 
+   /* protected TextView storeNameTextView;*/
+
     abstract MobileLabel getStoreNames() throws Exception;
-
     abstract MobileButton getSelectRestaurantButton() throws Exception;
-
     abstract MobileButton getStartOrderButton() throws Exception;
-
     abstract MobileButton getAddToBag() throws Exception;
-
     abstract MobileButton getPlaceOrder() throws Exception;
-
     abstract MobileButton getGotIt() throws Exception;
-
     abstract MobileButton getCategory(String Category) throws Exception;
-
     abstract MobileButton getSubCategory(String Category) throws Exception;
-
     abstract MobileButton getCustomize() throws Exception;
-
     abstract MobileButton getMakeItAMeal() throws Exception;
-
     abstract MobileButton getDrinks() throws Exception;
-
     abstract MobileButton getDrinksAddToBag() throws Exception;
-
     abstract MobileButton getChange() throws Exception;
-
     abstract MobileTextBox getSpecialInstructions() throws Exception;
+    abstract MobileButton getAddIngredient() throws Exception;
+    abstract MobileButton getAddBag() throws Exception;
+    abstract MobileButton getModify() throws Exception;
+    abstract MobileButton getDone() throws Exception;
+    abstract MobileButton getLess() throws Exception;
+    abstract MobileButton getRegular() throws Exception;
+    abstract MobileButton getMore() throws Exception;
+    abstract MobileButton getRegularCheeseOrDeluxe() throws Exception;
+    abstract MobileButton getExtraCheeseOrDoubleMeat() throws Exception;
+    abstract MobileButton getRegularInSauce() throws Exception;
+    abstract MobileButton getToastIt() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -64,6 +67,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     protected void waitForPageToLoad() throws Exception {
 
     }
+
+
 
     public static OrdersPage get(AppiumDriver driver) throws Exception {
 
@@ -195,6 +200,45 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception(ex);
 
+        }
+    }
+
+    /*public MobileLabel getStoreNameTextView(String storeName) throws Exception {
+        try {
+            if(driver instanceof AndroidDriver)
+                storeNameTextView = new TextView(driver, By.xpath("//android.widget.TextView[@text='" + storeName + "']"), "storeName");
+            else
+                storeNameTextView = new TextView(driver, By.xpath("//UIAStaticText[@label='"+storeName+"']"), "Search Store text field");
+        }
+        catch (Exception e) {
+            driver.scrollTo(storeName);
+            if(driver instanceof AndroidDriver)
+                storeNameTextView = new TextView(driver, By.xpath("//android.widget.TextView[@text='" + storeName + "']"), "storeName");
+            else
+                storeNameTextView = new TextView(driver, By.xpath("//UIAStaticText[@label='"+storeName+"']"), "Search Store text field");
+        }
+        return storeNameTextView;
+    }*/
+
+    public void addIngredient() throws Exception {
+        try {
+            getAddIngredient().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+
+
+    public void additionalIngredients(RemoteWebDriver driver,Order order) throws Exception{
+        try{
+            addIngredient();
+            List<WebElement> extraIngredients = driver.findElements((By.xpath("//android.widget.HorizontalScrollView[@resource-id='com.subway.mobile.subwayapp03:id/category_tabs']")));
+            for(int i=1;i<=extraIngredients.size();i++){
+
+            }
+        }catch (Exception ex) {
+            throw new Exception(ex);
         }
     }
 }

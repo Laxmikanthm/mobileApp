@@ -120,5 +120,81 @@ public class OrdersPageIOS extends OrdersPage {
         return specialInstructions;
     }
 
+    public IOSButton getAddIngredient() throws Exception {
+
+        IOSButton AddIngredient = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return AddIngredient;
+    }
+
+    public IOSButton getAddBag() throws Exception {
+
+        IOSButton placeOrder = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return placeOrder;
+    }
+
+    public IOSButton getModify() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getDone() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getLess() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getMore() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getRegular() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getRegularInSauce() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getRegularCheeseOrDeluxe() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getExtraCheeseOrDoubleMeat() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getToastIt() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
 
 }
