@@ -50,7 +50,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public LoginPage gotoLogInPage() throws Exception {
         try {
-            skip();
+            //skip();
             this.getLoginButton().click();
             return LoginPage.get((AppiumDriver) driver);
         } catch (Exception ex) {
@@ -59,7 +59,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public RegistrationPage gotoRegistrationPage() throws Exception {
-        skip();
+        //skip();
         getRegistrationButton().click();
         return RegistrationPage.get((AppiumDriver) driver);
     }

@@ -74,7 +74,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
             mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
             //mobileUser.registerNewUserHeadless(mobileUser);
             mobileUser = RegisterUser.registerAUser(mobileUser);
-            cards.add(0,SubwayCard.getSubwayCardFromDB(pojos.enums.Lock.TRUE));
+            //cards.add(0,SubwayCard.getSubwayCardFromDB(pojos.enums.Lock.TRUE));
             mobileUser.setSubwayCards(cards);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
             LoginPage loginPage = landingPage.gotoLogInPage();

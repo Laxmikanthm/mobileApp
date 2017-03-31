@@ -234,7 +234,24 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try{
             addIngredient();
             List<WebElement> extraIngredients = driver.findElements((By.xpath("//android.widget.HorizontalScrollView[@resource-id='com.subway.mobile.subwayapp03:id/category_tabs']")));
-            for(int i=1;i<=extraIngredients.size();i++){
+            for(int i=0;i<=extraIngredients.size();i++){
+                if(extraIngredients.get(i).getText().equals(order.getCart().getProductDetail().getOptionGroups()[0].getName())){
+                    List<WebElement> InnerIngredients = driver.findElements((By.xpath("//android.support.v7.widget.RecyclerView[@resource-id='com.subway.mobile.subwayapp03:id/recyclerView']")));
+                    for(int j=0;j<=InnerIngredients.size();j++){
+                        if(InnerIngredients.get(j).getText().equals(order.getCart().getProductDetail().getOptionGroups()[0].getOptions()[0].getName())) {
+                            InnerIngredients.get(j).click();
+                            getModify().click();
+                            //getquatity(order.getCart().getProductDetail().getOptionGroups()[0].getOptions()[0].getValue()).click();
+                            //android.widget.TextView/ancestor::
+                        }
+                    }
+
+                    List<WebElement> quantity = driver.findElements(By.xpath("//android.widget.RelativeLayout[@resource-id='com.subway.mobile.subwayapp03:id/bottom_sheet']"));
+                    if(quantity.size()>0){
+                        getRegular().click();
+                    }
+                    getDone().click();
+                }
 
             }
         }catch (Exception ex) {
