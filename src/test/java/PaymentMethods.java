@@ -19,7 +19,7 @@ import pages.SubwayPage.SubwayPage;
 import pojos.tenders.SubwayCard;
 import pojos.user.MobileUser;
 import pojos.user.RemoteOrderCustomer;
-import snaplogicApi.serviceUtils.RegisterUser;
+import pojos.user.RegisterUser;
 
 import java.util.List;
 
