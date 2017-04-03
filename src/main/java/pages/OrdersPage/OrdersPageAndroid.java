@@ -143,5 +143,40 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
 
+    public MobileButton getEdit() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Edit")+"']"), "Edit button");
+        return button;
+    }
+
+    public MobileButton getAddAnother() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("AddAnother")+"']"), "AddAnother button");
+        return button;
+    }
+
+    public MobileButton getDeleteItem() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("DeleteItem")), "DeleteItem button");
+        return button;
+    }
+
+    public MobileButton getSomethingElse() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("SomethingElse")+"']"), "SomethingElse button");
+        return button;
+    }
+
+    public MobileButton getRemove() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='"+BaseTest.bundle.getString("Remove")+"']"), "Remove button");
+        return button;
+    }
+
+    public MobileLabel getSubItem() throws Exception {
+        AndroidLabel subItem = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("SubItem")+"']"), "SubItem label");
+        return subItem;
+    }
+
+    public MobileButton getBackButton() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.className("android.widget.ImageButton"), "Back button");
+        return button;
+    }
+
 
 }

@@ -197,4 +197,55 @@ public class OrdersPageIOS extends OrdersPage {
         return button;
     }
 
+    public IOSButton getEdit() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getAddAnother() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getDeleteItem() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getSomethingElse() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getRemove() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return button;
+    }
+
+    public MobileLabel getSubItem() throws Exception {
+
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getBackButton() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
+    }
+
+
+
 }

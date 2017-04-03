@@ -46,7 +46,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");//remove hardcoded control
+        OrdersPage ordersPage=searchStore.findYourStore("06460");
         ordersPage.placeRandomOrder("All Sandwiches", mobileUser, storeName);
         //remove hardcoded swipe values, remove hardcoded Controls. Add Customize options logic.
 
