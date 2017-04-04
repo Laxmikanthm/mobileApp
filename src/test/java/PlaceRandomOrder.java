@@ -15,6 +15,7 @@ import pages.SubwayPage.SubwayPage;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.Orders.Order;
+import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
 
 /**
@@ -32,9 +33,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        //mobileUser.registerNewUserHeadless(mobileUser);
-        mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
-        mobileUser.setPassword("Subway1234");
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

@@ -5,6 +5,7 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.OptionItem;
+import cardantApiFramework.utils.NumberUtil;
 import com.thoughtworks.selenium.condition.Text;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -367,7 +368,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         return driver.findElements(by);
     }
 
-    public void additionalIngredients(RemoteWebDriver driver,Order order) throws Exception{
+    public void customizeOrder(RemoteWebDriver driver,Order order) throws Exception{
         try {
             By  extraIngredientsBy,InnerIngredientsBy,quantityBy;
             if(driver instanceof AndroidDriver) {
@@ -380,25 +381,30 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 quantityBy=null;
             }
             addIngredient();
+            int item = NumberUtil.getRandomInt(0, order.getCart().getOptions().length - 1);
                 List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
                 for(int i=0;i<=extraIngredients.size();i++) {
-                    for(int m=0; m<=20; m++) {
-                        if (extraIngredients.get(i).getText().equals(order.getCart().getProductDetail().getOptionGroups()[m].getName())) {
+                    for(int m=0; m<=order.getCart().getOptions().length; m++) {
+                        if (extraIngredients.get(i).getText().equals(order.getCart().getOptions()[item].getClass().getName())) {
+                            extraIngredients.get(i).click();
                             List<WebElement> InnerIngredients = driver.findElements((InnerIngredientsBy));
                             for (int j=0; j<=InnerIngredients.size(); j++) {
-                                for(int n=0; n<=20; n++) {
-                                    if (InnerIngredients.get(j).getText().equals(order.getCart().getProductDetail().getOptionGroups()[m].getOptions()[n].getName())) {
+                                String fullName= order.getCart().getOptions()[item].getValue();
+                                String itemName = (String) fullName.subSequence(fullName.length()-2, fullName.length());
+                                String Quantity = "something";
+                                if (InnerIngredients.get(j).getText().equals(itemName)) {
                                         InnerIngredients.get(j).click();
                                         getModify().click();
                                         List<WebElement> quantity = driver.findElements((quantityBy));
                                             if (quantity.size() > 0) {
+                                                //getQuantity(order.getCart().getProductDetail().getOptionGroups()[m].getOptions()[n].getValue()).click();
                                                 getRegular().click();
                                             }
                                             getDone().click();
-                                        //getquatity(order.getCart().getProductDetail().getOptionGroups()[0].getOptions()[0].getValue()).click();
-                                        //android.widget.TextView/ancestor::
+                                        //getquantity(order.getCart().getProductDetail().getOptionGroups()[0].getOptions()[0].getValue()).click();
+                                        //android.widget.TextView/ancestor::android.widget.LinearLayout
                                     }
-                                }
+
                             }
                         }
                     }

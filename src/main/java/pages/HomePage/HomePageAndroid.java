@@ -40,8 +40,8 @@ public class HomePageAndroid extends HomePage {
         return button;
     }
 
-    public MobileButton getFindYourAnotherSubWay() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("FindYouAnotherSubWay")+"']"), "FindYourAnother SubWay button");
+    public MobileButton getFindSubWayNearYou() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("FindNearbySubway")+"']"), "FindASubwayNearYou button");
         return button;
     }
 
