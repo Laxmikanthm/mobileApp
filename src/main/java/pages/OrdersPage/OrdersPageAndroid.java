@@ -178,5 +178,9 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
 
+    public MobileButton getSixInchOption() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.RelativeLayout[@resource-id='"+BaseTest.bundle.getString("SixInch")+"']"), "SixInch label");
+        return button;
+    }
 
 }

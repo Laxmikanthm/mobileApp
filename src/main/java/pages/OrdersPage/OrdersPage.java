@@ -98,6 +98,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     abstract MobileLabel getSubItem() throws Exception;
     abstract MobileButton getBackButton() throws Exception;
+    abstract MobileButton getSixInchOption() throws Exception;
 
 
 
@@ -199,15 +200,24 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
+    public void getItemType() throws Exception{
+        try{
+            getSixInchOption().click();
+        }catch (Exception ex){
 
-    public List<WebElement> customizeItems() throws Exception {
+        }
+    }
+
+
+    public void selectItemTypeAndClickCustomize(String ItemType) throws Exception {
         try {
+            if(ItemType.equals("6 INCH")) {
+                getSixInchOption().click();
+            }
             getCustomize().click();
-
-        } catch (Exception ex) {
+            } catch (Exception ex) {
             throw new Exception(ex);
         }
-        return null;
     }
 
     /* Need to find better Solution*/
@@ -244,23 +254,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    /*public MobileLabel getStoreNameTextView(String storeName) throws Exception {
-        try {
-            if(driver instanceof AndroidDriver)
-                storeNameTextView = new TextView(driver, By.xpath("//android.widget.TextView[@text='" + storeName + "']"), "storeName");
-            else
-                storeNameTextView = new TextView(driver, By.xpath("//UIAStaticText[@label='"+storeName+"']"), "Search Store text field");
-        }
-        catch (Exception e) {
-            driver.scrollTo(storeName);
-            if(driver instanceof AndroidDriver)
-                storeNameTextView = new TextView(driver, By.xpath("//android.widget.TextView[@text='" + storeName + "']"), "storeName");
-            else
-                storeNameTextView = new TextView(driver, By.xpath("//UIAStaticText[@label='"+storeName+"']"), "Search Store text field");
-        }
-        return storeNameTextView;
-    }*/
-
     public void addIngredient() throws Exception {
         try {
             getAddIngredient().click();
@@ -290,6 +283,20 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
             String aSubItem = order.getCart().getProductDetail().getProductClass().getName();
             return aSubItem;
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+    public void selectCategoryAndSubcategory(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            searchStore(storeName);
+            getSelectRestaurantButton().click();
+            getStartOrderButton().click();
+            selectCategory(order.getCart().getProductDetail().getProductGroup().getName());
+            selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -363,12 +370,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
+
+
     public List<WebElement> findElements(By by){
 
         return driver.findElements(by);
     }
 
-    public void customizeOrder(RemoteWebDriver driver,Order order) throws Exception{
+    public void customizeOrder(MobileUser mobileUser, Order order) throws Exception{
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         try {
             By  extraIngredientsBy,InnerIngredientsBy,quantityBy;
             if(driver instanceof AndroidDriver) {
@@ -381,6 +391,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 quantityBy=null;
             }
             addIngredient();
+
             int item = NumberUtil.getRandomInt(0, order.getCart().getOptions().length - 1);
                 List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
                 for(int i=0;i<=extraIngredients.size();i++) {

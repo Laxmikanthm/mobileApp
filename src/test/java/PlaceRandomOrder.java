@@ -56,7 +56,6 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         int store = 54589;
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        String subCategoryName="Bacon, Egg & Cheese";
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
         mobileUser.registerNewUserHeadless(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

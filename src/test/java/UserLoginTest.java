@@ -8,6 +8,7 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.RegistrationPage.RegistrationPage;
 import pojos.user.MobileUser;
+import pojos.user.RegisterUser;
 
 /**
  * Created by Sujit on 1/26/17.
@@ -19,7 +20,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
     @Test
     public void userLogin() throws Exception {
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         loginPage.login(mobileUser);
