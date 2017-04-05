@@ -10,19 +10,21 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.RegistrationPage.RegistrationPage;
 import pojos.user.MobileUser;
+import pojos.user.RegisterUser;
 
 /**
  * Created by E003705 on 28-02-2017.
  */
 @ContextConfiguration("classpath:MobileAppBeans.xml")
 public class ForgotPassword extends SubwayAppBaseTest  {
+    MobileUser mobileUser;
 
 
     @Test
     public void forgotPassword()throws Exception
     {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         /*RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
         HomePage homePage = registrationPage.signUp();

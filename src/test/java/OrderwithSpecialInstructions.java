@@ -14,6 +14,7 @@ import pages.SearchStore.SearchStore;
 import pages.SubwayPage.SubwayPage;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
+import pojos.user.RegisterUser;
 
 /**
  * Created by e002243 on 23-03-2017.
@@ -21,15 +22,16 @@ import pojos.user.MobileUser;
 
 @ContextConfiguration("classpath:MobileAppBeans.xml")
 public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
+    MobileUser mobileUser;
 
     @Test
     public void OrderSpecialInstructions() throws Exception
     {
-        int store = 54588;
+
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         String specialInstructions ="Required more salt";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);

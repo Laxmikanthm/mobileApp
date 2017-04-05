@@ -10,6 +10,7 @@ import pages.SearchStore.SearchStore;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
+import pojos.user.RegisterUser;
 
 import java.util.List;
 
@@ -17,14 +18,15 @@ import java.util.List;
  * Created by E003705 on 03-04-2017.
  */
 public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
+    MobileUser mobileUser;
 
     //After clicking on  edit check whether selected product is displayed or not
     @Test
     public void editCartVerifyPlaceOrder() throws Exception{
-        int store = 54589;
+
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -41,10 +43,10 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     //When clicked on Add another button same product needs to be added
     @Test
     public void editCartAddAnotherVerifyPlaceOrder() throws Exception{
-        int store = 54589;
+
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -63,10 +65,10 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     //In edit page use should be able to remove the selected product
     @Test
     public void editCartDeleteItemVerifyPlaceOrder() throws Exception{
-        int store = 54589;
+
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -86,10 +88,10 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     //When clicked on Something else button user should be able to select different product from the category item
     @Test
     public void editCartSomethingElseVerifyPlaceOrder() throws Exception{
-        int store = 54589;
+
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

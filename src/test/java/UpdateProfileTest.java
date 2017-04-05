@@ -8,6 +8,7 @@ import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pojos.user.MobileUser;
+import pojos.user.RegisterUser;
 
 /**
  * Created by e002243 on 17-02-2017.
@@ -15,13 +16,14 @@ import pojos.user.MobileUser;
 
 @ContextConfiguration("classpath:MobileAppBeans.xml")
 public class UpdateProfileTest extends SubwayAppBaseTest {
+    MobileUser mobileUser;
 
 
     @Test
     public void updateProfile()throws Exception
     {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);

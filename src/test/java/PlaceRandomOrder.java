@@ -23,17 +23,17 @@ import pojos.user.RemoteOrderCustomer;
  */
 @ContextConfiguration("classpath:MobileAppBeans.xml")
 public class PlaceRandomOrder extends SubwayAppBaseTest {
-
+    MobileUser mobileUser;
 
 
     @Test
     public void placeOrderAllSandwiches() throws Exception
     {
-        int store = 54589;
+
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUser(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -53,11 +53,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderSubwayFreshFit() throws Exception
     {
-        int store = 54589;
+        
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -74,11 +74,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderBreakfast() throws Exception
     {
-        int store = 54589;
+
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -95,11 +95,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderPersonalPizza() throws Exception
     {
-        int store = 54589;
+
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -116,11 +116,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderChoppedSalads() throws Exception
     {
-        int store = 54589;
+
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -137,11 +137,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderSUBWAYFreshFitforKids() throws Exception
     {
-        int store = 54589;
+
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -158,11 +158,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderSides() throws Exception
     {
-        int store = 54588;
+
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -179,11 +179,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderDrinks() throws Exception
     {
-        int store = 54588;
+
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -201,11 +201,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void OrderAMeal() throws Exception
     {
-        int store = 54588;
+
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);

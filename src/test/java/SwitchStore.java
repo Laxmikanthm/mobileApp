@@ -16,6 +16,7 @@ import pojos.user.MobileUser;
  */
 @ContextConfiguration("classpath:MobileAppBeans.xml")
 public class SwitchStore extends SubwayAppBaseTest {
+    MobileUser mobileUser;
 
 
     @Test
