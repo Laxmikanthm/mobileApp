@@ -27,16 +27,26 @@ public class CustomizeOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        //mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
+        mobileUser.setPassword("Subway1234");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
+        OrdersPage ordersPage = landingPage.findYourStore("06460");
+       /* LoginPage loginPage = landingPage.gotoLogInPage();
+
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.selectCategoryAndSubcategory("All Sandwiches", mobileUser, storeName);
-        ordersPage.selectItemTypeAndClickCustomize("FOOTLONG");
-        Order order = new Order();
+       */
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
+        //ordersPage.selectCategoryAndSubcategory(order, storeName);
+        //ordersPage.selectItemTypeAndClickCustomize("FOOTLONG");
+
+        //ordersPage.selectCategoryAndSubcategory("All Sandwiches", mobileUser, storeName);
+        //ordersPage.selectItemTypeAndClickCustomize("FOOTLONG");
         ordersPage.customizeOrder(mobileUser,order);
+        ordersPage.addToCartAndPlaceOrder();
 
 
     }

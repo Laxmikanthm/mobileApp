@@ -33,7 +33,9 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUser(mobileUser);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        /*mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
+        mobileUser.setPassword("Subway1234");*/
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

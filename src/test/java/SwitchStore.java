@@ -10,6 +10,7 @@ import pages.SearchStore.SearchStore;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
+import pojos.user.RegisterUser;
 
 /**
  * Created by E003705 on 04-04-2017.
@@ -25,10 +26,10 @@ public class SwitchStore extends SubwayAppBaseTest {
         int store = 54589;
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        //mobileUser.registerNewUserHeadless(mobileUser);
-        mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
-        mobileUser.setPassword("Subway1234");
+        mobileUser = new MobileUser(false, Country.UnitedStates, store);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        /*mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
+        mobileUser.setPassword("Subway1234");*/
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

@@ -37,8 +37,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
 
     @Test
     public void addCreditCard() throws Exception {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
@@ -53,8 +53,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
 
     @Test
     public void addDebitCard() throws Exception {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        mobileUser.registerNewUserHeadless(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
@@ -97,8 +97,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
     @Test
         public void addPayPal () throws Exception{
 
-            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-            mobileUser.registerNewUserHeadless(mobileUser);
+            mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+            mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
             LoginPage loginPage = landingPage.gotoLogInPage();
             HomePage homePage = loginPage.login(mobileUser);

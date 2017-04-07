@@ -7,6 +7,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.LoginPage.LoginPage;
+import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 
 /**
@@ -57,6 +58,20 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             throw new Exception(ex);
         }
     }
+
+    public OrdersPage findYourStore(String store) throws Exception
+    {
+        try{
+            /*okPopUp();
+            allowPopUp();
+            toggleView();
+            searchStoreByZipCode(store);*/
+            return OrdersPage.get((AppiumDriver) driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
 
     public RegistrationPage gotoRegistrationPage() throws Exception {
         //skip();
