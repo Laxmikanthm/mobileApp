@@ -9,6 +9,7 @@ import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.OptionI
 import cardantApiFramework.utils.NumberUtil;
 import com.thoughtworks.selenium.condition.Text;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
@@ -16,6 +17,7 @@ import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.log4j.lf5.viewer.categoryexplorer.CategoryElement;
 import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
@@ -104,6 +106,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getSixInchOption() throws Exception;
 
     Random rn = new Random();
+    int firstrandnum;
+    int nextrandnum;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -259,11 +263,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void addIngredient() throws Exception {
         try {
+            JavascriptExecutor js = (JavascriptExecutor)((AppiumDriver)driver);
             getAddIngredient().isReady();
+            getAddIngredient().tap();
             WebElement element = ((AndroidDriver)driver).findElement(By.id("add_ingredient"));
-            TouchAction action = new TouchAction(((AndroidDriver)driver));
-            MobileElement el = (MobileElement)element;
-            action.longPress(el).perform();
+            js.executeScript("arguments[0].click();", element);
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -390,22 +394,22 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void getModifyList() {
-
-        List<WebElement> modifyElements=((AppiumDriver)driver).findElements(By.xpath("//android.widget.TextView[@text='Modify']"));
-
-        if(modifyElements.size()>0)
-        {
-            for(int n=0; n<modifyElements.size(); n++)
-            {
-                modifyElements.get(n).click();
+    public void getModifyList() throws Exception{
+        try{
+            int modify = ((AndroidDriver)driver).findElements(By.xpath("//android.widget.TextView[@text='Modify']")).size();
+            if (modify>0){
+                getModify().click();
             }
+        }catch(Exception ex){
+
         }
+
+
     }
 
-    public void getQuantityOfItem() throws Exception {
+    public void getQuantityOfItem(By quantityBy) throws Exception {
         try {
-                List<WebElement> quantity = driver.findElements((By.xpath("//android.widget.RelativeLayout[@resource-id='com.subway.mobile.subwayapp03:id/bottom_sheet']")));
+                List<WebElement> quantity = driver.findElements((quantityBy));
                 if (quantity.size() > 0) {
                     quantity.get(rn.nextInt(quantity.size())).click();
                 }
@@ -414,9 +418,20 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
     }
 
-    public void selectRandomItems(List<WebElement> list) {
-        list.get(rn.nextInt(list.size())).click();
-        list.get(rn.nextInt(list.size())).click();
+    public void selectRandomItems(List<WebElement> list, By locator) throws Exception {
+        firstrandnum = rn.nextInt(list.size());
+        nextrandnum = rn.nextInt(list.size());
+        if (firstrandnum!=nextrandnum){
+            list.get(rn.nextInt(list.size())).click();
+            getModifyList();
+            getQuantityOfItem(locator);
+        } else {
+            nextrandnum = rn.nextInt(list.size());
+            list.get(rn.nextInt(list.size())).click();
+            getModifyList();
+            getQuantityOfItem(locator);
+        }
+
     }
 
 
@@ -427,65 +442,57 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void customizeOrder(MobileUser mobileUser, Order order) throws Exception{
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-
         try {
-            By  extraIngredientsBy,InnerIngredientsBy,quantityBy;
-            if(driver instanceof AndroidDriver) {
-                extraIngredientsBy= By.xpath("//android.widget.HorizontalScrollView[@resource-id='com.subway.mobile.subwayapp03:id/category_tabs']");
+            By extraIngredientsBy, InnerIngredientsBy, quantityBy;
+            if (driver instanceof AndroidDriver) {
+                extraIngredientsBy = By.xpath("//android.widget.HorizontalScrollView[@resource-id='com.subway.mobile.subwayapp03:id/category_tabs']");
                 InnerIngredientsBy = By.xpath("//android.support.v7.widget.RecyclerView[@resource-id='com.subway.mobile.subwayapp03:id/recyclerView']");
-            }else {
-                extraIngredientsBy=null;
-                InnerIngredientsBy=null;
-                quantityBy=null;
+                quantityBy = By.xpath("//android.widget.RelativeLayout[@resource='com.subway.mobile.subwayapp03:id/bottom_sheet']");
+            } else {
+                extraIngredientsBy = null;
+                InnerIngredientsBy = null;
+                quantityBy = null;
             }
-            addIngredient();
+            //addIngredient();
 
-           // int item = NumberUtil.getRandomInt(0, order.getCart().getOptions().length - 1);
+            // int item = NumberUtil.getRandomInt(0, order.getCart().getOptions().length - 1);
             int item = rn.nextInt(order.getCart().getOptions().length - 1);
-                List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
+            List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
 
-                for(int i=0;i<=extraIngredients.size();i++) {
-                    for(int m=0; m<=order.getCart().getOptions().length; m++) {
-                        if (extraIngredients.get(i).getText().equalsIgnoreCase(order.getCart().getOptions()[item].getOptionGroup())) {
-                            extraIngredients.get(i).click();
-                            List<WebElement> InnerIngredients = driver.findElements((InnerIngredientsBy));
-                            for (int j=0;j<=InnerIngredients.size();j++) {
+            for (int i = 0; i <= extraIngredients.size(); i++) {
+                for (int m = 0; m <= order.getCart().getOptions().length; m++) {
+                    if (extraIngredients.get(i).getText().equalsIgnoreCase(order.getCart().getOptions()[item].getOptionGroup())) {
+                        extraIngredients.get(i).click();
+                        List<WebElement> InnerIngredients = driver.findElements((InnerIngredientsBy));
+                        for (int j = 0; j <= InnerIngredients.size(); j++) {
 
-                                switch(extraIngredients.get(i+1).getText())
-                                {
-                                    case "Cheese" :
-                                        InnerIngredients.get(rn.nextInt(InnerIngredients.size())).click();
-                                        getModifyList();
-                                        getQuantityOfItem();
-                                        break;
-                                    case "Extras" :
-                                        selectRandomItems(InnerIngredients);
-                                        break;
-                                    case"Veggies" :
-                                        selectRandomItems(InnerIngredients);
-                                        getModifyList();
-                                        getQuantityOfItem();
-                                        break;
-                                    case "Sauces" :
-                                        selectRandomItems(InnerIngredients);
-                                        getModifyList();
-                                        getQuantityOfItem();
-                                        break;
-                                    case "Seasonings" :
-                                        selectRandomItems(InnerIngredients);
-                                        getModifyList();
-                                        getQuantityOfItem();
-                                        break;
-                                    }
-                                }
-
+                            switch (extraIngredients.get(i + 1).getText()) {
+                                case "Cheese":
+                                    selectRandomItems(InnerIngredients, quantityBy);
+                                    break;
+                                case "Extras":
+                                    selectRandomItems(InnerIngredients, quantityBy);
+                                    break;
+                                case "Veggies":
+                                    selectRandomItems(InnerIngredients, quantityBy);
+                                    selectRandomItems(InnerIngredients, quantityBy);
+                                    break;
+                                case "Sauces":
+                                    selectRandomItems(InnerIngredients, quantityBy);
+                                    selectRandomItems(InnerIngredients, quantityBy);
+                                    break;
+                                case "Seasonings":
+                                    selectRandomItems(InnerIngredients, quantityBy);
+                                    selectRandomItems(InnerIngredients, quantityBy);
+                                    break;
                             }
                         }
-                    }
 
-            addToCartAndPlaceOrder();
-        }catch (Exception ex) {
+                    }
+                }
+            }
+        }
+        catch (Exception ex) {
             throw new Exception(ex);
         }
     }
