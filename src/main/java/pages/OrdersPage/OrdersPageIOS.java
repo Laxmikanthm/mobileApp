@@ -253,4 +253,18 @@ public class OrdersPageIOS extends OrdersPage {
         return button;
     }
 
+    public IOSButton getToolTipExtras() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
+    }
+
+    public IOSButton getToolTipForSwipe() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
+    }
+
 }

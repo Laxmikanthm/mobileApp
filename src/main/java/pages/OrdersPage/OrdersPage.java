@@ -104,6 +104,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileLabel getSubItem() throws Exception;
     abstract MobileButton getBackButton() throws Exception;
     abstract MobileButton getSixInchOption() throws Exception;
+    abstract MobileButton getToolTipExtras() throws Exception;
+    abstract MobileButton getToolTipForSwipe() throws Exception;
 
     Random rn = new Random();
     int firstrandnum;
@@ -216,9 +218,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void selectItemTypeAndClickCustomize(String ItemType) throws Exception {
+    public void selectItemTypeAndClickCustomize(Order order) throws Exception {
         try {
-            if(ItemType.equals("6 INCH")) {
+            String FullName = order.getCart().getProductDetail().getName();
+            String[] Itemtype = FullName.split(" ");
+            if(!Itemtype[0].equals("FOOTLONG")) {
+                getSixInchOption().isReady();
                 getSixInchOption().click();
             }
             getCustomize().click();
@@ -263,11 +268,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void addIngredient() throws Exception {
         try {
-            JavascriptExecutor js = (JavascriptExecutor)((AppiumDriver)driver);
             getAddIngredient().isReady();
-            getAddIngredient().tap();
-            WebElement element = ((AndroidDriver)driver).findElement(By.id("add_ingredient"));
-            js.executeScript("arguments[0].click();", element);
+            getAddIngredient().click();
+            getAddIngredient().click();
+            getAddIngredient().click();
+            getAddIngredient().click();
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -445,49 +450,30 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             By extraIngredientsBy, InnerIngredientsBy, quantityBy;
             if (driver instanceof AndroidDriver) {
-                extraIngredientsBy = By.xpath("//android.widget.HorizontalScrollView[@resource-id='com.subway.mobile.subwayapp03:id/category_tabs']");
-                InnerIngredientsBy = By.xpath("//android.support.v7.widget.RecyclerView[@resource-id='com.subway.mobile.subwayapp03:id/recyclerView']");
+                extraIngredientsBy = By.xpath("//android.widget.HorizontalScrollView[@resource-id='com.subway.mobile.subwayapp03:id/category_tabs']//android.widget.TextView");
+                InnerIngredientsBy = By.id("ingredient_text");
                 quantityBy = By.xpath("//android.widget.RelativeLayout[@resource='com.subway.mobile.subwayapp03:id/bottom_sheet']");
             } else {
                 extraIngredientsBy = null;
                 InnerIngredientsBy = null;
                 quantityBy = null;
             }
-            //addIngredient();
-
-            // int item = NumberUtil.getRandomInt(0, order.getCart().getOptions().length - 1);
-            int item = rn.nextInt(order.getCart().getOptions().length - 1);
+            addIngredient();
+            //swipe veggies to middle
             List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
+            for (int m = 0; m <= order.getCart().getOptions().length; m++) {
+                for (int i = 0; i <= extraIngredients.size(); i++) {
+                    //swipe veggies to middle
 
-            for (int i = 0; i <= extraIngredients.size(); i++) {
-                for (int m = 0; m <= order.getCart().getOptions().length; m++) {
-                    if (extraIngredients.get(i).getText().equalsIgnoreCase(order.getCart().getOptions()[item].getOptionGroup())) {
+                    String name = extraIngredients.get(i).getText();
+                    if (name.equalsIgnoreCase(order.getCart().getOptions()[m+2].getOptionGroup())) {
                         extraIngredients.get(i).click();
-                        List<WebElement> InnerIngredients = driver.findElements((InnerIngredientsBy));
-                        for (int j = 0; j <= InnerIngredients.size(); j++) {
-
-                            switch (extraIngredients.get(i + 1).getText()) {
-                                case "Cheese":
-                                    selectRandomItems(InnerIngredients, quantityBy);
-                                    break;
-                                case "Extras":
-                                    selectRandomItems(InnerIngredients, quantityBy);
-                                    break;
-                                case "Veggies":
-                                    selectRandomItems(InnerIngredients, quantityBy);
-                                    selectRandomItems(InnerIngredients, quantityBy);
-                                    break;
-                                case "Sauces":
-                                    selectRandomItems(InnerIngredients, quantityBy);
-                                    selectRandomItems(InnerIngredients, quantityBy);
-                                    break;
-                                case "Seasonings":
-                                    selectRandomItems(InnerIngredients, quantityBy);
-                                    selectRandomItems(InnerIngredients, quantityBy);
-                                    break;
-                            }
+                        if(name.equalsIgnoreCase("cheese"))
+                            ClickonItem(order.getCart().getOptions()[m+2].getValue(), InnerIngredientsBy);
+                        else {
+                            ClickonItem(order.getCart().getOptions()[m + 2].getName(), InnerIngredientsBy);
                         }
-
+                        break;
                     }
                 }
             }
@@ -495,6 +481,38 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         catch (Exception ex) {
             throw new Exception(ex);
         }
+    }
+
+    public void ClickonItem(String name, By InnerIngredientsBy){
+        boolean flag = true;
+        do {
+            List<WebElement> innerIngredients = driver.findElements((InnerIngredientsBy));
+            for (int i = 0; i<=innerIngredients.size(); i++){
+                if(i==innerIngredients.size()){
+                    //scroll;
+                    flag =false;
+                    break;
+                }
+                if(innerIngredients.get(i).getText().equalsIgnoreCase(name)){
+                    innerIngredients.get(i).click();
+                    if(innerIngredients.get(i).findElements(By.xpath("//parent::android.widget.RelativeLayout[@id='main_layout']/following-sibling::android.widget.LinearLayout[@id='modify_layout']")).size()>0)
+                        innerIngredients.get(i).findElement(By.xpath("//parent::android.widget.RelativeLayout[@id='main_layout']/following-sibling::android.widget.LinearLayout[@id='modify_layout']")).click();
+                    flag =false;
+                    break;
+                }
+            }
+        }while (flag);
+    }
+
+    public void modify(String value, By quantityBy){
+        List<WebElement> mod = driver.findElements((quantityBy));
+        for(int i = 0; i<=mod.size(); i++){
+            if(i==mod.size()){
+
+            }
+
+        }
+
     }
 }
 

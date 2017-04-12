@@ -183,4 +183,14 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
 
+    public MobileButton getToolTipExtras() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("firstTooltip")+"']"), "ToolTip button");
+        return button;
+    }
+
+    public MobileButton getToolTipForSwipe() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("SwipeTooltip")+"']"), "SwipeTooltip button");
+        return button;
+    }
+
 }
