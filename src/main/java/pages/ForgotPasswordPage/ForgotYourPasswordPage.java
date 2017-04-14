@@ -1,24 +1,24 @@
 package pages.ForgotPasswordPage;
 
+import base.gui.controls.mobile.android.AndroidPasswordTextBox;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
+import base.gui.controls.mobile.generic.PasswordTextBox;
+import base.gui.controls.mobile.ios.IOSPasswordTextBox;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
-import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
-import pages.HomePage.HomePage;
 import pages.LoginPage.LoginPage;
 import pojos.user.MobileUser;
 
 
 import java.util.List;
 
-import static cardantApiFramework.pojos.StringUtils.getRandomString;
 import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.getVerificationCode;
 
 /**
@@ -33,8 +33,8 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
     abstract MobileTextBox getEmailAddress() throws Exception;
     abstract MobileButton getNextButton() throws Exception;
     abstract MobileButton getResetButton() throws Exception;
-    abstract MobileTextBox getPassword() throws Exception;
-    abstract MobileTextBox getConfirmPassword() throws Exception;
+    abstract PasswordTextBox getPassword() throws Exception;
+    abstract PasswordTextBox getConfirmPassword() throws Exception;
     abstract MobileButton getSetPassword() throws Exception;
     abstract MobileButton getLoginAgainPopUp() throws Exception;
 
