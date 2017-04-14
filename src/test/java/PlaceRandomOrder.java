@@ -214,7 +214,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        ordersPage.placeRandomOrderAMeal(remoteOrder.placeRandomOrderWithSpecificProduct("Sides"), mobileUser, storeName);
+        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, storeName);
     }
 
 
