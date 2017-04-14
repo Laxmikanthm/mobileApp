@@ -5,6 +5,7 @@ import base.gui.controls.mobile.android.AndroidTextBox;
 import base.test.BaseTest;
 import org.openqa.selenium.By;
 import io.appium.java_client.android.AndroidDriver;
+import base.gui.controls.mobile.android.AndroidPasswordTextBox;
 
 /**
  * Created by E003705 on 28-02-2017.
@@ -30,13 +31,13 @@ public class ForgotYourPasswordPageAndroid extends ForgotYourPasswordPage {
         return resetButton;
     }
 
-    public AndroidTextBox getPassword() throws Exception{
-        AndroidTextBox passwordField = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@resource-id='"+ BaseTest.bundle.getString("NewPassword")+"']"), "Password text field");
+    public AndroidPasswordTextBox getPassword() throws Exception{
+        AndroidPasswordTextBox passwordField = new AndroidPasswordTextBox((AndroidDriver)driver, By.xpath("//android.widget.EditText[@resource-id='"+ BaseTest.bundle.getString("NewPassword")+"']"), "Password text field");
         return passwordField;
     }
 
-    public AndroidTextBox getConfirmPassword() throws Exception{
-        AndroidTextBox conPasswordField = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@resource-id='"+ BaseTest.bundle.getString("ConfirmPassword")+"']"), "Confirm Password text field");
+    public AndroidPasswordTextBox getConfirmPassword() throws Exception{
+        AndroidPasswordTextBox conPasswordField = new AndroidPasswordTextBox((AndroidDriver)driver, By.xpath("//android.widget.EditText[@resource-id='"+ BaseTest.bundle.getString("ConfirmPassword")+"']"), "Confirm Password text field");
         return conPasswordField;
     }
 
