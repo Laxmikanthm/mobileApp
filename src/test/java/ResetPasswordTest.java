@@ -1,7 +1,8 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
-import org.junit.Test;
+
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.annotations.Test;
 import pages.ContactInformationPage.ContactInformationPage;
 import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.HomePage.HomePage;
@@ -30,6 +31,7 @@ public class ResetPasswordTest extends SubwayAppBaseTest {
         ForgotYourPasswordPage forgotYourPasswordPage = contactInformation.getPasswordField();
         mobileUser.setPassword("Subway12345");
         loginPage = forgotYourPasswordPage.setNewPassword(mobileUser);
+        landingPage.gotoLogInPage();
         loginPage.loginAfterResetPassoword(mobileUser);
 
     }

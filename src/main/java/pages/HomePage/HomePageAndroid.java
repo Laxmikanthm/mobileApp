@@ -53,5 +53,6 @@ public class HomePageAndroid extends HomePage {
         AndroidButton storeViewButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toggle_view"), "StoreView button");
         return storeViewButton;
     }
+   
 
 }

@@ -48,4 +48,8 @@ public class HomePageIOS extends HomePage {
         IOSButton storeViewButton = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toggle_view"), "StoreView button");
         return storeViewButton;
     }
+    public MobileButton getBackButton() throws Exception {
+        IOSButton backButton = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toggle_view"), "StoreView button");
+        return backButton;
+    }
 }

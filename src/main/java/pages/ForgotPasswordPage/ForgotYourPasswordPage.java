@@ -51,6 +51,8 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
             getPassword().setText(mobileUser.getPassword());
             getConfirmPassword().getControl().clear();
             getConfirmPassword().setText(mobileUser.getPassword());
+            getDriver().hideKeyboard();
+            getSetPassword().isReady();
             getSetPassword().click();
             getOKButton();
             return LoginPage.get((AppiumDriver)driver);

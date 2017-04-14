@@ -40,6 +40,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getFindSubWayNearYou()throws Exception;
     abstract MobileButton getAllowLocation()throws Exception;
     abstract MobileButton getStoreView()throws Exception;
+    abstract MobileButton getBackButton() throws Exception;
 
 
     @Override
@@ -95,6 +96,14 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
             throw new Exception(ex);
         }
     }
+    public void selectBackButton()  throws Exception
+    {
+
+        getBackButton().waitForClickable();
+        getBackButton().click();
+
+    }
+
 
 
 }

@@ -3,6 +3,7 @@ package pages.ForgotPasswordPage;
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.android.AndroidTextBox;
 import base.test.BaseTest;
+import io.appium.java_client.MobileBy;
 import org.openqa.selenium.By;
 import io.appium.java_client.android.AndroidDriver;
 import base.gui.controls.mobile.android.AndroidPasswordTextBox;
@@ -41,13 +42,12 @@ public class ForgotYourPasswordPageAndroid extends ForgotYourPasswordPage {
         return conPasswordField;
     }
 
-    public AndroidButton getSetPassword() throws Exception {
-        AndroidButton setButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("SetPassword")+"']"), "Set Password button");
-        return setButton;
-    }
-
     public AndroidButton getLoginAgainPopUp() throws Exception {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LoginAgainOkButton") + "']"), "Login Again Pop Up");
         return button;
+    }
+    public AndroidButton getSetPassword() throws Exception {
+        AndroidButton setButton = new AndroidButton((AndroidDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("SetPassword")), "Set Password button");
+        return setButton;
     }
 }

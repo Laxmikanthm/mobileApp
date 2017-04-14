@@ -66,7 +66,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
             getSearchByZipCode().isReady();
             getSearchByZipCode().getControl().clear();
             //   getSearchByZipCode().setText("06460");
-            ((AndroidDriver)driver).findElement(By.xpath("//*[@text='Search by Zip Code']")).sendKeys("06460");
+            ((AppiumDriver)driver).findElement(By.xpath("//*[@text='Search by Zip Code']")).sendKeys("06460");
         }
         catch(Exception ex){
             throw new Exception(ex);
@@ -80,7 +80,6 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
             if(d>0)
             {
                 getAllowButton().click();
-                ((AndroidDriver)driver).findElement(By.xpath("//*[@text='Allow']")).click();
             }
         }catch(Exception ex){
             throw new Exception(ex);
@@ -90,11 +89,11 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     public void okPopUp() throws Exception
     {
         try{
-            int d=((AndroidDriver)driver).findElements(By.xpath("//*[@text='OK']")).size();
+            int d=((AppiumDriver)driver).findElements(By.xpath("//*[@text='OK']")).size();
             if(d>0)
             {
                 getOkPopupButton().click();
-                // ((AndroidDriver)driver).findElement(By.xpath("//*[@text='OK']")).click();
+
             }
         }catch(Exception ex){
             throw new Exception(ex);
@@ -104,7 +103,16 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     public void toggleView() throws Exception
     {
         try{
-            getToggleView().click();
+            if(driver instanceof AndroidDriver) {
+                int d = ((AppiumDriver) driver).findElements(By.xpath("//android.widget.ImageView[@resource-id='com.subway.mobile.subwayapp03:id/toggle_view']")).size();
+                if(d>0)
+                {
+                    getToggleView().click();
+                }
+            }else{
+                
+            }
+
         }catch(Exception ex){
             throw new Exception(ex);
         }

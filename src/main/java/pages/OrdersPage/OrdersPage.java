@@ -146,7 +146,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void placeRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
-
+            By storeNamesLocator=By.id("com.subway.mobile.subwayapp03:id/address");
+            By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             scrollToItemAndClick(getStoreNamesLocator(),storeName,1600);
@@ -163,11 +164,18 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void placeRandomOrderAMeal(String menuItem, MobileUser mobileUser, String storeName, String moreToYourOrder) throws Exception {
         try {
-            scrollToItemAndClick(getStoreNamesLocator(),storeName,1600);
+            By storeNamesLocator=By.id("com.subway.mobile.subwayapp03:id/address");
+            By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
+            String subcategoryLocator="com.subway.mobile.subwayapp03:id/product_group_header";
+            By drinkslocator = By.id("com.subway.mobile.subwayapp03:id/product_title");
+//            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+//            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+
+            scrollToItemAndClick(storeNamesLocator,storeName,1600);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
-            scrollToItemAndClick(getCategoryLocator(),"All Sandwiches",1600);
-            scrollToItemAndClick(getCategoryLocator(),"Cold Cut Combo",1600);
+            scrollToItemAndClick(categoryLocator,"All Sandwiches",1600);
+            scrollToItemAndClick(categoryLocator,"Cold Cut Combo",1600);
             getAddToBag().click();
             getMakeItAMeal().click();
             getDrinks().click();
