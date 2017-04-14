@@ -266,5 +266,28 @@ public class OrdersPageIOS extends OrdersPage {
 
         return button;
     }
+    public IOSButton getCookies() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
+    }
+
+    public By getStoreNamesLocator() throws Exception{
+        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
+        return storeNamesLocator;
+    }
+    public By getCategoryLocator() throws Exception{
+        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
+        return storeNamesLocator;
+    }
+    public By getSubcategoryLocator() throws Exception{
+        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
+        return storeNamesLocator;
+    }
+    public By getDrinkslocator() throws Exception{
+        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
+        return storeNamesLocator;
+    }
 
 }

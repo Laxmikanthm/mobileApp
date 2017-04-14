@@ -192,5 +192,26 @@ public class OrdersPageAndroid extends OrdersPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("SwipeTooltip")+"']"), "SwipeTooltip button");
         return button;
     }
+    public MobileButton getCookies() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("SwipeTooltip")+"']"), "SwipeTooltip button");
+        return button;
+    }
+
+    public By getStoreNamesLocator() throws Exception{
+        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
+        return storeNamesLocator;
+    }
+    public By getCategoryLocator() throws Exception{
+        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
+        return storeNamesLocator;
+    }
+    public By getSubcategoryLocator() throws Exception{
+        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
+        return storeNamesLocator;
+    }
+    public By getDrinkslocator() throws Exception{
+        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
+        return storeNamesLocator;
+    }
 
 }
