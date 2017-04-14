@@ -32,7 +32,7 @@ public class ForgotPassword extends SubwayAppBaseTest  {
         menuPage.logout();*/
         LoginPage loginPage = landingPage.gotoLogInPage();
         ForgotYourPasswordPage forgotPasswordPage= loginPage.forgotPassword();
-        mobileUser.setPassword("Subway12345");
+        mobileUser.setPassword("Subway@12345");
         loginPage = forgotPasswordPage.setNewPassword(mobileUser);
         loginPage.loginAfterResetPassoword(mobileUser);
     }

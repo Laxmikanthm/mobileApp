@@ -40,6 +40,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
     public void userLogout() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
         mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

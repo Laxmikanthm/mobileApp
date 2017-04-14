@@ -32,12 +32,12 @@ public class MenuPageAndroid extends MenuPage {
         return label;
     }
     public AndroidButton getLogOut() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+ BaseTest.bundle.getString("LogOut")+"']"), "LogOut button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("LogOut")), "LogOut button");
         return button;
     }
 
     public AndroidButton getLogOutButtonInPopUp() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+ BaseTest.bundle.getString("LogoutBtn")+"']"), "LogOut button in Popup");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("LogoutBtn")), "LogoutBtn in PopUp");
         return button;
     }
 

@@ -1,6 +1,10 @@
 package pages.ForgotPasswordPage;
 
+
+
+import base.gui.controls.mobile.android.AndroidPasswordTextBox;
 import base.gui.controls.mobile.ios.IOSButton;
+import base.gui.controls.mobile.ios.IOSPasswordTextBox;
 import base.gui.controls.mobile.ios.IOSTextBox;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
@@ -34,17 +38,18 @@ public class ForgotYourPasswordPageIOS extends ForgotYourPasswordPage {
 
         return resetButton;
     }
-    public IOSTextBox getPassword() throws Exception {
+    public IOSPasswordTextBox getPassword() throws Exception {
 
-        IOSTextBox passwordText = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("NewPassword") + "']"), "Password text field");
+        IOSPasswordTextBox passwordText = new IOSPasswordTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("NewPassword") + "']"), "Password text field");
 
         return passwordText;
     }
-    public IOSTextBox getConfirmPassword() throws Exception {
 
-        IOSTextBox conPasswordText = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("ConfirmPassword") + "']"), "Confirm Password text field");
+    public IOSPasswordTextBox getConfirmPassword() throws Exception {
 
-        return conPasswordText;
+        IOSPasswordTextBox conText = new IOSPasswordTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("ConfirmPassword") + "']"), "Confirm Password text field");
+
+        return conText;
     }
     public IOSButton getSetPassword() throws Exception {
 

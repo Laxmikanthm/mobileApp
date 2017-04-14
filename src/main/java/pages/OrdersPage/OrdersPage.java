@@ -4,6 +4,7 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
+import io.appium.java_client.SwipeElementDirection;
 import base.test.BaseTest;
 import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.OptionItem;
 import cardantApiFramework.utils.NumberUtil;
@@ -13,6 +14,7 @@ import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.log4j.lf5.viewer.categoryexplorer.CategoryElement;
@@ -110,6 +112,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     Random rn = new Random();
     int firstrandnum;
     int nextrandnum;
+    public String itemName=null;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -222,7 +225,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             String FullName = order.getCart().getProductDetail().getName();
             String[] Itemtype = FullName.split(" ");
-            if(!Itemtype[0].equals("FOOTLONG")) {
+            if(!Itemtype[0].trim().equals("FOOTLONG™")) {
                 getSixInchOption().isReady();
                 getSixInchOption().click();
             }
@@ -448,7 +451,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void customizeOrder(MobileUser mobileUser, Order order) throws Exception{
         try {
-            By extraIngredientsBy, InnerIngredientsBy, quantityBy;
+            By extraIngredientsBy, InnerIngredientsBy, quantityBy = null;
             if (driver instanceof AndroidDriver) {
                 extraIngredientsBy = By.xpath("//android.widget.HorizontalScrollView[@resource-id='com.subway.mobile.subwayapp03:id/category_tabs']//android.widget.TextView");
                 InnerIngredientsBy = By.id("ingredient_text");
@@ -459,12 +462,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 quantityBy = null;
             }
             addIngredient();
-            //swipe veggies to middle
-            List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
-            for (int m = 0; m <= order.getCart().getOptions().length; m++) {
-                for (int i = 0; i <= extraIngredients.size(); i++) {
-                    //swipe veggies to middle
-
+            WebElement ele = driver.findElement(By.id("category_tabs"));
+            int width=ele.getSize().getWidth();
+            AndroidElement veggies = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='Veggies']"));
+            if(veggies.getLocation().getX()>width/2)
+                veggies.swipe(SwipeElementDirection.LEFT, 500);
+            else
+                veggies.swipe(SwipeElementDirection.RIGHT, 500);
+            for (int m = 0; m < order.getCart().getOptions().length; m++) {
+                List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
+                for (int i = 0; i < extraIngredients.size(); i++) {
                     String name = extraIngredients.get(i).getText();
                     if (name.equalsIgnoreCase(order.getCart().getOptions()[m+2].getOptionGroup())) {
                         extraIngredients.get(i).click();
@@ -473,7 +480,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                         else {
                             ClickonItem(order.getCart().getOptions()[m + 2].getName(), InnerIngredientsBy);
                         }
+                        //Select quantity method
                         break;
+                    }
+                    try {
+                        if (extraIngredients.get(i).getText().equalsIgnoreCase("veggies") ||
+                                extraIngredients.get(i).getText().equalsIgnoreCase("sauces") ||
+                                extraIngredients.get(i).getText().equalsIgnoreCase("seasonings"))
+                            veggies.swipe(SwipeElementDirection.LEFT, 1200);
+                    }catch (Exception e){
+                        Logz.info("End of screen");
                     }
                 }
             }
@@ -490,18 +506,88 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             for (int i = 0; i<=innerIngredients.size(); i++){
                 if(i==innerIngredients.size()){
                     //scroll;
-                    flag =false;
+                    flag =false; //turn this on if you are not implementing scroll. if not it will go into infinite loop
                     break;
                 }
-                if(innerIngredients.get(i).getText().equalsIgnoreCase(name)){
+                 itemName = innerIngredients.get(i).getText();
+                By itemBy;
+                if(itemName.equalsIgnoreCase(name)){
+                    if(driver instanceof AndroidDriver)
+                        itemBy = By.xpath("//android.widget.TextView[@text ='"+ itemName +"' ]/parent::android.widget.LinearLayout/parent::android.widget.RelativeLayout/following-sibling::android.widget.LinearLayout");
+                    else
+                        itemBy = null;
                     innerIngredients.get(i).click();
-                    if(innerIngredients.get(i).findElements(By.xpath("//parent::android.widget.RelativeLayout[@id='main_layout']/following-sibling::android.widget.LinearLayout[@id='modify_layout']")).size()>0)
-                        innerIngredients.get(i).findElement(By.xpath("//parent::android.widget.RelativeLayout[@id='main_layout']/following-sibling::android.widget.LinearLayout[@id='modify_layout']")).click();
+                    if(driver.findElements(itemBy).size()>0 && !itemName.equalsIgnoreCase("cheese"))
+                        driver.findElement(itemBy).click();
                     flag =false;
                     break;
                 }
             }
         }while (flag);
+    }
+
+
+    public  List<WebElement> getNames(By locator)
+    {
+        List<WebElement> namesList = ((AndroidDriver)driver).findElements(locator);
+
+        return namesList;
+    }
+
+    public void swipeOrRight(By locator, String subProductName,int duration,String direction) throws  Exception
+    {
+        boolean flag=false;
+        int match=0;
+
+        while(getNames(locator).size()>0)
+        {
+            List<WebElement> allElements= getNames(locator);
+
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get(i).getText().equals(subProductName)) {
+
+                    match++;
+                }
+                if(match>0 && i==0) {
+                    flag=true;
+                    break;
+                }else{
+                    WebElement ele = allElements.get(0);
+                    MobileElement element = (MobileElement) ele;
+                    Thread.sleep(10000L);
+                    if(direction.equals("Left")) {
+                        element.swipe(SwipeElementDirection.LEFT, duration);
+                    }else{
+                        element.swipe(SwipeElementDirection.RIGHT, duration);
+                    }
+                }
+            }
+
+            if(flag==true)
+            {
+                break;
+            }
+        }
+    }
+
+
+    public  List<WebElement> getElements(By locator)
+    {
+        List<WebElement> elementsList = ((AndroidDriver)driver).findElements(locator);
+
+        return elementsList;
+    }
+
+
+    public void scrollToElement(By locator, long startpoint, long endpoint )
+    {
+        while(getElements(locator).size()==0) {
+            boolean flag = false;
+            Dimension dimensions = driver.manage().window().getSize();
+            int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
+            int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
+            ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+        }
     }
 
     public void modify(String value, By quantityBy){

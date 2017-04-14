@@ -86,10 +86,13 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     public void logout() throws Exception
 
     {
-        getDriver().hideKeyboard();
-        getLogOut().waitForClickable();
-        getLogOut().click();
-        logOutInpopupButton();
+        try {
+            getLogOut().isReady();
+            getLogOut().click();
+            logOutInpopupButton();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
     }
 
 
