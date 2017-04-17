@@ -197,21 +197,11 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
 
-    public By getStoreNamesLocator() throws Exception{
-        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
-        return storeNamesLocator;
-    }
-    public By getCategoryLocator() throws Exception{
-        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
-        return storeNamesLocator;
-    }
-    public By getSubcategoryLocator() throws Exception{
-        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
-        return storeNamesLocator;
-    }
-    public By getDrinkslocator() throws Exception{
-        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
-        return storeNamesLocator;
+
+    public MobileLabel getSwitchStoreName() throws Exception{
+        AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("SwitchStoreName")+"']"), "SwitchStoreName");
+
+        return switchNameLabel;
     }
 
 }

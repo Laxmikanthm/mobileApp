@@ -103,20 +103,24 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getRemove() throws Exception;
 
     abstract MobileLabel getSubItem() throws Exception;
+
     abstract MobileButton getBackButton() throws Exception;
+
     abstract MobileButton getSixInchOption() throws Exception;
+
     abstract MobileButton getToolTipExtras() throws Exception;
+
     abstract MobileButton getToolTipForSwipe() throws Exception;
-    abstract MobileButton getCookies() throws  Exception;
-    abstract By getStoreNamesLocator() throws  Exception;
-    abstract By getCategoryLocator() throws  Exception;
-    abstract By getSubcategoryLocator() throws  Exception;
-    abstract By getDrinkslocator() throws  Exception;
+
+    abstract MobileButton getCookies() throws Exception;
+
+
+    abstract MobileLabel getSwitchStoreName() throws Exception;
 
     Random rn = new Random();
     int firstrandnum;
     int nextrandnum;
-    public String itemName=null;
+    public String itemName = null;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -146,15 +150,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void placeRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
-            By storeNamesLocator=By.id("com.subway.mobile.subwayapp03:id/address");
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
             By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
-            scrollToItemAndClick(getStoreNamesLocator(),storeName,1600);
+            scrollToItemAndClick(storeNamesLocator, storeName, 1600);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
-            scrollToItemAndClick(getCategoryLocator(),order.getCart().getProductDetail().getProductGroup().getName(),1600);
-            scrollToItemAndClick(getCategoryLocator(),order.getCart().getProductDetail().getProductClass().getName(),1600);
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), 1600);
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), 1600);
             getAddToBag().click();
             getGotIt().click();
         } catch (Exception ex) {
@@ -164,22 +168,22 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void placeRandomOrderAMeal(String menuItem, MobileUser mobileUser, String storeName, String moreToYourOrder) throws Exception {
         try {
-            By storeNamesLocator=By.id("com.subway.mobile.subwayapp03:id/address");
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
             By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
-            String subcategoryLocator="com.subway.mobile.subwayapp03:id/product_group_header";
+            String subcategoryLocator = "com.subway.mobile.subwayapp03:id/product_group_header";
             By drinkslocator = By.id("com.subway.mobile.subwayapp03:id/product_title");
 //            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
 //            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
 
-            scrollToItemAndClick(storeNamesLocator,storeName,1600);
+            scrollToItemAndClick(storeNamesLocator, storeName, 1600);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
-            scrollToItemAndClick(categoryLocator,"All Sandwiches",1600);
-            scrollToItemAndClick(categoryLocator,"Cold Cut Combo",1600);
+            scrollToItemAndClick(categoryLocator, "All Sandwiches", 1600);
+            scrollToItemAndClick(categoryLocator, "Cold Cut Combo", 1600);
             getAddToBag().click();
             getMakeItAMeal().click();
             getDrinks().click();
-            swipeLeftOrRight(getDrinkslocator(),"21oz Fountain Drink",500,"Left");
+            swipeLeftOrRight(drinkslocator, "21oz Fountain Drink", 500, "Left");
             getCookies().click();
             getDrinksAddToBag().click();
             getPlaceOrder().click();
@@ -189,22 +193,19 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void scrollToItemAndClick(By locator,String itemName, int endY )
-    {
-        boolean flag=false;
-        while(getItems(locator).size()>0)
-        {
-            List<WebElement> allElements= getElements(locator);
+    public void scrollToItemAndClick(By locator, String itemName, int endY) {
+        boolean flag = false;
+        while (getItems(locator).size() > 0) {
+            List<WebElement> allElements = getElements(locator);
 
             for (int i = 0; i < allElements.size(); i++) {
                 if (allElements.get(i).getText().equals(itemName)) {
                     allElements.get(i).click();
-                    flag=true;
+                    flag = true;
                     break;
                 }
             }
-            if(flag==false)
-            {
+            if (flag == false) {
                 WebElement element = allElements.get(allElements.size() - 1);
                 MobileElement ele = (MobileElement) element;
                 int x = ele.getLocation().getX();
@@ -212,56 +213,49 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 ((AndroidDriver) driver).swipe(x, y, x, y - endY, 3000);
 
             }
-            if(flag==true)
-            {
+            if (flag == true) {
                 break;
             }
         }
     }
 
 
+    public void swipeLeftOrRight(By locator, String subProductName, int duration, String direction) throws Exception {
+        boolean flag = false;
+        int match = 0;
 
-
-    public void swipeLeftOrRight(By locator, String subProductName,int duration,String direction) throws  Exception
-    {
-        boolean flag=false;
-        int match=0;
-
-        while(getNames(locator).size()>0)
-        {
-            List<WebElement> allElements= getNames(locator);
+        while (getNames(locator).size() > 0) {
+            List<WebElement> allElements = getNames(locator);
 
             for (int i = 0; i < allElements.size(); i++) {
                 if (allElements.get(i).getText().equals(subProductName)) {
 
                     match++;
                 }
-                if(match>0 && i==0) {
-                    flag=true;
+                if (match > 0 && i == 0) {
+                    flag = true;
                     break;
-                }else{
+                } else {
                     WebElement ele = allElements.get(0);
                     MobileElement element = (MobileElement) ele;
                     Thread.sleep(10000L);
-                    if(direction.equals("Left")) {
+                    if (direction.equals("Left")) {
                         element.swipe(SwipeElementDirection.LEFT, duration);
-                    }else{
+                    } else {
                         element.swipe(SwipeElementDirection.RIGHT, duration);
                     }
                 }
             }
 
-            if(flag==true)
-            {
+            if (flag == true) {
                 break;
             }
         }
     }
 
 
-    public void scroolToElement(By locator)
-    {
-        while(getElements(locator).size()==0) {
+    public void scroolToElement(By locator) {
+        while (getElements(locator).size() == 0) {
             boolean flag = false;
             Dimension dimensions = driver.manage().window().getSize();
             int Startpoint = (int) (dimensions.getHeight() * 0.9);
@@ -270,18 +264,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public  List<WebElement> getElements(By locator)
-    {
-        List<WebElement> elementsList = ((AndroidDriver)driver).findElements(locator);
+    public List<WebElement> getElements(By locator) {
+        List<WebElement> elementsList = ((AndroidDriver) driver).findElements(locator);
 
         return elementsList;
     }
-    public  List<WebElement> getItems(By locator)
-    {
-        List<WebElement> storesList = ((AndroidDriver)driver).findElements(locator);
+
+    public List<WebElement> getItems(By locator) {
+        List<WebElement> storesList = ((AndroidDriver) driver).findElements(locator);
         return storesList;
     }
-
 
 
     public void searchStore(String storeName) throws Exception {
@@ -322,10 +314,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void getItemType() throws Exception{
-        try{
+    public void getItemType() throws Exception {
+        try {
             getSixInchOption().click();
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
     }
@@ -335,12 +327,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             String FullName = order.getCart().getProductDetail().getName();
             String[] Itemtype = FullName.split(" ");
-            if(!Itemtype[0].trim().equals("FOOTLONG™")) {
+            if (!Itemtype[0].trim().equals("FOOTLONG™")) {
                 getSixInchOption().isReady();
                 getSixInchOption().click();
             }
             getCustomize().click();
-            } catch (Exception ex) {
+        } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
@@ -391,12 +383,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void selectBackButton()  throws Exception
-    {
-        try{
+    public void selectBackButton() throws Exception {
+        try {
             getBackButton().waitForClickable();
             getBackButton().click();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
@@ -443,82 +434,78 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void placeAnOrder() throws Exception{
+    public void placeAnOrder() throws Exception {
         try {
             selectBackButton();
             getPlaceOrder().click();
             getGotIt().click();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
 
-    public List<Integer> addAnotherSameItem() throws Exception{
+    public List<Integer> addAnotherSameItem() throws Exception {
         try {
             ArrayList<Integer> subItems = new ArrayList<Integer>();
             int previousList = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/cart_items_recycler")).size();
             getAddAnother().isReady();
             getAddAnother().click();
             int afterList = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/cart_items_recycler")).size();
-            subItems.add(previousList+1);
+            subItems.add(previousList + 1);
             subItems.add(afterList);
             return subItems;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
 
-    public void addAnotherNewItem() throws Exception{
-        try{
+    public void addAnotherNewItem() throws Exception {
+        try {
             getAddToBag().isReady();
             getAddToBag().click();
             getSomethingElse().isReady();
             getSomethingElse().click();
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
 
-    public List<Integer> removeItem() throws Exception{
-        try{
+    public List<Integer> removeItem() throws Exception {
+        try {
             ArrayList<Integer> subItems = new ArrayList<Integer>();
             int previousList = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/cart_items_recycler")).size();
             getRemove().isReady();
             getRemove().click();
             int afterList = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/cart_items_recycler")).size();
             subItems.add(previousList);
-            subItems.add(afterList+1);
+            subItems.add(afterList + 1);
             return subItems;
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
 
-    public void addToCartAndPlaceOrder() throws Exception{
-        try{
+    public void addToCartAndPlaceOrder() throws Exception {
+        try {
             getAddBag().isReady();
             getAddBag().click();
             getPlaceOrder().isReady();
             getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
     }
 
 
-    public void getModifyList() throws Exception{
-        try{
-            int modify = ((AndroidDriver)driver).findElements(By.xpath("//android.widget.TextView[@text='Modify']")).size();
-            if (modify>0){
+    public void getModifyList() throws Exception {
+        try {
+            int modify = ((AndroidDriver) driver).findElements(By.xpath("//android.widget.TextView[@text='Modify']")).size();
+            if (modify > 0) {
                 getModify().click();
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
 
         }
 
@@ -527,19 +514,19 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void getQuantityOfItem(By quantityBy) throws Exception {
         try {
-                List<WebElement> quantity = driver.findElements((quantityBy));
-                if (quantity.size() > 0) {
-                    quantity.get(rn.nextInt(quantity.size())).click();
-                }
-        }catch(Exception ex){
-
+            List<WebElement> quantity = driver.findElements((quantityBy));
+            if (quantity.size() > 0) {
+                quantity.get(rn.nextInt(quantity.size())).click();
             }
+        } catch (Exception ex) {
+
+        }
     }
 
     public void selectRandomItems(List<WebElement> list, By locator) throws Exception {
         firstrandnum = rn.nextInt(list.size());
         nextrandnum = rn.nextInt(list.size());
-        if (firstrandnum!=nextrandnum){
+        if (firstrandnum != nextrandnum) {
             list.get(rn.nextInt(list.size())).click();
             getModifyList();
             getQuantityOfItem(locator);
@@ -553,13 +540,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-
-    public List<WebElement> findElements(By by){
+    public List<WebElement> findElements(By by) {
 
         return driver.findElements(by);
     }
 
-    public void customizeOrder(MobileUser mobileUser, Order order) throws Exception{
+    public void customizeOrder(MobileUser mobileUser, Order order) throws Exception {
         try {
             By extraIngredientsBy, InnerIngredientsBy, quantityBy = null;
             if (driver instanceof AndroidDriver) {
@@ -573,9 +559,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
             addIngredient();
             WebElement ele = driver.findElement(By.id("category_tabs"));
-            int width=ele.getSize().getWidth();
+            int width = ele.getSize().getWidth();
             AndroidElement veggies = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='Veggies']"));
-            if(veggies.getLocation().getX()>width/2)
+            if (veggies.getLocation().getX() > width / 2)
                 veggies.swipe(SwipeElementDirection.LEFT, 500);
             else
                 veggies.swipe(SwipeElementDirection.RIGHT, 500);
@@ -583,10 +569,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
                 for (int i = 0; i < extraIngredients.size(); i++) {
                     String name = extraIngredients.get(i).getText();
-                    if (name.equalsIgnoreCase(order.getCart().getOptions()[m+2].getOptionGroup())) {
+                    if (name.equalsIgnoreCase(order.getCart().getOptions()[m + 2].getOptionGroup())) {
                         extraIngredients.get(i).click();
-                        if(name.equalsIgnoreCase("cheese"))
-                            ClickonItem(order.getCart().getOptions()[m+2].getValue(), InnerIngredientsBy);
+                        if (name.equalsIgnoreCase("cheese"))
+                            ClickonItem(order.getCart().getOptions()[m + 2].getValue(), InnerIngredientsBy);
                         else {
                             ClickonItem(order.getCart().getOptions()[m + 2].getName(), InnerIngredientsBy);
                         }
@@ -598,95 +584,86 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                                 extraIngredients.get(i).getText().equalsIgnoreCase("sauces") ||
                                 extraIngredients.get(i).getText().equalsIgnoreCase("seasonings"))
                             veggies.swipe(SwipeElementDirection.LEFT, 1200);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Logz.info("End of screen");
                     }
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
 
-    public void ClickonItem(String name, By InnerIngredientsBy){
+    public void ClickonItem(String name, By InnerIngredientsBy) {
         boolean flag = true;
         do {
             List<WebElement> innerIngredients = driver.findElements((InnerIngredientsBy));
-            for (int i = 0; i<=innerIngredients.size(); i++){
-                if(i==innerIngredients.size()){
+            for (int i = 0; i <= innerIngredients.size(); i++) {
+                if (i == innerIngredients.size()) {
                     //scroll;
-                    flag =false; //turn this on if you are not implementing scroll. if not it will go into infinite loop
+                    flag = false; //turn this on if you are not implementing scroll. if not it will go into infinite loop
                     break;
                 }
-                 itemName = innerIngredients.get(i).getText();
+                itemName = innerIngredients.get(i).getText();
                 By itemBy;
-                if(itemName.equalsIgnoreCase(name)){
-                    if(driver instanceof AndroidDriver)
-                        itemBy = By.xpath("//android.widget.TextView[@text ='"+ itemName +"' ]/parent::android.widget.LinearLayout/parent::android.widget.RelativeLayout/following-sibling::android.widget.LinearLayout");
+                if (itemName.equalsIgnoreCase(name)) {
+                    if (driver instanceof AndroidDriver)
+                        itemBy = By.xpath("//android.widget.TextView[@text ='" + itemName + "' ]/parent::android.widget.LinearLayout/parent::android.widget.RelativeLayout/following-sibling::android.widget.LinearLayout");
                     else
                         itemBy = null;
                     innerIngredients.get(i).click();
-                    if(driver.findElements(itemBy).size()>0 && !itemName.equalsIgnoreCase("cheese"))
+                    if (driver.findElements(itemBy).size() > 0 && !itemName.equalsIgnoreCase("cheese"))
                         driver.findElement(itemBy).click();
-                    flag =false;
+                    flag = false;
                     break;
                 }
             }
-        }while (flag);
+        } while (flag);
     }
 
 
-    public  List<WebElement> getNames(By locator)
-    {
-        List<WebElement> namesList = ((AndroidDriver)driver).findElements(locator);
+    public List<WebElement> getNames(By locator) {
+        List<WebElement> namesList = ((AndroidDriver) driver).findElements(locator);
 
         return namesList;
     }
 
-    public void swipeOrRight(By locator, String subProductName,int duration,String direction) throws  Exception
-    {
-        boolean flag=false;
-        int match=0;
+    public void swipeOrRight(By locator, String subProductName, int duration, String direction) throws Exception {
+        boolean flag = false;
+        int match = 0;
 
-        while(getNames(locator).size()>0)
-        {
-            List<WebElement> allElements= getNames(locator);
+        while (getNames(locator).size() > 0) {
+            List<WebElement> allElements = getNames(locator);
 
             for (int i = 0; i < allElements.size(); i++) {
                 if (allElements.get(i).getText().equals(subProductName)) {
 
                     match++;
                 }
-                if(match>0 && i==0) {
-                    flag=true;
+                if (match > 0 && i == 0) {
+                    flag = true;
                     break;
-                }else{
+                } else {
                     WebElement ele = allElements.get(0);
                     MobileElement element = (MobileElement) ele;
                     Thread.sleep(10000L);
-                    if(direction.equals("Left")) {
+                    if (direction.equals("Left")) {
                         element.swipe(SwipeElementDirection.LEFT, duration);
-                    }else{
+                    } else {
                         element.swipe(SwipeElementDirection.RIGHT, duration);
                     }
                 }
             }
 
-            if(flag==true)
-            {
+            if (flag == true) {
                 break;
             }
         }
     }
 
 
-
-
-
-    public void scrollToElement(By locator, long startpoint, long endpoint )
-    {
-        while(getElements(locator).size()==0) {
+    public void scrollToElement(By locator, long startpoint, long endpoint) {
+        while (getElements(locator).size() == 0) {
             boolean flag = false;
             Dimension dimensions = driver.manage().window().getSize();
             int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
@@ -695,16 +672,27 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void modify(String value, By quantityBy){
+    public void modify(String value, By quantityBy) {
         List<WebElement> mod = driver.findElements((quantityBy));
-        for(int i = 0; i<=mod.size(); i++){
-            if(i==mod.size()){
+        for (int i = 0; i <= mod.size(); i++) {
+            if (i == mod.size()) {
 
             }
 
         }
 
     }
+
+    public void selectRestaurant() throws Exception {
+        getSelectRestaurantButton().click();
+    }
+
+    public String switchStoreName() throws Exception {
+        getSwitchStoreName().isReady();
+        return getSwitchStoreName().getText();
+    }
+
+
 }
 
 

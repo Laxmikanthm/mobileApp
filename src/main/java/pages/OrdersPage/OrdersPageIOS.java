@@ -272,22 +272,12 @@ public class OrdersPageIOS extends OrdersPage {
 
         return button;
     }
+    public MobileLabel getSwitchStoreName() throws Exception {
 
-    public By getStoreNamesLocator() throws Exception{
-        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
-        return storeNamesLocator;
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
     }
-    public By getCategoryLocator() throws Exception{
-        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
-        return storeNamesLocator;
-    }
-    public By getSubcategoryLocator() throws Exception{
-        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
-        return storeNamesLocator;
-    }
-    public By getDrinkslocator() throws Exception{
-        By storeNamesLocator =  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("storeNamesLocator")+"']");
-        return storeNamesLocator;
-    }
+
 
 }

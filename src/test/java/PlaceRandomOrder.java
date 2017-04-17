@@ -33,7 +33,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         /*mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
         mobileUser.setPassword("Subway1234");*/
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
@@ -59,7 +59,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -80,7 +80,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -122,7 +122,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -143,7 +143,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -164,7 +164,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -185,7 +185,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -207,7 +207,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);

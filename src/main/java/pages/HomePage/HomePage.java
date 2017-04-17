@@ -41,6 +41,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getAllowLocation()throws Exception;
     abstract MobileButton getStoreView()throws Exception;
     abstract MobileButton getBackButton() throws Exception;
+    abstract MobileButton getFindAnotherSubway()throws Exception;
 
 
     @Override
@@ -91,6 +92,15 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     {
         try{
             getFindSubWayNearYou().click();
+            return SearchStore.get((AppiumDriver)driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+    public SearchStore findAnotherSubway() throws Exception
+    {
+        try{
+            getFindAnotherSubway().click();
             return SearchStore.get((AppiumDriver)driver);
         }catch(Exception ex){
             throw new Exception(ex);
