@@ -26,6 +26,13 @@ public class OrdersPageIOS extends OrdersPage {
         return button;
     }
 
+    public MobileLabel getItems() throws Exception {
+
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
+    }
+
     public IOSButton getSelectRestaurantButton() throws Exception {
 
         IOSButton selectRestaurantButton = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
@@ -272,6 +279,14 @@ public class OrdersPageIOS extends OrdersPage {
 
         return button;
     }
+
+    public IOSButton getDirections() throws Exception {
+
+        IOSButton placeOrder = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return placeOrder;
+    }
+
     public MobileLabel getSwitchStoreName() throws Exception {
 
         IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");

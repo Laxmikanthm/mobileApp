@@ -197,11 +197,21 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
 
+    public MobileButton getDirections() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.LinearLayout[@resource-id='"+BaseTest.bundle.getString("Directions")+"']"), "Directions button");
+        return button;
+    }
+
 
     public MobileLabel getSwitchStoreName() throws Exception{
         AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("SwitchStoreName")+"']"), "SwitchStoreName");
-
         return switchNameLabel;
     }
+
+    public MobileLabel getItems() throws Exception {
+        AndroidLabel items = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Items")), "Items label");
+        return items;
+    }
+
 
 }

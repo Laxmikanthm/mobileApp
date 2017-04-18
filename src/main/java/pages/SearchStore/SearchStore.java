@@ -3,16 +3,28 @@ package pages.SearchStore;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
+import base.gui.controls.mobile.keyboard.AndroidKeyboard;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDeviceActionShortcuts;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidKeyCode;
+import io.appium.java_client.android.AndroidKeyMetastate;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.internal.KeysRelatedAction;
+import org.openqa.selenium.winium.KeyboardSimulatorType;
 import pages.HomePage.HomePage;
 import pages.OrdersPage.OrdersPage;
 import pages.OrdersPage.OrdersPageAndroid;
 import pages.OrdersPage.OrdersPageIOS;
 import pojos.user.MobileUser;
+
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+
+import static java.awt.event.KeyEvent.VK_ENTER;
 
 /**
  * Created by E003705 on 17-03-2017.
@@ -61,12 +73,13 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     {
         try{
             getSearchButton().click();
-            //getSearchByZipCode().setText(mobileUser.getPostalCode());
-
             getSearchByZipCode().isReady();
             getSearchByZipCode().getControl().clear();
-            //   getSearchByZipCode().setText("06460");
-            ((AppiumDriver)driver).findElement(By.xpath("//*[@text='Search by Zip Code']")).sendKeys("06460");
+            //getSearchByZipCode().setText("06460");
+            ((AppiumDriver)driver).findElement(By.xpath("//android.widget.EditText[@text='Search by Zip Code']")).sendKeys("06460");
+            //((AppiumDriver)driver).findElement(By.xpath("//android.widget.EditText[@text='Search by Zip Code']")).sendKeys(Keys.ENTER);
+            //getSearchByZipCode().getControl().sendKeys(Keys.ENTER);
+            //getSearchByZipCode().getControl().sendKeys(VK_ENTER);
         }
         catch(Exception ex){
             throw new Exception(ex);
@@ -76,24 +89,42 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     public void allowPopUp() throws Exception
     {
         try{
-            int d=((AndroidDriver)driver).findElements(By.xpath("//*[@text='Allow']")).size();
-            if(d>0)
-            {
-                getAllowButton().click();
+            if(driver instanceof AndroidDriver) {
+                int d=((AndroidDriver)driver).findElements(By.xpath("//android.widget.Button[@text='Allow']")).size();
+                if(d>0)
+                {
+                    getAllowButton().click();
+                }
+            }else{
+                int d=((IOSDriver)driver).findElements(By.id("permission_allow_button")).size();
+                if(d>0)
+                {
+                    getAllowButton().click();
+                }
             }
         }catch(Exception ex){
             throw new Exception(ex);
         }
+
     }
 
     public void okPopUp() throws Exception
     {
         try{
-            int d=((AppiumDriver)driver).findElements(By.xpath("//*[@text='OK']")).size();
-            if(d>0)
-            {
-                getOkPopupButton().click();
+            if(driver instanceof AndroidDriver) {
+                int d=((AndroidDriver)driver).findElements(By.xpath("//android.widget.Button[@text='OK']")).size();
+                if(d>0)
+                {
+                    getOkPopupButton().click();
 
+                }
+            }else{
+                int d=((IOSDriver)driver).findElements(By.xpath("//android.widget.Button[@text='OK']")).size();
+                if(d>0)
+                {
+                    getOkPopupButton().click();
+
+                }
             }
         }catch(Exception ex){
             throw new Exception(ex);
@@ -104,13 +135,18 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     {
         try{
             if(driver instanceof AndroidDriver) {
-                int d = ((AppiumDriver) driver).findElements(By.xpath("//android.widget.ImageView[@resource-id='com.subway.mobile.subwayapp03:id/toggle_view']")).size();
+                int d = ((AndroidDriver) driver).findElements(By.id("toggle_view")).size();
                 if(d>0)
                 {
                     getToggleView().click();
                 }
             }else{
-                
+                int d = ((IOSDriver) driver).findElements(By.id("toggle_view")).size();
+                if(d>0)
+                {
+                    getToggleView().click();
+                }
+
             }
 
         }catch(Exception ex){
@@ -123,6 +159,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         try{
             okPopUp();
             allowPopUp();
+            okPopUp();
             toggleView();
             searchStoreByZipCode(store);
             return OrdersPage.get((AppiumDriver) driver);

@@ -76,7 +76,6 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             getBillingStreetAddress().setText(mobileUser.getStreetAddresss());
             getBillingZipCode().setText(mobileUser.getPostalCode());
             getReviewDetails().click();
-            HideKeyboard();
             getSavePaymentMethod().isReady();
             getSavePaymentMethod().click();
             selectBackButton();
@@ -114,7 +113,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     public void selectBackButton()  throws Exception
     {
 
-        getBackButton().waitForClickable();
+        getBackButton().isReady();
         getBackButton().click();
 
     }
@@ -149,12 +148,12 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
                 break;
             case "DebitCard":
                 ChoosePaymentMethodPage choosePaymentPage = subwayPage.addPaymentMethod();
-                AddCardPage cardPage = choosePaymentPage.ChoosePaymentMethodCreditCard();
+                AddCardPage cardPage = choosePaymentPage.ChoosePaymentMethodDebitCard();
                 PaymentMethodsPage methodsPage= cardPage.addCardDetails(mobileUser);
                 break;
             case "GiftCard":
                 ChoosePaymentMethodPage paymentMethodPage = subwayPage.addPaymentMethod();
-                AddCardPage addPage = paymentMethodPage.ChoosePaymentMethodCreditCard();
+                AddCardPage addPage = paymentMethodPage.ChoosePaymentMethodGiftCard();
                 PaymentMethodsPage paymentPage= addPage.addCardDetails(mobileUser);
                 break;
             case "Paypal":

@@ -27,12 +27,12 @@ public class SearchStoreAndroid extends SearchStore {
     }
 
     public MobileButton getOkPopupButton() throws Exception {
-        AndroidButton okButton = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("OkButton")+"']"), "Ok button");
+        AndroidButton okButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='"+BaseTest.bundle.getString("OkButton")+"']"), "Ok button");
         return okButton;
     }
 
     public MobileButton getAllowButton() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+BaseTest.bundle.getString("Allow")+"']"), "Allow button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='"+BaseTest.bundle.getString("Allow")+"']"), "Allow button");
         return button;
     }
 
@@ -57,7 +57,7 @@ public class SearchStoreAndroid extends SearchStore {
     }
 
     public MobileButton getToggleView() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.ImageView[@resource-id='"+BaseTest.bundle.getString("ToggleView")+"']"), "Toggle button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ToggleView")), "ToggleView button");
         return button;
     }
 

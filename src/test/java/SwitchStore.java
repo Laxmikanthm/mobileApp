@@ -40,11 +40,11 @@ public class SwitchStore extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.scrollToItemAndClick(storeNamesLocator,storeName,1600);
+        ordersPage.scrollToItemAndClick(storeNamesLocator,storeName,1600,3000);
         ordersPage.selectRestaurant();
         homePage.findAnotherSubway();
         searchStore.findYourStore("06460");
-        ordersPage.scrollToItemAndClick(storeNamesLocator,storeName1,1600);
+        ordersPage.scrollToItemAndClick(storeNamesLocator,storeName1,1600,3000);
         String actualStoreName= ordersPage.switchStoreName();
         ordersPage.selectRestaurant();
         Assert.assertEquals(actualStoreName,storeName1);

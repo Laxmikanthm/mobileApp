@@ -33,9 +33,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        /*mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
-        mobileUser.setPassword("Subway1234");*/
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -69,8 +67,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");//remove hardcoded control
-        ordersPage.placeRandomOrder("SUBWAY Fresh Fit™", mobileUser, storeName);
+        OrdersPage ordersPage=searchStore.findYourStore("06460");
+        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, storeName);
     }
 
     @Test
@@ -154,7 +152,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrder("SUBWAY Fresh Fit for Kids®", mobileUser, storeName);
+        ordersPage.placeRandomOrder("Kids' Meal", mobileUser, storeName);
     }
 
     @Test
