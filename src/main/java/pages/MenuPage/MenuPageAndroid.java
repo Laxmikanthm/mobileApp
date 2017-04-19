@@ -70,6 +70,11 @@ public class MenuPageAndroid extends MenuPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("About")+"']"), "About button");
         return button;
     }
+    public AndroidButton getEmail() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Switch[@text='"+BaseTest.bundle.getString("UpdateEmailPrefernce")+"']"), "Update Email Prefernce");
+        return button;
+    }
+
 
 }
 

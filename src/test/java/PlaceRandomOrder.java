@@ -47,7 +47,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
         ordersPage.placeRandomOrder("All Sandwiches", mobileUser, storeName);
-        //remove hardcoded swipe values, remove hardcoded Controls. Add Customize options logic.
+
 
     }
     @Test

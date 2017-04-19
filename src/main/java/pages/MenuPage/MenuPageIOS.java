@@ -86,4 +86,10 @@ public class MenuPageIOS extends MenuPage {
 
         return button;
     }
+    public MobileButton getEmail() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+
+        return button;
+    }
 }

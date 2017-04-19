@@ -42,6 +42,8 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getStoreView()throws Exception;
     abstract MobileButton getBackButton() throws Exception;
     abstract MobileButton getFindAnotherSubway()throws Exception;
+    abstract MobileLabel getYourFavoriteOrderName() throws Exception;
+
 
 
     @Override
@@ -112,6 +114,11 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         getBackButton().waitForClickable();
         getBackButton().click();
 
+    }
+
+    public String favoriteOrderName() throws  Exception
+    {
+        return getYourFavoriteOrderName().getText();
     }
 
 

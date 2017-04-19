@@ -1,7 +1,9 @@
 package pages.HomePage;
 
 import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.android.AndroidLabel;
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileLabel;
 import base.test.BaseTest;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -31,7 +33,8 @@ public class HomePageAndroid extends HomePage {
     }
 
     public MobileButton getBackButton() throws Exception {
-        AndroidButton backButton = new AndroidButton ((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='" + BaseTest.bundle.getString("FindButton") + "']"), "Find Button");
+        //AndroidButton backButton = new AndroidButton ((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='" + BaseTest.bundle.getString("FindButton") + "']"), "Find Button");
+        AndroidButton backButton = new AndroidButton((AndroidDriver) driver, By.className("android.widget.ImageButton"), "Back button");
         return backButton;
     }
 
@@ -56,6 +59,10 @@ public class HomePageAndroid extends HomePage {
     public MobileButton getFindAnotherSubway() throws Exception {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("FindAnotherSubway")+"']"), "Find Another Subway button");
         return button;
+    }
+    public MobileLabel getYourFavoriteOrderName() throws Exception {
+        AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("UserInfo")+"']"), "User Information");
+        return label;
     }
 
 

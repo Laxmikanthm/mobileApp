@@ -76,6 +76,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             getBillingStreetAddress().setText(mobileUser.getStreetAddresss());
             getBillingZipCode().setText(mobileUser.getPostalCode());
             getReviewDetails().click();
+            HideKeyboard();
             getSavePaymentMethod().isReady();
             getSavePaymentMethod().click();
             selectBackButton();

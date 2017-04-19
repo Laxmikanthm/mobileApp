@@ -1,7 +1,9 @@
 package pages.HomePage;
 
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.ios.IOSButton;
+import base.gui.controls.mobile.ios.IOSLabel;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -55,5 +57,11 @@ public class HomePageIOS extends HomePage {
     public MobileButton getFindAnotherSubway() throws Exception {
         IOSButton backButton = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toggle_view"), "StoreView button");
         return backButton;
+    }
+    public MobileLabel getYourFavoriteOrderName() throws Exception {
+
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
     }
 }
