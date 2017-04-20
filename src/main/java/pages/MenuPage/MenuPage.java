@@ -7,6 +7,7 @@ import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
 import pages.AddCardPage.AddCardPage;
 import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
 import pages.ContactInformationPage.ContactInformationPage;
@@ -37,6 +38,9 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getHelp() throws Exception;
     abstract MobileButton getAbout() throws Exception;
     abstract MobileButton getEmail() throws Exception;
+    abstract MobileButton getPrivacyPolicy() throws Exception;
+    abstract MobileButton getPrivacyPolicyShare() throws Exception;
+    abstract MobileButton getTermsandConditions() throws Exception;
 
 
     //abstract MobileButton getLogOutButton() throws Exception;
@@ -206,10 +210,12 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         }
     }
 
-    public boolean isElementPresent(MobileButton element)throws Exception
+    public boolean isElementPresent(By locator)throws Exception
     {
         try{
-            if(element.getControl().isDisplayed()){
+
+            int x= ((AppiumDriver)driver).findElements(locator).size();
+            if(x>0){
                 return true;
             }else{
                 return false;

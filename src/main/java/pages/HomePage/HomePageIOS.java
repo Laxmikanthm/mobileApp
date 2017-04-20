@@ -64,4 +64,8 @@ public class HomePageIOS extends HomePage {
 
         return button;
     }
+    public MobileButton getFavoritesAddIcon() throws Exception {
+        IOSButton backButton = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toggle_view"), "StoreView button");
+        return backButton;
+    }
 }

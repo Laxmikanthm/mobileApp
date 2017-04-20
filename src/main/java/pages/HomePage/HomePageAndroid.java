@@ -64,6 +64,11 @@ public class HomePageAndroid extends HomePage {
         AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("UserInfo")+"']"), "User Information");
         return label;
     }
+    public MobileButton getFavoritesAddIcon() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.ImageView[@resource-id='"+BaseTest.bundle.getString("FavoriteAddIcon")+"']"), "Find Another Subway button");
+        return button;
+    }
+
 
 
 }

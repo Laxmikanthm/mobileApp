@@ -1,6 +1,8 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import org.openqa.selenium.By;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
@@ -19,12 +21,15 @@ public class AppVersion extends SubwayAppBaseTest {
     @Test
     public void verifyAppVersion() throws Exception
     {
+        By appVersionLocator= By.xpath("//android.widget.TextView[@text='Version']");
+
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
+        Assert.assertTrue(menuPage.isElementPresent(appVersionLocator),"App version is existed in the About page");
 
 
     }

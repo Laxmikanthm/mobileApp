@@ -12,23 +12,25 @@ import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
 /**
- * Created by e002243 on 18-04-2017.
+ * Created by e002243 on 20-04-2017.
  */
 @ContextConfiguration("classpath:MobileAppBeans.xml")
-public class HelpPage extends SubwayAppBaseTest {
+public class Privacypolicy extends SubwayAppBaseTest {
+
     MobileUser mobileUser;
     @Test
-    public void verifyHelpPage() throws Exception
+    public void verifyAppVersion() throws Exception
     {
-        By helopPageLocator= By.id("com.subway.mobile.subwayapp03:id/question");
+        By appVersionLocator= By.xpath("//android.widget.TextView[@text='Version']");
+
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        menuPage.verifyHelp();
-        Assert.assertTrue(menuPage.isElementPresent(helopPageLocator),"Help page has the expected Text");
+        menuPage.getabout();
+
 
     }
 }

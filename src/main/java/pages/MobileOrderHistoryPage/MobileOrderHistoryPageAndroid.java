@@ -24,7 +24,7 @@ public class MobileOrderHistoryPageAndroid extends MobileOrderHistoryPage {
         return button;
     }
     public AndroidButton getFavoriteSaveButton() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+BaseTest.bundle.getString("FavoriteOrderSaveButton")+"']"), "FavoriteOrderSaveButton");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='"+BaseTest.bundle.getString("FavoriteOrderSaveButton")+"']"), "FavoriteOrderSaveButton");
         return button;
     }
     public AndroidTextBox getFavoriteOrderName() throws Exception {

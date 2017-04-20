@@ -74,7 +74,18 @@ public class MenuPageAndroid extends MenuPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Switch[@text='"+BaseTest.bundle.getString("UpdateEmailPrefernce")+"']"), "Update Email Prefernce");
         return button;
     }
-
+    public AndroidButton getPrivacyPolicy() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("PrivacyPolicy")+"']"), "PrivacyPolicy");
+        return button;
+    }
+    public AndroidButton getPrivacyPolicyShare() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("PrivacyPolicyShare")+"']"), "PrivacyPolicyShare");
+        return button;
+    }
+    public AndroidButton getTermsandConditions() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TermandConditions")+"']"), "TermandConditions");
+        return button;
+    }
 
 }
 

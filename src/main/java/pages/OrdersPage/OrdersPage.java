@@ -152,7 +152,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void placeRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
 
-            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
+          /*  By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
             By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
             By sidesOrDrinks = By.id("com.subway.mobile.subwayapp03:id/product_title");
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
@@ -174,7 +174,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getPlaceOrder().isReady();
             getPlaceOrder().click();
-            getGotIt().isReady();
+            getGotIt().isReady();*/
             getGotIt().click();
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -348,6 +348,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getSixInchOption().click();
         } catch (Exception ex) {
 
+        }
+    }
+    public void gotIt() throws Exception {
+        try {
+           getGotIt().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
         }
     }
 

@@ -43,6 +43,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getBackButton() throws Exception;
     abstract MobileButton getFindAnotherSubway()throws Exception;
     abstract MobileLabel getYourFavoriteOrderName() throws Exception;
+    abstract MobileButton getFavoritesAddIcon() throws Exception;
 
 
 
@@ -120,7 +121,10 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     {
         return getYourFavoriteOrderName().getText();
     }
-
+    public void reSubmitFavoriteOrder() throws  Exception
+    {
+        getFavoritesAddIcon().click();
+    }
 
 
 }
