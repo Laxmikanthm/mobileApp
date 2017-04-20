@@ -75,8 +75,8 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
             getSearchButton().click();
             getSearchByZipCode().isReady();
             getSearchByZipCode().getControl().clear();
-            //getSearchByZipCode().setText("06460");
-            ((AppiumDriver)driver).findElement(By.xpath("//android.widget.EditText[@text='Search by Zip Code']")).sendKeys("06460");
+            getSearchByZipCode().setText("06460");
+            //((AppiumDriver)driver).findElement(By.xpath("//android.widget.EditText[@text='Search by Zip Code']")).sendKeys("06460");
             //((AppiumDriver)driver).findElement(By.xpath("//android.widget.EditText[@text='Search by Zip Code']")).sendKeys(Keys.ENTER);
             //getSearchByZipCode().getControl().sendKeys(Keys.ENTER);
             //getSearchByZipCode().getControl().sendKeys(VK_ENTER);

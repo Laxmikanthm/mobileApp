@@ -84,7 +84,7 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public AndroidTextBox getSpecialInstructions() throws Exception {
-        AndroidTextBox specialInstructions = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("MakeItAMeal")+"']"), "Make It a Meal Button");
+        AndroidTextBox specialInstructions = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("TypeInstructions")), "Type Instructions field");
         return specialInstructions;
     }
 

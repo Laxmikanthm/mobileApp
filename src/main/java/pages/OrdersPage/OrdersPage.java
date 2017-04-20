@@ -152,7 +152,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void placeRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
 
-          /*  By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
             By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
             By sidesOrDrinks = By.id("com.subway.mobile.subwayapp03:id/product_title");
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
@@ -173,7 +173,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
             getAddToBag().click();
             getPlaceOrder().isReady();
-            getPlaceOrder().click();*/
+            getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
@@ -293,16 +293,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void scroolToElement(By locator, int duration) {
-        while (getElements(locator).size() == 0) {
-            boolean flag = false;
-            Dimension dimensions = driver.manage().window().getSize();
-            int Startpoint = (int) (dimensions.getHeight() * 0.9);
-            int scrollEnd = (int) (dimensions.getHeight() * 0.5);
-            ((AndroidDriver) driver).swipe(200, Startpoint, 200, scrollEnd, duration);
-        }
-    }
-
     public List<WebElement> getElements(By locator) {
         List<WebElement> elementsList = ((AndroidDriver) driver).findElements(locator);
 
@@ -392,17 +382,26 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void placeRandomOrderSpecialInstructions(String menuItem, MobileUser mobileUser, String storeName, String specialInstructions) throws Exception {
         try {
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
+            By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
+            By specialInstructionsLabel  = By.id("com.subway.mobile.subwayapp03:id/instructions_header");
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
-            searchStore(storeName);
+            getDirections().isReady();
+            scrollToItemAndClick(storeNamesLocator, storeName, 1600, 3000);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
-            selectCategory(order.getCart().getProductDetail().getProductGroup().getName());
-            selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
+            getItems().isReady();
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), 1600, 3000);
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), 1600, 3000);
             getAddToBag().click();
+            getPlaceOrder().isReady();
+            scrollToElement(specialInstructionsLabel,0.9,0.5);
+            //remoteOrder.addRandomInstructions(specialInstructions);
+            getSpecialInstructions().setText(specialInstructions);
+            getDriver().hideKeyboard();
             getPlaceOrder().click();
-            // remoteOrder.addRandomInstructions(specialInstructions);
-
+            getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -667,41 +666,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         return namesList;
     }
 
-    public void swipeOrRight(By locator, String subProductName, int duration, String direction) throws Exception {
-        boolean flag = false;
-        int match = 0;
 
-        while (getNames(locator).size() > 0) {
-            List<WebElement> allElements = getNames(locator);
-
-            for (int i = 0; i < allElements.size(); i++) {
-                if (allElements.get(i).getText().equals(subProductName)) {
-
-                    match++;
-                }
-                if (match > 0 && i == 0) {
-                    flag = true;
-                    break;
-                } else {
-                    WebElement ele = allElements.get(0);
-                    MobileElement element = (MobileElement) ele;
-                    Thread.sleep(10000L);
-                    if (direction.equals("Left")) {
-                        element.swipe(SwipeElementDirection.LEFT, duration);
-                    } else {
-                        element.swipe(SwipeElementDirection.RIGHT, duration);
-                    }
-                }
-            }
-
-            if (flag == true) {
-                break;
-            }
-        }
-    }
-
-
-    public void scrollToElement(By locator, long startpoint, long endpoint) {
+    public void scrollToElement(By locator, double startpoint, double endpoint) {
         while (getElements(locator).size() == 0) {
             boolean flag = false;
             Dimension dimensions = driver.manage().window().getSize();

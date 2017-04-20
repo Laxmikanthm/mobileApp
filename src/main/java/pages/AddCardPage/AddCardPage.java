@@ -65,8 +65,8 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             getNameOnCard().setText(mobileUser.getFirstName()+mobileUser.getLastName());
             HideKeyboard();
             getNextButton().click();
-           String date = mobileUser.getCreditCards().get(0).getExpirationDate();
-           String cardExpiryDate = date.substring(0,3)+date.substring(8,10);
+            String date = mobileUser.getCreditCards().get(0).getExpirationDate();
+            String cardExpiryDate = date.substring(0,3)+date.substring(8,10);
             getExpiresOn().setText(cardExpiryDate);
            // getExpiresOn().setText("12/22");
             getCCV().setText(mobileUser.getCreditCards().get(0).getCsvCode());
@@ -155,7 +155,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             case "GiftCard":
                 ChoosePaymentMethodPage paymentMethodPage = subwayPage.addPaymentMethod();
                 AddCardPage addPage = paymentMethodPage.ChoosePaymentMethodGiftCard();
-                PaymentMethodsPage paymentPage= addPage.addCardDetails(mobileUser);
+                PaymentMethodsPage paymentPage= addPage.addSubwayCardDetails(mobileUser);
                 break;
             case "Paypal":
                 ChoosePaymentMethodPage choosePage = subwayPage.addPaymentMethod();

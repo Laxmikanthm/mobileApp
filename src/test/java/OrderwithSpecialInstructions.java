@@ -27,23 +27,24 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
     @Test
     public void OrderSpecialInstructions() throws Exception
     {
-
+        String paymentType = "DebitCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         String specialInstructions ="Required more salt";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        /*mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
+        mobileUser.setPassword("Cigniti@123");*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         SubwayPage subwayPage = menuPage.addPaymentMethods();
-        ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
-        AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
-        PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
+        AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
+        addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrderSpecialInstructions("Sides", mobileUser, storeName,specialInstructions);
+        ordersPage.placeRandomOrderSpecialInstructions("All Sandwiches", mobileUser, storeName, specialInstructions);
 
     }
 }

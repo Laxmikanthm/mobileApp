@@ -22,7 +22,7 @@ public class SearchStoreAndroid extends SearchStore {
     }
 
     public AndroidTextBox getSearchByZipCode() throws Exception {
-        AndroidTextBox searchByZipCode = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@text='"+BaseTest.bundle.getString("SearchInputBox")+"']"), "Search by Zip Code text field");
+        AndroidTextBox searchByZipCode = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SearchInputBox")), "SearchInputBox button");
         return searchByZipCode;
     }
 
