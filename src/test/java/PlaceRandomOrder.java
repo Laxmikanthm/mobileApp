@@ -1,6 +1,8 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import org.openqa.selenium.By;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
@@ -201,18 +203,28 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void OrderAMeal() throws Exception
     {
-
+        By ItemList= By.id("com.subway.mobile.subwayapp03:id/item_options");
+        By ItemFromSides= By.id("com.subway.mobile.subwayapp03:id/side_title_1");
+        By ItemFromDrinks= By.id("com.subway.mobile.subwayapp03:id/drink_title");
         String paymentType = "CreditCard";
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
+        HomePage homePage = loginPage.login(mobileUser);
+        MenuPage menuPage = homePage.getUserDetails();
+        SubwayPage subwayPage = menuPage.addPaymentMethods();
+        AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
+        addCardPage.addMethodForPayment(subwayPage, mobileUser, paymentType);
+        menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, storeName);
+        OrdersPage ordersPage = searchStore.findYourStore("06460");
+        ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, storeName);
+        Assert.assertTrue(ordersPage.isElementPresent(ItemList),"ItemList is present in Make It A Meal dropdown");
+        Assert.assertTrue(ordersPage.isElementPresent(ItemFromSides),"One item from Sides is present in Make It A Meal dropdown");
+        Assert.assertTrue(ordersPage.isElementPresent(ItemFromDrinks),"One item from Drinks is present in Make It A Meal dropdown");
+        ordersPage.clickOnPlaceOrder();
     }
 
 

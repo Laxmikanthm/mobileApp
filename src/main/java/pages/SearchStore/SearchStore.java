@@ -93,12 +93,14 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
                 int d=((AndroidDriver)driver).findElements(By.xpath("//android.widget.Button[@text='Allow']")).size();
                 if(d>0)
                 {
+                    getAllowButton().isReady();
                     getAllowButton().click();
                 }
             }else{
                 int d=((IOSDriver)driver).findElements(By.id("permission_allow_button")).size();
                 if(d>0)
                 {
+                    getAllowButton().isReady();
                     getAllowButton().click();
                 }
             }
@@ -115,6 +117,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
                 int d=((AndroidDriver)driver).findElements(By.xpath("//android.widget.Button[@text='OK']")).size();
                 if(d>0)
                 {
+                    getOkPopupButton().isReady();
                     getOkPopupButton().click();
 
                 }
@@ -122,6 +125,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
                 int d=((IOSDriver)driver).findElements(By.xpath("//android.widget.Button[@text='OK']")).size();
                 if(d>0)
                 {
+                    getOkPopupButton().isReady();
                     getOkPopupButton().click();
 
                 }
@@ -138,12 +142,14 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
                 int d = ((AndroidDriver) driver).findElements(By.id("toggle_view")).size();
                 if(d>0)
                 {
+                    getToggleView().isReady();
                     getToggleView().click();
                 }
             }else{
                 int d = ((IOSDriver) driver).findElements(By.id("toggle_view")).size();
                 if(d>0)
                 {
+                    getToggleView().isReady();
                     getToggleView().click();
                 }
 

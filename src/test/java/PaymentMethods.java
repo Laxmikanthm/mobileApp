@@ -38,7 +38,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
     @Test
     public void addCreditCard() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
@@ -54,7 +54,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
     @Test
     public void addDebitCard() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
@@ -73,7 +73,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
         {
             mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
             //mobileUser.registerNewUserHeadless(mobileUser);
-            mobileUser = RegisterUser.registerAUser(mobileUser);
+            RegisterUser.registerAUser(mobileUser);
             //cards.add(0,SubwayCard.getSubwayCardFromDB(pojos.enums.Lock.TRUE));
             mobileUser.setSubwayCards(cards);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -98,7 +98,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
         public void addPayPal () throws Exception{
 
             mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-            mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+            RegisterUser.registerAUserWithoutCardLink(mobileUser);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
             LoginPage loginPage = landingPage.gotoLogInPage();
             HomePage homePage = loginPage.login(mobileUser);

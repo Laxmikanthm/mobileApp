@@ -213,5 +213,11 @@ public class OrdersPageAndroid extends OrdersPage {
         return items;
     }
 
+    public MobileButton getExpandArrow() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ExpandButton")), "Expand Button in MakeItAMeal");
+        return button;
+    }
+
+
 
 }
