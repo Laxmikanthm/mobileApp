@@ -30,6 +30,7 @@ public class Privacypolicy extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         menuPage.getabout();
+        Assert.assertTrue(menuPage.checkElemetnPresence(),"Privacy Statment Text present in the Privacypolicy");
 
 
     }

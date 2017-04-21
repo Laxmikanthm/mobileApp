@@ -1,6 +1,7 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
@@ -19,12 +20,15 @@ public class TermsandConditions extends SubwayAppBaseTest {
     @Test
     public void verifyTermandConditions() throws Exception
     {
+
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
+        menuPage.getabout();
+        Assert.assertTrue(menuPage.checkElemetnPresence(),"Privacy Statment Text present in the Terms and Conditions");
 
 
     }

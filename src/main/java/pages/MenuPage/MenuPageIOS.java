@@ -98,9 +98,22 @@ public class MenuPageIOS extends MenuPage {
 
         return button;
     }
+
     public MobileButton getPrivacyPolicyShare() throws Exception {
 
         IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+
+        return button;
+    }
+    public MobileButton getTermsandConditions() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+
+        return button;
+    }
+    public MobileLabel getPrivacyStatement() throws Exception {
+
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
 
         return button;
     }

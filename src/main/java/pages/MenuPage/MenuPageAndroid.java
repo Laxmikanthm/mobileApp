@@ -87,5 +87,10 @@ public class MenuPageAndroid extends MenuPage {
         return button;
     }
 
+    public MobileLabel getPrivacyStatement() throws Exception {
+        AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.xpath("//android.view.View[@content-desc='"+BaseTest.bundle.getString("PrivacyStatement")+"']"), "PrivacyStatement");
+        return label;
+    }
+
 }
 

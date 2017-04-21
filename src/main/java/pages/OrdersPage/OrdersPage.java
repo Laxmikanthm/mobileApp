@@ -363,11 +363,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             String FullName = order.getCart().getProductDetail().getName();
             String[] Itemtype = FullName.split(" ");
-            if (!Itemtype[0].trim().equals("FOOTLONG™")) {
+            if (!Itemtype[0].trim().equals("FOOTLONG™"))
+            getCustomize().click();{
                 getSixInchOption().isReady();
                 getSixInchOption().click();
             }
-            getCustomize().click();
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -640,12 +640,17 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void ClickonItem(String name, By InnerIngredientsBy) {
+
+        By cheeseSubCategoryItem=By.id("com.subway.mobile.subwayapp03:id/ingredient_text");
         boolean flag = true;
         do {
             List<WebElement> innerIngredients = driver.findElements((InnerIngredientsBy));
             for (int i = 0; i <= innerIngredients.size(); i++) {
                 if (i == innerIngredients.size()) {
                     //scroll;
+
+                    //scrollToItemAndClick(cheeseSubCategoryItem, name, 1600,3000);
+
                     flag = false; //turn this on if you are not implementing scroll. if not it will go into infinite loop
                     break;
                 }

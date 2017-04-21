@@ -41,6 +41,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getPrivacyPolicy() throws Exception;
     abstract MobileButton getPrivacyPolicyShare() throws Exception;
     abstract MobileButton getTermsandConditions() throws Exception;
+    abstract MobileLabel getPrivacyStatement() throws Exception;
 
 
     //abstract MobileButton getLogOutButton() throws Exception;
@@ -199,12 +200,22 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         }
     }
 
-    public ContactInformationPage getabout() throws Exception
+    public void getabout() throws Exception
     {
         try{
             this.getAbout().waitForClickable();
             this.getHelp().click();
-            return ContactInformationPage.get((AppiumDriver) driver);
+
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }
+    }
+    public void navigatetoTermsandConditions() throws Exception
+    {
+        try{
+            getTermsandConditions().waitForClickable();
+            getTermsandConditions().click();
+
         }catch (Exception ex){
             throw new Exception(ex);
         }
@@ -225,5 +236,24 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             throw new Exception(ex);
         }
     }
+
+    public boolean checkElemetnPresence()throws Exception
+    {
+        try{
+
+          boolean displayed= getPrivacyStatement().getControl().isDisplayed();
+            if(displayed){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }
+
+    }
+
+
 
 }
