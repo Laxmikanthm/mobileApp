@@ -1,6 +1,8 @@
 package pages.PaymentMethodsPage;
 
 import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.android.AndroidLabel;
+import base.gui.controls.mobile.generic.MobileLabel;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -26,5 +28,10 @@ public class PaymentMethodsPageAndroid extends  PaymentMethodsPage{
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("AddPaymentMethod") + "']"), "");
 
         return button;
+    }
+
+    public MobileLabel getCardType() throws Exception {
+        AndroidLabel items = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("GiftCardType")), "GiftCard label");
+        return items;
     }
 }

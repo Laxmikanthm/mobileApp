@@ -67,6 +67,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
         addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
@@ -88,6 +89,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
         addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
@@ -109,6 +111,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
         addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
@@ -130,6 +133,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
         addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
@@ -151,6 +155,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
         addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
@@ -172,6 +177,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
         addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
@@ -193,6 +199,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
         addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
@@ -217,6 +224,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
         addCardPage.addMethodForPayment(subwayPage, mobileUser, paymentType);
+        addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore("06460");

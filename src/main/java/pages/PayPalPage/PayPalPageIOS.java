@@ -1,6 +1,8 @@
 package pages.PayPalPage;
 
+import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.ios.IOSButton;
+import base.gui.controls.mobile.ios.IOSLabel;
 import base.gui.controls.mobile.ios.IOSPasswordTextBox;
 import base.gui.controls.mobile.ios.IOSTextBox;
 import base.test.BaseTest;
@@ -25,11 +27,25 @@ public class PayPalPageIOS extends  PayPalPage{
         return userNameTextbox;
     }
 
+    public IOSTextBox getPaypalUname() throws Exception {
+
+        IOSTextBox userNameTextbox = new IOSTextBox ((IOSDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalEmail")+"']"), "PayPal email" );
+
+        return userNameTextbox;
+    }
+
     public IOSTextBox getPaypalPassword() throws Exception {
         IOSTextBox passwordTextBox = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "PayPal password");
 
         return passwordTextBox;
     }
+
+    public IOSTextBox getPaypalPwd() throws Exception {
+        IOSTextBox passwordTextBox = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "PayPal password");
+
+        return passwordTextBox;
+    }
+
 
     public IOSButton getLogIn() throws Exception {
 
@@ -41,6 +57,13 @@ public class PayPalPageIOS extends  PayPalPage{
     public IOSButton getAgreeAndContinue() throws Exception {
 
         IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("AgreeBtn")+"']"), "Agree button");
+
+        return button;
+    }
+
+    public MobileLabel getPayWith() throws Exception {
+
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
 
         return button;
     }

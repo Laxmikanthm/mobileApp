@@ -203,7 +203,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     public void getabout() throws Exception
     {
         try{
-            this.getAbout().waitForClickable();
+            this.getAbout().isReady();
             this.getHelp().click();
 
         }catch (Exception ex){

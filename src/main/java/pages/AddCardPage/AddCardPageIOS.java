@@ -1,8 +1,10 @@
 package pages.AddCardPage;
 
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.ios.IOSButton;
+import base.gui.controls.mobile.ios.IOSLabel;
 import base.gui.controls.mobile.ios.IOSTextBox;
 import base.test.BaseTest;
 import io.appium.java_client.ios.IOSDriver;
@@ -93,6 +95,34 @@ public class AddCardPageIOS extends AddCardPage {
         IOSButton backButton = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
 
         return backButton;
+    }
+
+    public MobileLabel getCreditCardType() throws Exception {
+
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
+    }
+
+    public MobileLabel getDebitCardType() throws Exception {
+
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
+    }
+
+    public MobileLabel getGiftCardType() throws Exception {
+
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
+    }
+
+    public MobileLabel getPayPalType() throws Exception {
+
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+
+        return button;
     }
 
 }

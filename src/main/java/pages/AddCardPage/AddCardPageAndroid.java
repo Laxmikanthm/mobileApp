@@ -1,7 +1,9 @@
 package pages.AddCardPage;
 
 import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.android.AndroidLabel;
 import base.gui.controls.mobile.android.AndroidTextBox;
+import base.gui.controls.mobile.generic.MobileLabel;
 import base.test.BaseTest;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -71,4 +73,23 @@ public class AddCardPageAndroid extends  AddCardPage {
         return button;
     }
 
+    public MobileLabel getCreditCardType() throws Exception {
+        AndroidLabel items = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Creditcard")+"']"), "Credit Card Label");
+        return items;
+    }
+
+    public MobileLabel getDebitCardType() throws Exception {
+        AndroidLabel items = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Debitcard")+"']"), "Debit Card Label");
+        return items;
+    }
+
+    public MobileLabel getGiftCardType() throws Exception {
+        AndroidLabel items = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("SubwayCard")+"']"), "Subway Card Label");
+        return items;
+    }
+
+    public MobileLabel getPayPalType() throws Exception {
+        AndroidLabel items = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("PaypalCard")+"']"), "Paypal Card Label");
+        return items;
+    }
 }

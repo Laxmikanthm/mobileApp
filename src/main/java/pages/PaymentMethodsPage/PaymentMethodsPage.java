@@ -18,6 +18,7 @@ public abstract class PaymentMethodsPage<T extends AppiumDriver> extends MobileB
     public PaymentMethodsPage(AppiumDriver driver) { super(driver); }
 
     abstract MobileButton getAddPaymentMethod() throws Exception;
+    abstract MobileLabel getCardType() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -53,4 +54,6 @@ public abstract class PaymentMethodsPage<T extends AppiumDriver> extends MobileB
             throw new Exception(ex);
         }
     }
+
+
 }

@@ -1,5 +1,6 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
@@ -17,6 +18,9 @@ import java.util.List;
 /**
  * Created by E003705 on 03-04-2017.
  */
+
+
+@ContextConfiguration("classpath:MobileAppBeans.xml")
 public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     MobileUser mobileUser;
 

@@ -6,6 +6,7 @@ import azureApi.serviceUtils.AzureIdentityApi;
 import enums.Country;
 import org.openqa.selenium.internal.Lock;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
@@ -37,6 +38,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
 
     @Test
     public void addCreditCard() throws Exception {
+        String paymentType = "CreditCard";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -45,7 +47,10 @@ public class PaymentMethods extends SubwayAppBaseTest {
         MenuPage menuPage = homePage.getUserDetails();
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
-        addCardPage.addCreditorDebitCard(subwayPage, mobileUser);
+        addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        Assert.assertTrue(addCardPage.checkCreditCardElementPresence(),"Credit Card got added successfully");
+        addCardPage.selectBackButton();
+        menuPage.logout();
 
         //Assert
 
@@ -53,6 +58,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
 
     @Test
     public void addDebitCard() throws Exception {
+        String paymentType = "DebitCard";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -61,7 +67,10 @@ public class PaymentMethods extends SubwayAppBaseTest {
         MenuPage menuPage = homePage.getUserDetails();
         SubwayPage subwayPage = menuPage.addPaymentMethods();
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
-        addCardPage.addCreditorDebitCard(subwayPage, mobileUser);
+        addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        Assert.assertTrue(addCardPage.checkDebitCardElementPresence(),"Debit Card got added successfully");
+        addCardPage.selectBackButton();
+        menuPage.logout();
         //Assert
 
     }
@@ -71,6 +80,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
         try
 
         {
+            String paymentType = "GiftCard";
             mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
             //mobileUser.registerNewUserHeadless(mobileUser);
             RegisterUser.registerAUser(mobileUser);
@@ -82,12 +92,12 @@ public class PaymentMethods extends SubwayAppBaseTest {
             MenuPage menuPage = homePage.getUserDetails();
             SubwayPage subwayPage = menuPage.addPaymentMethods();
             AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
-            addCardPage.addGiftCard(subwayPage, mobileUser);
+            addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+            Assert.assertTrue(addCardPage.checkGiftCardElementPresence(),"Subway Card got added successfully");
+            addCardPage.selectBackButton();
             new SubwayCard().lockSubwayCard(mobileUser, pojos.enums.Lock.FALSE);
             AzureIdentityApi.deleteUserFromAzure(mobileUser.getEmailAddress());
-        } catch (Exception ex)
-
-        {
+        } catch (Exception ex){
             new SubwayCard().lockSubwayCard(mobileUser, pojos.enums.Lock.FALSE);
             AzureIdentityApi.deleteUserFromAzure(mobileUser.getEmailAddress());
         }
@@ -95,19 +105,24 @@ public class PaymentMethods extends SubwayAppBaseTest {
 
 
     @Test
-        public void addPayPal () throws Exception{
+    public void addPayPal () throws Exception{
+        String paymentType = "Paypal";
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage = loginPage.login(mobileUser);
+        MenuPage menuPage = homePage.getUserDetails();
+        SubwayPage subwayPage = menuPage.addPaymentMethods();
+        AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
+        addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        Assert.assertTrue(addCardPage.checkPayPalElementPresence(),"Paypal Card/account got added successfully");
+        addCardPage.selectBackButton();
+        menuPage.logout();
 
-            mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-            RegisterUser.registerAUserWithoutCardLink(mobileUser);
-            LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-            LoginPage loginPage = landingPage.gotoLogInPage();
-            HomePage homePage = loginPage.login(mobileUser);
-            MenuPage menuPage = homePage.getUserDetails();
-            SubwayPage subwayPage = menuPage.addPaymentMethods();
-            AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
-            addCardPage.addPayPal(subwayPage, mobileUser);
-
-        }
     }
+
+}
+
 
 

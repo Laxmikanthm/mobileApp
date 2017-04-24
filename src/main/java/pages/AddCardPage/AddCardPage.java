@@ -32,6 +32,11 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     abstract MobileButton getSavePaymentMethod() throws  Exception;
     abstract MobileButton getGiftCardSavePayment() throws  Exception;
     abstract MobileButton getBackButton() throws Exception;
+    abstract MobileLabel getCreditCardType() throws Exception;
+    abstract MobileLabel getDebitCardType() throws Exception;
+    abstract MobileLabel getGiftCardType() throws Exception;
+    abstract MobileLabel getPayPalType() throws Exception;
+
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -79,7 +84,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             //HideKeyboard();
             getSavePaymentMethod().isReady();
             getSavePaymentMethod().click();
-            selectBackButton();
+            //selectBackButton();
             return PaymentMethodsPage.get((AppiumDriver) driver);
 
 
@@ -163,6 +168,74 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
                 payPalPage.addPaypalDetails(mobileUser);
                 break;
 
+        }
+
+    }
+
+    public boolean checkCreditCardElementPresence()throws Exception
+    {
+        try{
+            getCreditCardType().isReady();
+            boolean creditCardDisplayed= getCreditCardType().getControl().isDisplayed();
+            if(creditCardDisplayed){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }
+
+    }
+
+    public boolean checkDebitCardElementPresence()throws Exception
+    {
+        try{
+            getDebitCardType().isReady();
+            boolean debitCardDisplayed= getDebitCardType().getControl().isDisplayed();
+            if(debitCardDisplayed){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }
+
+    }
+
+    public boolean checkGiftCardElementPresence()throws Exception
+    {
+        try{
+            getGiftCardType().isReady();
+            boolean giftCardDisplayed= getGiftCardType().getControl().isDisplayed();
+            if(giftCardDisplayed){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }
+
+    }
+
+    public boolean checkPayPalElementPresence()throws Exception
+    {
+        try{
+            getPayPalType().isReady();
+            boolean paypalDisplayed= getPayPalType().getControl().isDisplayed();
+            if(paypalDisplayed){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (Exception ex){
+            throw new Exception(ex);
         }
 
     }
