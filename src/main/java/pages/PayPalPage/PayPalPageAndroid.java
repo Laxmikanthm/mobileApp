@@ -30,14 +30,14 @@ public class PayPalPageAndroid extends PayPalPage {
         return userNameTextbox;
     }
 
-    public AndroidTextBox getPaypalPassword() throws Exception {
-        AndroidTextBox passwordTextBox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.view.View[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "PayPal password");
-        return passwordTextBox;
+    public AndroidPasswordTextBox getPaypalPassword() throws Exception{
+        AndroidPasswordTextBox passwordField = new AndroidPasswordTextBox((AndroidDriver)driver, By.xpath("//android.view.View[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "PayPal password");
+        return passwordField;
     }
 
-    public AndroidTextBox getPaypalPwd() throws Exception {
-        AndroidTextBox passwordTextBox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("PaypalPwd")), "PaypalPwd field");
-        return passwordTextBox;
+    public AndroidPasswordTextBox getPaypalPwd() throws Exception{
+        AndroidPasswordTextBox passwordField = new AndroidPasswordTextBox((AndroidDriver)driver, By.id(BaseTest.bundle.getString("PaypalPwd")), "PaypalPwd field");
+        return passwordField;
     }
 
     public AndroidButton getLogIn() throws Exception {
@@ -46,6 +46,11 @@ public class PayPalPageAndroid extends PayPalPage {
     }
     public AndroidButton getAgreeAndContinue() throws Exception {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("AgreeBtn")), "AgreeAndContinue button");
+        return button;
+    }
+
+    public AndroidButton getBackBtn() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("BackBtn")), "Back button");
         return button;
     }
 

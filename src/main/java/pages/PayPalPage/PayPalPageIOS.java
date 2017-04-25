@@ -34,16 +34,18 @@ public class PayPalPageIOS extends  PayPalPage{
         return userNameTextbox;
     }
 
-    public IOSTextBox getPaypalPassword() throws Exception {
-        IOSTextBox passwordTextBox = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "PayPal password");
+    public IOSPasswordTextBox getPaypalPassword() throws Exception {
 
-        return passwordTextBox;
+        IOSPasswordTextBox passwordText = new IOSPasswordTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("NewPassword") + "']"), "Password text field");
+
+        return passwordText;
     }
 
-    public IOSTextBox getPaypalPwd() throws Exception {
-        IOSTextBox passwordTextBox = new IOSTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("PayPalPassword")+"']"), "PayPal password");
+    public IOSPasswordTextBox getPaypalPwd() throws Exception {
 
-        return passwordTextBox;
+        IOSPasswordTextBox passwordText = new IOSPasswordTextBox((IOSDriver) driver, By.xpath("//*[@resource-id='" + BaseTest.bundle.getString("NewPassword") + "']"), "Password text field");
+
+        return passwordText;
     }
 
 
@@ -59,6 +61,13 @@ public class PayPalPageIOS extends  PayPalPage{
         IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@class='"+BaseTest.bundle.getString("AgreeBtn")+"']"), "Agree button");
 
         return button;
+    }
+
+    public IOSButton getBackBtn() throws Exception {
+
+        IOSButton backButton = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return backButton;
     }
 
     public MobileLabel getPayWith() throws Exception {

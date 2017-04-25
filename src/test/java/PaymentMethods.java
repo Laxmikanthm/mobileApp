@@ -117,7 +117,10 @@ public class PaymentMethods extends SubwayAppBaseTest {
         AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
         addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
         Assert.assertTrue(addCardPage.checkPayPalElementPresence(),"Paypal Card/account got added successfully");
+
+
         addCardPage.selectBackButton();
+
         menuPage.logout();
 
     }

@@ -3,8 +3,10 @@ package pages.PayPalPage;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
+import base.gui.controls.mobile.generic.PasswordTextBox;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
@@ -32,10 +34,11 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
 
     abstract MobileTextBox getPaypalUserName() throws Exception;
     abstract MobileTextBox getPaypalUname() throws Exception;
-    abstract MobileTextBox getPaypalPassword() throws Exception;
-    abstract MobileTextBox getPaypalPwd() throws Exception;
+    abstract PasswordTextBox getPaypalPassword() throws Exception;
+    abstract PasswordTextBox getPaypalPwd() throws Exception;
     abstract MobileButton getLogIn() throws Exception;
     abstract MobileButton getAgreeAndContinue() throws Exception;
+    abstract MobileButton getBackBtn() throws Exception;
     abstract MobileLabel getPayWith() throws Exception;
 
     @Override
@@ -64,7 +67,8 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
 
     public PaymentMethodsPage addPaypalDetails(MobileUser mobileUser)throws Exception {
         {
-            By AgreeAndContinue  = By.id("confirmButtonTop");
+            //By AgreeAndContinue  = MobileBy.AccessibilityId("Agree & Continue");
+            getPaypalUserName().isReady();
             getPaypalUserName().getControl().clear();
             getPaypalUname().setText("upadhyaya_s@subway.com");
             //getPaypalUserName().setText("upadhyaya_s@subway.com");
@@ -75,8 +79,11 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
             getPaypalPassword().setText(mobileUser.getPayPalPassword());*/
             getLogIn().click();
             getPayWith().isReady();
-            scrollToElement(AgreeAndContinue,0.9,0.5);
+            //scrollToElement(AgreeAndContinue,0.9,0.5);
+            ((AppiumDriver) driver).swipe(200, 700, 200, 100, 4000);
             getAgreeAndContinue().click();
+            getBackBtn().isReady();
+            getBackBtn().click();
             return PaymentMethodsPage.get((AppiumDriver) driver);
                 }
             }
@@ -87,13 +94,19 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
             Dimension dimensions = driver.manage().window().getSize();
             int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
-            ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+            ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 4000);
         }
     }
 
     public List<WebElement> getElements(By locator) {
-        List<WebElement> elementsList = ((AndroidDriver) driver).findElements(locator);
+        List<WebElement> elementsList = ((AppiumDriver) driver).findElements(locator);
 
         return elementsList;
+    }
+
+    public void goBackButton()  throws Exception
+    {
+        getBackBtn().isReady();
+        getBackBtn().click();
     }
 }
