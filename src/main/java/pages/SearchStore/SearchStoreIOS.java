@@ -103,4 +103,11 @@ public class SearchStoreIOS extends SearchStore {
 
         return button;
     }
+
+    public IOSButton getSearchKeyButton() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SearchKey")), "Search button");
+
+        return button;
+    }
 }

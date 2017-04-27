@@ -1,5 +1,6 @@
 package pages.SearchStore;
 
+import android.view.inputmethod.EditorInfo;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
@@ -45,6 +46,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     abstract MobileButton getOpenHours() throws Exception;
     abstract MobileButton getRecentlyVisited() throws Exception;
     abstract MobileButton getPreviousSearches() throws Exception;
+    abstract MobileButton getSearchKeyButton() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -69,22 +71,18 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-    public void searchStoreByZipCode(String store) throws Exception
-    {
-        try{
-            getSearchButton().click();
-            getSearchByZipCode().isReady();
-            getSearchByZipCode().getControl().clear();
-            getSearchByZipCode().setText("06460");
-            //((AppiumDriver)driver).findElement(By.xpath("//android.widget.EditText[@text='Search by Zip Code']")).sendKeys("06460");
-            //((AppiumDriver)driver).findElement(By.xpath("//android.widget.EditText[@text='Search by Zip Code']")).sendKeys(Keys.ENTER);
-            //getSearchByZipCode().getControl().sendKeys(Keys.ENTER);
-            //getSearchByZipCode().getControl().sendKeys(VK_ENTER);
-        }
-        catch(Exception ex){
-            throw new Exception(ex);
-        }
+    public SearchStore searchStoreByZipCode(String store) throws Exception {
+        getSearchButton().click();
+        getSearchByZipCode().isReady();
+        getSearchByZipCode().getControl().clear();
+        getSearchByZipCode().setText("06460");
+        if (driver instanceof AndroidDriver)
+            ((AndroidDriver) driver).pressKeyCode(EditorInfo.IME_ACTION_DONE);
+        else
+            getSearchKeyButton().tap();
+        return this;
     }
+
 
     public void allowPopUp() throws Exception
     {
