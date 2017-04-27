@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>2.5.3-SNAPSHOT</version>
+            <version>2.5.5-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -59,9 +59,6 @@
             <version>4.1.1.4</version>
         </dependency>
 
-
-
-
     </dependencies>
 
     <build>
@@ -94,16 +91,26 @@
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/nikesh/Downloads/Subway-QA-Staging-R1-1.0.0-(609).apk</app>
+                        <app>/Users/nikesh/Downloads/subwayUatDebug5000404.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
                         <operatingSystem>Mac</operatingSystem>
+                        <!-- R1/E2E-->
                         <environment>stage</environment>
                         <environmentR1R2>r1</environmentR1R2>
-                        <azureEnv>https://fwh-userprofileserviceapp-stg.test.subway.com</azureEnv>
+                        <azureEnv>stage</azureEnv>
                         <roEnv>https://q1-order.remote-order.com</roEnv>
-
+                        <!-- R2/E2E-->
+                        <!--<environment>stage</environment>
+                        <environmentR1R2>r2</environmentR1R2>
+                        <azureEnv>qa</azureEnv>
+                        <roEnv>https://qe-order.remote-order.com</roEnv>-->
+                        <!-- R1/PAT -->
+                        <!--<environment>stage</environment>
+                        <environmentR1R2>r1</environmentR1R2>
+                        <azureEnv>stage</azureEnv>
+                        <roEnv>https://pat-order.test.subway.com</roEnv>-->
 
                         <udid></udid>
 
