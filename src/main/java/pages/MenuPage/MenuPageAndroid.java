@@ -62,12 +62,12 @@ public class MenuPageAndroid extends MenuPage {
     }
 
     public AndroidButton getHelp() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Help")+"']"), "Help button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.RelativeLayout[@resource-id='"+BaseTest.bundle.getString("Help")+"']"), "Help button");
         return button;
     }
 
     public AndroidButton getAbout() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("About")+"']"), "About button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.RelativeLayout[@resource-id='"+BaseTest.bundle.getString("About")+"']"), "About button");
         return button;
     }
     public AndroidButton getEmail() throws Exception {
@@ -91,6 +91,5 @@ public class MenuPageAndroid extends MenuPage {
         AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.xpath("//android.view.View[@content-desc='"+BaseTest.bundle.getString("PrivacyStatement")+"']"), "PrivacyStatement");
         return label;
     }
-
 }
 

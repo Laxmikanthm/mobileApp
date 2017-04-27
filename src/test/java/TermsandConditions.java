@@ -1,5 +1,6 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import org.openqa.selenium.By;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -21,6 +22,7 @@ public class TermsandConditions extends SubwayAppBaseTest {
     public void verifyTermandConditions() throws Exception
     {
 
+        By termsAndConditionsTextLocator = By.id("android:id/content");
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -28,8 +30,8 @@ public class TermsandConditions extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         menuPage.getabout();
-        Assert.assertTrue(menuPage.checkElemetnPresence(),"Privacy Statment Text present in the Terms and Conditions");
-
+        menuPage.navigatetoTermsandConditions();
+        Assert.assertTrue(menuPage.isElementPresent(termsAndConditionsTextLocator),"Terms and conditions Text present in the Terms and conditions page");
 
     }
 }

@@ -220,6 +220,16 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             throw new Exception(ex);
         }
     }
+    public void navigatetoPrivacyPolicy() throws Exception
+    {
+        try{
+            getPrivacyPolicy().waitForClickable();
+            getPrivacyPolicy().click();
+
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }
+    }
 
     public boolean isElementPresent(By locator)throws Exception
     {

@@ -19,10 +19,9 @@ public class Privacypolicy extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     @Test
-    public void verifyAppVersion() throws Exception
+    public void verifyPrivacyPolicy() throws Exception
     {
-        By appVersionLocator= By.xpath("//android.widget.TextView[@text='Version']");
-
+        By privacyPolicyLocator = By.id("android:id/content");
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -30,8 +29,8 @@ public class Privacypolicy extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         menuPage.getabout();
-        Assert.assertTrue(menuPage.checkElemetnPresence(),"Privacy Statment Text present in the Privacypolicy");
-
+        menuPage.navigatetoPrivacyPolicy();
+        Assert.assertTrue(menuPage.isElementPresent(privacyPolicyLocator),"Privacy Statment Text present in the Privacypolicy");
 
     }
 }

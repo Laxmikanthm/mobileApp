@@ -21,7 +21,7 @@ public class AppVersion extends SubwayAppBaseTest {
     @Test
     public void verifyAppVersion() throws Exception
     {
-        By appVersionLocator= By.xpath("//android.widget.TextView[@text='Version']");
+        By appVersionLocator= By.id("com.subway.mobile.subwayapp03:id/version");
 
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
@@ -29,6 +29,7 @@ public class AppVersion extends SubwayAppBaseTest {
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
+        menuPage.getabout();
         Assert.assertTrue(menuPage.isElementPresent(appVersionLocator),"App version is existed in the About page");
 
 

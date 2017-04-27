@@ -148,7 +148,29 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
-
+    public void payWithGiftCardAndCreditCard(String menuItem, MobileUser mobileUser, String storeName)throws Exception
+    {
+        By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
+        By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
+        By sidesOrDrinks = By.id("com.subway.mobile.subwayapp03:id/product_title");
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+        getDirections().isReady();
+        scrollToItemAndClick(storeNamesLocator, storeName, 1600, 3000);
+        getSelectRestaurantButton().click();
+        getStartOrderButton().click();
+        getItems().isReady();
+        String CategoryItem = order.getCart().getProductDetail().getProductGroup().getName();
+        scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), 1600, 3000);
+        scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), 1600, 3000);
+        String subCategoryName = order.getCart().getProductDetail().getProductClass().getName();
+        swipeLeftOrRight(sidesOrDrinks, subCategoryName , 500, "Left");
+        getAddToBag().click();
+        getPlaceOrder().isReady();
+        getPlaceOrder().click();
+        getGotIt().isReady();
+        getGotIt().click();
+    }
 
     public void placeRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
