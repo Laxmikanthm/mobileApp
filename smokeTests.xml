@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="MobileApp_SmokeTest">
+    <test name="single">
+        <parameter name="platform" value="${platform}"></parameter>
+        <parameter name="browserOrDevice" value="${deviceName}"></parameter>
+        <parameter name="version" value="${platformVersions}"></parameter>
+        <parameter name="os" value="Windows"></parameter>
+        <parameter name="driverName" value="${driverName}"></parameter>
+        <parameter name="appPaths" value="${app}"></parameter>
+        <parameter name="projectName" value="${driverName}"></parameter>
+        <classes>
+
+            <class name="UserLoginTest">
+                <methods>
+                    <include name="createUser"/>
+                    <include name="userLogout"/>
+                </methods>
+            </class>
+
+            <class name="UpdateProfileTest">
+            </class>
+
+            <class name="ResetPasswordTest">
+            </class>
+
+            <class name="PlaceRandomOrder">
+                <methods>
+                    <include name="placeOrderAllSandwiches"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>
