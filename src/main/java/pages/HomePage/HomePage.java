@@ -7,7 +7,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.MenuPage.MenuPage;
-import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
 
 /**
@@ -83,8 +82,6 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         try{
 
             getFindYourSubWay().click();
-           // getAllowLocation().click();
-            //getStoreView().click();
             return SearchStore.get((AppiumDriver)driver);
         }catch(Exception ex){
             throw new Exception(ex);

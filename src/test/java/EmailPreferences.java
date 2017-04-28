@@ -1,6 +1,11 @@
+import Base.Order;
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
@@ -14,13 +19,17 @@ import pojos.user.RegisterUser;
  */
 
 @ContextConfiguration("classpath:MobileAppBeans.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class EmailPreferences extends SubwayAppBaseTest {
 
+    @Autowired
+    Order order;
     MobileUser mobileUser;
     @Test
     public void verifyHelpPage() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();

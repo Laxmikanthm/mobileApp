@@ -88,7 +88,6 @@ public abstract  class ContactInformationPage<T extends AppiumDriver> extends Mo
         try{
             getBackButton().waitForClickable();
             getBackButton().click();
-            //this.getPhone().click();
             return MenuPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);

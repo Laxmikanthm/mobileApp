@@ -84,7 +84,6 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             String date = mobileUser.getCreditCards().get(0).getExpirationDate();
             String cardExpiryDate = date.substring(0,3)+date.substring(8,10);
             getExpiresOn().setText(cardExpiryDate);
-           // getExpiresOn().setText("12/22");
             getCCV().setText(mobileUser.getCreditCards().get(0).getCsvCode());
             HideKeyboard();
             getNextButton().click();
@@ -92,10 +91,8 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             getBillingStreetAddress().setText(mobileUser.getStreetAddresss());
             getBillingZipCode().setText(mobileUser.getPostalCode());
             getReviewDetails().click();
-            //HideKeyboard();
             getSavePaymentMethod().isReady();
             getSavePaymentMethod().click();
-            //selectBackButton();
             return PaymentMethodsPage.get((AppiumDriver) driver);
 
 

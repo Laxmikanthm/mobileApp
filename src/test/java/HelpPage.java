@@ -1,7 +1,12 @@
+import Base.Order;
 import Base.SubwayAppBaseTest;
 import enums.Country;
 import org.openqa.selenium.By;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
@@ -15,12 +20,17 @@ import pojos.user.RegisterUser;
  * Created by e002243 on 18-04-2017.
  */
 @ContextConfiguration("classpath:MobileAppBeans.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class HelpPage extends SubwayAppBaseTest {
+
+    @Autowired
+    Order order;
     MobileUser mobileUser;
     @Test
     public void verifyHelpPage() throws Exception
     {
-        By helopPageLocator= By.id("com.subway.mobile.subwayapp03:id/question");
+
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -28,7 +38,8 @@ public class HelpPage extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         menuPage.verifyHelp();
-        Assert.assertTrue(menuPage.isElementPresent(helopPageLocator),"Help page has the expected Text");
+        menuPage.assertHelpPageTexts();
+
 
     }
 }

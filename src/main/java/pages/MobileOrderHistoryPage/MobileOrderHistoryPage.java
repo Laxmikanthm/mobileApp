@@ -15,7 +15,7 @@ import java.util.Random;
  */
 public abstract class MobileOrderHistoryPage<T extends AppiumDriver> extends MobileBasePage {
 
-    Random ramdom = new Random();
+    Random random = new Random();
     String favoriteOrderName=null;
     public MobileOrderHistoryPage(AppiumDriver driver)
     {
@@ -54,7 +54,7 @@ public abstract class MobileOrderHistoryPage<T extends AppiumDriver> extends Mob
     public void addFavoriteOrder() throws  Exception {
 
         try {
-            favoriteOrderName="Subway"+ramdom.nextInt(10);
+            favoriteOrderName="Subway"+random.nextInt(10);
             getFavorite().isReady();
             getFavorite().click();
             getFavoriteOrderName().setText(favoriteOrderName);
@@ -68,7 +68,7 @@ public abstract class MobileOrderHistoryPage<T extends AppiumDriver> extends Mob
     }
 
     }
-    public void selectBackButton()  throws Exception
+    public void selectBackButton() throws Exception
     {
 
         getBackButton().waitForClickable();

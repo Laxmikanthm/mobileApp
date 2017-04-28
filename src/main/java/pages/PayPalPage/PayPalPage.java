@@ -69,6 +69,7 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
             getDriver().hideKeyboard();
             getLogIn().click();
             getPayWith().isReady();
+            Thread.sleep(5000);
             ((AppiumDriver) driver).swipe(200, 700, 200, 100, 4000);
             getAgreeAndContinue().click();
             getBackBtn().isReady();

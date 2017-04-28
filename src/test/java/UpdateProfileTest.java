@@ -1,6 +1,11 @@
+import Base.Order;
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
@@ -15,9 +20,13 @@ import pojos.user.RegisterUser;
  */
 
 @ContextConfiguration("classpath:MobileAppBeans.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class UpdateProfileTest extends SubwayAppBaseTest {
-    MobileUser mobileUser;
 
+    @Autowired
+    Order order;
+    MobileUser mobileUser;
 
     @Test
     public void updateProfile()throws Exception

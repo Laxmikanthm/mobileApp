@@ -10,10 +10,17 @@
         <bean class="Base.Order">
             <property name="storeNumber" value="54589"></property>
             <property name="storeName" value="CT Turpike West Southbound 2, Milford, CT 06460"></property>
-            <property name="paymentType" value="Paypal"></property>
+            <property name="paymentType" value="CreditCard"></property>
             <property name="orderItem" value="All Sandwiches"></property>
             <property name="zipCode" value="06460"></property>
+            <property name="endY" value="1600"></property>
+            <property name="scrollDuration" value="3000"></property>
+            <property name="swipeDuration" value="500"></property>
+            <property name="scrollStartPoint" value="0.9"></property>
+            <property name="scrollEndPoint" value="0.5"></property>
+            <property name="storeName1" value="1 River St, Milford, CT 06460"></property>
         </bean>
     </beans>
 
 </beans>
+

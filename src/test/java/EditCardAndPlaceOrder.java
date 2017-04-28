@@ -1,6 +1,10 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
@@ -18,22 +22,26 @@ import java.util.List;
 
 
 @ContextConfiguration("classpath:MobileAppBeans.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
+
+    @Autowired
+    Base.Order order;
     MobileUser mobileUser;
 
     //After clicking on  edit check whether selected product is displayed or not
     @Test
     public void editCartVerifyPlaceOrder() throws Exception{
 
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        String aVal = ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, storeName);
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        String aVal = ordersPage.editCartAndPlaceAnOrder(order.getOrderItem(),mobileUser, order.getStoreName());
         String eVal = ordersPage.getSubItemInfo();
         Assert.assertEquals(aVal,eVal);
         ordersPage.placeAnOrder();
@@ -43,15 +51,14 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @Test
     public void editCartAddAnotherVerifyPlaceOrder() throws Exception{
 
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, storeName);
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        ordersPage.editCartAndPlaceAnOrder(order.getOrderItem(),mobileUser, order.getStoreName());
         ordersPage.getSubItemInfo();
         List<Integer> sizeOfSubItems = ordersPage.addAnotherSameItem();
         Assert.assertEquals(sizeOfSubItems.get(1),sizeOfSubItems.get(0));
@@ -64,14 +71,14 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     public void editCartDeleteItemVerifyPlaceOrder() throws Exception{
 
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, storeName);
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        ordersPage.editCartAndPlaceAnOrder(order.getOrderItem(),mobileUser, order.getStoreName());
         ordersPage.getSubItemInfo();
         List<Integer> sizeOfSubItems = ordersPage.addAnotherSameItem();
         ordersPage.removeItem();
@@ -84,18 +91,16 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @Test
     public void editCartSomethingElseVerifyPlaceOrder() throws Exception{
 
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        String aItem = ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, storeName);
-        //ScrollMethod
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        String aItem = ordersPage.editCartAndPlaceAnOrder(order.getOrderItem(),mobileUser, order.getStoreName());
         ordersPage.addAnotherNewItem();
-        String eItem = ordersPage.editCartAndPlaceAnOrder("SUBWAY Fresh Fit™",mobileUser, storeName);
+        String eItem = ordersPage.editCartAndPlaceAnOrder("SUBWAY Fresh Fit™",mobileUser, order.getStoreName());
         Assert.assertEquals(aItem,eItem);
         ordersPage.clickOnPlaceOrder();
     }

@@ -1,6 +1,11 @@
+import Base.Order;
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
@@ -17,16 +22,17 @@ import pojos.user.RegisterUser;
  */
 
 @ContextConfiguration("classpath:MobileAppBeans.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
+    @Autowired
+    Order order;
     MobileUser mobileUser;
 
     @Test
     public void OrderSpecialInstructions() throws Exception
     {
-        String paymentType = "DebitCard";
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        String specialInstructions ="Required more salt";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         /*mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
         mobileUser.setPassword("Cigniti@123");*/
@@ -35,12 +41,13 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrderSpecialInstructions("All Sandwiches", mobileUser, storeName, specialInstructions);
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        String specialInstructions ="Required more salt";
+        ordersPage.placeRandomOrderSpecialInstructions("All Sandwiches", mobileUser, order.getStoreName(), specialInstructions);
 
     }
 }

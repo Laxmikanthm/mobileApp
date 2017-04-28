@@ -71,16 +71,17 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-    public SearchStore searchStoreByZipCode(String store) throws Exception {
+    public void searchStoreByZipCode(String store) throws Exception {
+        okPopUp();
         getSearchButton().click();
         getSearchByZipCode().isReady();
         getSearchByZipCode().getControl().clear();
         getSearchByZipCode().setText("06460");
-        if (driver instanceof AndroidDriver)
+        /*if (driver instanceof AndroidDriver)
             ((AndroidDriver) driver).pressKeyCode(EditorInfo.IME_ACTION_DONE);
         else
             getSearchKeyButton().tap();
-        return this;
+        return this;*/
     }
 
 
@@ -166,6 +167,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
             allowPopUp();
             okPopUp();
             toggleView();
+            okPopUp();
             searchStoreByZipCode(zipCode);
             return OrdersPage.get((AppiumDriver) driver);
         }catch(Exception ex){

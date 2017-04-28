@@ -1,6 +1,9 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
@@ -16,6 +19,8 @@ import pojos.user.MobileUser;
  */
 
 @ContextConfiguration("classpath:MobileAppBeans.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class CustomizeOrder extends SubwayAppBaseTest {
 
 
@@ -30,12 +35,11 @@ public class CustomizeOrder extends SubwayAppBaseTest {
         mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
         mobileUser.setPassword("Cigniti@123");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        OrdersPage ordersPage = landingPage.findYourStore("06460");
+        //OrdersPage ordersPage = landingPage.findYourStore("06460");
         LoginPage loginPage = landingPage.gotoLogInPage();
-
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        //OrdersPage ordersPage =searchStore.findYourStore("06460");
+        OrdersPage ordersPage =searchStore.findYourStore("06460");
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         //ordersPage.selectCategoryAndSubcategory(Order, storeName);
@@ -44,7 +48,6 @@ public class CustomizeOrder extends SubwayAppBaseTest {
         //ordersPage.selectItemTypeAndClickCustomize("FOOTLONG");
         ordersPage.customizeOrder(mobileUser,order);
         ordersPage.addToCartAndPlaceOrder();
-
 
     }
 }

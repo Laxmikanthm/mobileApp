@@ -7,7 +7,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.LoginPage.LoginPage;
-import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 
 /**
@@ -17,8 +16,6 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public LandingPage(T driver) throws Exception {
         super(driver);
-       // Thread.sleep(15000);
-        //skip();
     }
 
     @Override
@@ -31,7 +28,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     }
 
-    /*public static LandingPage get(AppiumDriver driver) throws Exception {
+    public static LandingPage get(AppiumDriver driver) throws Exception {
 
       String platform = driver.getCapabilities().getCapability("mobilePlatform").toString();
 
@@ -41,9 +38,9 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
            case "Android":
                 return new LandingPageAndroid((AndroidDriver) driver);
             default:
-                throw new Exception("Unable to get Find A Store page for platform " + platform)
+                throw new Exception("Unable to get Find A Store page for platform " + platform);
                         }
-    }*/
+    }
     
     abstract MobileButton getLoginButton() throws Exception;
     abstract MobileButton getRegistrationButton() throws Exception;
@@ -51,7 +48,6 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public LoginPage gotoLogInPage() throws Exception {
         try {
-            //skip();
             getLoginButton().isReady();
             this.getLoginButton().click();
             return LoginPage.get((AppiumDriver) driver);
@@ -60,22 +56,8 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-    public OrdersPage findYourStore(String store) throws Exception
-    {
-        try{
-            /*okPopUp();
-            allowPopUp();
-            toggleView();
-            searchStoreByZipCode(store);*/
-            return OrdersPage.get((AppiumDriver) driver);
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-    }
-
 
     public RegistrationPage gotoRegistrationPage() throws Exception {
-        //skip();
         getRegistrationButton().click();
         return RegistrationPage.get((AppiumDriver) driver);
     }
@@ -85,6 +67,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     {
         getSkipButton().click();
     }
+
     public static Class getLandingPageClass(){
 
         String mobilePlatform = System.getProperty("mobilePlatform");
@@ -94,4 +77,6 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }else
             return LandingPageAndroid.class;
     }
+
+
 }

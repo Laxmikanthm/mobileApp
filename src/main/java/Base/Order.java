@@ -6,8 +6,64 @@ package Base;
 public class Order {
     public int storeNumber;
     public String storeName;
+
+    public String getStoreName1() {
+        return storeName1;
+    }
+
+    public void setStoreName1(String storeName1) {
+        this.storeName1 = storeName1;
+    }
+
+    public String storeName1;
     public String paymentType;
     public String orderItem;
+    public String zipCode;
+    public int endY;
+    public int scrollDuration;
+    public int swipeDuration;
+    public double scrollStartPoint;
+    public double scrollEndPoint;
+
+    public int getEndY() {
+        return endY;
+    }
+
+    public void setEndY(int endY) {
+        this.endY = endY;
+    }
+
+    public int getScrollDuration() {
+        return scrollDuration;
+    }
+
+    public void setScrollDuration(int scrollDuration) {
+        this.scrollDuration = scrollDuration;
+    }
+
+    public int getSwipeDuration() {
+        return swipeDuration;
+    }
+
+    public void setSwipeDuration(int swipeDuration) {
+        this.swipeDuration = swipeDuration;
+    }
+
+    public double getScrollStartPoint() {
+        return scrollStartPoint;
+    }
+
+    public void setScrollStartPoint(double scrollStartPoint) {
+        this.scrollStartPoint = scrollStartPoint;
+    }
+
+    public double getScrollEndPoint() {
+        return scrollEndPoint;
+    }
+
+    public void setScrollEndPoint(double scrollEndPoint) {
+        this.scrollEndPoint = scrollEndPoint;
+    }
 
     public String getZipCode() {
         return zipCode;
@@ -16,8 +72,6 @@ public class Order {
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
-
-    public String zipCode;
 
     public int getStoreNumber() {
         return storeNumber;

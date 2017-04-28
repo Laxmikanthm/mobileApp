@@ -1,6 +1,7 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
 import org.openqa.selenium.By;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -19,32 +20,27 @@ import pojos.user.RegisterUser;
  */
 @ContextConfiguration("classpath:MobileAppBeans.xml")
 public class SwitchStore extends SubwayAppBaseTest {
+
+    @Autowired
+    Base.Order order;
     MobileUser mobileUser;
 
 
     @Test
-    public void selectOtherStore() throws Exception{
-
-        int store = 54589;
-        String paymentType = "CreditCard";
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        String storeName1="1 River St, Milford, CT 06460";
-        By storeNamesLocator=By.id("com.subway.mobile.subwayapp03:id/address");
-        mobileUser = new MobileUser(false, Country.UnitedStates, store);
+    public void selectOtherStore() throws Exception
+    {
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.scrollToItemAndClick(storeNamesLocator,storeName,1600,3000);
-        ordersPage.selectRestaurant();
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        ordersPage.selectRestaurant(order.getStoreName());
         homePage.findAnotherSubway();
-        searchStore.findYourStore("06460");
-        ordersPage.scrollToItemAndClick(storeNamesLocator,storeName1,1600,3000);
-        String actualStoreName= ordersPage.switchStoreName();
+        searchStore.findYourStore(order.getZipCode());
+        String actualStoreName= ordersPage.switchStoreName(order.getStoreName1());
         ordersPage.selectRestaurant();
-        Assert.assertEquals(actualStoreName,storeName1);
-
+        Assert.assertEquals(actualStoreName,order.getStoreName1());
     }
 }

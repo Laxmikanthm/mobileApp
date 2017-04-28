@@ -1,7 +1,12 @@
+import Base.Order;
 import Base.SubwayAppBaseTest;
 import enums.Country;
 import org.openqa.selenium.By;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
@@ -15,16 +20,17 @@ import pojos.user.RegisterUser;
  * Created by e002243 on 20-04-2017.
  */
 @ContextConfiguration("classpath:MobileAppBeans.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class Privacypolicy extends SubwayAppBaseTest {
 
+    @Autowired
+    Order order;
     MobileUser mobileUser;
     @Test
     public void verifyPrivacyPolicy() throws Exception
     {
-
-        By privacyPolicyLocator = By.id("android:id/content");
-        By appVersionLocator= By.xpath("//android.widget.TextView[@text='Version']");
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
@@ -32,7 +38,6 @@ public class Privacypolicy extends SubwayAppBaseTest {
         MenuPage menuPage = homePage.getUserDetails();
         menuPage.getabout();
         menuPage.navigatetoPrivacyPolicy();
-        Assert.assertTrue(menuPage.isElementPresent(privacyPolicyLocator),"Privacy Statment Text present in the Privacypolicy");
-
+        menuPage.assertPrivacyPolicyTexts();
     }
 }

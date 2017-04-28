@@ -37,19 +37,18 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void placeOrderAllSandwiches() throws Exception
     {
-
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        /*mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
-        mobileUser.setPassword("Cigniti@123");*/
+        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
+        mobileUser.setPassword("Cigniti@123");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
+        /*MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
-        menuPage.goHome();
+        menuPage.goHome();*/
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
         ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
@@ -77,7 +76,6 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderBreakfast() throws Exception
     {
-
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -96,9 +94,6 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderPersonalPizza() throws Exception
     {
-
-        String paymentType = "CreditCard";
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -117,85 +112,73 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderChoppedSalads() throws Exception
     {
-
-        String paymentType = "CreditCard";
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrder("Chopped Salads", mobileUser, storeName);
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        ordersPage.placeRandomOrder("Chopped Salads", mobileUser, order.getStoreName());
 }
 
     @Test
     public void placeOrderSUBWAYFreshFitforKids() throws Exception
     {
-
-        String paymentType = "CreditCard";
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrder("Kids' Meal", mobileUser, storeName);
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        ordersPage.placeRandomOrder("Kids' Meal", mobileUser, order.getStoreName());
     }
 
     @Test
     public void placeOrderSides() throws Exception
     {
-
-        String paymentType = "CreditCard";
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrder("Sides", mobileUser, storeName);
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        ordersPage.placeRandomOrder("Sides", mobileUser, order.getStoreName());
     }
 
     @Test
     public void placeOrderDrinks() throws Exception
     {
-
-        String paymentType = "CreditCard";
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrder("Drinks", mobileUser, storeName);
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        ordersPage.placeRandomOrder("Drinks", mobileUser, order.getStoreName());
     }
 
 
@@ -214,7 +197,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore("06460");
-        ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, order.getStoreName(),ordersPage);
+        ordersPage.orderForMakeItAMeal(order.getOrderItem(), mobileUser, order.getStoreName(),ordersPage);
         ordersPage.clickOnPlaceOrder();
     }
 

@@ -4,7 +4,6 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
-import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -53,13 +52,11 @@ public abstract class NamePage<T extends AppiumDriver> extends MobileBasePage {
         try{
             getFirstName().isReady();
             getFirstName().getControl().clear();
-           getFirstName().setText(mobileUser.getFirstName());
-           Thread.sleep(10000);
-           getLastName().getControl().clear();
-           getLastName().setText(mobileUser.getLastName());
-           getSave().waitForClickable();
-           getSave().click();
-
+            getFirstName().setText(mobileUser.getFirstName());
+            getLastName().getControl().clear();
+            getLastName().setText(mobileUser.getLastName());
+            getSave().waitForClickable();
+            getSave().click();
             return ContactInformationPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);

@@ -1,8 +1,13 @@
+import Base.Order;
 import Base.SubwayAppBaseTest;
 
 import azureApi.serviceUtils.AzureIdentityApi;
 import enums.Country;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
@@ -23,22 +28,26 @@ import java.util.List;
  */
 
 @ContextConfiguration("classpath:MobileAppBeans.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class PaymentMethods extends SubwayAppBaseTest {
     List<SubwayCard> cards =null;
+
+    @Autowired
+    Order order;
     MobileUser mobileUser;
 
 
     @Test
     public void addCreditCard() throws Exception {
-        String paymentType = "CreditCard";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.addPayment(mobileUser,order.getPaymentType());
         Assert.assertTrue(addCardPage.checkCreditCardElementPresence(),"Credit Card got added successfully");
         addCardPage.selectBackButton();
         menuPage.logout();
@@ -69,11 +78,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
         {
             String paymentType = "GiftCard";
             mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-            //mobileUser.registerNewUserHeadless(mobileUser);
             //RegisterUser.registerAUser(mobileUser);
             //cards.add(0,SubwayCard.getSubwayCardFromDB(pojos.enums.Lock.TRUE));
-            mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
-            mobileUser.setPassword("Cigniti@123");
             mobileUser.setSubwayCards(cards);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
             LoginPage loginPage = landingPage.gotoLogInPage();
@@ -95,14 +101,14 @@ public class PaymentMethods extends SubwayAppBaseTest {
     @Test
     public void addPayPal () throws Exception{
         String paymentType = "Paypal";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.addPayment(mobileUser,order.getPaymentType());
         Assert.assertTrue(addCardPage.checkPayPalElementPresence(),"Paypal Card/account got added successfully");
         addCardPage.selectBackButton();
         menuPage.logout();

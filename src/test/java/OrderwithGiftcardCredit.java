@@ -1,6 +1,11 @@
+import Base.Order;
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
@@ -16,8 +21,12 @@ import pojos.user.RegisterUser;
  * Created by e002243 on 27-04-2017.
  */
 @ContextConfiguration("classpath:MobileAppBeans.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
 
+    @Autowired
+    Order order;
     MobileUser mobileUser;
 
     @Test
@@ -25,9 +34,7 @@ public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
     {
         String paymentTypeCreditCard = "CreditCard";
         String paymentTypeGiftCard="GiftCard";
-
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
@@ -39,7 +46,7 @@ public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrder("Drinks", mobileUser, storeName);
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        ordersPage.placeRandomOrder("Drinks", mobileUser, order.getStoreName());
     }
 }

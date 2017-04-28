@@ -8,12 +8,13 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.AddCardPage.AddCardPage;
 import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
 import pages.ContactInformationPage.ContactInformationPage;
-import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.MobileOrderHistoryPage.MobileOrderHistoryPage;
 import pages.NamePage.NamePage;
+import pages.OrdersPage.OrdersPage;
 import pages.PhonePage.PhonePage;
 import pojos.user.MobileUser;
 
@@ -119,33 +120,16 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         PhonePage phonePage= contactInformationPage.getPhoneField();
         contactInformationPage= phonePage.updatePhoneNumber();
         contactInformationPage.selectBackButton();
-//        String AfirstNameLastName=  menuPage.getUserInformation();
-//        String EfirstNameLastName= namepage.getFirstNameLastName();
-
         return MenuPage.get((AppiumDriver) driver);
     }
 
 
     public void HideKeyboard()
     {
-
         AppiumDriver d=(AppiumDriver) driver;
         d.hideKeyboard();
     }
 
-    public void addCreditCard() throws  Exception
-    {
-        try{
-            MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-            AddCardPage addCardPage=  gotoAddPaymentMethods();
-            ChoosePaymentMethodPage choosePaymentMethodPage= addCardPage.addPaymentMethod();
-            addCardPage= choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
-            addCardPage.addCardDetails(mobileUser);
-
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-    }
 
     public AddCardPage gotoAddPaymentMethods() throws  Exception
     {
@@ -263,6 +247,44 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
+    public void assertAppVersionTexts() throws Exception {
+        try {
+            By appVersionLocator = By.id("com.subway.mobile.subwayapp03:id/version");
+            Assert.assertTrue(isElementPresent(appVersionLocator), "App version is existed in the About page");
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
 
+    }
+
+    public void assertHelpPageTexts() throws Exception {
+        try {
+            By helopPageLocator= By.id("com.subway.mobile.subwayapp03:id/question");
+            Assert.assertTrue(isElementPresent(helopPageLocator),"Help page has the expected Text");
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+
+    }
+
+    public void assertPrivacyPolicyTexts() throws Exception {
+        try {
+            By privacyPolicyLocator = By.id("android:id/content");
+            Assert.assertTrue(isElementPresent(privacyPolicyLocator),"Privacy Statment Text present in the Privacypolicy");
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+
+    }
+
+    public void assertTermsAndConditionsTexts() throws Exception {
+        try {
+            By termsAndConditionsTextLocator = By.id("android:id/content");
+            Assert.assertTrue(isElementPresent(termsAndConditionsTextLocator),"Terms and conditions Text present in the Terms and conditions page");
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+
+    }
 
 }

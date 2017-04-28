@@ -1,7 +1,12 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
 import junit.framework.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
@@ -19,36 +24,38 @@ import pojos.user.RegisterUser;
 /**
  * Created by e002243 on 19-04-2017.
  */
-@ContextConfiguration("classpath:MobileAppBeans.xml")
+@ContextConfiguration("classpath:Order-data.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class AddFavoriteOrder extends SubwayAppBaseTest {
 
+    @Autowired
+    Base.Order order;
     MobileUser mobileUser;
+
+
     @Test
+    @DirtiesContext
     public void addFavoriteOrder() throws Exception
     {
-
-        String paymentType = "CreditCard";
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, storeName);
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
         menuPage= homePage.gotoMenuPage();
         MobileOrderHistoryPage mobileOrderHistoryPage= menuPage.getOrderHistory();
         mobileOrderHistoryPage.addFavoriteOrder();
         homePage.selectBackButton();
         menuPage.goHome();
         Assert.assertEquals(mobileOrderHistoryPage.favoriteOrderName(), homePage.favoriteOrderName());
-
-
     }
 }

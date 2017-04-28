@@ -36,7 +36,6 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-
     public static LoginPage get(AppiumDriver driver) throws Exception{
 
         String platform = driver.getCapabilities().getCapability("platformName").toString();
@@ -57,9 +56,6 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
             getUserName().isReady();
             getUserName().setText(mobileUser.getEmailAddress());
             getPassword().setText(mobileUser.getPassword());
-
-//            getUserName().setText("gopal.boyina@cigniti.com");
-//            getPassword().setText("Cigniti@123");
             HideKeyboard();
             getLogin().click();
         }catch (Exception ex){
@@ -73,7 +69,6 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     public void HideKeyboard()
     {
-
         AppiumDriver d=(AppiumDriver) driver;
         d.hideKeyboard();
     }
