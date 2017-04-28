@@ -9,9 +9,7 @@ import io.appium.java_client.ios.IOSDriver;
 import pages.AddCardPage.AddCardPage;
 import pages.MenuPage.MenuPage;
 import pages.PayPalPage.PayPalPage;
-import pages.SubwayPage.SubwayPage;
-import pages.SubwayPage.SubwayPageAndroid;
-import pages.SubwayPage.SubwayPageIOS;
+
 
 /**
  * Created by e002243 on 01-03-2017.

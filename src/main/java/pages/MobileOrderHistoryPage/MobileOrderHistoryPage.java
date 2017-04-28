@@ -7,9 +7,6 @@ import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import pages.SubwayPage.SubwayPage;
-import pages.SubwayPage.SubwayPageAndroid;
-import pages.SubwayPage.SubwayPageIOS;
 
 import java.util.Random;
 

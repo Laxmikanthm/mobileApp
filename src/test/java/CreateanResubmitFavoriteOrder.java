@@ -11,7 +11,6 @@ import pages.MenuPage.MenuPage;
 import pages.MobileOrderHistoryPage.MobileOrderHistoryPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
-import pages.SubwayPage.SubwayPage;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
@@ -31,15 +30,13 @@ public class CreateanResubmitFavoriteOrder extends SubwayAppBaseTest {
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        SubwayPage subwayPage = menuPage.addPaymentMethods();
-        AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
-        addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
@@ -49,7 +46,6 @@ public class CreateanResubmitFavoriteOrder extends SubwayAppBaseTest {
         mobileOrderHistoryPage.addFavoriteOrder();
         homePage.selectBackButton();
         menuPage.goHome();
-        ordersPage.placeOrder();
-        ordersPage.gotIt();
+        ordersPage.clickOnPlaceOrder();
     }
 }

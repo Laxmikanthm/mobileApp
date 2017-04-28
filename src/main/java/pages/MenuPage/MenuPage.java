@@ -15,7 +15,6 @@ import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.MobileOrderHistoryPage.MobileOrderHistoryPage;
 import pages.NamePage.NamePage;
 import pages.PhonePage.PhonePage;
-import pages.SubwayPage.SubwayPage;
 import pojos.user.MobileUser;
 
 /**
@@ -138,9 +137,9 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     {
         try{
             MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-            SubwayPage subwayPage=  addPaymentMethods();
-            ChoosePaymentMethodPage choosePaymentMethodPage= subwayPage.addPaymentMethod();
-            AddCardPage addCardPage= choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
+            AddCardPage addCardPage=  gotoAddPaymentMethods();
+            ChoosePaymentMethodPage choosePaymentMethodPage= addCardPage.addPaymentMethod();
+            addCardPage= choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
             addCardPage.addCardDetails(mobileUser);
 
         }catch(Exception ex){
@@ -148,11 +147,11 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         }
     }
 
-    public SubwayPage addPaymentMethods() throws  Exception
+    public AddCardPage gotoAddPaymentMethods() throws  Exception
     {
         try{
             getPaymentMethods().click();
-            return SubwayPage.get((AppiumDriver) driver);
+            return AddCardPage.get((AppiumDriver) driver);
 
         }catch(Exception ex){
             throw new Exception(ex);

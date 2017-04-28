@@ -8,11 +8,8 @@ import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
-import pojos.Orders.Order;
-import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
-
 import java.util.List;
 
 /**
@@ -31,8 +28,6 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
         mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -51,8 +46,6 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
         mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -73,8 +66,6 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
         mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -96,8 +87,6 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
         mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -108,7 +97,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         ordersPage.addAnotherNewItem();
         String eItem = ordersPage.editCartAndPlaceAnOrder("SUBWAY Fresh Fit™",mobileUser, storeName);
         Assert.assertEquals(aItem,eItem);
-        ordersPage.placeOrder();
+        ordersPage.clickOnPlaceOrder();
     }
 
 }

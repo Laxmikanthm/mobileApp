@@ -21,8 +21,8 @@ public class AppVersion extends SubwayAppBaseTest {
     @Test
     public void verifyAppVersion() throws Exception
     {
-        By appVersionLocator= By.id("com.subway.mobile.subwayapp03:id/version");
 
+        By appVersionLocator= By.id("com.subway.mobile.subwayapp03:id/version");
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

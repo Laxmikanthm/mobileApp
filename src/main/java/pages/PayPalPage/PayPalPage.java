@@ -6,21 +6,14 @@ import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.PasswordTextBox;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
-import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
-import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPageAndroid;
-import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPageIOS;
 import pages.PaymentMethodsPage.PaymentMethodsPage;
 import pojos.user.MobileUser;
-
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by e002243 on 08-03-2017.
@@ -66,27 +59,26 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public PaymentMethodsPage addPaypalDetails(MobileUser mobileUser)throws Exception {
-        {
-            //By AgreeAndContinue  = MobileBy.AccessibilityId("Agree & Continue");
+
+        try {
             getPaypalUserName().isReady();
             getPaypalUserName().getControl().clear();
             getPaypalUname().setText("upadhyaya_s@subway.com");
-            //getPaypalUserName().setText("upadhyaya_s@subway.com");
             getPaypalPassword().getControl().clear();
             getPaypalPwd().setText("Subway1965");
             getDriver().hideKeyboard();
-            /*getPaypalUserName().setText(mobileUser.getPayPalEmailAddress());
-            getPaypalPassword().setText(mobileUser.getPayPalPassword());*/
             getLogIn().click();
             getPayWith().isReady();
-            //scrollToElement(AgreeAndContinue,0.9,0.5);
             ((AppiumDriver) driver).swipe(200, 700, 200, 100, 4000);
             getAgreeAndContinue().click();
             getBackBtn().isReady();
             getBackBtn().click();
             return PaymentMethodsPage.get((AppiumDriver) driver);
-                }
-            }
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
 
     public void scrollToElement(By locator, double startpoint, double endpoint) {
         while (getElements(locator).size() == 0) {

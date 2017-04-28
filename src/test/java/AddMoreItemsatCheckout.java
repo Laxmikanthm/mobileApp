@@ -9,7 +9,6 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
-import pages.SubwayPage.SubwayPage;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
@@ -32,15 +31,13 @@ public class AddMoreItemsatCheckout extends SubwayAppBaseTest {
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         /*mobileUser.setEmailAddress("gopal.boyinag@gmail.com");
         mobileUser.setPassword("Subway1234");*/
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        SubwayPage subwayPage = menuPage.addPaymentMethods();
-        AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
-        addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");

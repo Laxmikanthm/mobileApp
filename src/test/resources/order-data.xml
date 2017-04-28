@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+
+    <beans>
+        <bean class="Base.Order">
+            <property name="storeNumber" value="54589"></property>
+            <property name="storeName" value="CT Turpike West Southbound 2, Milford, CT 06460"></property>
+            <property name="paymentType" value="Paypal"></property>
+            <property name="orderItem" value="All Sandwiches"></property>
+            <property name="zipCode" value="06460"></property>
+        </bean>
+    </beans>
+
+</beans>

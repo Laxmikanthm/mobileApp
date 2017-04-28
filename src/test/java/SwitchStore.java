@@ -30,11 +30,8 @@ public class SwitchStore extends SubwayAppBaseTest {
         String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         String storeName1="1 River St, Milford, CT 06460";
         By storeNamesLocator=By.id("com.subway.mobile.subwayapp03:id/address");
-
         mobileUser = new MobileUser(false, Country.UnitedStates, store);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);

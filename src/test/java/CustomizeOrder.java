@@ -10,7 +10,6 @@ import pages.SearchStore.SearchStore;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
-import pojos.user.RegisterUser;
 
 /**
  * Created by E003705 on 05-04-2017.
@@ -32,15 +31,14 @@ public class CustomizeOrder extends SubwayAppBaseTest {
         mobileUser.setPassword("Cigniti@123");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         OrdersPage ordersPage = landingPage.findYourStore("06460");
-       /* LoginPage loginPage = landingPage.gotoLogInPage();
+        LoginPage loginPage = landingPage.gotoLogInPage();
 
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
-       */
+        //OrdersPage ordersPage =searchStore.findYourStore("06460");
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
-        //ordersPage.selectCategoryAndSubcategory(order, storeName);
+        //ordersPage.selectCategoryAndSubcategory(Order, storeName);
         ordersPage.selectItemTypeAndClickCustomize(order);
         //ordersPage.selectCategoryAndSubcategory("All Sandwiches", mobileUser, storeName);
         //ordersPage.selectItemTypeAndClickCustomize("FOOTLONG");

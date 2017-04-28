@@ -5,21 +5,13 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.SwipeElementDirection;
-import base.test.BaseTest;
-import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.OptionItem;
-import cardantApiFramework.utils.NumberUtil;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
-import org.apache.log4j.lf5.viewer.categoryexplorer.CategoryElement;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.Assert;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
@@ -39,9 +31,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public OrdersPage(AppiumDriver driver) {
         super(driver);
     }
-
-   /* protected TextView storeNameTextView;*/
-
     abstract MobileLabel getStoreNames() throws Exception;
     abstract MobileLabel getItems() throws Exception;
     abstract MobileButton getSelectRestaurantButton() throws Exception;
@@ -55,8 +44,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getGotIt() throws Exception;
 
     abstract MobileButton getCategory(String Category) throws Exception;
-
-    abstract MobileButton getSubCategory(String Category) throws Exception;
 
     abstract MobileButton getCustomize() throws Exception;
 
@@ -208,7 +195,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
             By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
-            By someThingElseLocator=By.id("//android.widget.TextVie[@resource-id='com.subway.mobile.subwayapp03:id/something_else_text']");
+            By someThingElseLocator=By.id("com.subway.mobile.subwayapp03:id/something_else_text");
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             scrollToItemAndClick(storeNamesLocator, storeName, 1600,3000);
@@ -228,7 +215,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void orderForMakeItAMeal(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+    public void orderForMakeItAMeal(String menuItem, MobileUser mobileUser, String storeName,OrdersPage ordersPage) throws Exception {
 
         try {
             By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
@@ -256,19 +243,30 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getExpandArrow().isReady();
             getExpandArrow().click();
             getPlaceOrder().isReady();
+            assertTexts(ordersPage);
         } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
 
+    public void assertTexts(OrdersPage ordersPage) throws Exception{
+        try {
+            By ItemList = By.id("com.subway.mobile.subwayapp03:id/item_options");
+            By ItemFromSides = By.id("com.subway.mobile.subwayapp03:id/side_title_1");
+            By ItemFromDrinks = By.id("com.subway.mobile.subwayapp03:id/drink_title");
+            Assert.assertTrue(ordersPage.isElementPresent(ItemList), "ItemList is present in Make It A Meal dropdown");
+            Assert.assertTrue(ordersPage.isElementPresent(ItemFromSides), "One item from Sides is present in Make It A Meal dropdown");
+            Assert.assertTrue(ordersPage.isElementPresent(ItemFromDrinks), "One item from Drinks is present in Make It A Meal dropdown");
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
+
     public void clickOnPlaceOrder() throws Exception {
 
         try {
-            /*getDrinks().click();
-            swipeLeftOrRight(sidesOrDrinks, "21oz Fountain Drink", 500, "Left");
-            getCookies().click();
-            getDrinksAddToBag().click();*/
-            //getPlaceOrder().isReady();
+            getPlaceOrder().isReady();
             getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
@@ -366,17 +364,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void searchStore(String storeName) throws Exception {
-        try {
-
-            getStoreList(driver);
-            ((AndroidDriver) driver).findElement(By.xpath("//*[@text='" + storeName + "']")).click();
-
-        } catch (Exception ex) {
-            throw new Exception(ex);
-        }
-    }
-
     public void selectCategory(String categoryName) throws Exception {
         try {
             getCategory(categoryName).click();
@@ -396,26 +383,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void placeOrder() throws Exception {
-        try {
-            getPlaceOrder().click();
-        } catch (Exception ex) {
-            throw new Exception(ex);
-        }
-    }
+
 
     public void getItemType() throws Exception {
         try {
             getSixInchOption().click();
         } catch (Exception ex) {
 
-        }
-    }
-    public void gotIt() throws Exception {
-        try {
-           getGotIt().click();
-        } catch (Exception ex) {
-            throw new Exception(ex);
         }
     }
 
@@ -434,19 +408,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    /* Need to find better Solution*/
-    public static void getStoreList(RemoteWebDriver driver) throws Exception {
-        List<WebElement> list = driver.findElements((By.xpath("//*[@resource-id='com.subway.mobile.subwayapp03:id/stores_list']//android.widget.RelativeLayout")));
-        //for(WebElement ele : list){
-        if (list.get(1).findElement(By.id("com.subway.mobile.subwayapp03:id/address")).getText().contains("1365 Boston Post Road, Milford, CT 06460")) {
-            System.out.println(list.get(1).getLocation().getY());
-            int x = list.get(1).getLocation().getX();
-            int y1 = list.get(1).getLocation().getY();
-            int y2 = list.get(0).getLocation().getY();
-            ((AppiumDriver) driver).swipe(x, y1, x, y2, 1000);
-        }
-
-    }
 
     public void placeRandomOrderSpecialInstructions(String menuItem, MobileUser mobileUser, String storeName, String specialInstructions) throws Exception {
         try {
@@ -465,7 +426,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getPlaceOrder().isReady();
             scrollToElement(specialInstructionsLabel,0.9,0.5);
-            //remoteOrder.addRandomInstructions(specialInstructions);
             getSpecialInstructions().setText(specialInstructions);
             getDriver().hideKeyboard();
             getPlaceOrder().click();
@@ -500,11 +460,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public String editCartAndPlaceAnOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
-            searchStore(storeName);
+            getDirections().isReady();
+            scrollToItemAndClick(storeNamesLocator, storeName, 1600, 3000);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
+            getItems().isReady();
             selectCategory(order.getCart().getProductDetail().getProductGroup().getName());
             selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
             String aSubItem = order.getCart().getProductDetail().getProductClass().getName();
@@ -514,18 +477,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void selectCategoryAndSubcategory(Order order, String storeName) throws Exception {
-        try {
-
-            searchStore(storeName);
-            getSelectRestaurantButton().click();
-            getStartOrderButton().click();
-            selectCategory(order.getCart().getProductDetail().getProductGroup().getName());
-            selectSubCategory(order.getCart().getProductDetail().getProductClass().getName());
-        } catch (Exception ex) {
-            throw new Exception(ex);
-        }
-    }
 
     public String getSubItemInfo() throws Exception {
         try {
@@ -567,9 +518,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void addAnotherNewItem() throws Exception {
         try {
+            By someThingElseLocator=By.id("com.subway.mobile.subwayapp03:id/something_else_text");
             getAddToBag().isReady();
             getAddToBag().click();
-            getSomethingElse().isReady();
+            getPlaceOrder().isReady();
+            scrollToItemAndClick(someThingElseLocator, "Something Else", 1600,3000);
             getSomethingElse().click();
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -769,6 +722,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         getSwitchStoreName().isReady();
         return getSwitchStoreName().getText();
     }
+
+
 
 
 }

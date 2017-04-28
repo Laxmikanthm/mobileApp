@@ -1,5 +1,6 @@
 package pages.SearchStore;
 
+
 import android.view.inputmethod.EditorInfo;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
@@ -18,8 +19,7 @@ import org.openqa.selenium.interactions.internal.KeysRelatedAction;
 import org.openqa.selenium.winium.KeyboardSimulatorType;
 import pages.HomePage.HomePage;
 import pages.OrdersPage.OrdersPage;
-import pages.OrdersPage.OrdersPageAndroid;
-import pages.OrdersPage.OrdersPageIOS;
+
 import pojos.user.MobileUser;
 
 import javax.swing.*;
@@ -126,6 +126,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
                     getOkPopupButton().isReady();
                     getOkPopupButton().click();
 
+
                 }
             }
         }catch(Exception ex){
@@ -158,14 +159,14 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-    public OrdersPage findYourStore(String store) throws Exception
+    public OrdersPage findYourStore(String zipCode) throws Exception
     {
         try{
             okPopUp();
             allowPopUp();
             okPopUp();
             toggleView();
-            searchStoreByZipCode(store);
+            searchStoreByZipCode(zipCode);
             return OrdersPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);

@@ -1,25 +1,17 @@
 import Base.SubwayAppBaseTest;
 
-import azureApi.pojos.User;
-import azureApi.serviceUtils.AzureClient;
 import azureApi.serviceUtils.AzureIdentityApi;
 import enums.Country;
-import org.openqa.selenium.internal.Lock;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
-import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
-import pages.PayPalPage.PayPalPage;
-import pages.PaymentMethodsPage.PaymentMethodsPage;
-import pages.SubwayPage.SubwayPage;
 import pojos.tenders.SubwayCard;
 import pojos.user.MobileUser;
-import pojos.user.RemoteOrderCustomer;
 import pojos.user.RegisterUser;
 
 import java.util.List;
@@ -45,14 +37,11 @@ public class PaymentMethods extends SubwayAppBaseTest {
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        SubwayPage subwayPage = menuPage.addPaymentMethods();
-        AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
-        addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser,paymentType);
         Assert.assertTrue(addCardPage.checkCreditCardElementPresence(),"Credit Card got added successfully");
         addCardPage.selectBackButton();
         menuPage.logout();
-
-        //Assert
 
     }
 
@@ -65,13 +54,11 @@ public class PaymentMethods extends SubwayAppBaseTest {
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        SubwayPage subwayPage = menuPage.addPaymentMethods();
-        AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
-        addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser,paymentType);
         Assert.assertTrue(addCardPage.checkDebitCardElementPresence(),"Debit Card got added successfully");
         addCardPage.selectBackButton();
         menuPage.logout();
-        //Assert
 
     }
 
@@ -83,16 +70,17 @@ public class PaymentMethods extends SubwayAppBaseTest {
             String paymentType = "GiftCard";
             mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
             //mobileUser.registerNewUserHeadless(mobileUser);
-            RegisterUser.registerAUser(mobileUser);
+            //RegisterUser.registerAUser(mobileUser);
             //cards.add(0,SubwayCard.getSubwayCardFromDB(pojos.enums.Lock.TRUE));
+            mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
+            mobileUser.setPassword("Cigniti@123");
             mobileUser.setSubwayCards(cards);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
             LoginPage loginPage = landingPage.gotoLogInPage();
             HomePage homePage = loginPage.login(mobileUser);
             MenuPage menuPage = homePage.getUserDetails();
-            SubwayPage subwayPage = menuPage.addPaymentMethods();
-            AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
-            addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+            AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+            addCardPage.addPayment(mobileUser,paymentType);
             Assert.assertTrue(addCardPage.checkGiftCardElementPresence(),"Subway Card got added successfully");
             addCardPage.selectBackButton();
             new SubwayCard().lockSubwayCard(mobileUser, pojos.enums.Lock.FALSE);
@@ -113,14 +101,10 @@ public class PaymentMethods extends SubwayAppBaseTest {
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        SubwayPage subwayPage = menuPage.addPaymentMethods();
-        AddCardPage addCardPage = subwayPage.getAddCardPageInstance();
-        addCardPage.addMethodForPayment(subwayPage,mobileUser,paymentType);
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser,paymentType);
         Assert.assertTrue(addCardPage.checkPayPalElementPresence(),"Paypal Card/account got added successfully");
-
-
         addCardPage.selectBackButton();
-
         menuPage.logout();
 
     }

@@ -8,10 +8,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
-import pages.MenuPage.MenuPage;
 import pages.PayPalPage.PayPalPage;
 import pages.PaymentMethodsPage.PaymentMethodsPage;
-import pages.SubwayPage.SubwayPage;
 import pojos.user.MobileUser;
 
 /**
@@ -20,6 +18,7 @@ import pojos.user.MobileUser;
 public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePage {
 
     public AddCardPage(AppiumDriver driver){ super(driver);}
+
     abstract MobileTextBox getCardNumber() throws Exception;
     abstract MobileTextBox getExpiresOn() throws Exception;
     abstract MobileTextBox getCCV() throws Exception;
@@ -36,6 +35,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     abstract MobileLabel getDebitCardType() throws Exception;
     abstract MobileLabel getGiftCardType() throws Exception;
     abstract MobileLabel getPayPalType() throws Exception;
+    abstract MobileButton getAddPaymentMethod() throws Exception;
 
 
     @Override
@@ -61,6 +61,17 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
         }
     }
 
+    public ChoosePaymentMethodPage addPaymentMethod() throws Exception
+    {
+        try{
+            getAddPaymentMethod().click();
+
+            return ChoosePaymentMethodPage.get((AppiumDriver) driver);
+        }catch(Exception ex){
+            throw new Exception(ex);
+        }
+
+    }
     public PaymentMethodsPage addCardDetails(MobileUser mobileUser) throws Exception
     {
         try{
@@ -124,47 +135,50 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
 
     }
 
-    public void addCreditorDebitCard(SubwayPage subwayPage, MobileUser mobileUser) throws Exception
+    public void addCreditorDebitCard(MobileUser mobileUser) throws Exception
     {
-        ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
+        ChoosePaymentMethodPage choosePaymentMethodPage = addPaymentMethod();
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
         PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
     }
 
-    public void addGiftCard(SubwayPage subwayPage, MobileUser mobileUser) throws Exception
+    public void addGiftCard(MobileUser mobileUser) throws Exception
     {
-        ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
+        ChoosePaymentMethodPage choosePaymentMethodPage = addPaymentMethod();
         AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodGiftCard();
         PaymentMethodsPage paymentMethodsPage=  addCardPage.addSubwayCardDetails(mobileUser);
     }
 
-    public void addPayPal(SubwayPage subwayPage, MobileUser mobileUser) throws Exception
+    public void addPayPal( MobileUser mobileUser) throws Exception
     {
-        ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
+        ChoosePaymentMethodPage choosePaymentMethodPage = addPaymentMethod();
         PayPalPage payPalPage = choosePaymentMethodPage.ChoosePaymentMethodPayPalCard();
         payPalPage.addPaypalDetails(mobileUser);
     }
 
-    public void addMethodForPayment(SubwayPage subwayPage, MobileUser mobileUser,String paymentType) throws Exception{
+    public void addPayment(MobileUser mobileUser,String paymentType) throws Exception{
+        ChoosePaymentMethodPage choosePaymentMethodPage;
+        AddCardPage addCardPage;
+        PaymentMethodsPage paymentMethodsPage;
         switch(paymentType){
             case "CreditCard":
-                ChoosePaymentMethodPage choosePaymentMethodPage = subwayPage.addPaymentMethod();
-                AddCardPage addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
-                PaymentMethodsPage paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
+                choosePaymentMethodPage = addPaymentMethod();
+                addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
+                paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
                 break;
             case "DebitCard":
-                ChoosePaymentMethodPage choosePaymentPage = subwayPage.addPaymentMethod();
-                AddCardPage cardPage = choosePaymentPage.ChoosePaymentMethodDebitCard();
-                PaymentMethodsPage methodsPage= cardPage.addCardDetails(mobileUser);
+                choosePaymentMethodPage = addPaymentMethod();
+                addCardPage = choosePaymentMethodPage.ChoosePaymentMethodDebitCard();
+                paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
                 break;
             case "GiftCard":
-                ChoosePaymentMethodPage paymentMethodPage = subwayPage.addPaymentMethod();
-                AddCardPage addPage = paymentMethodPage.ChoosePaymentMethodGiftCard();
-                PaymentMethodsPage paymentPage= addPage.addSubwayCardDetails(mobileUser);
+                choosePaymentMethodPage = addPaymentMethod();
+                addCardPage = choosePaymentMethodPage.ChoosePaymentMethodGiftCard();
+                paymentMethodsPage= addCardPage.addSubwayCardDetails(mobileUser);
                 break;
             case "Paypal":
-                ChoosePaymentMethodPage choosePage = subwayPage.addPaymentMethod();
-                PayPalPage payPalPage = choosePage.ChoosePaymentMethodPayPalCard();
+                choosePaymentMethodPage = addPaymentMethod();
+                PayPalPage payPalPage = choosePaymentMethodPage.ChoosePaymentMethodPayPalCard();
                 payPalPage.addPaypalDetails(mobileUser);
                 break;
 

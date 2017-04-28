@@ -17,6 +17,13 @@ public class AddCardPageIOS extends AddCardPage {
 
  public AddCardPageIOS(IOSDriver driver){ super(driver);}
 
+    public MobileButton getAddPaymentMethod() throws Exception {
+
+        IOSButton addPaymentMethodButton = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+
+        return addPaymentMethodButton;
+    }
+
     public IOSTextBox getCardNumber() throws Exception {
 
         IOSTextBox cardNumberInputBox = new IOSTextBox((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");

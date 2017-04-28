@@ -21,7 +21,9 @@ public class Privacypolicy extends SubwayAppBaseTest {
     @Test
     public void verifyPrivacyPolicy() throws Exception
     {
+
         By privacyPolicyLocator = By.id("android:id/content");
+        By appVersionLocator= By.xpath("//android.widget.TextView[@text='Version']");
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

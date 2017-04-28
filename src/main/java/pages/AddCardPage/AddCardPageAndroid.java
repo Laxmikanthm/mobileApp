@@ -14,6 +14,10 @@ import org.openqa.selenium.By;
 public class AddCardPageAndroid extends  AddCardPage {
 
     public AddCardPageAndroid(AndroidDriver driver){super(driver);}
+    public AndroidButton getAddPaymentMethod() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("AddPaymet") + "']"), "AddPaymentMethod Button");
+        return button;
+    }
 
     public AndroidTextBox getCardNumber() throws Exception {
         AndroidTextBox cardNumberInputBox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("CardNumber")), "CardNumber field");
