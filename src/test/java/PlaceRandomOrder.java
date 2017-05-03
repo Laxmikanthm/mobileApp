@@ -49,10 +49,9 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
-
-
+        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, order.getStoreName());
     }
+
     @Test
     @DirtiesContext
     public void placeOrderSubwayFreshFit() throws Exception
@@ -69,7 +68,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, order.getStoreName());
     }
 
     @Test
@@ -88,7 +87,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder("Breakfast", mobileUser, order.getStoreName());
     }
 
     @Test
@@ -107,7 +106,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder("Personal Pizza", mobileUser, order.getStoreName());
     }
 
     @Test
@@ -126,7 +125,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder("Chopped Salads", mobileUser, order.getStoreName());
 }
 
     @Test
@@ -145,7 +144,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder("Kids' Meal", mobileUser, order.getStoreName());
     }
 
     @Test
@@ -164,7 +163,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrderSides(order.getOrderItem(), mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrderSides("Sides", mobileUser, order.getStoreName());
     }
 
     @Test
@@ -183,7 +182,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrderDrinks(order.getOrderItem(), mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrderDrinks("Drinks", mobileUser, order.getStoreName());
     }
 
 
@@ -203,7 +202,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore("06460");
-        ordersPage.orderForMakeItAMeal(order.getOrderItem(), mobileUser, order.getStoreName(),ordersPage);
+        ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, order.getStoreName(),ordersPage);
         ordersPage.clickOnPlaceOrder();
     }
 

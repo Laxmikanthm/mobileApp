@@ -46,6 +46,6 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrderSpecialInstructions(order.getOrderItem(), mobileUser, order.getStoreName(), order.getSpecialInstructions());
+        ordersPage.placeRandomOrderSpecialInstructions("All Sandwiches", mobileUser, order.getStoreName(), order.getSpecialInstructions());
     }
 }

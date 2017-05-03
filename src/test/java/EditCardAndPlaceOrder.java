@@ -52,7 +52,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        String aVal = ordersPage.editCartAndPlaceAnOrder(order.getOrderItem(),mobileUser, order.getStoreName());
+        String aVal = ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, order.getStoreName());
         String eVal = ordersPage.getSubItemInfo();
         Assert.assertEquals(aVal,eVal);
         ordersPage.placeAnOrder();
@@ -75,7 +75,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.editCartAndPlaceAnOrder(order.getOrderItem(),mobileUser, order.getStoreName());
+        ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, order.getStoreName());
         ordersPage.getSubItemInfo();
         List<Integer> sizeOfSubItems = ordersPage.addAnotherSameItem();
         Assert.assertEquals(sizeOfSubItems.get(1),sizeOfSubItems.get(0));
@@ -100,7 +100,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.editCartAndPlaceAnOrder(order.getOrderItem(),mobileUser, order.getStoreName());
+        ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, order.getStoreName());
         ordersPage.getSubItemInfo();
         List<Integer> sizeOfSubItems = ordersPage.addAnotherSameItem();
         ordersPage.removeItem();
@@ -126,7 +126,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        String aItem = ordersPage.editCartAndPlaceAnOrder(order.getOrderItem(),mobileUser, order.getStoreName());
+        String aItem = ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, order.getStoreName());
         ordersPage.addAnotherNewItem();
         String eItem = ordersPage.editCartAndPlaceAnOrder("SUBWAY Fresh Fit®",mobileUser, order.getStoreName());
         Assert.assertEquals(aItem,eItem);

@@ -49,7 +49,7 @@ public class AddMoreItemsatCheckout extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.addMoreItemsatCheckOut(order.getOrderItem(), mobileUser, order.getStoreName());
+        ordersPage.addMoreItemsatCheckOut("All Sandwiches", mobileUser, order.getStoreName());
 
 
     }

@@ -11,7 +11,6 @@
             <property name="storeNumber" value="54589"></property>
             <property name="storeName" value="CT Turpike West Southbound 2, Milford, CT 06460"></property>
             <property name="paymentType" value="DebitCard"></property>
-            <property name="orderItem" value="Drinks"></property>
             <property name="zipCode" value="06460"></property>
             <property name="endY" value="1600"></property>
             <property name="scrollDuration" value="3000"></property>

@@ -17,7 +17,6 @@ public class Order {
 
     public String storeName1;
     public String paymentType;
-    public String orderItem;
     public String zipCode;
     public int endY;
     public int scrollDuration;
@@ -117,12 +116,5 @@ public class Order {
         this.paymentType = paymentType;
     }
 
-    public String getOrderItem() {
-        return orderItem;
-    }
-
-    public void setOrderItem(String orderItem) {
-        this.orderItem = orderItem;
-    }
 
 }
