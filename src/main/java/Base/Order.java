@@ -25,6 +25,26 @@ public class Order {
     public double scrollStartPoint;
     public double scrollEndPoint;
 
+    public String getSpecialInstructions() {
+        return specialInstructions;
+    }
+
+    public void setSpecialInstructions(String specialInstructions) {
+        this.specialInstructions = specialInstructions;
+    }
+
+    public String specialInstructions;
+
+    public String getUpdatePassword() {
+        return updatePassword;
+    }
+
+    public void setUpdatePassword(String updatePassword) {
+        this.updatePassword = updatePassword;
+    }
+
+    public String updatePassword;
+
     public int getEndY() {
         return endY;
     }

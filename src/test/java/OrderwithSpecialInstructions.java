@@ -36,8 +36,6 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        /*mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
-        mobileUser.setPassword("Cigniti@123");*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -48,8 +46,6 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        String specialInstructions ="Required more salt";
-        ordersPage.placeRandomOrderSpecialInstructions("All Sandwiches", mobileUser, order.getStoreName(), specialInstructions);
-
+        ordersPage.placeRandomOrderSpecialInstructions(order.getOrderItem(), mobileUser, order.getStoreName(), order.getSpecialInstructions());
     }
 }

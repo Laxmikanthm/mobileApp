@@ -177,22 +177,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
-            String CategoryItem = order.getCart().getProductDetail().getProductGroup().getName();
-            if(!CategoryItem.equalsIgnoreCase("Sides")&&!CategoryItem.equalsIgnoreCase("Drinks")){
-                scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
-                scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  1600 , 3000);
-            }else{
-                scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
-                String subCategoryName = order.getCart().getProductDetail().getProductClass().getName();
-                swipeLeftOrRight(sidesOrDrinks, subCategoryName , 500, "Left");
-                getAddToBag().isReady();
-                if(subCategoryName.equalsIgnoreCase("Chips")||subCategoryName.equalsIgnoreCase("Cookies")) {
-                    getSelectFlavor().isReady();
-                    getSelectFlavor().click();
-                    getItemSelectFlavor().isReady();
-                    getItemSelectFlavor().click();
-                }
-            }
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  1600 , 3000);
+            getAddToBag().isReady();
             getAddToBag().click();
             getPlaceOrder().isReady();
             getPlaceOrder().click();
@@ -216,7 +203,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getStartOrderButton().click();
             getItems().isReady();
             scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
-            String subCategoryName = order.getCart().getProductDetail().getProductClass().getName();
+            String subCategoryName = order.getCart().getProductDetail().getName();
             if(subCategoryName.equalsIgnoreCase("Apple Slices")){
                 getAddToBag().isReady();
             }else{
@@ -236,6 +223,33 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
+
+    public void placeRandomOrderDrinks(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
+            By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
+            By sidesOrDrinks = By.id("com.subway.mobile.subwayapp03:id/product_title");
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            scrollToItemAndClick(storeNamesLocator, storeName,  1600 , 3000);
+            getSelectRestaurantButton().click();
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
+            String subCategoryName = order.getCart().getProductDetail().getName();
+            swipeLeftOrRight(sidesOrDrinks, subCategoryName , 500, "Left");
+            getAddToBag().isReady();
+            getAddToBag().click();
+            getPlaceOrder().isReady();
+            getPlaceOrder().click();
+            getGotIt().isReady();
+            getGotIt().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
 
     public void addMoreItemsatCheckOut(String menuItem, MobileUser mobileUser, String storeName) throws Exception
     {
@@ -257,7 +271,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollToElement(someThingElseLocator,0.9,0.5);
             getSomethingElse().isReady();
             getSomethingElse().click();
-            //scrollToItemAndClick(someThingElseLocator, "Something Else",  1600 , 3000);
             Order order1 = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getItems().isReady();
             scrollToItemAndClick(categoryLocator, order1.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);

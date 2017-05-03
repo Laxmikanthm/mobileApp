@@ -14,6 +14,7 @@ import pages.SearchStore.SearchStore;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
+import pojos.user.RegisterUser;
 
 /**
  * Created by E003705 on 05-04-2017.
@@ -26,29 +27,21 @@ public class CustomizeOrder extends SubwayAppBaseTest {
 
     @Autowired
     Base.Order order;
+    MobileUser mobileUser;
 
     @Test
     public void placeCustomizeOrderAllSandwiches() throws Exception
     {
-        int store = 54589;
-        String paymentType = "CreditCard";
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, store);
-        //mobileUser = RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
-        mobileUser.setPassword("Cigniti@123");
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        //OrdersPage ordersPage = landingPage.findYourStore("06460");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage =searchStore.findYourStore("06460");
+        OrdersPage ordersPage =searchStore.findYourStore(order.getZipCode());
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
-        //ordersPage.selectCategoryAndSubcategory(Order, storeName);
         ordersPage.selectItemTypeAndClickCustomize(order);
-        //ordersPage.selectCategoryAndSubcategory("All Sandwiches", mobileUser, storeName);
-        //ordersPage.selectItemTypeAndClickCustomize("FOOTLONG");
         ordersPage.customizeOrder(mobileUser,order);
         ordersPage.addToCartAndPlaceOrder();
 

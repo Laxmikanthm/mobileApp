@@ -1,4 +1,5 @@
 import Base.SubwayAppBaseTest;
+import Base.Order;
 import enums.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
@@ -31,7 +32,7 @@ import java.util.List;
 public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
 
     @Autowired
-    Base.Order order;
+    Order order;
     MobileUser mobileUser;
 
     //After clicking on  edit check whether selected product is displayed or not
@@ -87,7 +88,6 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void editCartDeleteItemVerifyPlaceOrder() throws Exception{
 
-        String storeName = "CT Turpike West Southbound 2, Milford, CT 06460";
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -128,7 +128,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
         String aItem = ordersPage.editCartAndPlaceAnOrder(order.getOrderItem(),mobileUser, order.getStoreName());
         ordersPage.addAnotherNewItem();
-        String eItem = ordersPage.editCartAndPlaceAnOrder("SUBWAY Fresh Fit™",mobileUser, order.getStoreName());
+        String eItem = ordersPage.editCartAndPlaceAnOrder("SUBWAY Fresh Fit®",mobileUser, order.getStoreName());
         Assert.assertEquals(aItem,eItem);
         ordersPage.clickOnPlaceOrder();
     }

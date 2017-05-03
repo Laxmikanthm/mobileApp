@@ -38,17 +38,15 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     public void placeOrderAllSandwiches() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
-        mobileUser.setPassword("Cigniti@123");
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        /*MenuPage menuPage = homePage.getUserDetails();
+        MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
-        menuPage.goHome();*/
+        menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
         ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
@@ -71,7 +69,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
     }
 
     @Test
@@ -90,7 +88,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder("Breakfast", mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
     }
 
     @Test
@@ -109,7 +107,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder("Personal Pizza", mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
     }
 
     @Test
@@ -128,7 +126,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder("Chopped Salads", mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
 }
 
     @Test
@@ -147,7 +145,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder("Kids' Meal", mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
     }
 
     @Test
@@ -155,20 +153,18 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     public void placeOrderSides() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("sksushmakamlakar@gmail.com");
-        mobileUser.setPassword("Subway1234");
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        /*MenuPage menuPage = homePage.getUserDetails();
+        MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
-        menuPage.goHome();*/
+        menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrderSides("Sides", mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrderSides(order.getOrderItem(), mobileUser, order.getStoreName());
     }
 
     @Test
@@ -176,20 +172,18 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     public void placeOrderDrinks() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("sksushmakamlakar@gmail.com");
-        mobileUser.setPassword("Subway1234");
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        /*MenuPage menuPage = homePage.getUserDetails();
+        MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
-        menuPage.goHome();*/
+        menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder("Drinks", mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrderDrinks(order.getOrderItem(), mobileUser, order.getStoreName());
     }
 
 

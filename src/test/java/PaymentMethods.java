@@ -57,8 +57,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
     }
 
     @Test
+    @DirtiesContext
     public void addDebitCard() throws Exception {
-        String paymentType = "DebitCard";
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -66,7 +66,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,paymentType);
+        addCardPage.addPayment(mobileUser,order.getPaymentType());
         Assert.assertTrue(addCardPage.checkDebitCardElementPresence(),"Debit Card got added successfully");
         addCardPage.selectBackButton();
         menuPage.logout();
@@ -74,21 +74,19 @@ public class PaymentMethods extends SubwayAppBaseTest {
     }
 
     @Test
+    @DirtiesContext
     public void addGiftCard() throws Exception {
-        try
-
-        {
-            String paymentType = "GiftCard";
+        try{
             mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-            //RegisterUser.registerAUser(mobileUser);
-            //cards.add(0,SubwayCard.getSubwayCardFromDB(pojos.enums.Lock.TRUE));
+            RegisterUser.registerAUser(mobileUser);
+            cards.add(0,SubwayCard.getSubwayCardFromDB(pojos.enums.Lock.TRUE));
             mobileUser.setSubwayCards(cards);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
             LoginPage loginPage = landingPage.gotoLogInPage();
             HomePage homePage = loginPage.login(mobileUser);
             MenuPage menuPage = homePage.getUserDetails();
             AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-            addCardPage.addPayment(mobileUser,paymentType);
+            addCardPage.addPayment(mobileUser,order.getPaymentType());
             Assert.assertTrue(addCardPage.checkGiftCardElementPresence(),"Subway Card got added successfully");
             addCardPage.selectBackButton();
             new SubwayCard().lockSubwayCard(mobileUser, pojos.enums.Lock.FALSE);
@@ -101,8 +99,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
 
 
     @Test
+    @DirtiesContext
     public void addPayPal () throws Exception{
-        String paymentType = "Paypal";
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

@@ -34,7 +34,6 @@ public class HelpPage extends SubwayAppBaseTest {
     @DirtiesContext
     public void verifyHelpPage() throws Exception
     {
-
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -43,7 +42,5 @@ public class HelpPage extends SubwayAppBaseTest {
         MenuPage menuPage = homePage.getUserDetails();
         menuPage.verifyHelp();
         menuPage.assertHelpPageTexts();
-
-
     }
 }

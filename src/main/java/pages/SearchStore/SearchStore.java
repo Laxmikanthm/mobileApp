@@ -2,6 +2,8 @@ package pages.SearchStore;
 
 
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
@@ -77,13 +79,11 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         getSearchByZipCode().isReady();
         getSearchByZipCode().getControl().clear();
         getSearchByZipCode().setText("06460");
-        /*if (driver instanceof AndroidDriver)
-            ((AndroidDriver) driver).pressKeyCode(EditorInfo.IME_ACTION_DONE);
+        if (driver instanceof AndroidDriver)
+            ((AndroidDriver) driver).pressKeyCode(EditorInfo.IME_ACTION_SEARCH);
         else
             getSearchKeyButton().tap();
-        return this;*/
     }
-
 
     public void allowPopUp() throws Exception
     {

@@ -49,6 +49,6 @@ public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder("Drinks", mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder(order.getOrderItem(), mobileUser, order.getStoreName());
     }
 }

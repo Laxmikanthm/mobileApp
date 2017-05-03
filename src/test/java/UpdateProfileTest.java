@@ -33,13 +33,13 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
     @DirtiesContext
     public void updateProfile()throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        MobileUser mobUser = new MobileUser(false, Country.UnitedStates, 54588);
+        MobileUser mobUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         menuPage= menuPage.updateProfileInfo(mobUser);
         Assert.assertEquals(mobUser.getFirstName()+" "+mobUser.getLastName(), menuPage.getUserInformation());
         menuPage.logout();
