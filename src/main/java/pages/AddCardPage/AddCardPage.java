@@ -82,7 +82,10 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             HideKeyboard();
             getNextButton().click();
             String date = mobileUser.getCreditCards().get(0).getExpirationDate();
-            String cardExpiryDate = date.substring(0,3)+date.substring(8,10);
+            //String cardExpiryDate = date.substring(0,3)+date.substring(8,10);
+            String ExpiryDate[] = date.split("/");
+            String year = ExpiryDate[2].substring(2,4);
+            String cardExpiryDate = ExpiryDate[0]+"/"+year;
             getExpiresOn().setText(cardExpiryDate);
             getCCV().setText(mobileUser.getCreditCards().get(0).getCsvCode());
             HideKeyboard();

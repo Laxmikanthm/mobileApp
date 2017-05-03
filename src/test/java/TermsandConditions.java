@@ -3,6 +3,7 @@ import Base.SubwayAppBaseTest;
 import enums.Country;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -19,7 +20,7 @@ import pojos.user.RegisterUser;
 /**
  * Created by e002243 on 19-04-2017.
  */
-@ContextConfiguration("classpath:MobileAppBeans.xml")
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class TermsandConditions extends SubwayAppBaseTest {
@@ -27,7 +28,9 @@ public class TermsandConditions extends SubwayAppBaseTest {
     @Autowired
     Order order;
     MobileUser mobileUser;
+
     @Test
+    @DirtiesContext
     public void verifyTermandConditions() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());

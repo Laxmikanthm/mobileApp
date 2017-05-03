@@ -301,5 +301,19 @@ public class OrdersPageIOS extends OrdersPage {
         return placeOrder;
     }
 
+    public IOSButton getSelectFlavor() throws Exception {
+
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return Button;
+    }
+
+    public IOSButton getItemSelectFlavor() throws Exception {
+
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return Button;
+    }
+
 
 }

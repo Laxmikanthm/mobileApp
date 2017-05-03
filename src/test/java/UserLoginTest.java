@@ -2,6 +2,7 @@ import Base.Order;
 import Base.SubwayAppBaseTest;
 import enums.Country;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -20,7 +21,7 @@ import pojos.user.RemoteOrderCustomer;
 /**
  * Created by Sujit on 1/26/17.
  */
-@ContextConfiguration("classpath:MobileAppBeans.xml")
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class UserLoginTest extends SubwayAppBaseTest {
@@ -31,6 +32,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
 
 
     @Test
+    @DirtiesContext
     public void userLogin() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
@@ -40,6 +42,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
     }
 
     @Test
+    @DirtiesContext
     public void createUser() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
@@ -47,6 +50,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
     }
 
     @Test
+    @DirtiesContext
     public void userLogout() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);

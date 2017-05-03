@@ -2,7 +2,11 @@ import Base.SubwayAppBaseTest;
 import enums.Country;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
@@ -18,7 +22,9 @@ import pojos.user.RegisterUser;
 /**
  * Created by E003705 on 04-04-2017.
  */
-@ContextConfiguration("classpath:MobileAppBeans.xml")
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class SwitchStore extends SubwayAppBaseTest {
 
     @Autowired
@@ -27,6 +33,7 @@ public class SwitchStore extends SubwayAppBaseTest {
 
 
     @Test
+    @DirtiesContext
     public void selectOtherStore() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());

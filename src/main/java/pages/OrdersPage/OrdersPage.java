@@ -106,6 +106,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileLabel getSwitchStoreName() throws Exception;
 
     abstract MobileButton getExpandArrow() throws Exception;
+    abstract MobileButton getSelectFlavor() throws Exception;
+    abstract MobileButton getItemSelectFlavor() throws Exception;
+
 
 
     Random rn = new Random();
@@ -175,13 +178,20 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getStartOrderButton().click();
             getItems().isReady();
             String CategoryItem = order.getCart().getProductDetail().getProductGroup().getName();
-            if(!CategoryItem.equalsIgnoreCase("Sides")||!CategoryItem.equalsIgnoreCase("Drinks")){
+            if(!CategoryItem.equalsIgnoreCase("Sides")&&!CategoryItem.equalsIgnoreCase("Drinks")){
                 scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
                 scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  1600 , 3000);
             }else{
                 scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
                 String subCategoryName = order.getCart().getProductDetail().getProductClass().getName();
                 swipeLeftOrRight(sidesOrDrinks, subCategoryName , 500, "Left");
+                getAddToBag().isReady();
+                if(subCategoryName.equalsIgnoreCase("Chips")||subCategoryName.equalsIgnoreCase("Cookies")) {
+                    getSelectFlavor().isReady();
+                    getSelectFlavor().click();
+                    getItemSelectFlavor().isReady();
+                    getItemSelectFlavor().click();
+                }
             }
             getAddToBag().click();
             getPlaceOrder().isReady();
@@ -192,25 +202,70 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
+
+    public void placeRandomOrderSides(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
+            By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
+            By sidesOrDrinks = By.id("com.subway.mobile.subwayapp03:id/product_title");
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            scrollToItemAndClick(storeNamesLocator, storeName,  1600 , 3000);
+            getSelectRestaurantButton().click();
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
+            String subCategoryName = order.getCart().getProductDetail().getProductClass().getName();
+            if(subCategoryName.equalsIgnoreCase("Apple Slices")){
+                getAddToBag().isReady();
+            }else{
+                swipeLeftOrRight(sidesOrDrinks, subCategoryName , 500, "Left");
+                getSelectFlavor().isReady();
+                getSelectFlavor().click();
+                getItemSelectFlavor().isReady();
+                getItemSelectFlavor().click();
+                getAddToBag().isReady();
+            }
+            getAddToBag().click();
+            getPlaceOrder().isReady();
+            getPlaceOrder().click();
+            getGotIt().isReady();
+            getGotIt().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
     public void addMoreItemsatCheckOut(String menuItem, MobileUser mobileUser, String storeName) throws Exception
     {
         try {
             By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
             By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
-            By someThingElseLocator=By.id("com.subway.mobile.subwayapp03:id/something_else_text");
+            By someThingElseLocator= By.id("com.subway.mobile.subwayapp03:id/something_else_text");
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
             scrollToItemAndClick(storeNamesLocator, storeName,  1600 , 3000);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
+            getItems().isReady();
             scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
             scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  1600 , 3000);
             getAddToBag().click();
-            scrollToItemAndClick(someThingElseLocator, "Something Else",  1600 , 3000);
-            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
-            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  1600 , 3000);
+            getMakeItAMeal().isReady();
+            scrollToElement(someThingElseLocator,0.9,0.5);
+            getSomethingElse().isReady();
+            getSomethingElse().click();
+            //scrollToItemAndClick(someThingElseLocator, "Something Else",  1600 , 3000);
+            Order order1 = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getItems().isReady();
+            scrollToItemAndClick(categoryLocator, order1.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
+            scrollToItemAndClick(categoryLocator, order1.getCart().getProductDetail().getProductClass().getName(),  1600 , 3000);
             getAddToBag().click();
+            getPlaceOrder().isReady();
             getPlaceOrder().click();
+            getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -241,6 +296,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
             getAddToBag().isReady();
             getAddToBag().click();
+            getMakeItAMeal().isReady();
             getMakeItAMeal().click();
             getExpandArrow().isReady();
             getExpandArrow().click();
@@ -376,7 +432,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             String FullName = order.getCart().getProductDetail().getName();
             String[] Itemtype = FullName.split(" ");
             if (!Itemtype[0].trim().equals("FOOTLONG™"))
-            getCustomize().click();{
+            getCustomize().click();
+            else {
                 getSixInchOption().isReady();
                 getSixInchOption().click();
             }

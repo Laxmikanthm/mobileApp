@@ -4,6 +4,7 @@ import Base.SubwayAppBaseTest;
 import azureApi.serviceUtils.AzureIdentityApi;
 import enums.Country;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -27,7 +28,7 @@ import java.util.List;
  * Created by e002243 on 03-03-2017.
  */
 
-@ContextConfiguration("classpath:MobileAppBeans.xml")
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class PaymentMethods extends SubwayAppBaseTest {
@@ -39,6 +40,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
 
 
     @Test
+    @DirtiesContext
     public void addCreditCard() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);

@@ -152,8 +152,9 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     public void verifyEmailPreference() throws Exception
     {
         try{
-            getEmailPreferences().waitForClickable();;
+            getEmailPreferences().isReady();
             getEmailPreferences().click();
+            getEmail().isReady();
             getEmail().click();
         }catch(Exception ex){
             throw new Exception(ex);

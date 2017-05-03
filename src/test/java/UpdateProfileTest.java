@@ -2,6 +2,7 @@ import Base.Order;
 import Base.SubwayAppBaseTest;
 import enums.Country;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -19,7 +20,7 @@ import pojos.user.RegisterUser;
  * Created by e002243 on 17-02-2017.
  */
 
-@ContextConfiguration("classpath:MobileAppBeans.xml")
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class UpdateProfileTest extends SubwayAppBaseTest {
@@ -29,6 +30,7 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
     MobileUser mobileUser;
 
     @Test
+    @DirtiesContext
     public void updateProfile()throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54589);

@@ -159,7 +159,7 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getSomethingElse() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("SomethingElse")+"']"), "SomethingElse button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("SomethingElse")+"']"), "SomethingElse Button");
         return button;
     }
 
@@ -215,6 +215,16 @@ public class OrdersPageAndroid extends OrdersPage {
 
     public MobileButton getExpandArrow() throws Exception{
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ExpandButton")), "Expand Button in MakeItAMeal");
+        return button;
+    }
+
+    public MobileButton getSelectFlavor() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SelectFlavor")), "SelectFlavor Button in MakeItAMeal");
+        return button;
+    }
+
+    public MobileButton getItemSelectFlavor() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SelectItemInSides")), "SelectItemInSides Button in MakeItAMeal");
         return button;
     }
 

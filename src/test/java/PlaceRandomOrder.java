@@ -23,7 +23,7 @@ import pojos.user.RegisterUser;
 /**
  * Created by e002243 on 10-03-2017.
  */
-@ContextConfiguration("classpath:Order-data.xml")
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class PlaceRandomOrder extends SubwayAppBaseTest {
@@ -56,6 +56,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     }
     @Test
+    @DirtiesContext
     public void placeOrderSubwayFreshFit() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
@@ -74,6 +75,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     }
 
     @Test
+    @DirtiesContext
     public void placeOrderBreakfast() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
@@ -92,6 +94,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     }
 
     @Test
+    @DirtiesContext
     public void placeOrderPersonalPizza() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
@@ -110,6 +113,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     }
 
     @Test
+    @DirtiesContext
     public void placeOrderChoppedSalads() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
@@ -128,6 +132,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 }
 
     @Test
+    @DirtiesContext
     public void placeOrderSUBWAYFreshFitforKids() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
@@ -146,36 +151,42 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     }
 
     @Test
+    @DirtiesContext
     public void placeOrderSides() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("sksushmakamlakar@gmail.com");
+        mobileUser.setPassword("Subway1234");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
+        /*MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
-        menuPage.goHome();
+        menuPage.goHome();*/
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder("Sides", mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrderSides("Sides", mobileUser, order.getStoreName());
     }
 
     @Test
+    @DirtiesContext
     public void placeOrderDrinks() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("sksushmakamlakar@gmail.com");
+        mobileUser.setPassword("Subway1234");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
+        /*MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser,order.getPaymentType());
         addCardPage.selectBackButton();
-        menuPage.goHome();
+        menuPage.goHome();*/
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
         ordersPage.placeRandomOrder("Drinks", mobileUser, order.getStoreName());
@@ -183,6 +194,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
 
     @Test
+    @DirtiesContext
     public void OrderAMeal() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());

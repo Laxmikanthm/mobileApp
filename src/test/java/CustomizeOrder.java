@@ -1,5 +1,6 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -18,11 +19,13 @@ import pojos.user.MobileUser;
  * Created by E003705 on 05-04-2017.
  */
 
-@ContextConfiguration("classpath:MobileAppBeans.xml")
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class CustomizeOrder extends SubwayAppBaseTest {
 
+    @Autowired
+    Base.Order order;
 
     @Test
     public void placeCustomizeOrderAllSandwiches() throws Exception

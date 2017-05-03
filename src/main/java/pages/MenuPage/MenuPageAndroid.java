@@ -42,7 +42,7 @@ public class MenuPageAndroid extends MenuPage {
     }
 
     public AndroidButton getPaymentMethods() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(("payment_methods")), "Payment methods");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("PaymentMethods")), "Payment methods button");
         return button;
     }
 
@@ -52,12 +52,12 @@ public class MenuPageAndroid extends MenuPage {
     }
 
     public AndroidButton getEmailPreferences() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("EmailPref")+"']"), "EmailPreferences button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("EmailPref")), "Email Preferences button");
         return button;
     }
 
     public AndroidButton getMobileOrderHistory() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("MobileOrderHistory")+"']"), "MobileOrderHistory button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("LogoutBtn")), "Email Preferences button");
         return button;
     }
 
@@ -71,7 +71,7 @@ public class MenuPageAndroid extends MenuPage {
         return button;
     }
     public AndroidButton getEmail() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Switch[@text='"+BaseTest.bundle.getString("UpdateEmailPrefernce")+"']"), "Update Email Prefernce");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("UpdateEmailPrefernce")), "UpdateEmailPrefernce button");
         return button;
     }
     public AndroidButton getPrivacyPolicy() throws Exception {

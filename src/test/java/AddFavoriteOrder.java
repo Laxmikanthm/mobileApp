@@ -24,7 +24,7 @@ import pojos.user.RegisterUser;
 /**
  * Created by e002243 on 19-04-2017.
  */
-@ContextConfiguration("classpath:Order-data.xml")
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class AddFavoriteOrder extends SubwayAppBaseTest {
