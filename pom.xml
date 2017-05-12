@@ -72,7 +72,7 @@
                     <systemPropertyVariables>
 
                         <projectName>SubwayMobileApp</projectName>
-                        <spring.profiles.active>local</spring.profiles.active>
+                       <!-- <spring.profiles.active>local</spring.profiles.active>-->
                         <!--<language>en</language>-->
                         <country>US</country>
                         <language>us</language>
@@ -121,16 +121,16 @@
                         <appName>Subway</appName>
 
                         <!--Test Object-->
-                        <!--<spring.profiles.active>testObject</spring.profiles.active>
+                        <spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
                         <testObjectApiKey>4974E96CF28D44CB85DD78AD3D5B2F54</testObjectApiKey>
                         <testObjectDevice>HTC_One_M8_real</testObjectDevice>
-                        <app>/Users/nikesh/Downloads/subwayStagingDebug571.apk</app>
+                        <app>C:\SubWayApps\May\May-12th\subwayStagingDebug5000417.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <appName>Subway1</appName>
-                        <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>-->
+                        <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>
 
 
                     </systemPropertyVariables>
