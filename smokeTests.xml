@@ -11,24 +11,17 @@
         <parameter name="projectName" value="${driverName}"></parameter>
         <classes>
 
-            <class name="UserLoginTest">
-                <methods>
-                    <include name="createUser"/>
-                    <include name="userLogout"/>
-                </methods>
-            </class>
-
-            <class name="UpdateProfileTest">
-            </class>
-
-            <class name="ResetPasswordTest">
-            </class>
-
-            <class name="PlaceRandomOrder">
-                <methods>
-                    <include name="placeOrderAllSandwiches"/>
-                </methods>
-            </class>
+            <class name="UserLoginTest"></class>
+            <class name="UpdateProfileTest"></class>
+            <class name="ResetPasswordTest"></class>
+            <class name="AppVersion"></class>
+            <class name="EmailPreferences"></class>
+            <class name="ForgotPassword"></class>
+            <class name="HelpPage"></class>
+            <class name="PaymentMethods"></class>
+            <class name="Privacypolicy"></class>
+            <class name="SwitchStore"></class>
+            <class name="TermsandConditions"></class>
         </classes>
     </test>
 
