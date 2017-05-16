@@ -3,18 +3,15 @@ package pages.MenuPage;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
-import enums.Country;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.AddCardPage.AddCardPage;
-import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
 import pages.ContactInformationPage.ContactInformationPage;
 import pages.MobileOrderHistoryPage.MobileOrderHistoryPage;
 import pages.NamePage.NamePage;
-import pages.OrdersPage.OrdersPage;
 import pages.PhonePage.PhonePage;
 import pojos.user.MobileUser;
 
@@ -188,7 +185,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     {
         try{
             this.getAbout().isReady();
-            this.getHelp().click();
+            this.getAbout().click();
 
         }catch (Exception ex){
             throw new Exception(ex);

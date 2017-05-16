@@ -1,11 +1,9 @@
 package pages.ForgotPasswordPage;
 
-import base.gui.controls.mobile.android.AndroidPasswordTextBox;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.PasswordTextBox;
-import base.gui.controls.mobile.ios.IOSPasswordTextBox;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;

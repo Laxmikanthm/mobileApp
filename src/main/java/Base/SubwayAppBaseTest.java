@@ -16,9 +16,9 @@ import org.testng.annotations.BeforeSuite;
  * Created by test-user on 1/30/17.
  */
 
-/*@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})*/
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class SubwayAppBaseTest extends BaseTest {
     ApplicationContext context;
     String driverName;

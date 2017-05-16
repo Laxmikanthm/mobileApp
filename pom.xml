@@ -12,12 +12,12 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>3.0.12-SNAPSHOT</version>
+            <version>3.1.6-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>2.5.7-SNAPSHOT</version>
+            <version>2.7.6-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -91,11 +91,11 @@
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/nikesh/Downloads/subwayUatDebug5000404.apk</app>
+                        <app>C:/Subway/SubWayApps/May16th/Android/subwayStagingDebug5000424.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
-                        <operatingSystem>Mac</operatingSystem>
+                        <operatingSystem>Windows</operatingSystem>
                         <!-- R1/E2E-->
                         <environment>stage</environment>
                         <environmentR1R2>r1</environmentR1R2>
@@ -118,21 +118,20 @@
                         <!--End Mobile-->
 
                         <executionPlatform></executionPlatform>
-                        <appName>Subway</appName>
+                        <appName>SubwayR1Execution</appName>
 
                         <!--Test Object-->
                         <!--<spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>4974E96CF28D44CB85DD78AD3D5B2F54</testObjectApiKey>
-                        <testObjectDevice>HTC_One_M8_real</testObjectDevice>
-                        <app>/Users/nikesh/Downloads/subwayStagingDebug571.apk</app>
+                        <testObjectApiKey>92358A02A874494A9F740E0B97297B94</testObjectApiKey>
+                        <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
+                        <app>C:/Subway/SubWayApps/May12th/subwayStagingDebug5000417.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
-                        <appName>Subway1</appName>
-                        <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>-->
-
-
+                        <appName>SubwayR1Execution</appName>
+                        <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>
+-->
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->
@@ -189,6 +188,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+
         </repository>
         <repository>
             <id>mavencentral</id>

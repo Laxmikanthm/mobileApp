@@ -7,6 +7,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
@@ -21,21 +24,29 @@ import pojos.user.RemoteOrderCustomer;
 /**
  * Created by Sujit on 1/26/17.
  */
-@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+/*@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})*/
 public class UserLoginTest extends SubwayAppBaseTest {
 
-    @Autowired
-    Order order;
+    /*@Autowired
+    Order order;*/
     MobileUser mobileUser;
+
+    @BeforeTest(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        return mobileUser;
+    }
 
 
     @Test
     @DirtiesContext
     public void userLogin() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        /*mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         loginPage.login(mobileUser);
@@ -52,8 +63,8 @@ public class UserLoginTest extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void userLogout() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        /*mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

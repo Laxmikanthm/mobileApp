@@ -1,15 +1,15 @@
 package pages.ContactInformationPage;
 
-        import base.gui.controls.mobile.generic.MobileButton;
-        import base.gui.controls.mobile.generic.MobileLabel;
-        import base.pages.mobile.MobileBasePage;
-        import io.appium.java_client.AppiumDriver;
-        import io.appium.java_client.android.AndroidDriver;
-        import io.appium.java_client.ios.IOSDriver;
-        import pages.ForgotPasswordPage.ForgotYourPasswordPage;
-        import pages.MenuPage.MenuPage;
-        import pages.NamePage.NamePage;
-        import pages.PhonePage.PhonePage;
+import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileLabel;
+import base.pages.mobile.MobileBasePage;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
+import pages.ForgotPasswordPage.ForgotYourPasswordPage;
+import pages.MenuPage.MenuPage;
+import pages.NamePage.NamePage;
+import pages.PhonePage.PhonePage;
 
 /**
  * Created by e002243 on 17-02-2017.

@@ -6,9 +6,6 @@ import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import pages.ContactInformationPage.ContactInformationPage;
-import pages.ContactInformationPage.ContactInformationPageAndroid;
-import pages.ContactInformationPage.ContactInformationPageIOS;
 
 /**
  * Created by e002243 on 01-03-2017.

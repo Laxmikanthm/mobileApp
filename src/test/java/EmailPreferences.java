@@ -7,6 +7,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
@@ -24,17 +26,23 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class EmailPreferences extends SubwayAppBaseTest {
 
-    @Autowired
-    Order order;
     MobileUser mobileUser;
+
+    @BeforeTest(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        return mobileUser;
+    }
 
 
     @Test
     @DirtiesContext
     public void verifyEmailPreferencesPage() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        /*mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

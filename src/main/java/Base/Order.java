@@ -24,6 +24,35 @@ public class Order {
     public double scrollStartPoint;
     public double scrollEndPoint;
 
+    public String getCreditpaymentType() {
+        return creditpaymentType;
+    }
+
+    public void setCreditpaymentType(String creditpaymentType) {
+        this.creditpaymentType = creditpaymentType;
+    }
+
+    public String getDebitpaymentType() {
+        return debitpaymentType;
+    }
+
+    public void setDebitpaymentType(String debitpaymentType) {
+        this.debitpaymentType = debitpaymentType;
+    }
+
+    public String getPaypalpaymentType() {
+        return paypalpaymentType;
+    }
+
+    public void setPaypalpaymentType(String paypalpaymentType) {
+        this.paypalpaymentType = paypalpaymentType;
+    }
+
+    public String creditpaymentType;
+    public String debitpaymentType;
+    public String paypalpaymentType;
+
+
     public String getSpecialInstructions() {
         return specialInstructions;
     }

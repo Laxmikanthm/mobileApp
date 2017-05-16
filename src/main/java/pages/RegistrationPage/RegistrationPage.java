@@ -1,32 +1,21 @@
 package pages.RegistrationPage;
 
-import base.gui.controls.browser.Button;
-import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
-import cardantApiFramework.pojos.AppUser;
-import cardantApiFramework.pojos.StringUtils;
-import cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient;
 import enums.Country;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
-import pages.FindYourSubWayPage.FindYourSubWayPage;
 import pages.HomePage.HomePage;
 import pojos.user.MobileUser;
 import utils.Logz;
 import java.util.List;
 import java.util.Map;
-
-import static cardantApiFramework.pojos.StringUtils.getRandomString;
-import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.generateEmailAddress;
-import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.getEmail;
 import static cardantApiFramework.serviceUtilities.mailinatorClient.MailinatorClient.getVerificationCode;
 
 /**

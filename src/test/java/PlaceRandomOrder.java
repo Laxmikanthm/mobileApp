@@ -1,6 +1,8 @@
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
+import enums.PaymentMethod;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
@@ -17,6 +19,7 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
+import pojos.Store;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
@@ -32,6 +35,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     Order order;
     MobileUser mobileUser;
 
+    cardantApiFramework.pojos.Store store=JdbcUtil.getStoreDetails();
+
 
     @Test
     @DirtiesContext
@@ -44,11 +49,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrder("All Sandwiches", mobileUser, order.getStoreName());
     }
 
@@ -63,11 +68,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, order.getStoreName());
     }
 
@@ -82,11 +87,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrder("Breakfast", mobileUser, order.getStoreName());
     }
 
@@ -101,11 +106,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrder("Personal Pizza", mobileUser, order.getStoreName());
     }
 
@@ -120,11 +125,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrder("Chopped Salads", mobileUser, order.getStoreName());
 }
 
@@ -139,11 +144,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrder("Kids' Meal", mobileUser, order.getStoreName());
     }
 
@@ -158,11 +163,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrderSides("Sides", mobileUser, order.getStoreName());
     }
 
@@ -177,11 +182,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrderDrinks("Drinks", mobileUser, order.getStoreName());
     }
 
@@ -197,11 +202,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore("06460");
+        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
         ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, order.getStoreName(),ordersPage);
         ordersPage.clickOnPlaceOrder();
     }

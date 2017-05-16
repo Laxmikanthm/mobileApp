@@ -1,5 +1,6 @@
 import Base.SubwayAppBaseTest;
 import enums.Country;
+import enums.PaymentMethod;
 import junit.framework.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
@@ -45,7 +46,7 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();

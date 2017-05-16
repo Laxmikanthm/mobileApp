@@ -1,6 +1,7 @@
 import Base.SubwayAppBaseTest;
 import Base.Order;
 import enums.Country;
+import enums.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -42,12 +43,14 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
 
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        /*mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
+        mobileUser.setPassword("Cigniti@123");*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
@@ -64,13 +67,15 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     public void editCartAddAnotherVerifyPlaceOrder() throws Exception{
 
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("sksushmakamlakar@gmail.com");
+        mobileUser.setPassword("Subway1234");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
@@ -90,12 +95,14 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
 
         mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        /*mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
+        mobileUser.setPassword("Cigniti@123");*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
@@ -121,7 +128,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,order.getPaymentType());
+        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();

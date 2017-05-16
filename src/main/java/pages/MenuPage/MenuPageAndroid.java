@@ -21,8 +21,6 @@ public class MenuPageAndroid extends MenuPage {
     }
 
     public AndroidButton getContactInfo() throws Exception {
-
-        // AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@resource-id='"+BaseTest.bundle.getString("ContactInfo")+"']"), "ContactInfo button");
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("ContactInfo")+"']"), "contact information");
         return button;
     }

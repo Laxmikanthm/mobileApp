@@ -156,27 +156,27 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
         payPalPage.addPaypalDetails(mobileUser);
     }
 
-    public void addPayment(MobileUser mobileUser,String paymentType) throws Exception{
+    public void addPayment(MobileUser mobileUser,enums.PaymentMethod paymentType) throws Exception{
         ChoosePaymentMethodPage choosePaymentMethodPage;
         AddCardPage addCardPage;
         PaymentMethodsPage paymentMethodsPage;
         switch(paymentType){
-            case "CreditCard":
+            case CREDITCARD:
                 choosePaymentMethodPage = addPaymentMethod();
                 addCardPage = choosePaymentMethodPage.ChoosePaymentMethodCreditCard();
                 paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
                 break;
-            case "DebitCard":
+            /*case DEBITCARD:
                 choosePaymentMethodPage = addPaymentMethod();
                 addCardPage = choosePaymentMethodPage.ChoosePaymentMethodDebitCard();
                 paymentMethodsPage= addCardPage.addCardDetails(mobileUser);
-                break;
-            case "GiftCard":
+                break;*/
+            case SUBWAYCARD:
                 choosePaymentMethodPage = addPaymentMethod();
                 addCardPage = choosePaymentMethodPage.ChoosePaymentMethodGiftCard();
                 paymentMethodsPage= addCardPage.addSubwayCardDetails(mobileUser);
                 break;
-            case "Paypal":
+            case PAYPAL:
                 choosePaymentMethodPage = addPaymentMethod();
                 PayPalPage payPalPage = choosePaymentMethodPage.ChoosePaymentMethodPayPalCard();
                 payPalPage.addPaypalDetails(mobileUser);
