@@ -677,9 +677,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                     if (name.equalsIgnoreCase(order.getCart().getOptions()[m + 2].getOptionGroup())) {
                         extraIngredients.get(i).click();
                         if (name.equalsIgnoreCase("cheese"))
-                            ClickonItem(order.getCart().getOptions()[m + 2].getValue(), InnerIngredientsBy);
+                            ClickonItem(order.getCart().getProductDetail().getOptionGroups()[m+1].getOptions()[i].getAttributes()[i+1].getName(), InnerIngredientsBy);
                         else {
-                            ClickonItem(order.getCart().getOptions()[m + 2].getName(), InnerIngredientsBy);
+                            ClickonItem(order.getCart().getProductDetail().getOptionGroups()[m].getOptions()[i].getName(), InnerIngredientsBy);
                         }
                         //Select quantity method
                         break;
@@ -697,6 +697,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception(ex);
         }
+
     }
 
     public void ClickonItem(String name, By InnerIngredientsBy) {
