@@ -1,3 +1,8 @@
 
 .idea/*.xml
 .idea/
+*.class
+*.xml
+null_Extent.html
+phantomjsdriver.log
+target/classes/ApplicationLocale_en_US.properties
