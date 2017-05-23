@@ -77,7 +77,7 @@ public class SearchStoreAndroid extends SearchStore {
     }
 
     public MobileButton getSearchKeyButton() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("SearchKey")+"']"), "SearchKey button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/search_button"), "SearchKey button");
         return button;
     }
 

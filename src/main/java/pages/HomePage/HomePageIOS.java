@@ -68,5 +68,25 @@ public class HomePageIOS extends HomePage {
         IOSButton backButton = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toggle_view"), "StoreView button");
         return backButton;
     }
+    public MobileLabel getTokenValue() throws Exception{
+        IOSLabel token = new IOSLabel((IOSDriver) driver,By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TokenValue")+"']"), "Get Token Value from Dashboard");
+        return token;
+    }
+    public MobileLabel getZeroTokenMessage() throws Exception{
+        IOSLabel token = new IOSLabel((IOSDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("ZeroTokenMessage")+"']"), "Get zero Token Message from Dashboard");
+        return token;
+    }
+    public MobileLabel getTokenMessage() throws Exception{
+        IOSLabel token = new IOSLabel((IOSDriver) driver,    By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TokenMessage")+"']"), "Get Token Message from Dashboard");
+        return token;
+    }
+    public MobileButton getTellMeHow() throws Exception{
+        IOSButton token = new IOSButton((IOSDriver) driver,   By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TellMeHow")+"']"), "Get zero token link");
+        return token;
+    }
+    public MobileButton getStartAnotherOrder() throws Exception{
+        IOSButton token = new IOSButton((IOSDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/order_divider_1"), "Get zero token link");
+        return token;
+    }
 
 }

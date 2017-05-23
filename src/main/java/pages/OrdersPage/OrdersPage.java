@@ -779,6 +779,34 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
+    public void placeFavouriteRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            scrollToItemAndClick(storeNamesLocator, storeName,  500 , 3000);
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  500 , 3000);
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  500 , 3000);
+            getAddToBag().isReady();
+            getAddToBag().click();
+            getPlaceOrder().isReady();
+            getPlaceOrder().click();
+            scrollToElement(FavouriteIconLocator,0.9,0.5);
+            getFavouriteIcon().click();
+            // getFavouriteText().click;
+            getFavouriteText().setText("test");
+            getFavouriteSave().click();
+
+            getGotIt().isReady();
+            getGotIt().click();
+
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
 
 
 

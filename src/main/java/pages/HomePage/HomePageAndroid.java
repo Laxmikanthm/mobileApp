@@ -68,7 +68,26 @@ public class HomePageAndroid extends HomePage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.ImageView[@resource-id='"+BaseTest.bundle.getString("FavoriteAddIcon")+"']"), "Find Another Subway button");
         return button;
     }
-
+    public MobileLabel getTokenValue() throws Exception{
+        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TokenValue")+"']"), "Get Token Value from Dashboard");
+        return token;
+    }
+    public MobileLabel getZeroTokenMessage() throws Exception{
+        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("ZeroTokenMessage")+"']"), "Get zero Token Message from Dashboard");
+        return token;
+    }
+    public MobileLabel getTokenMessage() throws Exception{
+        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,    By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TokenMessage")+"']"), "Get Token Message from Dashboard");
+        return token;
+    }
+    public MobileButton getTellMeHow() throws Exception{
+        AndroidButton token = new AndroidButton((AndroidDriver) driver,   By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TellMeHow")+"']"), "Get zero token link");
+        return token;
+    }
+    public MobileButton getStartAnotherOrder() throws Exception{
+        AndroidButton token = new AndroidButton((AndroidDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/order_divider_1"), "Get zero token link");
+        return token;
+    }
 
 
 }

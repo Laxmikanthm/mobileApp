@@ -83,6 +83,9 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
             ((AndroidDriver) driver).pressKeyCode(EditorInfo.IME_ACTION_SEARCH);
         else
             getSearchKeyButton().tap();*/
+        getSearchByZipCode().setText(store);
+
+        getSearchKeyButton().click();
     }
 
     public void allowPopUp() throws Exception

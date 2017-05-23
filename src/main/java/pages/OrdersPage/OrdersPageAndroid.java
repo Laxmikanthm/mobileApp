@@ -6,6 +6,7 @@ import base.gui.controls.mobile.android.AndroidPasswordTextBox;
 import base.gui.controls.mobile.android.AndroidTextBox;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import base.test.BaseTest;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -36,8 +37,7 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getAddToBag() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+BaseTest.bundle.getString("AddToBag")+"']"), "Add to bag button");
-        return button;
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/product_add_to_bag"), "Add to bag button");        return button;
     }
 
     public MobileButton getCustomize() throws Exception {
@@ -227,7 +227,17 @@ public class OrdersPageAndroid extends OrdersPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SelectItemInSides")), "SelectItemInSides Button in MakeItAMeal");
         return button;
     }
-
-
+    public MobileButton getFavouriteIcon() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/favorite_animation"), "Expand Button in MakeItAMeal");
+        return button;
+    }
+    public MobileButton getFavouriteSave() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavouriteSaveButton")), "SelectItemInSides Button in MakeItAMeal");
+        return button;
+    }
+    public MobileTextBox getFavouriteText() throws Exception{
+        AndroidTextBox button = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavouriteEditText")), "SelectItemInSides Button in MakeItAMeal");
+        return button;
+    }
 
 }

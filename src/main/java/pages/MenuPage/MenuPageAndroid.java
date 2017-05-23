@@ -45,8 +45,7 @@ public class MenuPageAndroid extends MenuPage {
     }
 
     public AndroidButton getGoHome() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.className("android.widget.ImageButton"), "Back button");
-        return button;
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/x_icon"), "Back button");        return button;
     }
 
     public AndroidButton getEmailPreferences() throws Exception {
