@@ -107,6 +107,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getExpandArrow() throws Exception;
     abstract MobileButton getSelectFlavor() throws Exception;
     abstract MobileButton getItemSelectFlavor() throws Exception;
+    abstract MobileButton getFavouriteSave() throws Exception;
+    abstract MobileButton getFavouriteIcon() throws Exception;
+    abstract MobileTextBox getFavouriteText() throws Exception;
 
     /*This elements are for finding list of elements*/
     By storeNamesLocator = By.id("address");
@@ -117,6 +120,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By ItemFromSides = By.id("side_title_1");
     By ItemFromDrinks = By.id("drink_title");
     By specialInstructionsLabel  = By.id("instructions_header");
+    By FavouriteIconLocator=By.id("favorite_animation");
 
     Random rn = new Random();
     int firstrandnum;

@@ -1,11 +1,16 @@
 package pages.OrdersPage;
 
+import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.android.AndroidTextBox;
+import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.ios.IOSButton;
 import base.gui.controls.mobile.ios.IOSLabel;
 import base.gui.controls.mobile.ios.IOSTextBox;
 import base.test.BaseTest;
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 
@@ -313,6 +318,18 @@ public class OrdersPageIOS extends OrdersPage {
         IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
 
         return Button;
+    }
+    public MobileButton getFavouriteIcon() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/favorite_animation"), "Expand Button in MakeItAMeal");
+        return button;
+    }
+    public MobileButton getFavouriteSave() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id(BaseTest.bundle.getString("FavouriteSaveButton")), "SelectItemInSides Button in MakeItAMeal");
+        return button;
+    }
+    public MobileTextBox getFavouriteText() throws Exception{
+        IOSTextBox button = new IOSTextBox((IOSDriver) driver, By.id(BaseTest.bundle.getString("FavouriteEditText")), "SelectItemInSides Button in MakeItAMeal");
+        return button;
     }
 
 

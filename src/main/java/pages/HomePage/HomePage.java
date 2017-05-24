@@ -180,6 +180,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
                 System.out.println("user has zero tokens");
             }
             MyWayRewards rewards = tellMeHow();
+            rewards.getSwipe();
         }
         if ((Integer.parseInt(tokenValue) >= 50 && Integer.parseInt(tokenValue) < 100)) {
             if (tokenMessage.equals("Wow, you're really racking up those - way to go")) {

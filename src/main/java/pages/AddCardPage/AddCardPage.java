@@ -78,8 +78,8 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             getCardNumber().isReady();
             getCardNumber().setText("4111111111111111");
             HideKeyboard();
-            getNameOnCard().setText(mobileUser.getFirstName()+mobileUser.getLastName());
-            HideKeyboard();
+            //getNameOnCard().setText(mobileUser.getFirstName()+mobileUser.getLastName());
+           // HideKeyboard();
             getNextButton().click();
             String date = mobileUser.getCreditCards().get(0).getExpirationDate();
             //String cardExpiryDate = date.substring(0,3)+date.substring(8,10);
@@ -120,7 +120,6 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             throw new Exception(ex);
         }
     }
-
     public void HideKeyboard()
     {
         AppiumDriver d = (AppiumDriver)driver;
