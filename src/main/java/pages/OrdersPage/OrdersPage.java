@@ -645,7 +645,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
         return driver.findElements(by);
     }
-
     public void customizeOrder(MobileUser mobileUser, Order order) throws Exception {
         try {
             By extraIngredientsBy, InnerIngredientsBy, quantityBy = null;
@@ -666,18 +665,20 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 veggies.swipe(SwipeElementDirection.LEFT, 500);
             else
                 veggies.swipe(SwipeElementDirection.RIGHT, 500);
+            List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
+
             for (int m = 0; m < order.getCart().getOptions().length; m++) {
-                List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
+
                 for (int i = 0; i < extraIngredients.size(); i++) {
                     String name = extraIngredients.get(i).getText();
+
                     if (name.equalsIgnoreCase(order.getCart().getOptions()[m + 2].getOptionGroup())) {
+                        String optionGroup=order.getCart().getOptions()[m + 2].getOptionGroup();
                         extraIngredients.get(i).click();
-                        if (name.equalsIgnoreCase("cheese"))
-                            ClickonItem(order.getCart().getOptions()[m + 2].getValue(), InnerIngredientsBy);
-                        else {
-                            ClickonItem(order.getCart().getOptions()[m + 2].getName(), InnerIngredientsBy);
-                        }
-                        //Select quantity method
+
+                        ClickonItem(order.getCart().getOptions()[m + 2].getName(), order.getCart().getOptions()[m + 2].getValue() , InnerIngredientsBy, optionGroup);
+
+
                         break;
                     }
                     try {
@@ -688,14 +689,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                     } catch (Exception e) {
                         Logz.info("End of screen");
                     }
+
                 }
             }
         } catch (Exception ex) {
+
             throw new Exception(ex);
         }
     }
 
-    public void ClickonItem(String name, By InnerIngredientsBy) {
+    public void ClickonItem(String name, String value, By InnerIngredientsBy, String optionGroup) {
 
         By cheeseSubCategoryItem=By.id("com.subway.mobile.subwayapp03:id/ingredient_text");
         boolean flag = true;
@@ -710,7 +713,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 }
                 itemName = innerIngredients.get(i).getText();
                 By itemBy;
-                if (itemName.equalsIgnoreCase(name)) {
+                if (itemName.equalsIgnoreCase(name) && !(value.equalsIgnoreCase("None")) && !(name.equalsIgnoreCase("Tomatoes")) && !(name.equalsIgnoreCase("Cucumber")) && !(name.equalsIgnoreCase("Pepper"))) {
                     if (driver instanceof AndroidDriver)
                         itemBy = By.xpath("//android.widget.TextView[@text ='" + itemName + "' ]/parent::android.widget.LinearLayout/parent::android.widget.RelativeLayout/following-sibling::android.widget.LinearLayout");
                     else
@@ -718,11 +721,45 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                     innerIngredients.get(i).click();
                     if (driver.findElements(itemBy).size() > 0 && !itemName.equalsIgnoreCase("cheese"))
                         driver.findElement(itemBy).click();
+                    if(!(optionGroup.equals("Extras"))) {
+                        getModifyMethod(value);
+                    }
+
                     flag = false;
                     break;
                 }
             }
         } while (flag);
+    }
+
+    public void getModifyMethod(String modification)
+    {
+        try {
+            switch (modification) {
+                case "Less":
+                    getLess().click();
+                    getDone().click();
+                    break;
+                case "More":
+                    getMore().click();
+                    getDone().click();
+                    break;
+                case "Regular":
+                    getRegular().click();
+                    getDone().click();
+                    break;
+                case "None":
+                    getDone().click();
+                    break;
+                default :
+                    getDone().click();
+                    break;
+            }
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -811,8 +848,93 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
+    public void placeCustomizeOrder(String menuItem, MobileUser mobileUser, String storeName, Order order) throws Exception {
+        try {
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
+            By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
+            By sidesOrDrinks = By.id("com.subway.mobile.subwayapp03:id/product_title");
+            getDirections().isReady();
+            scrollToItemAndClick(storeNamesLocator, storeName,  1600 , 3000);
+            getSelectRestaurantButton().click();
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  1600 , 3000);
 
 
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+
+    public void deleteToppings()
+    {
+        try{
+            By toppings = By.id("com.subway.mobile.subwayapp03:id/item_image");
+            By deleteToppingTextLocator = By.id("com.subway.mobile.subwayapp03:id/ingredient_name_textview");
+
+            //Get count before deleting toppings
+            List<WebElement> toppingBeforeDelete = ((AndroidDriver) driver).findElements(toppings);
+            WebElement element=toppingBeforeDelete.get(4);
+            MobileElement mobileElement= (MobileElement)element;
+            mobileElement.swipe(SwipeElementDirection.LEFT,500);
+            //Get count after deleting toppings
+            List<WebElement> toppingAfterDelete = ((AndroidDriver) driver).findElements(toppings);
+            Assert.assertEquals(toppingAfterDelete.size(),toppingBeforeDelete.size()-1);
+
+
+        }catch(Exception e)
+        {
+
+        }
+    }
+    public void placeRandomOrder1(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
+            By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
+            By sidesOrDrinks = By.id("com.subway.mobile.subwayapp03:id/product_title");
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            scrollToItemAndClick1(storeNamesLocator, storeName,  driver.manage().window().getSize().getHeight()-300 );
+            getSelectRestaurantButton().click();
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollToItemAndClick1(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  driver.manage().window().getSize().getHeight()-100);
+            scrollToItemAndClick1(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), driver.manage().window().getSize().getHeight()-100);
+            getAddToBag().isReady();
+            getAddToBag().click();
+
+            getGotIt().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+    public void scrollToItemAndClick1(By locator, String itemName, int endY) {
+        boolean flag = false;
+        while (getItems(locator).size() > 0) {
+            List<WebElement> allElements = getElements(locator);
+
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get(i).getText().equals(itemName)) {
+                    allElements.get(i).click();
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag == false) {
+                WebElement element = allElements.get(allElements.size() - 1);
+                MobileElement ele = (MobileElement) element;
+                int x = ele.getLocation().getX();
+                int y = ele.getLocation().getY();
+                ((AppiumDriver) driver).swipe(x, y, x, y - endY, 3000);
+            }
+            if (flag == true) {
+                break;
+            }
+        }
+    }
 
 }
 

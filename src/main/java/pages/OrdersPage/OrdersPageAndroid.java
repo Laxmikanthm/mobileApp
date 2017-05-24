@@ -109,24 +109,25 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getLess() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.LinearLayout[@resource-id='"+BaseTest.bundle.getString("Less")+"']"), "Less Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.ImageView[@resource-id='"+BaseTest.bundle.getString("Less")+"']"), "Less Button");
         return button;
     }
 
     public MobileButton getMore() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.LinearLayout[@resource-id='"+BaseTest.bundle.getString("More")+"']"), "More Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.ImageView[@resource-id='"+BaseTest.bundle.getString("More")+"']"), "More Button");
         return button;
     }
 
     public MobileButton getRegularInSauce() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.LinearLayout[@resource-id='"+BaseTest.bundle.getString("RegularSauce")+"']"), "Regular In sauce Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.ImageView[@resource-id='"+BaseTest.bundle.getString("RegularSauce")+"']"), "Regular In sauce Button");
         return button;
     }
 
     public MobileButton getRegular() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Regular")), "Regular button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.ImageView[@resource-id='"+BaseTest.bundle.getString("Regular")+"']"), "Regulars Button");
         return button;
     }
+
 
     public MobileButton getRegularCheeseOrDeluxe() throws Exception{
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("RegularCheeseOrDeluxe")), "RegularCheeseOrDeluxe button");
