@@ -11,6 +11,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
@@ -23,6 +24,8 @@ import pojos.Store;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
+import static pojos.RemoteOrder.order;
+
 /**
  * Created by e002243 on 10-03-2017.
  */
@@ -31,19 +34,20 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class PlaceRandomOrder extends SubwayAppBaseTest {
 
-    @Autowired
-    Order order;
     MobileUser mobileUser;
 
-    cardantApiFramework.pojos.Store store=JdbcUtil.getStoreDetails();
-
+    @BeforeClass(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        return mobileUser;
+    }
 
     @Test
     @DirtiesContext
     public void placeOrderAllSandwiches() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -53,16 +57,14 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrder1("All Sandwiches", mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.placeRandomOrder1("All Sandwiches", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
     }
 
     @Test
     @DirtiesContext
     public void placeOrderSubwayFreshFit() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -72,16 +74,14 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
     }
 
     @Test
     @DirtiesContext
     public void placeOrderBreakfast() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -91,16 +91,14 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrder("Breakfast", mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.placeRandomOrder("Breakfast", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
     }
 
     @Test
     @DirtiesContext
     public void placeOrderPersonalPizza() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -110,16 +108,14 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrder("Personal Pizza", mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.placeRandomOrder("Personal Pizza", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
     }
 
     @Test
     @DirtiesContext
     public void placeOrderChoppedSalads() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -129,16 +125,14 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrder("Chopped Salads", mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.placeRandomOrder("Chopped Salads", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
 }
 
     @Test
     @DirtiesContext
     public void placeOrderSUBWAYFreshFitforKids() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -148,16 +142,14 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrder("Kids' Meal", mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.placeRandomOrder("Kids' Meal", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
     }
 
     @Test
     @DirtiesContext
     public void placeOrderSides() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -167,16 +159,14 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrderSides("Sides", mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.placeRandomOrderSides("Sides", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
     }
 
     @Test
     @DirtiesContext
     public void placeOrderDrinks() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -186,8 +176,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrderDrinks("Drinks", mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.placeRandomOrderDrinks("Drinks", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
     }
 
 
@@ -195,8 +185,6 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void OrderAMeal() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
@@ -206,8 +194,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
-        ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, order.getStoreName(),ordersPage);
+        OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460",ordersPage);
         ordersPage.clickOnPlaceOrder();
     }
 

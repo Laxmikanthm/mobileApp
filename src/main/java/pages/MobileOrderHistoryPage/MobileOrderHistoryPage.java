@@ -57,6 +57,7 @@ public abstract class MobileOrderHistoryPage<T extends AppiumDriver> extends Mob
             favoriteOrderName="Subway"+random.nextInt(10);
             getFavorite().isReady();
             getFavorite().click();
+            getFavoriteOrderName().getControl().clear();
             getFavoriteOrderName().setText(favoriteOrderName);
             HideKeyboard();
             getFavoriteSaveButton().waitForClickable();

@@ -61,11 +61,11 @@ public class HomePageAndroid extends HomePage {
         return button;
     }
     public MobileLabel getYourFavoriteOrderName() throws Exception {
-        AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("UserInfo")+"']"), "User Information");
+        AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.id(BaseTest.bundle.getString("FavoriteNameInApp")), "FavoriteNameInApp button");
         return label;
     }
     public MobileButton getFavoritesAddIcon() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.ImageView[@resource-id='"+BaseTest.bundle.getString("FavoriteAddIcon")+"']"), "Find Another Subway button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.ImageView[@resource-id='"+BaseTest.bundle.getString("FavoriteAddIcon")+"']"), "Favorite Add icon button");
         return button;
     }
     public MobileLabel getTokenValue() throws Exception{

@@ -1,5 +1,6 @@
 import Base.SubwayAppBaseTest;
 import Base.Order;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
@@ -32,19 +34,22 @@ import java.util.List;
 
 public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
 
-    @Autowired
-    Order order;
     MobileUser mobileUser;
+
+    @BeforeTest(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        return mobileUser;
+
+    }
 
     //After clicking on  edit check whether selected product is displayed or not
     @Test
     @DirtiesContext
     public void editCartVerifyPlaceOrder() throws Exception{
 
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        /*mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
-        mobileUser.setPassword("Cigniti@123");*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -54,8 +59,8 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        String aVal = ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        String aVal = ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
         String eVal = ordersPage.getSubItemInfo();
         Assert.assertEquals(aVal,eVal);
         ordersPage.placeAnOrder();
@@ -66,10 +71,6 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void editCartAddAnotherVerifyPlaceOrder() throws Exception{
 
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("sksushmakamlakar@gmail.com");
-        mobileUser.setPassword("Subway1234");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -79,8 +80,8 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
         ordersPage.getSubItemInfo();
         List<Integer> sizeOfSubItems = ordersPage.addAnotherSameItem();
         Assert.assertEquals(sizeOfSubItems.get(1),sizeOfSubItems.get(0));
@@ -93,10 +94,6 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void editCartDeleteItemVerifyPlaceOrder() throws Exception{
 
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        /*mobileUser.setEmailAddress("sushma.kamlakar@cigniti.com");
-        mobileUser.setPassword("Cigniti@123");*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -106,8 +103,8 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
         ordersPage.getSubItemInfo();
         List<Integer> sizeOfSubItems = ordersPage.addAnotherSameItem();
         ordersPage.removeItem();
@@ -121,8 +118,6 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void editCartSomethingElseVerifyPlaceOrder() throws Exception{
 
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -132,10 +127,10 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        String aItem = ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        String aItem = ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
         ordersPage.addAnotherNewItem();
-        String eItem = ordersPage.editCartAndPlaceAnOrder("SUBWAY Fresh Fit®",mobileUser, order.getStoreName());
+        String eItem = ordersPage.editCartAndPlaceAnOrder("SUBWAY Fresh Fit®",mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
         Assert.assertEquals(aItem,eItem);
         ordersPage.clickOnPlaceOrder();
     }

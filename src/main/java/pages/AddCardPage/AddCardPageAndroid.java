@@ -73,7 +73,7 @@ public class AddCardPageAndroid extends  AddCardPage {
     }
 
     public AndroidButton getBackButton() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/back_arrow"), "Back button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Backbutton")), "Back button");
         return button;
     }
 

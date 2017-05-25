@@ -54,7 +54,7 @@ public class MenuPageAndroid extends MenuPage {
     }
 
     public AndroidButton getMobileOrderHistory() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("LogoutBtn")), "Email Preferences button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("MobileOrderHistory")), "MobileOrderHistory button");
         return button;
     }
 

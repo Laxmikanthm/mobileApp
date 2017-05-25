@@ -1,4 +1,5 @@
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
 import junit.framework.Assert;
@@ -8,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
@@ -30,17 +32,21 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class AddFavoriteOrder extends SubwayAppBaseTest {
 
-    @Autowired
-    Base.Order order;
     MobileUser mobileUser;
 
+    @BeforeTest(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        return mobileUser;
+
+    }
 
     @Test
     @DirtiesContext
     public void addFavoriteOrder() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -50,8 +56,8 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
         menuPage= homePage.gotoMenuPage();
         MobileOrderHistoryPage mobileOrderHistoryPage= menuPage.getOrderHistory();
         mobileOrderHistoryPage.addFavoriteOrder();
