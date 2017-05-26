@@ -22,7 +22,7 @@ import org.testng.annotations.BeforeSuite;
 public class SubwayAppBaseTest extends BaseTest {
     ApplicationContext context;
     String driverName;
-    private Object driver;
+    public Object driver;
 
     /*@Autowired
     Order order;*/

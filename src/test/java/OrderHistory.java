@@ -2,15 +2,18 @@ import Base.SubwayAppBaseTest;
 import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.PaymentResponse;
 import enums.Country;
 import enums.PaymentMethod;
+import io.appium.java_client.android.AndroidDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
+import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
 import pojos.Orders.Order;
@@ -27,19 +30,30 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class OrderHistory extends SubwayAppBaseTest {
 
-    @Autowired
-    Base.Order ord;
     MobileUser mobileUser;
+
+    @BeforeTest(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        return mobileUser;
+    }
 
     @Test
     public void verifyOrderHistory() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+
        // mobileUser.setEmailAddress("gopal.boyina@cigniti.com");
        // mobileUser.setPassword("Cigniti@123");
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        PaymentResponse paymentResponse=remoteOrder.placeRandomOrder(3, PaymentMethod.CREDITCARD);
+        PaymentResponse paymentResponse=remoteOrder.placeRandomOrder(1, PaymentMethod.CREDITCARD);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage=loginPage.login(mobileUser);
+        MenuPage menuPage = homePage.getUserDetails();
+        menuPage.validateMobileOrderHistory(paymentResponse.getOrderNumber());
+
 
     }
 }
