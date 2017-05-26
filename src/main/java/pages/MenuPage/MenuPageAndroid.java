@@ -25,6 +25,12 @@ public class MenuPageAndroid extends MenuPage {
         return button;
     }
 
+
+   /* public MobileLabel getOrderNumber() throws Exception {
+        AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("UserInfo")+"']"), "User Information");
+        return label;
+    }
+*/
     public MobileLabel getUserInfo() throws Exception {
         AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("UserInfo")+"']"), "User Information");
         return label;

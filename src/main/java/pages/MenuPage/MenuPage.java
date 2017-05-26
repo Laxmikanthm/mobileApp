@@ -39,6 +39,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getPrivacyPolicyShare() throws Exception;
     abstract MobileButton getTermsandConditions() throws Exception;
     abstract MobileLabel getPrivacyStatement() throws Exception;
+    //abstract MobileLabel getOrderNumber() throws Exception;
 
 
     //abstract MobileButton getLogOutButton() throws Exception;
@@ -65,6 +66,22 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     @Override
     protected void waitForPageToLoad() throws Exception {
 
+    }
+
+    public void validateMobileOrderHistory(String expectedOrderNum) throws Exception
+    {
+        try{
+           getMobileOrderHistory().click();
+           String orderNum= ((AndroidDriver)driver).findElementByXPath("//*[starts-with(@text,'Order ') and @class='android.widget.TextView']").getText();
+            String actualOrderNumber[]=orderNum.split(" ");
+
+            Assert.assertEquals(actualOrderNumber[1],expectedOrderNum);
+            System.out.println("Hello");
+
+
+        }catch(Exception ex){
+            System.out.println("*************** ----Catch Block ----- *********");
+        }
     }
 
     public ContactInformationPage getContactInformation() throws Exception

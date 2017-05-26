@@ -39,8 +39,10 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
-    By Swipe = By.xpath("//android.widget.LinearLayout[@resource-id='com.subway.mobile.subwayapp03:id/page_indicator_layout']/android.widget.ImageView");
+    abstract MobileButton getGotIt() throws Exception;
+    abstract MobileButton getToolbarClose() throws Exception;
 
+     By Swipe=By.id("com.subway.mobile.subwayapp03:id/reward_page_text");
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -59,15 +61,17 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     public void getSwipe()throws Exception
     {
         List<WebElement> elements=getElements(Swipe);
-        for(int i=0;i<elements.size()-1;i++)
+        for(int i=0;i<3;i++)
         {
-            WebElement ele = elements.get(i);
+            WebElement ele = elements.get(0);
             MobileElement element = (MobileElement) ele;
-            Thread.sleep(10000L);
+            Thread.sleep(3000L);
 
-            element.swipe(SwipeElementDirection.LEFT, 2000);
+            element.swipe(SwipeElementDirection.LEFT, 500);
 
         }
-        elements.size();
+        getGotIt().click();
+        getToolbarClose().click();
+
     }
 }

@@ -88,6 +88,10 @@ public class HomePageAndroid extends HomePage {
         AndroidButton token = new AndroidButton((AndroidDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/order_divider_1"), "Get zero token link");
         return token;
     }
+    public MobileButton getAnimationSparkle() throws Exception{
+        AndroidButton token = new AndroidButton((AndroidDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/animation_sparkle"), "Get zero token link");
+        return token;
+    }
 
 
 }
