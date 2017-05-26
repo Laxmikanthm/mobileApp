@@ -33,14 +33,6 @@ public class UserLoginTest extends SubwayAppBaseTest {
     Order order;*/
     MobileUser mobileUser;
 
-    @BeforeTest(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
-    }
-
 
     @Test
     @DirtiesContext

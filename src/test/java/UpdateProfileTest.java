@@ -31,13 +31,6 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
 
-    @BeforeTest
-    public MobileUser userRegistration()throws Exception
-    {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
-    }
 
     @Test
     @DirtiesContext

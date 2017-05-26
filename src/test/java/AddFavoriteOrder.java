@@ -34,15 +34,6 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
 
-    @BeforeTest(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
-
-    }
-
     @Test
     @DirtiesContext
     public void addFavoriteOrder() throws Exception

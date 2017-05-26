@@ -40,15 +40,6 @@ public class PaymentMethods extends SubwayAppBaseTest {
     List<SubwayCard> cards =null;
     MobileUser mobileUser;
 
-    @BeforeTest(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
-    }
-
-
     @Test
     @DirtiesContext
     public void addCreditCard() throws Exception {
@@ -72,7 +63,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
+        addCardPage.addPayment(mobileUser,PaymentMethod.DEBITCARD);
         Assert.assertTrue(addCardPage.checkDebitCardElementPresence(),"Debit Card got added successfully");
         addCardPage.selectBackButton();
         menuPage.logout();

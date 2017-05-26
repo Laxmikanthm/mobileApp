@@ -36,15 +36,6 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
 
-    @BeforeTest(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
-
-    }
-
     //After clicking on  edit check whether selected product is displayed or not
     @Test
     @DirtiesContext

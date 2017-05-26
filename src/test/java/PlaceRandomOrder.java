@@ -12,6 +12,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
@@ -24,6 +25,8 @@ import pojos.Store;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
+import java.util.ArrayList;
+
 import static pojos.RemoteOrder.order;
 
 /**
@@ -35,6 +38,22 @@ import static pojos.RemoteOrder.order;
 public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
+    //ArrayList<MobileUser> user;
+    //ArrayList<MobileUser> mobileUsers;
+
+
+    /*@BeforeClass(alwaysRun = true)
+    public void userRegistration()throws Exception {
+
+        user = new ArrayList<MobileUser>();
+        //mobileUsers=new ArrayList<MobileUser>();
+        for (int i = 1; i <= 9; i++) {
+            mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+            RegisterUser.registerAUserWithoutCardLink(mobileUser);
+            user.add(mobileUser);
+        }
+
+    }*/
 
     @BeforeClass(alwaysRun = true)
     public MobileUser userRegistration()throws Exception
@@ -42,12 +61,16 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         return mobileUser;
+
     }
 
     @Test
     @DirtiesContext
     public void placeOrderAllSandwiches() throws Exception
     {
+        /*mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        mobileUser.setEmailAddress("sushmatest@mailinator.com");
+        mobileUser.setPassword("Subway123");*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -58,7 +81,9 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrder1("All Sandwiches", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        //ordersPage.placeRandomOrder1("All Sandwiches", mobileUser, "Paseo de Diego #15 Rio Piedras, PR 00925");
+        //ordersPage.placeRandomOrder("All Sandwiches", mobileUser, "Paseo de Diego #15 Rio Piedras, PR 00925");
+        ordersPage.placeRandomOrder("All Sandwiches", mobileUser,JdbcUtil.getStoreDetails().getAddress1()+" "+JdbcUtil.getStoreDetails().getCity()+","+JdbcUtil.getStoreDetails().getStateProvCode());
     }
 
     @Test
@@ -75,7 +100,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, JdbcUtil.getStoreDetails().getAddress1()+" "+JdbcUtil.getStoreDetails().getCity()+","+JdbcUtil.getStoreDetails().getStateProvCode());
     }
 
     @Test
