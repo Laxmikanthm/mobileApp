@@ -28,7 +28,7 @@ public class EmailPreferences extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
 
-    @BeforeTest(alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public MobileUser userRegistration()throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);

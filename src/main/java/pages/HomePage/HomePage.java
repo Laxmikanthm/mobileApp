@@ -49,6 +49,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileLabel getTokenMessage() throws Exception;
     abstract MobileButton getTellMeHow() throws Exception;
     abstract MobileButton getStartAnotherOrder() throws Exception;
+    abstract MobileButton getAnimationSparkle() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -200,6 +201,11 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
                 System.out.println("So Close! You can almost taste the rewards now!");
             }
         }
+    }
+    public MyWayRewards getTokensSparkle()throws Exception
+    {
+        getAnimationSparkle().click();
+        return MyWayRewards.get((AppiumDriver) driver);
     }
 
 }

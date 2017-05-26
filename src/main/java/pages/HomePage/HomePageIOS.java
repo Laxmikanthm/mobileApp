@@ -1,11 +1,13 @@
 package pages.HomePage;
 
+import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.ios.IOSButton;
 import base.gui.controls.mobile.ios.IOSLabel;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 
@@ -88,5 +90,10 @@ public class HomePageIOS extends HomePage {
         IOSButton token = new IOSButton((IOSDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/order_divider_1"), "Get zero token link");
         return token;
     }
+    public MobileButton getAnimationSparkle() throws Exception{
+        IOSButton token = new IOSButton((IOSDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/animation_sparkle"), "Get zero token link");
+        return token;
+    }
+
 
 }
