@@ -331,6 +331,25 @@ public class OrdersPageIOS extends OrdersPage {
         IOSTextBox button = new IOSTextBox((IOSDriver) driver, By.id(BaseTest.bundle.getString("FavouriteEditText")), "SelectItemInSides Button in MakeItAMeal");
         return button;
     }
-
+    public MobileButton getFavourites() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/product_group_header"), "Select Favourites");
+        return button;
+    }
+    public MobileButton getRewardsApply() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Apply")+"']"), "Apply button");
+        return button;
+    }
+    public MobileButton getFavouriteAddToBag() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/product_add_to_bag"), "Select Favourites  Add to Bag");
+        return button;
+    }
+    public MobileButton getUnFavouriteIcon() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/product_detail_header"), "Select Favourites  Add to Bag");
+        return button;
+    }
+    public MobileButton getRemoveFavourite() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("android:id/button1"), "Remove Favourites ");
+        return button;
+    }
 
 }

@@ -94,6 +94,14 @@ public class HomePageIOS extends HomePage {
         IOSButton token = new IOSButton((IOSDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/animation_sparkle"), "Get zero token link");
         return token;
     }
+    public MobileButton getRewardsApply() throws Exception{
+        IOSButton token = new IOSButton((IOSDriver) driver,  By.id(" com.subway.mobile.subwayapp03:id/txt_loyalty_reward_apply"), "Apply button");
+        return token;
+    }
+    public MobileButton getStartAnother() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/nested_scroll_padding_fix"), "Add Something Else button");
+        return button;
+    }
 
 
 }

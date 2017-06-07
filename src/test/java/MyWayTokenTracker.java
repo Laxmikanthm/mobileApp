@@ -3,6 +3,7 @@
  */
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
@@ -12,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
@@ -34,15 +36,14 @@ public class MyWayTokenTracker extends SubwayAppBaseTest {
 
 
     MobileUser mobileUser;
+    Store store=JdbcUtil.getStoreDetails();
 
 
     @Test
     @DirtiesContext
     public void tokenTracker()throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        // RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("kavuru@mailinator.com");
-        mobileUser.setPassword("Subway123");
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
@@ -56,13 +57,16 @@ public class MyWayTokenTracker extends SubwayAppBaseTest {
         homePage.tokenTracker(tokenValue, tokenMessage);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(13, PaymentMethod.CREDITCARD);
-        homePage.refreshPage();
+        tokenValue= homePage.getTokenTrackerValue();
+        Assert.assertEquals("50", tokenValue);
         homePage.tokenTracker(tokenValue, tokenMessage);
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(13, PaymentMethod.CREDITCARD);
-        homePage.refreshPage();
+        tokenValue= homePage.getTokenTrackerValue();
+        Assert.assertEquals("100", tokenValue);
         homePage.tokenTracker(tokenValue, tokenMessage);
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(26, PaymentMethod.CREDITCARD);
-        homePage.refreshPage();
+        tokenValue= homePage.getTokenTrackerValue();
+        Assert.assertEquals("200", tokenValue);
         homePage.tokenTracker(tokenValue, tokenMessage);
 
 

@@ -92,6 +92,14 @@ public class HomePageAndroid extends HomePage {
         AndroidButton token = new AndroidButton((AndroidDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/animation_sparkle"), "Get zero token link");
         return token;
     }
+    public MobileButton getStartAnother() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/nested_scroll_padding_fix"), "Add Something Else button");
+        return button;
+    }
+    public MobileButton getRewardsApply() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Apply")+"']"), "Apply button");
+        return button;
+    }
 
 
 }

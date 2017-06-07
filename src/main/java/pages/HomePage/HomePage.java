@@ -8,6 +8,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
+import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
 
 /**
@@ -50,6 +51,8 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getTellMeHow() throws Exception;
     abstract MobileButton getStartAnotherOrder() throws Exception;
     abstract MobileButton getAnimationSparkle() throws Exception;
+    abstract MobileButton getStartAnother() throws Exception;
+    abstract MobileButton getRewardsApply() throws Exception;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -183,13 +186,13 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
             MyWayRewards rewards = tellMeHow();
             rewards.getSwipe();
         }
-        if ((Integer.parseInt(tokenValue) >= 50 && Integer.parseInt(tokenValue) < 100)) {
+        if (Integer.parseInt(tokenValue) >= 50)  {
             if (tokenMessage.equals("Wow, you're really racking up those - way to go")) {
                 System.out.println("user has greater than 50 and less than 100 tokens");
 
             }
         }
-        if ((Integer.parseInt(tokenValue) > 100 && Integer.parseInt(tokenValue) <= 199)) {
+        if (Integer.parseInt(tokenValue) >= 100 ) {
             if (tokenMessage.equals("So close! You can almost taste the \n" +
                     "\n" +
                     "rewards now!")) {
@@ -207,7 +210,24 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         getAnimationSparkle().click();
         return MyWayRewards.get((AppiumDriver) driver);
     }
+    public OrdersPage addSomethingElse()throws Exception
+    {
 
+        getStartAnother().click();
+        return OrdersPage.get((AppiumDriver) driver);
+    }
+    public SearchStore apply()throws Exception
+    {
+        getRewardsApply().click();
+        return SearchStore.get((AppiumDriver)driver);
+
+    }
+    public String getTokenTrackerValue()throws Exception {
+        MyWayRewards myWayRewards = getTokensSparkle();
+        myWayRewards.getSwipe();
+       String tokenValue = tokenValue();
+       return tokenValue;
+    }
 }
 
 

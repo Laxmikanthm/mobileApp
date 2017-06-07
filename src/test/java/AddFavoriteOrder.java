@@ -1,4 +1,5 @@
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
@@ -9,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
@@ -33,6 +35,16 @@ import pojos.user.RegisterUser;
 public class AddFavoriteOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
+    Store store;
+    @BeforeClass(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+        store= JdbcUtil.getStoreDetails();
+        mobileUser = new MobileUser(false, Country.UnitedStates,store.getLocationCode());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        return mobileUser;
+
+    }
 
     @Test
     @DirtiesContext
@@ -48,12 +60,29 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
-        menuPage= homePage.gotoMenuPage();
-        MobileOrderHistoryPage mobileOrderHistoryPage= menuPage.getOrderHistory();
-        mobileOrderHistoryPage.addFavoriteOrder();
-        homePage.selectBackButton();
-        menuPage.goHome();
-        Assert.assertEquals(mobileOrderHistoryPage.favoriteOrderName(), homePage.favoriteOrderName());
+        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
+        homePage.addSomethingElse();
+        ordersPage.placeFavouriteReOrder(mobileUser, store.getAddress1());
+
     }
+    @Test
+    @DirtiesContext
+    public void UnFavouriteOrder()throws Exception
+    {
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage=loginPage.login(mobileUser);
+        MenuPage menuPage = homePage.getUserDetails();
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+        addCardPage.selectBackButton();
+        menuPage.goHome();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
+        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser,store.getAddress1());
+        ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
+
+
+    }
+
 }

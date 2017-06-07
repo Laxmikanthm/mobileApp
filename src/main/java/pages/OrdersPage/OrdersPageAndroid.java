@@ -229,7 +229,7 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
     public MobileButton getFavouriteIcon() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/favorite_animation"), "Expand Button in MakeItAMeal");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavouriteIcon")), "Expand Button in MakeItAMeal");
         return button;
     }
     public MobileButton getFavouriteSave() throws Exception{
@@ -238,6 +238,22 @@ public class OrdersPageAndroid extends OrdersPage {
     }
     public MobileTextBox getFavouriteText() throws Exception{
         AndroidTextBox button = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavouriteEditText")), "SelectItemInSides Button in MakeItAMeal");
+        return button;
+    }
+    public MobileButton getFavourites() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Favourites")), "Select Favourites");
+        return button;
+    }
+    public MobileButton getFavouriteAddToBag() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavouriteAddToBag")), "Select Favourites  Add to Bag");
+        return button;
+    }
+    public MobileButton getUnFavouriteIcon() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("UnFavouriteIcon")), "Select Favourites  Add to Bag");
+        return button;
+    }
+    public MobileButton getRemoveFavourite() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("RemoveButton")), "Remove Favourites ");
         return button;
     }
 

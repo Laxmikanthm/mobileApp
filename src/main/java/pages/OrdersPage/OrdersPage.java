@@ -12,6 +12,7 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.*;
 import org.testng.Assert;
+import pages.HomePage.HomePage;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
@@ -110,6 +111,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getFavouriteSave() throws Exception;
     abstract MobileButton getFavouriteIcon() throws Exception;
     abstract MobileTextBox getFavouriteText() throws Exception;
+    abstract MobileButton getFavourites() throws Exception;
+    abstract MobileButton getFavouriteAddToBag() throws Exception;
+    abstract MobileButton getUnFavouriteIcon() throws Exception;
+    abstract MobileButton getRemoveFavourite() throws Exception;
+
+    Random random = new Random();
+    String favoriteOrderName=null;
 
     /*This elements are for finding list of elements*/
     By storeNamesLocator = By.id("address");
@@ -121,6 +129,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By ItemFromDrinks = By.id("drink_title");
     By specialInstructionsLabel  = By.id("instructions_header");
     By FavouriteIconLocator=By.id("favorite_animation");
+    By ManageLocator=By.id("manage_rewards");
 
     Random rn = new Random();
     int firstrandnum;
@@ -351,13 +360,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void scrollToItemAndClick(By locator, String itemName, int endY, int Duration) {
+    public HomePage scrollToItemAndClick(By locator, String itemName, int endY, int Duration)throws Exception {
         boolean flag = false;
         while (getItems(locator).size() > 0) {
             List<WebElement> allElements = getElements(locator);
 
             for (int i = 0; i < allElements.size(); i++) {
-                if (allElements.get(i).getText().equals(itemName)) {
+                if (allElements.get(i).getText().contains(itemName)) {
                     allElements.get(i).click();
                     flag = true;
                     break;
@@ -374,6 +383,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 break;
             }
         }
+        return HomePage.get((AppiumDriver)driver);
     }
 
 
@@ -799,7 +809,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
-
+    public String favoriteOrderName() throws  Exception
+    {
+        return favoriteOrderName;
+    }
+    public  String favoriteItem() throws  Exception
+    {
+        return favoriteOrderName;
+    }
     public void selectRestaurant() throws Exception {
         try {
            getSelectRestaurantButton().click();
@@ -837,7 +854,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollToElement(FavouriteIconLocator,0.9,0.5);
             getFavouriteIcon().click();
             // getFavouriteText().click;
-            getFavouriteText().setText("test");
+            favoriteOrderName="Subway"+random.nextInt(10);
+            getFavouriteText().setText(favoriteOrderName);
             getFavouriteSave().click();
 
             getGotIt().isReady();
@@ -935,6 +953,71 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
         }
     }
+    public void placeRandomOrderwithRedeemCertificate(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage=scrollToItemAndClick(storeNamesLocator, storeName,  500 , 3000);
+            homePage.apply();
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  1600 , 3000);
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  1600 , 3000);
+            getAddToBag().isReady();
+            getAddToBag().click();
+            getPlaceOrder().isReady();
+            scrollToElement(ManageLocator,0.9,0.5);
+            getPlaceOrder().click();
+            getGotIt().isReady();
+            getGotIt().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+    public void getAllFavourites()throws Exception
+    {
+        getFavourites().click();
+    }
+    public void placeFavouriteReOrder(MobileUser mobileUser, String storeName) throws Exception {
+        try {
+
+            getDirections().isReady();
+           HomePage homePage= scrollToItemAndClick(storeNamesLocator, storeName,  500 , 3000);
+            homePage.addSomethingElse();
+            getItems().isReady();
+            getAllFavourites();
+            getFavouriteAddToBag().isReady();
+            getFavouriteAddToBag().click();
+            getPlaceOrder().isReady();
+            getPlaceOrder().click();
+            getGotIt().isReady();
+            getGotIt().click();
+
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+    public void removeFavouriteOrder(MobileUser mobileUser, String storeName) throws Exception {
+        try {
+
+            getDirections().isReady();
+            HomePage homePage= scrollToItemAndClick(storeNamesLocator, storeName,  500 , 3000);
+            homePage.addSomethingElse();
+            getItems().isReady();
+            getAllFavourites();
+            getUnFavouriteIcon().isReady();
+            getUnFavouriteIcon().click();
+            getRemoveFavourite().isReady();
+            getRemoveFavourite().click();
+            getGotIt().isReady();
+            getGotIt().click();
+
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
 
 }
 
