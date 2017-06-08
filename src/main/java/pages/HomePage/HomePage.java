@@ -6,6 +6,7 @@ import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.testng.Assert;
 import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
@@ -227,6 +228,17 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         myWayRewards.getSwipe();
        String tokenValue = tokenValue();
        return tokenValue;
+    }
+
+    public void assertFavoriteOrder(String actualFavoriteOrderName, String expectedFacoriteOrderName)
+    {
+        try{
+            Assert.assertEquals(actualFavoriteOrderName, expectedFacoriteOrderName);
+
+        }catch(Throwable e)
+        {
+
+        }
     }
 }
 

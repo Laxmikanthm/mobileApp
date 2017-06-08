@@ -36,15 +36,9 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     Store store;
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-        store= JdbcUtil.getStoreDetails();
-        mobileUser = new MobileUser(false, Country.UnitedStates,store.getLocationCode());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
 
-    }
+    @Autowired
+    Base.Order order;
 
     @Test
     @DirtiesContext
@@ -60,7 +54,7 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
+        ordersPage.placeFavouriteRandomOrder(order.getCategoryAllSandwiches(), mobileUser, store.getAddress1());
         homePage.addSomethingElse();
         ordersPage.placeFavouriteReOrder(mobileUser, store.getAddress1());
 
@@ -79,7 +73,7 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser,store.getAddress1());
+        ordersPage.placeFavouriteRandomOrder(order.getCategoryAllSandwiches(), mobileUser,store.getAddress1());
         ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
 
 

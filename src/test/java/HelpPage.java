@@ -23,20 +23,23 @@ import pojos.user.RegisterUser;
 /**
  * Created by e002243 on 18-04-2017.
  */
-@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@ContextConfiguration({"classpath:MobileAppBeans.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class HelpPage extends SubwayAppBaseTest {
 
 
     MobileUser mobileUser;
+    @Autowired
+    Order order;
+
 
     @Test
     @DirtiesContext
     public void verifyHelpPage() throws Exception
     {
-        /*mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);*/
+
+        mobileUser=order.getMobileUser();
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

@@ -24,9 +24,9 @@ import pojos.user.RemoteOrderCustomer;
 /**
  * Created by Sujit on 1/26/17.
  */
-/*@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})*/
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class UserLoginTest extends SubwayAppBaseTest {
 
     /*@Autowired
@@ -37,8 +37,6 @@ public class UserLoginTest extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void userLogin() throws Exception {
-        /*mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         loginPage.login(mobileUser);
@@ -55,8 +53,6 @@ public class UserLoginTest extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void userLogout() throws Exception {
-        /*mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

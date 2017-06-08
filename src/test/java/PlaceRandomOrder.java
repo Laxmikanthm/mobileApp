@@ -38,39 +38,11 @@ import static pojos.RemoteOrder.order;
 public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
-    //ArrayList<MobileUser> user;
-    //ArrayList<MobileUser> mobileUsers;
-
-
-    /*@BeforeClass(alwaysRun = true)
-    public void userRegistration()throws Exception {
-
-        user = new ArrayList<MobileUser>();
-        //mobileUsers=new ArrayList<MobileUser>();
-        for (int i = 1; i <= 9; i++) {
-            mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-            RegisterUser.registerAUserWithoutCardLink(mobileUser);
-            user.add(mobileUser);
-        }
-
-    }*/
-
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
-
-    }
 
     @Test
     @DirtiesContext
     public void placeOrderAllSandwiches() throws Exception
     {
-        /*mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        mobileUser.setEmailAddress("sushmatest@mailinator.com");
-        mobileUser.setPassword("Subway123");*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -81,8 +53,6 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        //ordersPage.placeRandomOrder1("All Sandwiches", mobileUser, "Paseo de Diego #15 Rio Piedras, PR 00925");
-        //ordersPage.placeRandomOrder("All Sandwiches", mobileUser, "Paseo de Diego #15 Rio Piedras, PR 00925");
         ordersPage.placeRandomOrder("All Sandwiches", mobileUser,JdbcUtil.getStoreDetails().getAddress1()+" "+JdbcUtil.getStoreDetails().getCity()+","+JdbcUtil.getStoreDetails().getStateProvCode());
     }
 

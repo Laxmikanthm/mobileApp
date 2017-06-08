@@ -1,11 +1,24 @@
 package Base;
 
+import pojos.user.MobileUser;
+
 /**
  * Created by E003705 on 27-04-2017.
  */
 public class Order {
     public int storeNumber;
     public String storeName;
+    public MobileUser mobileUser;
+
+    public MobileUser getMobileUser() {
+        return mobileUser;
+    }
+
+    public void setMobileUser(MobileUser mobileUser) {
+        this.mobileUser = mobileUser;
+    }
+
+
 
     public String getStoreName1() {
         return storeName1;
@@ -23,6 +36,28 @@ public class Order {
     public int swipeDuration;
     public double scrollStartPoint;
     public double scrollEndPoint;
+    public String categoryAllSandwiches;
+    public String categorySUBWAYFreshFit;
+
+    public String getCategoryAllSandwiches() {
+        return categoryAllSandwiches;
+    }
+
+    public void setCategoryAllSandwiches(String categoryAllSandwiches) {
+        this.categoryAllSandwiches = categoryAllSandwiches;
+    }
+
+
+
+    public String getCategorySUBWAYFreshFit() {
+        return categorySUBWAYFreshFit;
+    }
+
+    public void setCategorySUBWAYFreshFit(String categorySUBWAYFreshFit) {
+        this.categorySUBWAYFreshFit = categorySUBWAYFreshFit;
+    }
+
+
 
     public String getCreditpaymentType() {
         return creditpaymentType;

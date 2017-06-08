@@ -36,8 +36,6 @@ public class SwitchStore extends SubwayAppBaseTest {
     @DirtiesContext
     public void selectOtherStore() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -46,8 +44,9 @@ public class SwitchStore extends SubwayAppBaseTest {
         ordersPage.selectRestaurant(order.getStoreName());
         homePage.findAnotherSubway();
         searchStore.findYourStore(order.getZipCode());
-        String actualStoreName= ordersPage.switchStoreName(order.getStoreName1());
         ordersPage.selectRestaurant();
-        Assert.assertEquals(actualStoreName,order.getStoreName1());
+        ordersPage.assertSwitchStore(ordersPage.switchStoreName(order.getStoreName1()),order.getStoreName1());
+
+
     }
 }

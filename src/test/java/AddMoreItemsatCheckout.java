@@ -1,4 +1,5 @@
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
+import pages.MobileOrderHistoryPage.MobileOrderHistoryPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
 import pojos.Orders.Order;
@@ -38,8 +40,6 @@ public class AddMoreItemsatCheckout extends SubwayAppBaseTest {
     @DirtiesContext
     public void addMoreItemsAtCheckOut() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -50,7 +50,13 @@ public class AddMoreItemsatCheckout extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.addMoreItemsatCheckOut("All Sandwiches", mobileUser, order.getStoreName());
+        ordersPage.addMoreItemsatCheckOut(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName());
+        menuPage= homePage.gotoMenuPage();
+        MobileOrderHistoryPage mobileOrderHistoryPage= menuPage.getOrderHistory();
+        mobileOrderHistoryPage.addFavoriteOrder();
+        homePage.selectBackButton();
+        menuPage.goHome();
+        homePage.assertFavoriteOrder(homePage.favoriteOrderName(),mobileOrderHistoryPage.favoriteOrderName());
 
 
     }

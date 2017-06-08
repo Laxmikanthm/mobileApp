@@ -35,8 +35,6 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
     @DirtiesContext
     public void OrderSpecialInstructions() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -47,6 +45,6 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrderSpecialInstructions("All Sandwiches", mobileUser, order.getStoreName(), order.getSpecialInstructions());
+        ordersPage.placeRandomOrderSpecialInstructions(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName(), order.getSpecialInstructions());
     }
 }

@@ -37,8 +37,6 @@ public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
     {
         String paymentTypeCreditCard = "CreditCard";
         String paymentTypeGiftCard="GiftCard";
-        mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
@@ -50,6 +48,6 @@ public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName());
     }
 }

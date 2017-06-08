@@ -1018,6 +1018,59 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
+    public void assertProduct(String actualProductName, String expectedProductName) throws Exception {
+        try{
+            Assert.assertEquals(actualProductName,expectedProductName);
+        }
+        catch (Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
+    public void assertEditCartAddAnother() throws Exception {
+
+
+        try{
+            List<Integer> sizeOfSubItems = addAnotherSameItem();
+            Assert.assertEquals(sizeOfSubItems.get(1),sizeOfSubItems.get(0));
+        }
+        catch (Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
+    public void assertEditCartDeleteItem() throws Exception {
+        try{
+            List<Integer> sizeOfSubItems = addAnotherSameItem();
+            removeItem();
+            Assert.assertEquals(sizeOfSubItems.get(0),sizeOfSubItems.get(1));
+        }
+        catch (Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
+    public void assertEditCartSomethingElseVerify(String actualProduct, String expectedProduct) throws Exception {
+        try{
+
+            Assert.assertEquals(actualProduct,expectedProduct);
+        }
+        catch (Exception ex){
+            throw new Exception(ex);
+        }
+    }
+    public void assertSwitchStore(String actualStoreName, String expectedStoreName) throws Exception {
+        try{
+
+            Assert.assertEquals(actualStoreName,expectedStoreName);
+        }
+        catch (Exception ex){
+            throw new Exception(ex);
+        }
+    }
+
+
+
 
 }
 

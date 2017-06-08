@@ -23,6 +23,9 @@
             <property name="storeName1" value="1 River St, Milford, CT 06460"></property>
             <property name="updatePassword" value="Subway@12345"></property>
             <property name="specialInstructions" value="Less salt"></property>
+            <property name="categoryAllSandwiches" value="All Sandwiches"></property>
+            <property name="categorySUBWAYFreshFit®" value="SUBWAY Fresh Fit®"></property>
+
         </bean>
     </beans>
 

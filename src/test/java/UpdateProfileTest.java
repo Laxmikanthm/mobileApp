@@ -31,7 +31,6 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
 
-
     @Test
     @DirtiesContext
     public void updateProfile()throws Exception
@@ -40,9 +39,8 @@ public class UpdateProfileTest extends SubwayAppBaseTest {
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        MobileUser mobUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        menuPage= menuPage.updateProfileInfo(mobUser);
-        Assert.assertEquals(mobUser.getFirstName()+" "+mobUser.getLastName(), menuPage.getUserInformation());
+        menuPage= menuPage.updateProfileInfo(mobileUser);
+        menuPage.assertUpdateProfile(mobileUser);
         menuPage.logout();
     }
 }

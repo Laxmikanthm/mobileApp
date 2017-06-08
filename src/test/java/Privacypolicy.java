@@ -36,8 +36,6 @@ public class Privacypolicy extends SubwayAppBaseTest {
     @DirtiesContext
     public void verifyPrivacyPolicy() throws Exception
     {
-        /*mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

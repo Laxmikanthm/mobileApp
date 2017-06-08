@@ -302,4 +302,14 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
+    public void assertUpdateProfile(MobileUser mobUser) throws Exception
+    {
+        try {
+
+            Assert.assertEquals(mobUser.getFirstName()+" "+mobUser.getLastName(), getUserInformation());
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
 }

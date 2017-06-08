@@ -12,6 +12,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.ITestContext;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import pojos.user.MobileUser;
@@ -24,7 +25,7 @@ import java.lang.reflect.Method;
  * Created by test-user on 1/30/17.
  */
 
-@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@ContextConfiguration({"classpath:MobileAppBeans.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class SubwayAppBaseTest extends BaseTest {
@@ -32,6 +33,8 @@ public class SubwayAppBaseTest extends BaseTest {
     String driverName;
     private Object driver;
     public MobileUser mobileUser;
+
+
 
     /*@Autowired
     Order order;*/
@@ -61,4 +64,16 @@ public class SubwayAppBaseTest extends BaseTest {
         }
 
     }*/
+
+    @BeforeClass(alwaysRun = true)
+    public void userRegistration()throws Exception
+    {
+        Order order=new Order();
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+       order.setMobileUser(mobileUser);
+
+
+
+    }
 }

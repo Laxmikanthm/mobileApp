@@ -34,6 +34,8 @@ import java.util.List;
 
 public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
 
+    @Autowired
+    Order order;
     MobileUser mobileUser;
 
     //After clicking on  edit check whether selected product is displayed or not
@@ -51,9 +53,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        String aVal = ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
-        String eVal = ordersPage.getSubItemInfo();
-        Assert.assertEquals(aVal,eVal);
+        ordersPage.assertProduct(ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),mobileUser, order.getStoreName()),ordersPage.getSubItemInfo());
         ordersPage.placeAnOrder();
     }
 
@@ -72,10 +72,9 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),mobileUser, order.getStoreName());
         ordersPage.getSubItemInfo();
-        List<Integer> sizeOfSubItems = ordersPage.addAnotherSameItem();
-        Assert.assertEquals(sizeOfSubItems.get(1),sizeOfSubItems.get(0));
+        ordersPage.assertEditCartAddAnother();
         ordersPage.placeAnOrder();
 
     }
@@ -95,11 +94,9 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),mobileUser, order.getStoreName());
         ordersPage.getSubItemInfo();
-        List<Integer> sizeOfSubItems = ordersPage.addAnotherSameItem();
-        ordersPage.removeItem();
-        Assert.assertEquals(sizeOfSubItems.get(0),sizeOfSubItems.get(1));
+        ordersPage.assertEditCartDeleteItem();
         ordersPage.placeAnOrder();
 
     }
@@ -119,10 +116,10 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        String aItem = ordersPage.editCartAndPlaceAnOrder("All Sandwiches",mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        String aItem = ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),mobileUser, order.getStoreName());
         ordersPage.addAnotherNewItem();
-        String eItem = ordersPage.editCartAndPlaceAnOrder("SUBWAY Fresh Fit®",mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
-        Assert.assertEquals(aItem,eItem);
+        String eItem = ordersPage.editCartAndPlaceAnOrder(order.getCategorySUBWAYFreshFit(),mobileUser, order.getStoreName());
+        ordersPage.assertEditCartSomethingElseVerify(aItem,eItem);
         ordersPage.clickOnPlaceOrder();
     }
 

@@ -33,8 +33,6 @@ public class TermsandConditions extends SubwayAppBaseTest {
     @DirtiesContext
     public void verifyTermandConditions() throws Exception
     {
-        /*mobileUser = new MobileUser(false, Country.UnitedStates, order.getStoreNumber());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

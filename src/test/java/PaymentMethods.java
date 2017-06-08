@@ -92,7 +92,6 @@ public class PaymentMethods extends SubwayAppBaseTest {
         }
     }
 
-
     @Test
     @DirtiesContext
     public void addPayPal () throws Exception{

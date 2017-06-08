@@ -1,4 +1,5 @@
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,21 +27,19 @@ import pojos.user.RegisterUser;
 public class CustomizeOrder extends SubwayAppBaseTest {
 
     @Autowired
-    Base.Order order;
+    Base.Order ord;
     MobileUser mobileUser;
 
     @Test
     public void placeCustomizeOrderAllSandwiches() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage =searchStore.findYourStore(order.getZipCode());
+        OrdersPage ordersPage =searchStore.findYourStore(ord.getZipCode());
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
+        Order order = remoteOrder.placeRandomOrderWithSpecificProduct(ord.getCategoryAllSandwiches());
         ordersPage.selectItemTypeAndClickCustomize(order);
         ordersPage.customizeOrder(mobileUser,order);
         ordersPage.addToCartAndPlaceOrder();

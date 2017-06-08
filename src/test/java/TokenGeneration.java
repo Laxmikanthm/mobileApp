@@ -31,11 +31,11 @@ public class TokenGeneration extends SubwayAppBaseTest {
     MobileUser mobileUser;
 
     @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
+    public void userRegistration()throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
+
     }
 
 

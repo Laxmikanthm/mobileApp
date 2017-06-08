@@ -1,4 +1,5 @@
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +35,14 @@ public class DeleteTopppings  extends SubwayAppBaseTest {
     @Test
     public void placeRandomOrderAndDeleteToppings() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54589);
-        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("gopal.boyina@cigniti.com");
-        mobileUser.setPassword("Cigniti@123");
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct("All Sandwiches");
+        Order order = remoteOrder.placeRandomOrderWithSpecificProduct(ord.getCategoryAllSandwiches());
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage =searchStore.findYourStore(ord.getZipCode());
-        ordersPage.placeCustomizeOrder("All Sandwiches", mobileUser, ord.getStoreName(),order);
+        ordersPage.placeCustomizeOrder(ord.getCategoryAllSandwiches(), mobileUser, ord.getStoreName(),order);
         ordersPage.selectItemTypeAndClickCustomize(order);
         ordersPage.deleteToppings();
 
