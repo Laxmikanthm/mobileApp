@@ -24,7 +24,7 @@
             <property name="updatePassword" value="Subway@12345"></property>
             <property name="specialInstructions" value="Less salt"></property>
             <property name="categoryAllSandwiches" value="All Sandwiches"></property>
-            <property name="categorySUBWAYFreshFit®" value="SUBWAY Fresh Fit®"></property>
+            <property name="categorySUBWAYFreshFit" value="SUBWAY Fresh Fit"></property>
 
         </bean>
     </beans>

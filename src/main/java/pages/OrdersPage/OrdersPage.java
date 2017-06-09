@@ -90,6 +90,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getRemove() throws Exception;
 
     abstract MobileLabel getSubItem() throws Exception;
+    abstract MobileLabel getSubTotal() throws Exception;
 
     abstract MobileButton getBackButton() throws Exception;
 
@@ -135,6 +136,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     int firstrandnum;
     int nextrandnum;
     public String itemName = null;
+    public double price=0.0;
+    public int tokens;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -189,7 +192,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             scrollToItemAndClick(storeNamesLocator, storeName,  driver.manage().window().getSize().getHeight()-300);
-            getSelectRestaurantButton().click();
+           // getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
             scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  driver.manage().window().getSize().getHeight()-300 );
@@ -1068,9 +1071,35 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
+    public void placeRandomOrderForSixTimes(String menuItem, MobileUser mobileUser, String storeName,int i) throws Exception {
+        try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage=scrollToItemAndClick(storeNamesLocator, storeName,  driver.manage().window().getSize().getHeight()-300);
+            if(i==0) {
+                getStartOrderButton().click();
+            }
+            else {
+                homePage.addSomethingElse();
+            }
+            getItems().isReady();
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  driver.manage().window().getSize().getHeight()-300 );
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  driver.manage().window().getSize().getHeight()-50 );
+            getAddToBag().isReady();
+            getAddToBag().click();
+            getPlaceOrder().isReady();
+            getPlaceOrder().click();
+            price=Double.parseDouble(getSubTotal().getText().substring(1));
+            tokens=remoteOrder.computeTokens(price);
 
 
-
+            getGotIt().isReady();
+            getGotIt().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
 
 }
 

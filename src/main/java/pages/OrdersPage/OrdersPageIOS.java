@@ -1,6 +1,7 @@
 package pages.OrdersPage;
 
 import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.android.AndroidLabel;
 import base.gui.controls.mobile.android.AndroidTextBox;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
@@ -349,6 +350,10 @@ public class OrdersPageIOS extends OrdersPage {
     }
     public MobileButton getRemoveFavourite() throws Exception{
         IOSButton button = new IOSButton((IOSDriver) driver, By.id("android:id/button1"), "Remove Favourites ");
+        return button;
+    }
+    public MobileLabel getSubTotal() throws Exception{
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/subtotal"), "Remove Favourites ");
         return button;
     }
 

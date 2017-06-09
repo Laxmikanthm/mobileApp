@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
  * Created by test-user on 1/30/17.
  */
 
-@ContextConfiguration({"classpath:MobileAppBeans.xml"})
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class SubwayAppBaseTest extends BaseTest {
@@ -34,10 +34,6 @@ public class SubwayAppBaseTest extends BaseTest {
     private Object driver;
     public MobileUser mobileUser;
 
-
-
-    /*@Autowired
-    Order order;*/
 
     @BeforeSuite(alwaysRun = true)
     public void setupSuite1(ITestContext testContext) throws Exception {
@@ -65,15 +61,5 @@ public class SubwayAppBaseTest extends BaseTest {
 
     }*/
 
-    @BeforeClass(alwaysRun = true)
-    public void userRegistration()throws Exception
-    {
-        Order order=new Order();
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-       order.setMobileUser(mobileUser);
 
-
-
-    }
 }

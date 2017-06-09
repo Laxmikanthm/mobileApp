@@ -1,5 +1,6 @@
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
@@ -21,7 +22,6 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
-import pojos.Store;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
@@ -38,6 +38,19 @@ import static pojos.RemoteOrder.order;
 public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
+   Store store=JdbcUtil.getStoreDetails();
+
+    @BeforeClass(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("june8th@mailinator.com");
+        mobileUser.setPassword("Subway123");
+        return mobileUser;
+
+    }
 
     @Test
     @DirtiesContext
@@ -192,6 +205,27 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
         ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460",ordersPage);
         ordersPage.clickOnPlaceOrder();
+    }
+    @Test
+    @DirtiesContext
+    public void placeOrderforMoreThanSixTimes() throws Exception
+    {
+        Store store=JdbcUtil.getStoreDetails();
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage=loginPage.login(mobileUser);
+        MenuPage menuPage = homePage.getUserDetails();
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+        addCardPage.selectBackButton();
+        menuPage.goHome();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage=searchStore.findYourStore("06460");
+        for(int i=0;i<=6;i++) {
+            ordersPage.placeRandomOrderForSixTimes("All Sandwiches", mobileUser, "I-95 East Northbound 1 Milford, CT 06460",i);
+           Assert.assertEquals(ordersPage.tokens,"");
+
+        }
     }
 
 

@@ -256,5 +256,9 @@ public class OrdersPageAndroid extends OrdersPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("RemoveButton")), "Remove Favourites ");
         return button;
     }
+    public MobileLabel getSubTotal() throws Exception{
+        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/subtotal"), "Remove Favourites ");
+        return button;
+    }
 
 }

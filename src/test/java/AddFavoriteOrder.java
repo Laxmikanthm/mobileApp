@@ -1,3 +1,4 @@
+import Base.Order;
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
@@ -21,7 +22,6 @@ import pages.MenuPage.MenuPage;
 import pages.MobileOrderHistoryPage.MobileOrderHistoryPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
-import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
@@ -34,24 +34,36 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class AddFavoriteOrder extends SubwayAppBaseTest {
 
-    MobileUser mobileUser;
-    Store store;
+MobileUser mobileUser;
+Store store=JdbcUtil.getStoreDetails();
+Order order=new Order();
 
-    @Autowired
-    Base.Order order;
+
+    @BeforeClass(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("june8th@mailinator.com");
+        mobileUser.setPassword("Subway123");
+        return mobileUser;
+
+    }
 
     @Test
     @DirtiesContext
     public void addFavoriteOrder() throws Exception
     {
+
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
+       /* MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
-        menuPage.goHome();
+        menuPage.goHome();*/
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
         ordersPage.placeFavouriteRandomOrder(order.getCategoryAllSandwiches(), mobileUser, store.getAddress1());
