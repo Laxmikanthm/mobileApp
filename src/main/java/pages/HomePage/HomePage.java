@@ -48,12 +48,15 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getFavoritesAddIcon() throws Exception;
     abstract MobileLabel getTokenValue() throws Exception;
     abstract MobileLabel getZeroTokenMessage() throws Exception;
+    abstract MobileLabel getCertificatesMessage() throws Exception;
     abstract MobileLabel getTokenMessage() throws Exception;
     abstract MobileButton getTellMeHow() throws Exception;
     abstract MobileButton getStartAnotherOrder() throws Exception;
     abstract MobileButton getAnimationSparkle() throws Exception;
     abstract MobileButton getStartAnother() throws Exception;
     abstract MobileButton getRewardsApply() throws Exception;
+
+    public int certValue=0;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -219,6 +222,12 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     }
     public SearchStore apply()throws Exception
     {
+        String cert[]=getCertificatesMessage().getText().split(" ");
+        certValue=Integer.parseInt(cert[0].substring(1));
+        if(certValue>2)
+        {
+            System.out.println("Apply for multiple Certificates");
+        }
         getRewardsApply().click();
         return SearchStore.get((AppiumDriver)driver);
 

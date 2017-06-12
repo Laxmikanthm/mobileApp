@@ -1,6 +1,7 @@
 package pages.HomePage;
 
 import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.android.AndroidLabel;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.ios.IOSButton;
@@ -102,6 +103,9 @@ public class HomePageIOS extends HomePage {
         IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/nested_scroll_padding_fix"), "Add Something Else button");
         return button;
     }
-
+    public MobileLabel getCertificatesMessage() throws Exception{
+        IOSLabel token = new IOSLabel((IOSDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("CertificatesCount")+"']"), "Get zero Token Message from Dashboard");
+        return token;
+    }
 
 }

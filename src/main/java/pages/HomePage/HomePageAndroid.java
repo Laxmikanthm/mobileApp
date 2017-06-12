@@ -93,12 +93,16 @@ public class HomePageAndroid extends HomePage {
         return token;
     }
     public MobileButton getStartAnother() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/nested_scroll_padding_fix"), "Add Something Else button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/start_order"), "Add Something Else button");
         return button;
     }
     public MobileButton getRewardsApply() throws Exception{
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("Apply")+"']"), "Apply button");
         return button;
+    }
+    public MobileLabel getCertificatesMessage() throws Exception{
+        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("CertificatesCount")+"']"), "Get zero Token Message from Dashboard");
+        return token;
     }
 
 

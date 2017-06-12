@@ -80,5 +80,26 @@ public class Certificates extends SubwayAppBaseTest {
 
 
     }
+    @Test
+    @DirtiesContext
+    public void redeemMultipleCertificate() throws Exception {
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");
+        mobileUser.setPassword("Subway2017");
+       // RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage = loginPage.login(mobileUser);
+        /*MenuPage menuPage = homePage.getUserDetails();
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+        addCardPage.selectBackButton();
+        menuPage.goHome();*/
+        //RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+      //  remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
+        ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser, store.getAddress1());
 
+    }
 }

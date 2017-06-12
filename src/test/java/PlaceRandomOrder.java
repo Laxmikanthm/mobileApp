@@ -45,7 +45,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     {
 
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
+       // RegisterUser.registerAUserWithoutCardLink(mobileUser);
         mobileUser.setEmailAddress("june8th@mailinator.com");
         mobileUser.setPassword("Subway123");
         return mobileUser;
@@ -214,16 +214,16 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
+        /*MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
-        menuPage.goHome();
+        menuPage.goHome();*/
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore("06460");
         for(int i=0;i<=6;i++) {
-            ordersPage.placeRandomOrderForSixTimes("All Sandwiches", mobileUser, "I-95 East Northbound 1 Milford, CT 06460",i);
-           Assert.assertEquals(ordersPage.tokens,"");
+            ordersPage.placeRandomOrderForSixTimes("Sides", mobileUser, "I-95 East Northbound 1 Milford, CT 06460",i,homePage);
+           Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());
 
         }
     }
