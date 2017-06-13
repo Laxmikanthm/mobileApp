@@ -33,19 +33,17 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class CreateanResubmitFavoriteOrder extends SubwayAppBaseTest {
 
+    RemoteOrder remoteOrder;
     @Autowired
     Base.Order order;
     MobileUser mobileUser;
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
+    @BeforeClass
+    public void init() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
-
     @Test
     @DirtiesContext
     public void resubmitFavoriteOrder() throws Exception
@@ -60,7 +58,7 @@ public class CreateanResubmitFavoriteOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder(order.getCategoryAllSandwiches(), remoteOrder, order.getStoreName());
         menuPage= homePage.gotoMenuPage();
         MobileOrderHistoryPage mobileOrderHistoryPage= menuPage.getOrderHistory();
         mobileOrderHistoryPage.addFavoriteOrder();

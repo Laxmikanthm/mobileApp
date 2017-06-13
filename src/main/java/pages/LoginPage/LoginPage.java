@@ -54,8 +54,11 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public HomePage login(MobileUser mobileUser) throws Exception {
         try {
             getUserName().isReady();
-            getUserName().setText(mobileUser.getEmailAddress());
-            getPassword().setText(mobileUser.getPassword());
+//            getUserName().setText(mobileUser.getEmailAddress());
+//            getPassword().setText(mobileUser.getPassword());
+
+            getUserName().setText("gopal.test@mailinator.com");
+            getPassword().setText("Cigniti@123");
             HideKeyboard();
             getLogin().click();
         }catch (Exception ex){

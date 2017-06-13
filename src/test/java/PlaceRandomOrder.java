@@ -22,6 +22,7 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
@@ -39,14 +40,13 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
    Store store=JdbcUtil.getStoreDetails();
+    RemoteOrder remoteOrder;
 
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+    @BeforeClass
+    public void init() throws Exception {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
 
@@ -64,7 +64,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrder("All Sandwiches", mobileUser,JdbcUtil.getStoreDetails().getAddress1()+" "+JdbcUtil.getStoreDetails().getCity()+","+JdbcUtil.getStoreDetails().getStateProvCode());
+        ordersPage.placeRandomOrder("All Sandwiches", remoteOrder,store.getAddress1());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, JdbcUtil.getStoreDetails().getAddress1()+" "+JdbcUtil.getStoreDetails().getCity()+","+JdbcUtil.getStoreDetails().getStateProvCode());
+        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®",  remoteOrder,store.getAddress1());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrder("Breakfast", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        ordersPage.placeRandomOrder("Breakfast", remoteOrder,store.getAddress1());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrder("Personal Pizza", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        ordersPage.placeRandomOrder("Personal Pizza", remoteOrder,store.getAddress1());
     }
 
     @Test
@@ -132,7 +132,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrder("Chopped Salads", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        ordersPage.placeRandomOrder("Chopped Salads", remoteOrder,store.getAddress1());
 }
 
     @Test
@@ -149,7 +149,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrder("Kids' Meal", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        ordersPage.placeRandomOrder("Kids' Meal", remoteOrder,store.getAddress1());
     }
 
     @Test
@@ -166,7 +166,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrderSides("Sides", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        ordersPage.placeRandomOrderSides("Sides", remoteOrder,store.getAddress1());
     }
 
     @Test
@@ -183,7 +183,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrderDrinks("Drinks", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460");
+        ordersPage.placeRandomOrderDrinks("Drinks", remoteOrder,store.getAddress1());
     }
 
 
@@ -201,7 +201,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460",ordersPage);
+        ordersPage.orderForMakeItAMeal("All Sandwiches", remoteOrder, "CT Turpike West Southbound 2, Milford, CT 06460",ordersPage);
         ordersPage.clickOnPlaceOrder();
     }
     @Test

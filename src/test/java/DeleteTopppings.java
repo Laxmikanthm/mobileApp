@@ -30,30 +30,29 @@ import java.util.List;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class DeleteTopppings  extends SubwayAppBaseTest {
 
+    RemoteOrder remoteOrder;
     @Autowired
     Base.Order ord;
     MobileUser mobileUser;
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
+    @BeforeClass
+    public void init() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
 
     @Test
     public void placeRandomOrderAndDeleteToppings() throws Exception
     {
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct(ord.getCategoryAllSandwiches());
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage =searchStore.findYourStore(ord.getZipCode());
-        ordersPage.placeCustomizeOrder(ord.getCategoryAllSandwiches(), mobileUser, ord.getStoreName(),order);
+        ordersPage.placeCustomizeOrder(ord.getCategoryAllSandwiches(), ord.getStoreName(),order);
         ordersPage.selectItemTypeAndClickCustomize(order);
         ordersPage.deleteToppings();
 
