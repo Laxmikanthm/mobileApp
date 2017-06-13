@@ -20,6 +20,7 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import java.util.List;
@@ -35,19 +36,17 @@ import java.util.List;
 
 public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
 
+    RemoteOrder remoteOrder;
     @Autowired
     Order order;
     MobileUser mobileUser;
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
+    @BeforeClass
+    public void init() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
-
     //After clicking on  edit check whether selected product is displayed or not
     @Test
     @DirtiesContext
@@ -63,7 +62,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.assertProduct(ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),mobileUser, order.getStoreName()),ordersPage.getSubItemInfo());
+        ordersPage.assertProduct(ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, order.getStoreName()),ordersPage.getSubItemInfo());
         ordersPage.placeAnOrder();
     }
 
@@ -82,7 +81,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),mobileUser, order.getStoreName());
+        ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, order.getStoreName());
         ordersPage.getSubItemInfo();
         ordersPage.assertEditCartAddAnother();
         ordersPage.placeAnOrder();
@@ -104,7 +103,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),mobileUser, order.getStoreName());
+        ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, order.getStoreName());
         ordersPage.getSubItemInfo();
         ordersPage.assertEditCartDeleteItem();
         ordersPage.placeAnOrder();
@@ -126,9 +125,9 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        String aItem = ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),mobileUser, order.getStoreName());
+        String aItem = ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, order.getStoreName());
         ordersPage.addAnotherNewItem();
-        String eItem = ordersPage.editCartAndPlaceAnOrder(order.getCategorySUBWAYFreshFit(),mobileUser, order.getStoreName());
+        String eItem = ordersPage.editCartAndPlaceAnOrder(order.getCategorySUBWAYFreshFit(),remoteOrder, order.getStoreName());
         ordersPage.assertEditCartSomethingElseVerify(aItem,eItem);
         ordersPage.clickOnPlaceOrder();
     }

@@ -18,6 +18,7 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
@@ -29,16 +30,15 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
 
+    RemoteOrder remoteOrder;
     @Autowired
     Order order;
     MobileUser mobileUser;
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
+    @BeforeClass
+    public void init() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
 
@@ -59,6 +59,6 @@ public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName());
+        ordersPage.placeRandomOrder(order.getCategoryAllSandwiches(), remoteOrder, order.getStoreName());
     }
 }

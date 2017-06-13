@@ -32,18 +32,18 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class AddMoreItemsatCheckout extends SubwayAppBaseTest {
 
+    RemoteOrder remoteOrder;
     @Autowired
     Base.Order order;
     MobileUser mobileUser;
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
+    @BeforeClass
+    public void init() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
+
 
 
     @Test
