@@ -12,12 +12,12 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>3.1.6-SNAPSHOT</version>
+            <version>3.2.8-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>2.7.6-SNAPSHOT</version>
+            <version>2.9.8-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -91,16 +91,16 @@
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>C:/Subway/SubWayApps/May16th/Android/subwayStagingDebug5000424.apk</app>
+                        <app>C:/Subway Projects/Apps/R2/june6th/subwayE2eDebug5000522.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
                         <operatingSystem>Windows</operatingSystem>
                         <!-- R1/E2E-->
                         <environment>stage</environment>
-                        <environmentR1R2>r1</environmentR1R2>
-                        <azureEnv>stage</azureEnv>
-                        <roEnv>https://q1-order.remote-order.com</roEnv>
+                        <environmentR1R2>r2</environmentR1R2>
+                        <azureEnv>qa</azureEnv>
+                        <roEnv>https://qe-order.remote-order.com</roEnv>
                         <!-- R2/E2E-->
                         <!--<environment>stage</environment>
                         <environmentR1R2>r2</environmentR1R2>
