@@ -198,7 +198,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getStartOrderButton().click();
             getItems().isReady();
             scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  driver.manage().window().getSize().getHeight()-300 );
-            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  driver.manage().window().getSize().getHeight()-300 );
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  driver.manage().window().getSize().getHeight()-100 );
             getAddToBag().isReady();
             getAddToBag().click();
             getPlaceOrder().isReady();
@@ -1148,7 +1148,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             HomePage homePage=scrollToItemAndClick(storeNamesLocator, storeName,  driver.manage().window().getSize().getHeight()-300 );
-            homePage.apply();
+            homePage.getOffers();
             getStartOrderButton().click();
             getItems().isReady();
             scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  driver.manage().window().getSize().getHeight()-300 );

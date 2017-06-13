@@ -45,7 +45,9 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     {
 
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+       // RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("june12th@mailinator.com");
+        mobileUser.setPassword("Subway123");
         return mobileUser;
 
     }
@@ -57,11 +59,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
+       /* MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
-        menuPage.goHome();
+        menuPage.goHome();*/
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
         ordersPage.placeRandomOrder("All Sandwiches", mobileUser,JdbcUtil.getStoreDetails().getAddress1()+" "+JdbcUtil.getStoreDetails().getCity()+","+JdbcUtil.getStoreDetails().getStateProvCode());

@@ -4,13 +4,19 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
+
+import java.util.List;
 
 /**
  * Created by test-user on 2/2/17.
@@ -57,6 +63,27 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getRewardsApply() throws Exception;
 
     public int certValue=0;
+
+  //  By Offers=By.xpath("com.subway.mobile.subwayapp03:id/promo_card_stack");
+    By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@resource-id='com.subway.mobile.subwayapp03:id/promo_card_stack']/@class=android.widget.RelativeLayout");
+
+    public List<WebElement> getElements(By locator) {
+        List<WebElement> elementsList = ((AndroidDriver) driver).findElements(locator);
+
+        return elementsList;
+    }
+
+    public void getOffers()throws Exception {
+        List<WebElement> elements = getElements(Offers);
+        for (int i = 0; i < 3; i++) {
+            WebElement ele = elements.get(0);
+            MobileElement element = (MobileElement) ele;
+            Thread.sleep(3000L);
+
+            element.swipe(SwipeElementDirection.LEFT, 500);
+
+        }
+    }
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
