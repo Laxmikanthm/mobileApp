@@ -1,5 +1,6 @@
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,15 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class TermsandConditions extends SubwayAppBaseTest {
     MobileUser mobileUser;
+    @BeforeClass(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        return mobileUser;
+
+    }
 
     @Test
     @DirtiesContext

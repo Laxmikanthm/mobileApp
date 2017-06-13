@@ -32,6 +32,7 @@ public class Privacypolicy extends SubwayAppBaseTest {
     MobileUser mobileUser;
 
 
+
     @Test
     @DirtiesContext
     public void verifyPrivacyPolicy() throws Exception

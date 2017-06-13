@@ -40,6 +40,20 @@ public class PaymentMethods extends SubwayAppBaseTest {
     List<SubwayCard> cards =null;
     MobileUser mobileUser;
 
+    @BeforeClass(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        // mobileUser.setEmailAddress("june8th@mailinator.com");
+        // mobileUser.setPassword("Subway123");
+        return mobileUser;
+
+    }
+
+
+
     @Test
     @DirtiesContext
     public void addCreditCard() throws Exception {

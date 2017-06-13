@@ -1,5 +1,6 @@
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +33,21 @@ public class HelpPage extends SubwayAppBaseTest {
     MobileUser mobileUser;
     @Autowired
     Order order;
+    @BeforeClass(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        return mobileUser;
+
+    }
 
 
     @Test
     @DirtiesContext
     public void verifyHelpPage() throws Exception
     {
-
         mobileUser=order.getMobileUser();
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();

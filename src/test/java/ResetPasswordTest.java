@@ -1,5 +1,6 @@
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,15 @@ public class ResetPasswordTest extends SubwayAppBaseTest {
     @Autowired
     Order order;
     MobileUser mobileUser;
+    @BeforeClass(alwaysRun = true)
+    public MobileUser userRegistration()throws Exception
+    {
+
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        return mobileUser;
+
+    }
 
 
     @Test

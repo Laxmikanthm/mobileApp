@@ -30,7 +30,7 @@ import pojos.user.RegisterUser;
 public class Certificates extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
-    Store store = JdbcUtil.getStoreDetails();
+  //  Store store = JdbcUtil.getStoreDetails();
 
 
 
@@ -38,6 +38,7 @@ public class Certificates extends SubwayAppBaseTest {
     @DirtiesContext
     public void redeemCertificate() throws Exception {
 
+        Store store = JdbcUtil.getStoreDetails();
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -57,10 +58,12 @@ public class Certificates extends SubwayAppBaseTest {
 
 
     }
-
+    @Test
+    @DirtiesContext
 
     public void verifyCertificate() throws Exception {
 
+        Store store = JdbcUtil.getStoreDetails();
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -83,7 +86,7 @@ public class Certificates extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void redeemMultipleCertificate() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser = new MobileUser(false, Country.UnitedStates,54588);
         mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");
         mobileUser.setPassword("Subway2017");
        // RegisterUser.registerAUserWithoutCardLink(mobileUser);
@@ -98,8 +101,8 @@ public class Certificates extends SubwayAppBaseTest {
         //RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
       //  remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser, store.getAddress1());
+        OrdersPage ordersPage = searchStore.findYourStore("06460");
+        ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser, "I-95 East Northbound 1 Milford, CT 06460");
 
     }
 }

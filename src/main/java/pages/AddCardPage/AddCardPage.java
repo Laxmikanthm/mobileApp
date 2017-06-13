@@ -76,7 +76,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     {
         try{
             getCardNumber().isReady();
-            getCardNumber().setText(mobileUser.getCreditCards().get(0).getCardNumber());
+            getCardNumber().getControl().sendKeys(mobileUser.getCreditCards().get(0).getCardNumber());
             HideKeyboard();
             getNextButton().click();
             String date = mobileUser.getCreditCards().get(0).getExpirationDate();

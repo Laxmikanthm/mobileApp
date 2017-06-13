@@ -1132,9 +1132,31 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getPlaceOrder().isReady();
             scrollToElement(ManageLocator,0.9,0.5);
-            String amt[]=getRewardsAmt().getText().split(".");
+            String amt[]=getRewardsAmt().getText().split("\\.");
             int Rewards=Integer.parseInt(amt[0].substring(2));
             Assert.assertEquals(Rewards,homePage.certValue);
+            //  getPlaceOrder().click();
+            getGotIt().isReady();
+            getGotIt().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+    public void placeRandomOrderwithRedeemOffers(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage=scrollToItemAndClick(storeNamesLocator, storeName,  driver.manage().window().getSize().getHeight()-300 );
+            homePage.apply();
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  driver.manage().window().getSize().getHeight()-300 );
+            scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  driver.manage().window().getSize().getHeight()-300 );
+            getAddToBag().isReady();
+            getAddToBag().click();
+            getPlaceOrder().isReady();
+            scrollToElement(ManageLocator,0.9,0.5);
             //  getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
