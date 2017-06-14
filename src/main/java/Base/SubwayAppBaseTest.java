@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
  * Created by test-user on 1/30/17.
  */
 
-@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@ContextConfiguration({"classpath:MobileAppBeans.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class SubwayAppBaseTest extends BaseTest {
