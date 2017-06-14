@@ -30,10 +30,11 @@ import pojos.user.RegisterUser;
 public class Offers extends SubwayAppBaseTest {
     MobileUser mobileUser;
      Store store = JdbcUtil.getStoreDetails();
+
     @BeforeClass(alwaysRun = true)
     public MobileUser userRegistration()throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
        // RegisterUser.registerAUserWithoutCardLink(mobileUser);
         mobileUser.setEmailAddress("garybowman@qasubway.com");
         mobileUser.setPassword("Subway1234");
@@ -61,8 +62,8 @@ public class Offers extends SubwayAppBaseTest {
      //   remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
      //   SearchStore searchStore = homePage.apply();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrderwithRedeemOffers("All Sandwiches", mobileUser, "I-95 East Northbound 1 Milford, CT 06460");
+        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
+        ordersPage.placeRandomOrderwithRedeemOffers("All Sandwiches", mobileUser, store.getAddress1());
 
 
     }

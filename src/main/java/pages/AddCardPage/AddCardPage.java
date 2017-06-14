@@ -103,7 +103,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     {
         try{
             getCardNumber().isReady();
-            getCardNumber().setText(mobileUser.getSubwayCards().get(0).getCardNumber());
+            getCardNumber().getControl().sendKeys(mobileUser.getSubwayCards().get(0).getCardNumber());
             HideKeyboard();
             getPin().setText(mobileUser.getSubwayCards().get(0).getCode());
             HideKeyboard();

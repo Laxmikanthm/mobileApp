@@ -11,10 +11,6 @@
             <property name="storeNumber" value="54589"></property>
             <property name="storeName" value="CT Turpike West Southbound 2, Milford, CT 06460"></property>
             <property name="debitpaymentType" value="DebitCard"></property>
-            <property name="paymentType" value="CreditCard"></property>
-            <property name="creditpaymentType" value="CreditCard"></property>
-            <property name="paypalpaymentType" value="Paypal"></property>
-            <property name="zipCode" value="06460"></property>
             <property name="endY" value="1600"></property>
             <property name="scrollDuration" value="3000"></property>
             <property name="swipeDuration" value="500"></property>

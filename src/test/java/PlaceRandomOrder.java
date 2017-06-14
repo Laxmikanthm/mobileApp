@@ -22,6 +22,7 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
@@ -38,7 +39,7 @@ import static pojos.RemoteOrder.order;
 public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
-   Store store=JdbcUtil.getStoreDetails();
+    Store store=JdbcUtil.getStoreDetails();
     RemoteOrder remoteOrder;
 
 

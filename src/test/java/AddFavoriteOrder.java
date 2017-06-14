@@ -34,9 +34,12 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class AddFavoriteOrder extends SubwayAppBaseTest {
 
+    @Autowired
+    Order order1;
+
 MobileUser mobileUser;
 Store store=JdbcUtil.getStoreDetails();
-Order order=new Order();
+
 
 
     @BeforeClass(alwaysRun = true)
@@ -44,9 +47,9 @@ Order order=new Order();
     {
 
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-       // mobileUser.setEmailAddress("june8th@mailinator.com");
-       // mobileUser.setPassword("Subway123");
+       // RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("june8th@mailinator.com");
+        mobileUser.setPassword("Subway123");
         return mobileUser;
 
     }
@@ -59,15 +62,16 @@ Order order=new Order();
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
+       /* MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
-        menuPage.goHome();
+        menuPage.goHome();*/
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeFavouriteRandomOrder(order.getCategoryAllSandwiches(), mobileUser, store.getAddress1());
+        OrdersPage ordersPage=searchStore.findYourStore("95932");
+        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "1031 Bridge St");
         homePage.addSomethingElse();
+        //Assert.assertEquals(orderPage.favoriteOrderName(), orderPage.favorite());
         ordersPage.placeFavouriteReOrder(mobileUser, store.getAddress1());
 
     }
@@ -85,7 +89,7 @@ Order order=new Order();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder(order.getCategoryAllSandwiches(), mobileUser,store.getAddress1());
+        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser,store.getAddress1());
         ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
 
 

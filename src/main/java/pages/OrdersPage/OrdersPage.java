@@ -994,9 +994,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void placeFavouriteReOrder(MobileUser mobileUser, String storeName) throws Exception {
         try {
 
-            getDirections().isReady();
-           HomePage homePage= scrollAndClick(storeNamesLocator, storeName,  "Up" );
-            homePage.addSomethingElse();
+
             getItems().isReady();
             getAllFavourites();
             getFavouriteAddToBag().isReady();
@@ -1155,7 +1153,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
-            homePage.apply();
+            homePage.getOffers();
             getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");

@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
  * Created by test-user on 1/30/17.
  */
 
-@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@ContextConfiguration({"classpath:MobileAppBeans.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class SubwayAppBaseTest extends BaseTest {
@@ -35,6 +35,10 @@ public class SubwayAppBaseTest extends BaseTest {
     public MobileUser mobileUser;
 
 
+
+
+
+
     @BeforeSuite(alwaysRun = true)
     public void setupSuite1(ITestContext testContext) throws Exception {
         context = new FileSystemXmlApplicationContext("src/test/resources/MobileAppBeans.xml");
@@ -42,24 +46,6 @@ public class SubwayAppBaseTest extends BaseTest {
         driverName = testContext.getCurrentXmlTest().getParameter("driverName");
         BaseTest.EXPLICIT_WAIT_TIME = 300;
     }
-
-    /*@BeforeMethod
-    protected void methodSetup(Method method, ITestContext testContext) throws Exception {
-        Logz.startTestCase(method.getName());
-        String[] platform = testContext.getCurrentXmlTest().getParameter("platform").split(",");
-        String[] browserOrDevice = testContext.getCurrentXmlTest().getParameter("browserOrDevice").split(",");
-        String[] version = testContext.getCurrentXmlTest().getParameter("version").split(",");
-        String[] os = testContext.getCurrentXmlTest().getParameter("os").split(",");
-        String[] driverName = testContext.getCurrentXmlTest().getParameter("driverName").split(",");
-        System.setProperty("testName", method.getName());
-        System.setProperty("suiteName", testContext.getCurrentXmlTest().getSuite().getName());
-        if(!driverName.equals("Windows")) {
-            mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-            RegisterUser.registerAUserWithoutCardLink(mobileUser);
-            this.initializeDrivers(platform, browserOrDevice, version, os, driverName);
-        }
-
-    }*/
 
 
 }

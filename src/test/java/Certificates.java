@@ -3,6 +3,7 @@ import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
+import kobieApi.serviceUtils.KobieClient;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -79,6 +80,7 @@ public class Certificates extends SubwayAppBaseTest {
         homePage.tokenTracker(tokenValue, tokenMessage);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+
         //cetification Generation through kobie..
 
 
