@@ -107,5 +107,15 @@ public class HomePageIOS extends HomePage {
         IOSLabel token = new IOSLabel((IOSDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("CertificatesCount")+"']"), "Get zero Token Message from Dashboard");
         return token;
     }
+    public MobileLabel getRedeemText() throws Exception{
+        IOSLabel token = new IOSLabel((IOSDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("RedeemText")+"']"), "Get zero Token Message from Dashboard");
+        return token;
+    }
+    public MobileButton getRedeemButton() throws Exception{
+        IOSButton token = new IOSButton((IOSDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("RedeemText")+"']"), "Get zero Token Message from Dashboard");
+        return token;
+    }
+
+
 
 }

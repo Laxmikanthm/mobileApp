@@ -56,17 +56,19 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileLabel getZeroTokenMessage() throws Exception;
     abstract MobileLabel getCertificatesMessage() throws Exception;
     abstract MobileLabel getTokenMessage() throws Exception;
+    abstract MobileLabel getRedeemText() throws Exception;
     abstract MobileButton getTellMeHow() throws Exception;
     abstract MobileButton getStartAnotherOrder() throws Exception;
     abstract MobileButton getAnimationSparkle() throws Exception;
     abstract MobileButton getStartAnother() throws Exception;
     abstract MobileButton getRewardsApply() throws Exception;
+    abstract MobileButton getRedeemButton() throws Exception;
 
     public int certValue=0;
 
   //  By Offers=By.xpath("com.subway.mobile.subwayapp03:id/promo_card_stack");
-    By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@resource-id='com.subway.mobile.subwayapp03:id/promo_card_stack']");
-
+   // By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@id='com.subway.mobile.subwayapp03:id/promo_card_stack']/android.support.v7.widget.RecyclerView");
+By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout");
     public List<WebElement> getElements(By locator) {
         List<WebElement> elementsList = ((AndroidDriver) driver).findElements(locator);
 
@@ -75,12 +77,26 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
 
     public void getOffers()throws Exception {
         List<WebElement> elements = getElements(Offers);
-        for (int i = 0; i < 3; i++) {
-            WebElement ele = elements.get(0);
-            MobileElement element = (MobileElement) ele;
-            Thread.sleep(3000L);
+        for (int i = 0; i < elements.size(); i++) {
 
-            element.swipe(SwipeElementDirection.LEFT, 500);
+            Thread.sleep(3000L);
+            List<WebElement> elements2=getElements(By.xpath("//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout[@index="+0+"]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.Button[@index="+0+"]"));
+            WebElement ele2=elements2.get(0);
+             if(ele2.getText().equals("Redeem Now"))
+             {
+                elements2.get(0).click();
+                i=elements.size();
+
+
+             }
+             else {
+                 By offerElement=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout[@index="+i+"]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView");
+                 List<WebElement> elements1=getElements(offerElement);
+                 WebElement ele = elements1.get(0);
+                 MobileElement element = (MobileElement) ele;
+                 element.swipe(SwipeElementDirection.LEFT, 500);
+             }
+
 
         }
     }

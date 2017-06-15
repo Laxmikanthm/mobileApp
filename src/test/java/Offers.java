@@ -53,6 +53,7 @@ public class Offers extends SubwayAppBaseTest {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
+
      /*   MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
@@ -62,10 +63,37 @@ public class Offers extends SubwayAppBaseTest {
      //   remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
      //   SearchStore searchStore = homePage.apply();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrderwithRedeemOffers("All Sandwiches", mobileUser, store.getAddress1());
+        OrdersPage ordersPage = searchStore.findYourStore("19428");
+        ordersPage.placeRandomOrderwithRedeemOffers("All Sandwiches", mobileUser, "200 W Ridge Pike");
 
 
     }
+
+
+    @Test
+    @DirtiesContext
+    public void redeemOfferandCertificate() throws Exception {
+
+        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
+
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage = loginPage.login(mobileUser);
+
+     /*   MenuPage menuPage = homePage.getUserDetails();
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+        addCardPage.selectBackButton();
+        menuPage.goHome();*/
+        //  RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        //   remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+        //   SearchStore searchStore = homePage.apply();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage = searchStore.findYourStore("19428");
+        ordersPage.placeOrderwithRedeemOffersandCertificates("All Sandwiches", mobileUser, "200 W Ridge Pike");
+
+
+    }
+
 
 }

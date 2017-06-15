@@ -1149,12 +1149,36 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
     public void placeRandomOrderwithRedeemOffers(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
-            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+           RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
             homePage.getOffers();
-            getStartOrderButton().click();
+           // getStartOrderButton().click();
+            getItems().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+           scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
+            getAddToBag().isReady();
+            getAddToBag().click();
+            getPlaceOrder().isReady();
+            scrollToElement(ManageLocator,0.9,0.5);
+            //  getPlaceOrder().click();
+            getGotIt().isReady();
+            getGotIt().click();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+    public void placeOrderwithRedeemOffersandCertificates(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
+            homePage.apply();
+            homePage.getOffers();
+            // getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
@@ -1162,6 +1186,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getPlaceOrder().isReady();
             scrollToElement(ManageLocator,0.9,0.5);
+            scrollToElement(ManageLocator,0.9,0.5);
+            String amt[]=getRewardsAmt().getText().split("\\.");
+            int Rewards=Integer.parseInt(amt[0].substring(2));
+            Assert.assertEquals(Rewards,homePage.certValue);
             //  getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
