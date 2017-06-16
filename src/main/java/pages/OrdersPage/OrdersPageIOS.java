@@ -360,5 +360,9 @@ public class OrdersPageIOS extends OrdersPage {
         IOSLabel button = new IOSLabel((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_amount"), "Remove Favourites ");
         return button;
     }
+    public MobileLabel getOrderNumber() throws Exception{
+        IOSLabel switchNameLabel = new IOSLabel((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("orderNumber")+"']"), "OrderNumber");
+        return switchNameLabel;
+    }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
@@ -89,22 +90,25 @@ public class Certificates extends SubwayAppBaseTest {
     @DirtiesContext
     public void redeemMultipleCertificate() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates,54588);
-        mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");
+        mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates
         mobileUser.setPassword("Subway2017");
        // RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
-        /*MenuPage menuPage = homePage.getUserDetails();
+        MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
-        menuPage.goHome();*/
+        menuPage.goHome();
         //RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
       //  remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore("06460");
         ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser, "I-95 East Northbound 1 Milford, CT 06460");
+        Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
+        Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
+        menuPage.validateMobileOrderHistory(ordersPage.orderValue);//validating order history
 
     }
 }

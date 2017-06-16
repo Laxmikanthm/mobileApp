@@ -46,7 +46,9 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @BeforeClass
     public void init() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+       // RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("Lavi@mailinator.com");
+        mobileUser.setPassword("Subway123");
         remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
@@ -205,24 +207,28 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         ordersPage.orderForMakeItAMeal("All Sandwiches", remoteOrder, "CT Turpike West Southbound 2, Milford, CT 06460",ordersPage);
         ordersPage.clickOnPlaceOrder();
     }
+
+    //Place Order for more than 6 times...R2
     @Test
     @DirtiesContext
     public void placeOrderforMoreThanSixTimes() throws Exception
     {
-        Store store=JdbcUtil.getStoreDetails();
+        Store store=JdbcUtil.getStoreDetails();//getting online Store Details
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
+        addCardPage.selectBackButton();//Added Credit Payment Method.
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("06460");
+        OrdersPage ordersPage=searchStore.findYourStore("19428");//searching the store
         for(int i=0;i<=6;i++) {
-            ordersPage.placeRandomOrderForSixTimes("Sides", mobileUser, "I-95 East Northbound 1 Milford, CT 06460",i,homePage);
-           Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());
+            ordersPage.placeRandomOrderForSixTimes("Sides", mobileUser, "200 W Ridge Pike",i,homePage);//Plcaing order more than 6 times
+           Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//Asserting each time token generation.
+            menuPage.validateMobileOrderHistory(ordersPage.orderValue);//verifying order in order History
+
 
         }
     }

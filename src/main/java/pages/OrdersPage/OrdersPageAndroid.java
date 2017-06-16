@@ -264,4 +264,9 @@ public class OrdersPageAndroid extends OrdersPage {
         AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_amount"), "Remove Favourites ");
         return button;
     }
+    public MobileLabel getOrderNumber() throws Exception{
+        AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("orderNumber")+"']"), "OrderNumber");
+        return switchNameLabel;
+    }
+
 }
