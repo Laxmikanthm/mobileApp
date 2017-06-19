@@ -25,6 +25,7 @@ import pages.SearchStore.SearchStore;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import utils.Logz;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -109,10 +110,13 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         Boolean timePresent=ordersPage.getTimeComparision(store.getBreakStartTime(),store.getBreakEndTime(),store.getTimeZone());
         if (timePresent) {
             ordersPage.placeRandomOrder("Breakfast", remoteOrder,store.getAddress1());
+            Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//Asserting each time token generation.
+            menuPage.validateMobileOrderHistory(ordersPage.orderValue);//verifying order in order History
+
         }
         else
         {
-            System.out.println("Breakfast time is over.");
+            Logz.step("Breakfast time is over.");
         }
 
     }

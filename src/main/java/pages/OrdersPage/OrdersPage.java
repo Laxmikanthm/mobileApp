@@ -200,13 +200,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            scrollAndClick(storeNamesLocator, storeName, "Up");
+           HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens=Integer.parseInt(homePage.tokenValue());
             // getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
             getAddToBag().click();
+            getOrderValue();
             getPlaceOrder().click();
             getGotIt().click();
         } catch (Exception ex) {
@@ -701,6 +703,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
 
                     timePresent=true;
+            }
+            if(startTime.equals("00:00:00")&&endTime.equals("00:00:00"))
+            {
+                timePresent=true;
             }
         }
         catch(Exception ex)
