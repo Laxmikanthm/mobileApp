@@ -16,14 +16,15 @@ import pages.HomePage.HomePage;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import sun.management.HotspotMemoryMBean;
 import utils.*;
 import org.openqa.selenium.WebElement;
 import java.lang.String;
-import java.util.Random;
 
 
 /**
@@ -671,6 +672,45 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
 
     }
+    public boolean getTimeComparision(String startTime,String endTime,String timeZone)throws Exception
+    {
+        Boolean timePresent=false;
+        try {
+            Date localTime = new Date();
+            DateFormat convert = new SimpleDateFormat("dd/MM/yyyy:HH:mm:ss");
+            convert.setTimeZone(TimeZone.getTimeZone(timeZone));
+            String dateGmt = convert.format(localTime);
+            System.out.println(dateGmt);
+            String time = dateGmt.split(":", 2)[1];
+
+            Date time1 = new SimpleDateFormat("HH:mm:ss").parse(startTime);
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(time1);
+
+            Date time2 = new SimpleDateFormat("HH:mm:ss").parse(endTime);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(time2);
+            calendar2.add(Calendar.DATE, 1);
+
+            Date d = new SimpleDateFormat("HH:mm:ss").parse(time);
+            Calendar calendar3 = Calendar.getInstance();
+            calendar3.setTime(d);
+            calendar3.add(Calendar.DATE, 1);
+
+            Date x = calendar3.getTime();
+            if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
+
+                    timePresent=true;
+            }
+        }
+        catch(Exception ex)
+        {
+
+        }
+        return timePresent;
+
+    }
+
 
 
     public List<WebElement> findElements(By by) {
@@ -981,6 +1021,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
+            tokens=Integer.parseInt(homePage.tokenValue());
             homePage.apply();
             getStartOrderButton().click();
             getItems().isReady();
@@ -989,6 +1030,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().isReady();
             getAddToBag().click();
             getPlaceOrder().isReady();
+            getOrderValue();
+            getRewardsAmt();
+            getTokens();
             scrollToElement(ManageLocator,0.9,0.5);
           //  getPlaceOrder().click();
             getGotIt().isReady();

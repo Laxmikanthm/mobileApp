@@ -56,9 +56,9 @@ public class Offers extends SubwayAppBaseTest {
         HomePage homePage = loginPage.login(mobileUser);
 
         MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+     /*   AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
+        addCardPage.selectBackButton();*/
         menuPage.goHome();
       //  RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
      //   remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
@@ -92,6 +92,9 @@ public class Offers extends SubwayAppBaseTest {
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore("19428");
         ordersPage.placeOrderwithRedeemOffersandCertificates("All Sandwiches", mobileUser, "200 W Ridge Pike");
+        Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//tokenVerification
+        menuPage.validateMobileOrderHistory(ordersPage.orderValue);//Order Verification
+        //need to do error log
 
 
     }

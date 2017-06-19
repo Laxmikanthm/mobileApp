@@ -57,6 +57,9 @@ public class Certificates extends SubwayAppBaseTest {
         searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches", mobileUser, store.getAddress1());
+        Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
+        Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
+        menuPage.validateMobileOrderHistory(ordersPage.orderValue);//validating order history
 
 
     }

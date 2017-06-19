@@ -26,7 +26,12 @@ import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import static pojos.RemoteOrder.order;
 
@@ -46,9 +51,9 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @BeforeClass
     public void init() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-       // RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("Lavi@mailinator.com");
-        mobileUser.setPassword("Subway123");
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+       /* mobileUser.setEmailAddress("Lavi@mailinator.com");
+        mobileUser.setPassword("Subway123");*/
         remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
@@ -100,8 +105,16 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.placeRandomOrder("Breakfast", remoteOrder,store.getAddress1());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
+        Boolean timePresent=ordersPage.getTimeComparision(store.getBreakStartTime(),store.getBreakEndTime(),store.getTimeZone());
+        if (timePresent) {
+            ordersPage.placeRandomOrder("Breakfast", remoteOrder,store.getAddress1());
+        }
+        else
+        {
+            System.out.println("Breakfast time is over.");
+        }
+
     }
 
     @Test
