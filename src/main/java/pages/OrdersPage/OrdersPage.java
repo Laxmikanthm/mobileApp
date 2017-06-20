@@ -195,9 +195,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 }
 
-    public void placeRandomOrder(String menuItem, RemoteOrder remoteOrder, String storeName) throws Exception {
+    public void placeRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
-
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
@@ -211,14 +211,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getOrderValue();
             getPlaceOrder().click();
             getGotIt().click();
+            Assert.assertEquals(String.valueOf(tokens),homePage.tokenValue().toString());
+            //return specific page
         } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
 
-    public void placeRandomOrderSides(String menuItem, RemoteOrder remoteOrder, String storeName) throws Exception {
+    public void placeRandomOrderSides(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
-
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             scrollAndClick(storeNamesLocator, storeName,  "Up" );
@@ -247,9 +249,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void placeRandomOrderDrinks(String menuItem, RemoteOrder remoteOrder, String storeName) throws Exception {
+    public void placeRandomOrderDrinks(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
-
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             scrollAndClick(storeNamesLocator, storeName,  "Up" );
@@ -274,7 +276,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void addMoreItemsatCheckOut(String menuItem, MobileUser mobileUser, String storeName) throws Exception
     {
         try {
-            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             scrollAndClick(storeNamesLocator, storeName,  "Up");
@@ -302,10 +304,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void orderForMakeItAMeal(String menuItem, RemoteOrder remoteOrder, String storeName,OrdersPage ordersPage) throws Exception {
+    public void orderForMakeItAMeal(String menuItem, MobileUser mobileUser, String storeName,OrdersPage ordersPage) throws Exception {
 
         try {
-
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             scrollAndClick(storeNamesLocator, storeName,  "Up");
@@ -678,6 +680,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     {
         Boolean timePresent=false;
         try {
+            if(startTime.equals("00:00:00")&&endTime.equals("00:00:00"))
+            {
+                timePresent=true;
+                return timePresent;
+            }
             Date localTime = new Date();
             DateFormat convert = new SimpleDateFormat("dd/MM/yyyy:HH:mm:ss");
             convert.setTimeZone(TimeZone.getTimeZone(timeZone));
@@ -703,10 +710,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
 
                     timePresent=true;
-            }
-            if(startTime.equals("00:00:00")&&endTime.equals("00:00:00"))
-            {
-                timePresent=true;
             }
         }
         catch(Exception ex)

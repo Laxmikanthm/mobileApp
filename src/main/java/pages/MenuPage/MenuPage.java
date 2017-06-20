@@ -68,19 +68,17 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-    public void validateMobileOrderHistory(String expectedOrderNum) throws Exception
+    public void assertMobileOrderHistory(String expectedOrderNum) throws Exception
     {
         try{
            getMobileOrderHistory().click();
+            //need to change
            String orderNum= ((AndroidDriver)driver).findElementByXPath("//*[starts-with(@text,'Order ') and @class='android.widget.TextView']").getText();
             String actualOrderNumber[]=orderNum.split(" ");
 
             Assert.assertEquals(actualOrderNumber[1],expectedOrderNum);
-            System.out.println("Hello");
-
-
         }catch(Exception ex){
-            System.out.println("*************** ----Catch Block ----- *********");
+            throw new Exception(ex);
         }
     }
 
