@@ -58,7 +58,7 @@ public class CreateanResubmitFavoriteOrder extends SubwayAppBaseTest {
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrder(order.getCategoryAllSandwiches(), remoteOrder, order.getStoreName());
+        ordersPage.placeRandomOrder(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName());
         menuPage= homePage.gotoMenuPage();
         MobileOrderHistoryPage mobileOrderHistoryPage= menuPage.getOrderHistory();
         mobileOrderHistoryPage.addFavoriteOrder();

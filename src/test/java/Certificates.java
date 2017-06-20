@@ -31,8 +31,17 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class Certificates extends SubwayAppBaseTest {
 
-    MobileUser mobileUser;
-  //  Store store = JdbcUtil.getStoreDetails();
+    MobileUser[] mobileUser;
+    Store store = JdbcUtil.getStoreDetails();
+  @BeforeClass
+  public void init() throws Exception {
+      for(int i =0; i<4; i++) {
+          mobileUser[i] = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+          RegisterUser.registerAUserWithoutCardLink(mobileUser[i]);
+      }
+       /* mobileUser.setEmailAddress("Lavi@mailinator.com");
+        mobileUser.setPassword("Subway123");*/
+  }
 
 
 
@@ -41,25 +50,25 @@ public class Certificates extends SubwayAppBaseTest {
     public void redeemCertificate() throws Exception {
 
         Store store = JdbcUtil.getStoreDetails();
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser[0] = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser[0]);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser);
+        HomePage homePage = loginPage.login(mobileUser[0]);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+        addCardPage.addPayment(mobileUser[0], PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        RemoteOrder remoteOrder = mobileUser[0].getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.apply();
         searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches", mobileUser, store.getAddress1());
+        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches", mobileUser[0], store.getAddress1());
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
-        menuPage.validateMobileOrderHistory(ordersPage.orderValue);//validating order history
+        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
 
 
     }
@@ -69,20 +78,20 @@ public class Certificates extends SubwayAppBaseTest {
     public void verifyCertificate() throws Exception {
 
         Store store = JdbcUtil.getStoreDetails();
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser[1] = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser[1]);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser);
+        HomePage homePage = loginPage.login(mobileUser[1]);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+        addCardPage.addPayment(mobileUser[1], PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         String tokenValue = homePage.tokenValue();
         String tokenMessage = homePage.tokenMessage(tokenValue);
         homePage.tokenTracker(tokenValue, tokenMessage);
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        RemoteOrder remoteOrder = mobileUser[1].getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
 
         //cetification Generation through kobie..
@@ -92,26 +101,48 @@ public class Certificates extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void redeemMultipleCertificate() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates,54588);
-        mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates
-        mobileUser.setPassword("Subway2017");
+
+        mobileUser[2].setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates
+        mobileUser[2].setPassword("Subway2017");
        // RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser);
+        HomePage homePage = loginPage.login(mobileUser[2]);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+        addCardPage.addPayment(mobileUser[2], PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         //RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
       //  remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore("06460");
-        ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser, "I-95 East Northbound 1 Milford, CT 06460");
+        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
+        ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser[2], store.getAddress1());
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
-        menuPage.validateMobileOrderHistory(ordersPage.orderValue);//validating order history
+        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
+
+    }
+
+    public void redeemExpiredCertificate() throws Exception{
+        mobileUser[2].setEmailAddress("test3_june@mailinator.com");//user who is having multiple certificates
+        mobileUser[2].setPassword("Subway2017");
+        // RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage = loginPage.login(mobileUser[2]);
+        MenuPage menuPage = homePage.getUserDetails();
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser[2], PaymentMethod.CREDITCARD);
+        addCardPage.selectBackButton();
+        menuPage.goHome();
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
+        ordersPage.placeRandomOrderwithExpiredCertificate("All Sandwiches", mobileUser[2], store.getAddress1());
+        Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
+        Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
+        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
+
 
     }
 }

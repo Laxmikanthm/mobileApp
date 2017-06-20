@@ -44,12 +44,12 @@ import static pojos.RemoteOrder.order;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class PlaceRandomOrder extends SubwayAppBaseTest {
 
-    MobileUser[] mobileUser = new MobileUser[10];
+   MobileUser[] mobileUser = new MobileUser[10];
     Store store = JdbcUtil.getStoreDetails();
 
     @BeforeClass
     public void init() throws Exception {
-        for(int i =0; i<10; i++) {
+        for(int i =0; i<1; i++) {
             mobileUser[i] = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
             RegisterUser.registerAUserWithoutCardLink(mobileUser[i]);
         }
@@ -96,17 +96,17 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser[3]);
+        HomePage homePage=loginPage.login(mobileUser[0]);
         MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[3],PaymentMethod.CREDITCARD);
+        addCardPage.addPayment(mobileUser[0],PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
         Boolean timePresent=ordersPage.getTimeComparision(store.getBreakStartTime(),store.getBreakEndTime(),store.getTimeZone());
         if (timePresent) {
-            ordersPage.placeRandomOrder("Breakfast", mobileUser[3], store.getAddress1());
+            ordersPage.placeRandomOrder("Breakfast", mobileUser[0], store.getAddress1());
             menuPage.assertMobileOrderHistory(ordersPage.orderValue);//verifying order in order History
 
         }
@@ -228,11 +228,10 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         addCardPage.selectBackButton();//Added Credit Payment Method.
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        //Temp CODE-- work in progress
-        OrdersPage ordersPage=searchStore.findYourStore("19428");//searching the store
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());//searching the store
         for(int i=0;i<=6;i++) {
-            ordersPage.placeRandomOrderForSixTimes("Sides", mobileUser[0], "200 W Ridge Pike",i,homePage);//Plcaing order more than 6 times
-           Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//Asserting each time token generation.
+            ordersPage.placeRandomOrderForSixTimes("Sides", mobileUser[0], store.getAddress1(),i,homePage);//Plcaing order more than 6 times
+            Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//Asserting each time token generation.
             menuPage.assertMobileOrderHistory(ordersPage.orderValue);//verifying order in order History
 
 

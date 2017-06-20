@@ -46,7 +46,7 @@ public class Offers extends SubwayAppBaseTest {
 
 
     @Test
-    @DirtiesContext
+
     public void redeemOffer() throws Exception {
 
         //RegisterUser.registerAUserWithoutCardLink(mobileUser);
@@ -68,7 +68,7 @@ public class Offers extends SubwayAppBaseTest {
         ordersPage.placeRandomOrderwithRedeemOffers("All Sandwiches", mobileUser, "200 W Ridge Pike");
         //need to do offers validation As we are not able place order and not displaying offers in place order page
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//tokenVerification
-        menuPage.validateMobileOrderHistory(ordersPage.orderValue);//Order Verification
+        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//Order Verification
 
 
     }
@@ -93,7 +93,7 @@ public class Offers extends SubwayAppBaseTest {
         OrdersPage ordersPage = searchStore.findYourStore("19428");
         ordersPage.placeOrderwithRedeemOffersandCertificates("All Sandwiches", mobileUser, "200 W Ridge Pike");
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//tokenVerification
-        menuPage.validateMobileOrderHistory(ordersPage.orderValue);//Order Verification
+        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//Order Verification
         //need to do error log
 
 

@@ -53,7 +53,7 @@ public class OrderHistory extends SubwayAppBaseTest {
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        menuPage.validateMobileOrderHistory(paymentResponse.getOrderNumber());
+        menuPage.assertMobileOrderHistory(paymentResponse.getOrderNumber());
 
 
     }
