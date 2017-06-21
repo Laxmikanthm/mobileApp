@@ -364,5 +364,19 @@ public class OrdersPageIOS extends OrdersPage {
         IOSLabel switchNameLabel = new IOSLabel((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("orderNumber")+"']"), "OrderNumber");
         return switchNameLabel;
     }
+    public MobileLabel getErrorTitle() throws Exception{
+        IOSLabel switchNameLabel = new IOSLabel((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("errorTitle")+"']"), "OrderNumber");
+        return switchNameLabel;
+
+    }
+    public MobileLabel getErrorMessage() throws Exception{
+        IOSLabel switchNameLabel = new IOSLabel((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("errorMessage")+"']"), "OrderNumber");
+        return switchNameLabel;
+
+    }
+    public MobileButton getErrorOk() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id(BaseTest.bundle.getString("errorOk")), "ErrorOk ");
+        return button;
+    }
 
 }

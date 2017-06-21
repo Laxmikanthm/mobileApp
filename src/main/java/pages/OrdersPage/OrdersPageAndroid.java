@@ -7,8 +7,10 @@ import base.gui.controls.mobile.android.AndroidTextBox;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
+import base.gui.controls.mobile.ios.IOSButton;
 import base.test.BaseTest;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 
 /**
@@ -267,6 +269,20 @@ public class OrdersPageAndroid extends OrdersPage {
     public MobileLabel getOrderNumber() throws Exception{
         AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("orderNumber")+"']"), "OrderNumber");
         return switchNameLabel;
+    }
+    public MobileLabel getErrorTitle() throws Exception{
+        AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("errorTitle")+"']"), "OrderNumber");
+        return switchNameLabel;
+
+    }
+    public MobileLabel getErrorMessage() throws Exception{
+        AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("errorMessage")+"']"), "OrderNumber");
+        return switchNameLabel;
+
+    }
+    public MobileButton getErrorOk() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("errorOk")), "ErrorOk ");
+        return button;
     }
 
 }

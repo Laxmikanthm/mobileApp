@@ -40,20 +40,16 @@ public class TokenGeneration extends SubwayAppBaseTest {
 
 
     @Test
-    @DirtiesContext
     public void tokenGeneration() throws Exception {
 
-      //  mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-      //  RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
-        String tokenValue = homePage.tokenValue();
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(13, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards = homePage.getTokensSparkle();
         myWayRewards.getSwipe();
-        tokenValue = homePage.tokenValue();
+        String tokenValue = homePage.tokenValue();
         Assert.assertEquals("50", tokenValue);
 
     }

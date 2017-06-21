@@ -4,6 +4,7 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
+import cardantApiFramework.pojos.Store;
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -13,12 +14,17 @@ import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.*;
 import org.testng.Assert;
 import pages.HomePage.HomePage;
+import pages.MenuPage.MenuPage;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import sun.management.HotspotMemoryMBean;
@@ -110,6 +116,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileLabel getSwitchStoreName() throws Exception;
     abstract MobileLabel getRewardsAmt() throws Exception;
     abstract MobileLabel getOrderNumber() throws Exception;
+    abstract MobileLabel getErrorTitle() throws Exception;
+    abstract MobileLabel getErrorMessage() throws Exception;
 
     abstract MobileButton getExpandArrow() throws Exception;
     abstract MobileButton getSelectFlavor() throws Exception;
@@ -121,6 +129,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getFavouriteAddToBag() throws Exception;
     abstract MobileButton getUnFavouriteIcon() throws Exception;
     abstract MobileButton getRemoveFavourite() throws Exception;
+    abstract MobileButton getErrorOk() throws Exception;
 
     Random random = new Random();
     String favoriteOrderName=null;
@@ -139,6 +148,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By specialInstructionsLabel  = By.id("instructions_header");
     By FavouriteIconLocator=By.id("favorite_animation");
     By ManageLocator=By.id("manage_rewards");
+    By Subtotal=By.id("subtotal");
 
     Random rn = new Random();
     int firstrandnum;
@@ -202,7 +212,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getDirections().isReady();
            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
             tokens=Integer.parseInt(homePage.tokenValue());
-            // getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
@@ -212,11 +221,35 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getPlaceOrder().click();
             getGotIt().click();
             Assert.assertEquals(String.valueOf(tokens),homePage.tokenValue().toString());
+
             //return specific page
         } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
+    public void placeRandomOrderForInvalidBreakfastTime(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens=Integer.parseInt(homePage.tokenValue());
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
+            getAddToBag().click();
+            getErrorTitle().getText();
+            Assert.assertTrue( getErrorTitle().getText().equals("Error"));
+            Assert.assertTrue(getErrorMessage().equals("Could not add FOOTLONG™"+order.getCart().getProductDetail().getProductClass().getName()+"at this time"));
+            getErrorOk().click();
+
+            //return specific page
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
 
     public void placeRandomOrderSides(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
@@ -676,9 +709,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
 
     }
-    public boolean getTimeComparision(String startTime,String endTime,String timeZone)throws Exception
+    public boolean getTimeComparision(Store store)throws Exception
     {
         Boolean timePresent=false;
+        String startTime=store.getBreakStartTime();
+        String endTime=store.getBreakEndTime();
+        String timeZone=store.getTimeZone();
         try {
             if(startTime.equals("00:00:00")&&endTime.equals("00:00:00"))
             {
@@ -686,10 +722,27 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 return timePresent;
             } else {
 
-                Date localTime = new Date();
-                DateFormat convert = new SimpleDateFormat("dd/MM/yyyy:HH:mm:ss");
-                convert.setTimeZone(TimeZone.getTimeZone(timeZone));
-                String dateGmt = convert.format(TimeZone.getTimeZone(timeZone));
+
+                Date today = new Date();
+
+                DateFormat df = new SimpleDateFormat("dd-MM-yy HH:mm:ss");
+
+                //dispalying date on PST timezone
+                if(timeZone.equals("Pacific Standard Time"))
+                {
+                    timeZone="America/Los_Angeles";
+                }
+                else if(timeZone.equals("Eastern Standard Time"))
+                {
+                    timeZone="America/New_York";
+                }
+                else if(timeZone.equals("Central Standard Time"))
+                {
+                    timeZone="America/Chicago";
+                }
+                df.setTimeZone(TimeZone.getTimeZone(timeZone));
+                String dateGmt = df.format(today);
+                System.out.println("Date in  Timezone : " + dateGmt);
                 System.out.println(dateGmt);
                 String time = dateGmt.split(":", 2)[1];
 
@@ -716,7 +769,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
         catch(Exception ex)
         {
-
+            throw new Exception(ex);
         }
         return timePresent;
 
@@ -1043,7 +1096,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getPlaceOrder().isReady();
             getOrderValue();
             getRewardsAmt();
-            getTokens();
+            getTokens(remoteOrder);
             scrollToElement(ManageLocator,0.9,0.5);
           //  getPlaceOrder().click();
             getGotIt().isReady();
@@ -1092,8 +1145,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
-    public void getTokens()throws Exception
+    public void getTokens(RemoteOrder remoteOrder)throws Exception
     {
+        scrollToElement(Subtotal,0.9,0.5);
         price=Double.parseDouble(getSubTotal().getText().substring(1));
         tokens1=remoteOrder.computeTokens(price);
         tokens=tokens+tokens1;
@@ -1156,7 +1210,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
         return Rewards;
     }
-    public void placeRandomOrderForSixTimes(String menuItem, MobileUser mobileUser, String storeName,int i,HomePage homePage) throws Exception {
+    public MenuPage placeRandomOrderForSixTimes(String menuItem, MobileUser mobileUser, String storeName,int i,HomePage homePage) throws Exception {
         try {
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
@@ -1175,26 +1229,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up" );
-           // scrollToItemAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  driver.manage().window().getSize().getHeight()-50 );
-            String subCategoryName = order.getCart().getProductDetail().getName();
-            if(subCategoryName.equalsIgnoreCase("Apple Slices")){
-                getAddToBag().isReady();
-            }else{
-                swipe(sidesOrDrinks, subCategoryName , "Left");
-                getSelectFlavor().isReady();
-                getSelectFlavor().click();
-                getItemSelectFlavor().isReady();
-                getItemSelectFlavor().click();
-                getAddToBag().isReady();
-            }
-           // getAddToBag().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
             getAddToBag().click();
             getOrderValue();
             getPlaceOrder().isReady();
             getPlaceOrder().click();
-            getTokens();
+            getTokens(remoteOrder);
             getGotIt().isReady();
             getGotIt().click();
+            return MenuPage.get((AppiumDriver) driver);
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -1214,7 +1257,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().isReady();
             getAddToBag().click();
             getOrderValue();
-            getTokens();
+            getTokens(remoteOrder);
             scrollToElement(ManageLocator,0.9,0.5);
             rewardsValue();
             //  getPlaceOrder().click();
@@ -1288,8 +1331,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
             getAddToBag().isReady();
             getAddToBag().click();
+
             getOrderValue();
-            getTokens();
+            getTokens(remoteOrder);
             scrollToElement(ManageLocator,0.9,0.5);
             rewardsValue();
             //  getPlaceOrder().click();
@@ -1297,6 +1341,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getGotIt().click();
         } catch (Exception ex) {
             throw new Exception(ex);
+        }
+    }
+    public void ValidatingPlacingOrderForSixTimes(MobileUser mobileUser,String Address,HomePage homePage)throws Exception {
+        for (int i = 0; i <= 6; i++) {
+            MenuPage menuPage=placeRandomOrderForSixTimes("All Sandwiches", mobileUser, Address, i, homePage);//Plcaing order more than 6 times
+            homePage= menuPage.assertMobileOrderHistory(orderValue);
+            //Asserting each time token generation.
+            Assert.assertEquals(String.valueOf(tokens), homePage.tokenValue().toString());//verifying order in order History
+
+
         }
     }
 

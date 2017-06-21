@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.AddCardPage.AddCardPage;
 import pages.ContactInformationPage.ContactInformationPage;
+import pages.HomePage.HomePage;
 import pages.MobileOrderHistoryPage.MobileOrderHistoryPage;
 import pages.NamePage.NamePage;
 import pages.PhonePage.PhonePage;
@@ -68,7 +69,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-    public void assertMobileOrderHistory(String expectedOrderNum) throws Exception
+    public HomePage assertMobileOrderHistory(String expectedOrderNum) throws Exception
     {
         try{
            getMobileOrderHistory().click();
@@ -77,6 +78,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             String actualOrderNumber[]=orderNum.split(" ");
 
             Assert.assertEquals(actualOrderNumber[1],expectedOrderNum);
+            return HomePage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);
         }
