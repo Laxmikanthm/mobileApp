@@ -3,6 +3,7 @@ import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
+import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,6 +23,7 @@ import pages.SearchStore.SearchStore;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
 
 /**
  * Created by E001599 on 29-05-2017.
@@ -31,27 +33,24 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class Certificates extends SubwayAppBaseTest {
 
-    MobileUser[] mobileUser;
+    MobileUser[] mobileUser=new MobileUser[3];
     Store store = JdbcUtil.getStoreDetails();
   @BeforeClass
   public void init() throws Exception {
-      for(int i =0; i<4; i++) {
+      for(int i =0; i<1; i++) {
           mobileUser[i] = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
           RegisterUser.registerAUserWithoutCardLink(mobileUser[i]);
       }
-       /* mobileUser.setEmailAddress("Lavi@mailinator.com");
-        mobileUser.setPassword("Subway123");*/
+
   }
 
 
-
     @Test
-    @DirtiesContext
     public void redeemCertificate() throws Exception {
 
         Store store = JdbcUtil.getStoreDetails();
-        mobileUser[0] = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser[0]);
+        //mobileUser[0] = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+       // RegisterUser.registerAUserWithoutCardLink(mobileUser[0]);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser[0]);
@@ -62,6 +61,9 @@ public class Certificates extends SubwayAppBaseTest {
         menuPage.goHome();
         RemoteOrder remoteOrder = mobileUser[0].getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+      RemoteOrderCustomer remoteOrderCustomer=remoteOrder.customer;
+        String MdmId=remoteOrderCustomer.getGuestID();
+        Kobie.generateCertificates(MdmId);
         SearchStore searchStore = homePage.apply();
         searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
@@ -73,7 +75,6 @@ public class Certificates extends SubwayAppBaseTest {
 
     }
     @Test
-    @DirtiesContext
 
     public void verifyCertificate() throws Exception {
 
@@ -113,8 +114,11 @@ public class Certificates extends SubwayAppBaseTest {
         addCardPage.addPayment(mobileUser[2], PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
-        //RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-      //  remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+        RemoteOrder remoteOrder = mobileUser[2].getCart().getRemoteOrder();
+       remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+        RemoteOrderCustomer remoteOrderCustomer=remoteOrder.customer;
+        String MdmId=remoteOrderCustomer.getGuestID();
+        Kobie.generateCertificates(MdmId);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser[2], store.getAddress1());

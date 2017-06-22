@@ -101,7 +101,7 @@ public class HomePageAndroid extends HomePage {
         return button;
     }
     public MobileLabel getCertificatesMessage() throws Exception{
-        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("CertificatesCount")+"']"), "Get zero Token Message from Dashboard");
+        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("CertificatesCount")+"']"), "Get Certificates Count");
         return token;
     }
     public MobileLabel getRedeemText() throws Exception{
