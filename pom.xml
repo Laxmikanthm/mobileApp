@@ -72,7 +72,7 @@
                     <systemPropertyVariables>
 
                         <projectName>SubwayMobileApp</projectName>
-                        <spring.profiles.active>local</spring.profiles.active>
+                       <!-- <spring.profiles.active>local</spring.profiles.active>-->
                         <!--<language>en</language>-->
                         <country>US</country>
                         <language>us</language>
@@ -91,11 +91,11 @@
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>C:/Subway Projects/Apps/R2/june6th/subwayE2eDebug5000522.apk</app>
+                        <app>/Users/e001599/Downloads/subwayE2eDebug5000564.apk </app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
-                        <operatingSystem>Windows</operatingSystem>
+                        <operatingSystem>mac</operatingSystem>
                         <!-- R1/E2E-->
                         <environment>stage</environment>
                         <environmentR1R2>r2</environmentR1R2>
@@ -121,7 +121,7 @@
                         <appName>SubwayR1Execution</appName>
 
                         <!--Test Object-->
-                        <!--<spring.profiles.active>testObject</spring.profiles.active>
+                        <spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
@@ -131,7 +131,8 @@
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <appName>SubwayR1Execution</appName>
                         <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>
--->
+                        <testObjectURL>https://us1.appium.testobject.com/wd/hub</testObjectURL>
+
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->

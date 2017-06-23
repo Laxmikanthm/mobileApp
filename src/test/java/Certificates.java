@@ -3,6 +3,7 @@ import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
+import kobieApi.pojos.Loyalty;
 import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;
 import org.springframework.test.annotation.DirtiesContext;
@@ -18,6 +19,7 @@ import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
+import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
 import pojos.RemoteOrder;
@@ -61,14 +63,20 @@ public class Certificates extends SubwayAppBaseTest {
         menuPage.goHome();
         RemoteOrder remoteOrder = mobileUser[0].getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
-      RemoteOrderCustomer remoteOrderCustomer=remoteOrder.customer;
+        MyWayRewards myWayRewards=homePage.getTokensSparkle();
+        myWayRewards.getSwipe();
+        RemoteOrderCustomer remoteOrderCustomer=remoteOrder.customer;
         String MdmId=remoteOrderCustomer.getGuestID();
         Kobie.generateCertificates(MdmId);
-        SearchStore searchStore = homePage.apply();
-        searchStore = homePage.findYourSubWay();
+        myWayRewards=homePage.getTokensSparkle();
+        myWayRewards.toolBarClose();
+        Loyalty loyalty=new Loyalty(remoteOrderCustomer);
+        remoteOrderCustomer=KobieClient.getLoyaltyLookup(loyalty,remoteOrderCustomer);
+        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
+        SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches", mobileUser[0], store.getAddress1());
-        Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
+        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",remoteOrder, store.getAddress1());
+        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
         menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
 
@@ -94,8 +102,17 @@ public class Certificates extends SubwayAppBaseTest {
         homePage.tokenTracker(tokenValue, tokenMessage);
         RemoteOrder remoteOrder = mobileUser[1].getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+        MyWayRewards myWayRewards=homePage.getTokensSparkle();
+        myWayRewards.getSwipe();
+        RemoteOrderCustomer remoteOrderCustomer=remoteOrder.customer;
+        String MdmId=remoteOrderCustomer.getGuestID();
+        Kobie.generateCertificates(MdmId);
+        myWayRewards=homePage.getTokensSparkle();
+        myWayRewards.toolBarClose();
+        Loyalty loyalty=new Loyalty(remoteOrderCustomer);
+        remoteOrderCustomer=KobieClient.getLoyaltyLookup(loyalty,remoteOrderCustomer);
+        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
 
-        //cetification Generation through kobie..
 
 
     }
@@ -129,8 +146,7 @@ public class Certificates extends SubwayAppBaseTest {
     }
 
     public void redeemExpiredCertificate() throws Exception{
-        mobileUser[2].setEmailAddress("test3_june@mailinator.com");//user who is having multiple certificates
-        mobileUser[2].setPassword("Subway2017");
+
         // RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
@@ -140,6 +156,18 @@ public class Certificates extends SubwayAppBaseTest {
         addCardPage.addPayment(mobileUser[2], PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
         menuPage.goHome();
+        RemoteOrder remoteOrder = mobileUser[2].getCart().getRemoteOrder();
+        remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+        MyWayRewards myWayRewards=homePage.getTokensSparkle();
+        myWayRewards.getSwipe();
+        RemoteOrderCustomer remoteOrderCustomer=remoteOrder.customer;
+        String MdmId=remoteOrderCustomer.getGuestID();
+        Kobie.generateCertificates(MdmId);
+        myWayRewards=homePage.getTokensSparkle();
+        myWayRewards.toolBarClose();
+        Loyalty loyalty=new Loyalty(remoteOrderCustomer);
+        remoteOrderCustomer=KobieClient.getLoyaltyLookup(loyalty,remoteOrderCustomer);
+        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
         ordersPage.placeRandomOrderwithExpiredCertificate("All Sandwiches", mobileUser[2], store.getAddress1());

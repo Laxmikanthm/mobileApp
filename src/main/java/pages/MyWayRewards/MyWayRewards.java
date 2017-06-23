@@ -76,4 +76,8 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         getToolbarClose().click();
 
     }
+    public void toolBarClose()throws Exception
+    {
+        getToolbarClose().click();
+    }
 }

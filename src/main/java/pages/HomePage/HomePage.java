@@ -65,6 +65,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getRedeemButton() throws Exception;
 
     public int certValue=0;
+    public int certCount=0;
 
   //  By Offers=By.xpath("com.subway.mobile.subwayapp03:id/promo_card_stack");
    // By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@id='com.subway.mobile.subwayapp03:id/promo_card_stack']/android.support.v7.widget.RecyclerView");
@@ -262,6 +263,13 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
 
         getStartAnother().click();
         return OrdersPage.get((AppiumDriver) driver);
+    }
+    public int certsCount() throws Exception
+    {
+        String cert[]=getCertificatesMessage().getText().split(" ");
+        certValue=Integer.parseInt(cert[0].substring(1));
+        certCount=certValue/2;
+        return certCount;
     }
     public SearchStore apply()throws Exception
     {

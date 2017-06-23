@@ -1079,9 +1079,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
         }
     }
-    public void placeRandomOrderwithRedeemCertificate(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+    public void placeRandomOrderwithRedeemCertificate(String menuItem, RemoteOrder remoteOrder, String storeName) throws Exception {
         try {
-            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
