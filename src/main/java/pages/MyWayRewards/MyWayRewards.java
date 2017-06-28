@@ -10,10 +10,16 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import kobieApi.pojos.Loyalty;
+import kobieApi.pojos.Summaries;
+import kobieApi.serviceUtils.KobieClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+import pages.HomePage.HomePage;
 import pages.LoginPage.LoginPageAndroid;
 import pages.LoginPage.LoginPageIOS;
+import pojos.user.RemoteOrderCustomer;
 
 import java.util.List;
 
@@ -79,5 +85,35 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     public void toolBarClose()throws Exception
     {
         getToolbarClose().click();
+    }
+    public int getTokens(RemoteOrderCustomer remoteOrderCustomer) throws Exception
+    {
+        List<Summaries> summaries=remoteOrderCustomer.getLoyaltyLookup().getLoyalty().getSummaries();
+        int tokens=0;
+        for(int i=0;i<summaries.size();i++)
+        {
+            if(summaries.get(i).getRewardType()=="Points")
+            {
+
+                tokens=Integer.parseInt(summaries.get(i).getAvailable());
+                tokens=+tokens;
+            }
+        }
+        return tokens;
+
+    }
+
+    public void validateTokens(RemoteOrderCustomer remoteOrderCustomer, HomePage homePage)throws Exception
+    {
+            int tokens=getTokens(remoteOrderCustomer);
+             homePage.tokenValue();
+        Assert.assertEquals(tokens,Integer.parseInt(homePage.tokenValue()));
+    }
+    public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer, HomePage homePage)throws Exception
+    {
+        Loyalty loyalty=new Loyalty(remoteOrderCustomer);
+        remoteOrderCustomer= KobieClient.getLoyaltyLookup(loyalty,remoteOrderCustomer);
+        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
+
     }
 }

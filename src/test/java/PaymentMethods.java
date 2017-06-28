@@ -44,7 +44,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
     public MobileUser userRegistration()throws Exception
     {
 
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         // mobileUser.setEmailAddress("june8th@mailinator.com");
         // mobileUser.setPassword("Subway123");
