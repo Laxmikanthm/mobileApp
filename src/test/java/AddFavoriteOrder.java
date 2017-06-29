@@ -38,7 +38,8 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
     Order order1;
 
 MobileUser mobileUser;
-Store store=JdbcUtil.getStoreDetails();
+Store store;
+//Store store=JdbcUtil.getStoreDetails();
 
 
 
@@ -46,10 +47,10 @@ Store store=JdbcUtil.getStoreDetails();
     public MobileUser userRegistration()throws Exception
     {
 
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-       // RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("june8th@mailinator.com");
-        mobileUser.setPassword("Subway123");
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        /*mobileUser.setEmailAddress("june8th@mailinator.com");
+        mobileUser.setPassword("Subway123");*/
         return mobileUser;
 
     }
@@ -62,14 +63,15 @@ Store store=JdbcUtil.getStoreDetails();
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-       /* MenuPage menuPage = homePage.getUserDetails();
+        MenuPage menuPage = homePage.getUserDetails();
         AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
-        menuPage.goHome();*/
+        menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("95932");
-        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "1031 Bridge St");
+        OrdersPage ordersPage=searchStore.findYourStore("19428");
+        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "200 W Ridge Pike");
+        Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue());
         homePage.addSomethingElse();
         //Assert.assertEquals(orderPage.favoriteOrderName(), orderPage.favorite());
         ordersPage.placeFavouriteReOrder(mobileUser, store.getAddress1());

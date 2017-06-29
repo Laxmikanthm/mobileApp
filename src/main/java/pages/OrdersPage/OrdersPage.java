@@ -968,7 +968,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            scrollAndClick(storeNamesLocator, storeName,  "Up" );
+            HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
+            tokens=Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up" );
@@ -977,6 +978,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getPlaceOrder().isReady();
             getPlaceOrder().click();
+            getTokens(remoteOrder);
             scrollToElement(FavouriteIconLocator,0.9,0.5);
             getFavouriteIcon().click();
             // getFavouriteText().click;
