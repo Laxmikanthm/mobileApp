@@ -1,5 +1,6 @@
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
@@ -30,15 +31,16 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
 
-    RemoteOrder remoteOrder;
+   // RemoteOrder remoteOrder;
     @Autowired
     Order order;
     MobileUser mobileUser;
+    Store store=JdbcUtil.getStoreDetails();
     @BeforeClass
     public void init() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        remoteOrder = mobileUser.getCart().getRemoteOrder();
+       // remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
 
@@ -49,16 +51,8 @@ public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
         String paymentTypeCreditCard = "CreditCard";
         String paymentTypeGiftCard="GiftCard";
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
-        addCardPage.addPayment(mobileUser,PaymentMethod.SUBWAYCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrder(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName());
     }
 }

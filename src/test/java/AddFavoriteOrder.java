@@ -39,6 +39,7 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
 
 MobileUser mobileUser;
 Store store;
+
 //Store store=JdbcUtil.getStoreDetails();
 
 
@@ -47,7 +48,7 @@ Store store;
     public MobileUser userRegistration()throws Exception
     {
 
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         /*mobileUser.setEmailAddress("june8th@mailinator.com");
         mobileUser.setPassword("Subway123");*/
@@ -61,16 +62,9 @@ Store store;
     {
 
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore("19428");
-        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "200 W Ridge Pike");
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore("06460");
+        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 East Northbound 1");
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue());
         homePage.addSomethingElse();
         //Assert.assertEquals(orderPage.favoriteOrderName(), orderPage.favorite());
@@ -82,15 +76,8 @@ Store store;
     public void UnFavouriteOrder()throws Exception
     {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore("06460");
         ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser,store.getAddress1());
         ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
 

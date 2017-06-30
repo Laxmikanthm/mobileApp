@@ -51,15 +51,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderAllSandwiches() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[1]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[1], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[1],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrder("All Sandwiches", mobileUser[1], store.getAddress1());
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
@@ -67,15 +60,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderSubwayFreshFit() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[2]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[2], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[2],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser[2], store.getAddress1());
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
@@ -83,19 +69,12 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderBreakfast() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[0]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[0], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[0],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         Boolean timePresent = ordersPage.getTimeComparision(store);
         if (timePresent) {
             ordersPage.placeRandomOrder("Breakfast", mobileUser[0], store.getAddress1());
-            menuPage.assertMobileOrderHistory(ordersPage.orderValue);//verifying order in order History
+           // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//verifying order in order History
 
         } else {
             //Assert 'Breakfast Not available' alert popup message
@@ -107,75 +86,40 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderPersonalPizza() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[4]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[4], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[4],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrder("Personal Pizza", mobileUser[4], store.getAddress1());
     }
 
     @Test
     public void placeOrderChoppedSalads() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[5]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[5], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[5],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrder("Chopped Salads", mobileUser[5], store.getAddress1());
     }
 
     @Test
     public void placeOrderSUBWAYFreshFitforKids() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[6]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[6], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[6],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrder("Kids' Meal", mobileUser[6], store.getAddress1());
     }
 
     @Test
     public void placeOrderSides() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[7]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[7], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[1],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrderSides("Sides", mobileUser[7], store.getAddress1());
     }
 
     @Test
     public void placeOrderDrinks() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[8]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[8], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[1],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrderDrinks("Drinks", mobileUser[8], store.getAddress1());
     }
 
@@ -183,15 +127,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void OrderAMeal() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[9]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[9], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[1],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser[9], "CT Turpike West Southbound 2, Milford, CT 06460", ordersPage);
         ordersPage.clickOnPlaceOrder();
     }
@@ -200,15 +137,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderforMoreThanSixTimes() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[0]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[0], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();//Added Credit Payment Method.
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());//searching the store
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[1],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.ValidatingPlacingOrderForSixTimes(mobileUser[0], store.getAddress1(), homePage);
 
     }

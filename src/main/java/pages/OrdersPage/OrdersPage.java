@@ -974,7 +974,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up" );
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
-            getAddToBag().isReady();
             getAddToBag().click();
             getPlaceOrder().isReady();
             getPlaceOrder().click();

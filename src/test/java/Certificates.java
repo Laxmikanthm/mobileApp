@@ -57,13 +57,7 @@ public class Certificates extends SubwayAppBaseTest {
         //mobileUser[0] = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
        // RegisterUser.registerAUserWithoutCardLink(mobileUser[0]);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[0]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[0], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[0],PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser[0].getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
@@ -75,12 +69,11 @@ public class Certificates extends SubwayAppBaseTest {
         myWayRewards=homePage.getTokensSparkle();
         myWayRewards.toolBarClose();
         myWayRewards.validateCertificate(remoteOrderCustomer,homePage);
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",remoteOrder, store.getAddress1());
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
-        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
+        //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
 
 
     }
@@ -92,13 +85,7 @@ public class Certificates extends SubwayAppBaseTest {
         mobileUser[1] = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser[1]);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[1]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[1], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[1],PaymentMethod.CREDITCARD);
         String tokenValue = homePage.tokenValue();
         String tokenMessage = homePage.tokenMessage(tokenValue);
         homePage.tokenTracker(tokenValue, tokenMessage);
@@ -125,13 +112,7 @@ public class Certificates extends SubwayAppBaseTest {
         mobileUser[2].setPassword("Subway2017");
        // RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[2]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[2], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[2],PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser[2].getCart().getRemoteOrder();
        remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         RemoteOrderCustomer remoteOrderCustomer=remoteOrder.customer;
@@ -140,12 +121,11 @@ public class Certificates extends SubwayAppBaseTest {
         myWayRewards.validateCertificate(remoteOrderCustomer,homePage);
         String MdmId=remoteOrderCustomer.getGuestID();
         Kobie.generateCertificates(MdmId);
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser[2], store.getAddress1());
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
-        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
+       // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
 
     }
 
@@ -153,13 +133,7 @@ public class Certificates extends SubwayAppBaseTest {
 
         // RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser[2]);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser[2], PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[2],PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser[2].getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
@@ -172,12 +146,11 @@ public class Certificates extends SubwayAppBaseTest {
         Loyalty loyalty=new Loyalty(remoteOrderCustomer);
         remoteOrderCustomer=KobieClient.getLoyaltyLookup(loyalty,remoteOrderCustomer);
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrderwithExpiredCertificate("All Sandwiches", mobileUser[2], store.getAddress1());
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
-        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
+        //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
 
 
     }

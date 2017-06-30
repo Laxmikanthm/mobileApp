@@ -300,6 +300,12 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
 
         }
     }
+    public OrdersPage findStore(String zipCode)throws Exception
+    {
+        SearchStore searchStore = findYourSubWay();
+        searchStore.findYourStore(zipCode);
+        return OrdersPage.get((AppiumDriver) driver);
+    }
 }
 
 

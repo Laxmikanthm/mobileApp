@@ -3,11 +3,16 @@ package pages.LandingPage;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
+import enums.PaymentMethod;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import pages.AddCardPage.AddCardPage;
+import pages.HomePage.HomePage;
 import pages.LoginPage.LoginPage;
+import pages.MenuPage.MenuPage;
 import pages.RegistrationPage.RegistrationPage;
+import pojos.user.MobileUser;
 
 /**
  * Created by test-user on 3/1/17.
@@ -76,6 +81,17 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             return LandingPageIOS.class;
         }else
             return LandingPageAndroid.class;
+    }
+    public HomePage getUserLoginAndAddingCard(MobileUser mobileUser,PaymentMethod paymentType)throws Exception
+    {
+        LoginPage loginPage = gotoLogInPage();
+        HomePage homePage=loginPage.login(mobileUser);
+        MenuPage menuPage = homePage.getUserDetails();
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser, paymentType);
+        addCardPage.selectBackButton();
+        menuPage.goHome();
+        return HomePage.get((AppiumDriver) driver);
     }
 
 
