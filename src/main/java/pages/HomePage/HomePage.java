@@ -8,6 +8,9 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import kobieApi.pojos.Loyalty;
+import kobieApi.pojos.Summaries;
+import kobieApi.serviceUtils.KobieClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -15,6 +18,7 @@ import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
+import pojos.user.RemoteOrderCustomer;
 
 import java.util.List;
 
@@ -305,6 +309,38 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
         SearchStore searchStore = findYourSubWay();
         searchStore.findYourStore(zipCode);
         return OrdersPage.get((AppiumDriver) driver);
+    }
+    public int getTokens(RemoteOrderCustomer remoteOrderCustomer) throws Exception
+    {
+        List<Summaries> summaries=remoteOrderCustomer.getLoyaltyLookup().getLoyalty().getSummaries();
+        int tokens=0;
+        for(int i=0;i<summaries.size();i++)
+        {
+            if(summaries.get(i).getRewardType().equals("Points"))
+            {
+
+                int tokens1=(int)Double.parseDouble(summaries.get(i).getAvailable());
+                tokens+=tokens1;
+            }
+        }
+        return tokens;
+
+    }
+    public void validateTokens(RemoteOrderCustomer remoteOrderCustomer)throws Exception
+    {
+        Loyalty loyality=new Loyalty(remoteOrderCustomer);
+        remoteOrderCustomer= KobieClient.getLoyaltyLookup(loyality,remoteOrderCustomer);
+        List<Summaries> summaries=remoteOrderCustomer.getLoyaltyLookup().getLoyalty().getSummaries();
+        int tokens=getTokens(remoteOrderCustomer);
+        tokenValue();
+        Assert.assertEquals(tokens,Integer.parseInt(tokenValue()));
+    }
+    public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer)throws Exception
+    {
+        Loyalty loyalty=new Loyalty(remoteOrderCustomer);
+        remoteOrderCustomer= KobieClient.getLoyaltyLookup(loyalty,remoteOrderCustomer);
+        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),certsCount());
+
     }
 }
 

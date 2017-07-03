@@ -12,12 +12,12 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>3.2.8-SNAPSHOT</version>
+            <version>3.3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>2.9.8-SNAPSHOT</version>
+            <version>3.0.9-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -72,7 +72,7 @@
                     <systemPropertyVariables>
 
                         <projectName>SubwayMobileApp</projectName>
-                       <!-- <spring.profiles.active>local</spring.profiles.active>-->
+                        <spring.profiles.active>local</spring.profiles.active>
                         <!--<language>en</language>-->
                         <country>US</country>
                         <language>us</language>
@@ -91,11 +91,12 @@
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000564.apk </app>
+                        <app>/Users/e001599/Downloads/subwayE2eDebug5000564.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
                         <operatingSystem>mac</operatingSystem>
+                        <kobieEndpoint>Mobile</kobieEndpoint>
                         <!-- R1/E2E-->
                         <environment>stage</environment>
                         <environmentR1R2>r2</environmentR1R2>
@@ -118,21 +119,20 @@
                         <!--End Mobile-->
 
                         <executionPlatform></executionPlatform>
-                        <appName>SubwayR1Execution</appName>
+                        <appName>R2-Mobile</appName>
 
                         <!--Test Object-->
-                        <spring.profiles.active>testObject</spring.profiles.active>
+                        <!--<spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>92358A02A874494A9F740E0B97297B94</testObjectApiKey>
-                        <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
-                        <app>C:/Subway/SubWayApps/May12th/subwayStagingDebug5000417.apk</app>
+                        <testObjectApiKey>DB6DDA0FF3FF46C7B3803867B8BD8AF5</testObjectApiKey>
+                        <testObjectDevice>Samsung_Galaxy_S7_real</testObjectDevice>
+                        <app>/Users/e001599/Downloads/subwayE2eDebug5000564.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
-                        <appName>SubwayR1Execution</appName>
+                        <appName>R2-Mobile</appName>
                         <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>
-                        <testObjectURL>https://us1.appium.testobject.com/wd/hub</testObjectURL>
-
+                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>-->
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->
@@ -225,6 +225,30 @@
         </pluginRepository>
 
     </pluginRepositories>
+
+    <!--<profiles>
+        <profile>
+            <id>R2smoke</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.19.1</version>
+                        <configuration>
+
+
+                            <suiteXmlFiles>
+                                <suiteXmlFile>smokeTests.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+
+                        </configuration>
+
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>-->
 
 </project>
 
