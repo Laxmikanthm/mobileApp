@@ -12,6 +12,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import kobieApi.pojos.Loyalty;
 import kobieApi.pojos.Summaries;
+import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -111,6 +112,8 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     }
     public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer, HomePage homePage)throws Exception
     {
+        String MdmId=remoteOrderCustomer.getGuestID();
+        Kobie.generateCertificates(MdmId);
         Loyalty loyalty=new Loyalty(remoteOrderCustomer);
         remoteOrderCustomer= KobieClient.getLoyaltyLookup(loyalty,remoteOrderCustomer);
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());

@@ -21,6 +21,7 @@ import pages.SearchStore.SearchStore;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
 
 /**
  * Created by E001599 on 13-06-2017.
@@ -30,12 +31,13 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class Offers extends SubwayAppBaseTest {
     MobileUser mobileUser;
+    RemoteOrderCustomer remoteOrderCustomer;
     Store store = JdbcUtil.getStoreDetails();
 
     @BeforeClass(alwaysRun = true)
     public MobileUser userRegistration() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        // RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
         mobileUser.setEmailAddress("garybowman@qasubway.com");
         mobileUser.setPassword("Subway1234");
         return mobileUser;
@@ -48,19 +50,14 @@ public class Offers extends SubwayAppBaseTest {
     public void redeemOffer() throws Exception {
 
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore("19428");
         ordersPage.placeRandomOrderwithRedeemOffers("All Sandwiches", mobileUser, "200 W Ridge Pike");
         //need to do offers validation As we are not able place order and not displaying offers in place order page
         Assert.assertEquals(String.valueOf(ordersPage.tokens), homePage.tokenValue().toString());//tokenVerification
-        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//Order Verification
+       // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//Order Verification
+        homePage.validateTokens(remoteOrderCustomer);
 
 
     }

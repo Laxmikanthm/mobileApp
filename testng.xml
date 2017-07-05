@@ -17,6 +17,12 @@
                 <include name="addCreditCard"/>
             </methods>
         </class>
+        <class name="TokenGeneration">
+            <methods>
+
+                <include name="tokenGeneration"/>
+            </methods>
+        </class>
     </classes>
 </test>
 

@@ -10,6 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import kobieApi.pojos.Loyalty;
 import kobieApi.pojos.Summaries;
+import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -312,7 +313,10 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
     }
     public int getTokens(RemoteOrderCustomer remoteOrderCustomer) throws Exception
     {
+        Loyalty loyality=new Loyalty(remoteOrderCustomer);
+        remoteOrderCustomer= KobieClient.getLoyaltyLookup(loyality,remoteOrderCustomer);
         List<Summaries> summaries=remoteOrderCustomer.getLoyaltyLookup().getLoyalty().getSummaries();
+
         int tokens=0;
         for(int i=0;i<summaries.size();i++)
         {
@@ -328,19 +332,22 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
     }
     public void validateTokens(RemoteOrderCustomer remoteOrderCustomer)throws Exception
     {
-        Loyalty loyality=new Loyalty(remoteOrderCustomer);
-        remoteOrderCustomer= KobieClient.getLoyaltyLookup(loyality,remoteOrderCustomer);
-        List<Summaries> summaries=remoteOrderCustomer.getLoyaltyLookup().getLoyalty().getSummaries();
+
         int tokens=getTokens(remoteOrderCustomer);
         tokenValue();
         Assert.assertEquals(tokens,Integer.parseInt(tokenValue()));
     }
     public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer)throws Exception
     {
-        Loyalty loyalty=new Loyalty(remoteOrderCustomer);
-        remoteOrderCustomer= KobieClient.getLoyaltyLookup(loyalty,remoteOrderCustomer);
-        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),certsCount());
-
+        if(getTokens(remoteOrderCustomer)>=200) {
+            String MdmId = remoteOrderCustomer.getGuestID();
+            Kobie.generateCertificates(MdmId);
+            MyWayRewards myWayRewards = getTokensSparkle();
+            myWayRewards.toolBarClose();
+            Loyalty loyalty = new Loyalty(remoteOrderCustomer);
+            remoteOrderCustomer = KobieClient.getLoyaltyLookup(loyalty, remoteOrderCustomer);
+            Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(), certsCount());
+        }
     }
 }
 

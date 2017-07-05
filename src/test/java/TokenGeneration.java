@@ -2,6 +2,7 @@ import Base.SubwayAppBaseTest;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
+import kobieApi.serviceUtils.Kobie;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -19,6 +20,7 @@ import pages.MyWayRewards.MyWayRewards;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
 
 /**
  * Created by E001599 on 25-05-2017.
@@ -29,12 +31,13 @@ import pojos.user.RegisterUser;
 public class TokenGeneration extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
+    RemoteOrderCustomer remoteOrderCustomer;
 
     @BeforeClass(alwaysRun = true)
     public void userRegistration()throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
 
     }
 
@@ -46,11 +49,21 @@ public class TokenGeneration extends SubwayAppBaseTest {
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        remoteOrder.placeRandomOrderForGivenNumberOfTokens(13, PaymentMethod.CREDITCARD);
+        remoteOrder.placeRandomOrderForGivenNumberOfTokens(2, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards = homePage.getTokensSparkle();
         myWayRewards.getSwipe();
-        String tokenValue = homePage.tokenValue();
-        Assert.assertEquals("50", tokenValue);
+        if(homePage.getTokens(remoteOrderCustomer)>=200)
+        {
+            String MdmId=remoteOrderCustomer.getGuestID();
+            Kobie.generateCertificates(MdmId);
+            myWayRewards=homePage.getTokensSparkle();
+            myWayRewards.toolBarClose();
+            homePage.validateCertificate(remoteOrderCustomer);
+
+        }
+        homePage.validateTokens(remoteOrderCustomer);
+
+
 
     }
 

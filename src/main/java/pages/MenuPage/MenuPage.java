@@ -7,14 +7,19 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.AddCardPage.AddCardPage;
 import pages.ContactInformationPage.ContactInformationPage;
 import pages.HomePage.HomePage;
 import pages.MobileOrderHistoryPage.MobileOrderHistoryPage;
 import pages.NamePage.NamePage;
+import pages.OrdersPage.OrdersPage;
 import pages.PhonePage.PhonePage;
 import pojos.user.MobileUser;
+
+import java.util.List;
 
 /**
  * Created by e002243 on 16-02-2017.
@@ -43,6 +48,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     //abstract MobileLabel getOrderNumber() throws Exception;
 
 
+    By logout=By.id("com.subway.mobile.subwayapp03:id/logout");
     //abstract MobileButton getLogOutButton() throws Exception;
 
     public static MenuPage get(AppiumDriver driver) throws Exception{
@@ -104,11 +110,26 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             throw new Exception(ex);
         }
     }
+    public List<WebElement> getElements(By locator) {
+        List<WebElement> elementsList = ((AndroidDriver) driver).findElements(locator);
 
+        return elementsList;
+    }
+    public void scrollToElement(By locator, double startpoint, double endpoint) {
+        while (getElements(locator).size() == 0) {
+            boolean flag = false;
+            Dimension dimensions = driver.manage().window().getSize();
+            int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
+            int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
+            ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+        }
+    }
     public void logout() throws Exception
 
     {
         try {
+
+            scrollToElement(logout,0.9,0.5);
             getLogOut().isReady();
             getLogOut().click();
             logOutInpopupButton();
