@@ -108,7 +108,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
 
     @Test
     @DirtiesContext
-    public void addPayPal () throws Exception{
+    public void addPayPal() throws Exception{
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

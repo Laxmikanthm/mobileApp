@@ -11,18 +11,21 @@
     <parameter name="projectName" value="${driverName}"></parameter>
     <classes>
 
+        <class name="PlaceRandomOrder">
+            <methods>
+
+                <include name="placeOrderAllSandwiches"/>
+            </methods>
+        </class>
         <class name="PaymentMethods">
             <methods>
 
                 <include name="addCreditCard"/>
+                <include name="addDebitCard"/>
+                <include name="addPayPal"/>
             </methods>
         </class>
-        <class name="TokenGeneration">
-            <methods>
 
-                <include name="tokenGeneration"/>
-            </methods>
-        </class>
     </classes>
 </test>
 
