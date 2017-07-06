@@ -25,6 +25,7 @@ import pages.SearchStore.SearchStore;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
 
 /**
  * Created by e002243 on 19-04-2017.
@@ -39,6 +40,7 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
 
 MobileUser mobileUser;
 Store store;
+RemoteOrderCustomer remoteOrderCustomer;
 
 //Store store=JdbcUtil.getStoreDetails();
 
@@ -65,9 +67,9 @@ Store store;
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("06460");
         ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 East Northbound 1");
-        Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue());
+        homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
-        //Assert.assertEquals(orderPage.favoriteOrderName(), orderPage.favorite());
+        Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
         ordersPage.placeFavouriteReOrder(mobileUser, store.getAddress1());
 
     }

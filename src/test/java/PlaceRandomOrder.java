@@ -25,6 +25,7 @@ import pages.SearchStore.SearchStore;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
 import utils.Logz;
 
 
@@ -38,6 +39,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     MobileUser[] mobileUser = new MobileUser[10];
     Store store;
+    RemoteOrderCustomer remoteOrderCustomer;
     //Store store = JdbcUtil.getStoreDetails();
 
     @BeforeClass
@@ -57,6 +59,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[0],PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("06460");
         ordersPage.placeRandomOrder("All Sandwiches", mobileUser[0], "I-95 East Northbound 1");
+        homePage.validateTokens(remoteOrderCustomer);
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
 

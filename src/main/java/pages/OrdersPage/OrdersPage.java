@@ -132,7 +132,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getErrorOk() throws Exception;
 
     Random random = new Random();
-    String favoriteOrderName=null;
+    public String favoriteOrderName=null;
     public String orderValue=null;
     RemoteOrder remoteOrder;
     public  int Rewards=0;
@@ -219,8 +219,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getOrderValue();
             getPlaceOrder().click();
+            getTokens(remoteOrder);
             getGotIt().click();
-            Assert.assertEquals(String.valueOf(tokens),homePage.tokenValue().toString());
+            Assert.assertEquals(homePage.tokenValue().toString(),String.valueOf(tokens));
 
             //return specific page
         } catch (Exception ex) {
@@ -987,6 +988,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             getGotIt().isReady();
             getGotIt().click();
+            Assert.assertEquals(String.valueOf(tokens),homePage.tokenValue().toString());
 
         } catch (Exception ex) {
             throw new Exception(ex);
