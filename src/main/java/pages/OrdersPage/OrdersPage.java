@@ -1150,6 +1150,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
     public void getTokens(RemoteOrder remoteOrder)throws Exception
     {
+        Thread.sleep(2000);
+
+
         scrollToElement(Subtotal,0.9,0.5);
         price=Double.parseDouble(getSubTotal().getText().substring(1));
         tokens1=remoteOrder.computeTokens(price);

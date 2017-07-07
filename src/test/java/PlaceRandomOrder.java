@@ -13,6 +13,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
@@ -38,17 +39,17 @@ import utils.Logz;
 public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     MobileUser[] mobileUser = new MobileUser[10];
-    Store store;
+   Store store;
     RemoteOrderCustomer remoteOrderCustomer;
-    //Store store = JdbcUtil.getStoreDetails();
+   // Store store = JdbcUtil.getStoreDetails();
 
     @BeforeClass
     public void init() throws Exception {
         for (int i = 0; i < 1; i++) {
             mobileUser[i] = new MobileUser(false, Country.UnitedStates, 54588);
-           // RegisterUser.registerAUserWithoutCardLink(mobileUser[i]);
-            mobileUser[0].setEmailAddress("lavi@mailinator.com");
-            mobileUser[0].setPassword("Subway1234");
+            RegisterUser.registerAUserWithoutCardLink(mobileUser[i]);
+           // mobileUser[0].setEmailAddress("lavi@mailinator.com");
+           // mobileUser[0].setPassword("Subway1234");
 
         }
     }
@@ -66,9 +67,9 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderSubwayFreshFit() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[2],PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser[2], store.getAddress1());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[0],PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore("06460");
+        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser[0], "I-95 East Northbound 1");
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
 

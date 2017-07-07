@@ -129,7 +129,6 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
     public MenuPage getUserDetails() throws Exception
     {
         try{
-            this.getMenu().waitForClickable();
             this.getMenu().click();
             return MenuPage.get((AppiumDriver)driver);
         }catch(Exception ex){

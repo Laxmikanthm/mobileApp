@@ -53,7 +53,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public LoginPage gotoLogInPage() throws Exception {
         try {
-            getLoginButton().isReady();
+
             this.getLoginButton().click();
             return LoginPage.get((AppiumDriver) driver);
         } catch (Exception ex) {
@@ -87,9 +87,9 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         LoginPage loginPage = gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-       /* AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, paymentType);
-        addCardPage.selectBackButton();*/
+        addCardPage.selectBackButton();
         menuPage.goHome();
         return HomePage.get((AppiumDriver) driver);
     }

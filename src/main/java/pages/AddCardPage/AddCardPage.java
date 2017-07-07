@@ -123,7 +123,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     public void selectBackButton()  throws Exception
     {
 
-        getBackButton().isReady();
+
         getBackButton().click();
 
     }

@@ -72,7 +72,6 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
             Thread.sleep(5000);
             ((AppiumDriver) driver).swipe(200, 700, 200, 100, 4000);
             getAgreeAndContinue().click();
-            getBackBtn().isReady();
             getBackBtn().click();
             return PaymentMethodsPage.get((AppiumDriver) driver);
         } catch (Exception ex) {

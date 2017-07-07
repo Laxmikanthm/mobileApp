@@ -50,7 +50,7 @@ RemoteOrderCustomer remoteOrderCustomer;
     public MobileUser userRegistration()throws Exception
     {
 
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         /*mobileUser.setEmailAddress("june8th@mailinator.com");
         mobileUser.setPassword("Subway123");*/
