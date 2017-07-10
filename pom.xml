@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.0.9-SNAPSHOT</version>
+            <version>3.1.8-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -91,7 +91,7 @@
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000564.apk</app>
+                        <app>/Users/e001599/Downloads/subwayE2eDebug5000588.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
@@ -128,7 +128,7 @@
                         <testObjectUser>dias_p</testObjectUser>
                         <testObjectApiKey>DB6DDA0FF3FF46C7B3803867B8BD8AF5</testObjectApiKey>
                         <testObjectDevice>Samsung_Galaxy_S7_real</testObjectDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000564.apk</app>
+                        <app>/Users/e001599/Downloads/subwayE2eDebug5000588.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <appName>R2-Mobile</appName>
                         <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>
@@ -230,6 +230,8 @@
         <profile>
             <id>R2smoke</id>
             <build>
+
+
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
