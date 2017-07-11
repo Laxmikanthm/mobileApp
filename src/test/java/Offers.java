@@ -34,20 +34,13 @@ public class Offers extends SubwayAppBaseTest {
     RemoteOrderCustomer remoteOrderCustomer;
     Store store = JdbcUtil.getStoreDetails();
 
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("garybowman@qasubway.com");
-        mobileUser.setPassword("Subway1234");
-        return mobileUser;
-
-    }
 
 
     @Test
 
     public void redeemOffer() throws Exception {
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
 
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
@@ -67,7 +60,8 @@ public class Offers extends SubwayAppBaseTest {
     @DirtiesContext
     public void redeemOfferandCertificate() throws Exception {
 
-
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

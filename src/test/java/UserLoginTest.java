@@ -45,7 +45,6 @@ public class UserLoginTest extends SubwayAppBaseTest {
 
 
     @Test
-    @DirtiesContext
     public void userLogin() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
@@ -53,7 +52,6 @@ public class UserLoginTest extends SubwayAppBaseTest {
     }
 
     @Test
-    @DirtiesContext
     public void createUser() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
@@ -61,8 +59,9 @@ public class UserLoginTest extends SubwayAppBaseTest {
     }
 
     @Test
-    @DirtiesContext
     public void userLogout() throws Exception {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

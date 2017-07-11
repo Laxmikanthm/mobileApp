@@ -33,8 +33,10 @@ public class AppVersion extends SubwayAppBaseTest {
     @BeforeClass(alwaysRun = true)
     public MobileUser userRegistration()throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+       // RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("lavi@mailinator.com");
+        mobileUser.setPassword("Subway1234");
         return mobileUser;
     }
 

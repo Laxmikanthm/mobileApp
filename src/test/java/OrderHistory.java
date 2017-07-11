@@ -34,19 +34,11 @@ public class OrderHistory extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
 
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
-
-    }
-
     @Test
     public void verifyOrderHistory() throws Exception
     {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         PaymentResponse paymentResponse=remoteOrder.placeRandomOrder(1, PaymentMethod.CREDITCARD);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

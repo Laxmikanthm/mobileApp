@@ -5,6 +5,7 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
+import enums.PaymentMethod;
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -1082,9 +1083,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
         }
     }
-    public void placeRandomOrderwithRedeemCertificate(String menuItem, RemoteOrder remoteOrder, String storeName) throws Exception {
+    public void placeRandomOrderwithRedeemCertificate(String menuItem,MobileUser mobileUser, String storeName) throws Exception {
         try {
 
+            RemoteOrder remoteOrder=mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
@@ -1099,11 +1101,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getPlaceOrder().isReady();
             getOrderValue();
             getRewardsAmt();
-            getTokens(remoteOrder);
             scrollToElement(ManageLocator,0.9,0.5);
-          //  getPlaceOrder().click();
+           getPlaceOrder().click();
+            getTokens(remoteOrder);
             getGotIt().isReady();
             getGotIt().click();
+            Assert.assertEquals(String.valueOf(tokens),homePage.tokenValue().toString());
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -1263,10 +1266,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().isReady();
             getAddToBag().click();
             getOrderValue();
-            getTokens(remoteOrder);
+
             scrollToElement(ManageLocator,0.9,0.5);
             rewardsValue();
-            //  getPlaceOrder().click();
+             getPlaceOrder().click();
+            getTokens(remoteOrder);
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
@@ -1290,7 +1294,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getPlaceOrder().isReady();
             getOrderValue();
             scrollToElement(ManageLocator,0.9,0.5);
-            //  getPlaceOrder().click();
+            getPlaceOrder().click();
+            getTokens(remoteOrder);
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {

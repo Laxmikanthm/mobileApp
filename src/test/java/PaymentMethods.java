@@ -40,23 +40,13 @@ public class PaymentMethods extends SubwayAppBaseTest {
     List<SubwayCard> cards =null;
     MobileUser mobileUser;
 
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        // mobileUser.setEmailAddress("june8th@mailinator.com");
-        // mobileUser.setPassword("Subway123");
-        return mobileUser;
-
-    }
-
 
 
     @Test
     @DirtiesContext
     public void addCreditCard() throws Exception {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
@@ -72,6 +62,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void addDebitCard() throws Exception {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
@@ -88,6 +80,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
     @DirtiesContext
     public void addGiftCard() throws Exception {
         try{
+            mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+            RegisterUser.registerAUserWithoutCardLink(mobileUser);
             cards.add(0,SubwayCard.getSubwayCardFromDB(pojos.enums.Lock.TRUE));
             mobileUser.setSubwayCards(cards);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -109,6 +103,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void addPayPal() throws Exception{
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

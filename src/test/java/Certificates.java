@@ -1,5 +1,6 @@
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.pojos.Store;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
@@ -38,35 +39,26 @@ import java.util.List;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class Certificates extends SubwayAppBaseTest {
 
-    MobileUser[] mobileUser=new MobileUser[3];
+    MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
    Store store;
    //Store store = JdbcUtil.getStoreDetails();
-  @BeforeClass
-  public void init() throws Exception {
-      for(int i =0; i<1; i++) {
-          mobileUser[i] = new MobileUser(false, Country.UnitedStates, 54588);
-          remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser[i]);
-          /*mobileUser[i].setEmailAddress("lavi@mailinator.com");
-          mobileUser[i].setPassword("Subway123");*/
-      }
-
-  }
-
 
     @Test
     public void redeemCertificate() throws Exception {
-
+        mobileUser= new MobileUser(false, Country.UnitedStates, 12921);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[0],PaymentMethod.CREDITCARD);
-        RemoteOrder remoteOrder = mobileUser[0].getCart().getRemoteOrder();
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
         homePage.validateCertificate(remoteOrderCustomer);
         homePage.validateTokens(remoteOrderCustomer);
-        OrdersPage ordersPage=homePage.findStore("06460");
-        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",remoteOrder, "I-95 East Northbound 1");
+        OrdersPage ordersPage=homePage.findStore("19428");
+        CartData.createNewCart(remoteOrderCustomer,12921);
+        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",mobileUser, "200 W Ridge Pike");
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
         //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
@@ -77,14 +69,14 @@ public class Certificates extends SubwayAppBaseTest {
 
     public void verifyCertificate() throws Exception {
 
-        mobileUser[1] = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser[1]);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[1],PaymentMethod.CREDITCARD);
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         String tokenValue = homePage.tokenValue();
         String tokenMessage = homePage.tokenMessage(tokenValue);
         homePage.tokenTracker(tokenValue, tokenMessage);
-        RemoteOrder remoteOrder = mobileUser[1].getCart().getRemoteOrder();
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
@@ -98,18 +90,18 @@ public class Certificates extends SubwayAppBaseTest {
     @DirtiesContext
     public void redeemMultipleCertificate() throws Exception {
 
-        mobileUser[2].setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates
-        mobileUser[2].setPassword("Subway2017");
+        mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates
+        mobileUser.setPassword("Subway2017");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[2],PaymentMethod.CREDITCARD);
-        RemoteOrder remoteOrder = mobileUser[2].getCart().getRemoteOrder();
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
        remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
         homePage.validateCertificate(remoteOrderCustomer);
         homePage.validateTokens(remoteOrderCustomer);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser[2], store.getAddress1());
+        ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser, store.getAddress1());
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
        // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
@@ -117,18 +109,18 @@ public class Certificates extends SubwayAppBaseTest {
     }
 
     public void redeemExpiredCertificate() throws Exception{
-
-        // RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser[2],PaymentMethod.CREDITCARD);
-        RemoteOrder remoteOrder = mobileUser[2].getCart().getRemoteOrder();
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
         homePage.validateCertificate(remoteOrderCustomer);
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.placeRandomOrderwithExpiredCertificate("All Sandwiches", mobileUser[2], store.getAddress1());
+        ordersPage.placeRandomOrderwithExpiredCertificate("All Sandwiches", mobileUser, store.getAddress1());
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
         //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history

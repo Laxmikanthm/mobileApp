@@ -46,23 +46,13 @@ RemoteOrderCustomer remoteOrderCustomer;
 
 
 
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        /*mobileUser.setEmailAddress("june8th@mailinator.com");
-        mobileUser.setPassword("Subway123");*/
-        return mobileUser;
-
-    }
 
     @Test
     @DirtiesContext
     public void addFavoriteOrder() throws Exception
     {
-
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("06460");
@@ -77,6 +67,8 @@ RemoteOrderCustomer remoteOrderCustomer;
     @DirtiesContext
     public void UnFavouriteOrder()throws Exception
     {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("06460");
