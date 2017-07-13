@@ -42,24 +42,19 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     MobileUser mobileUser;
     @BeforeClass
     public void init() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        remoteOrder = mobileUser.getCart().getRemoteOrder();
+
+
 
     }
     //After clicking on  edit check whether selected product is displayed or not
     @Test
     @DirtiesContext
     public void editCartVerifyPlaceOrder() throws Exception{
-
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
+        HomePage homePage = landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
         ordersPage.assertProduct(ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, order.getStoreName()),ordersPage.getSubItemInfo());
@@ -70,17 +65,13 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void editCartAddAnotherVerifyPlaceOrder() throws Exception{
-
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
+        HomePage homePage = landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, order.getStoreName());
         ordersPage.getSubItemInfo();
         ordersPage.assertEditCartAddAnother();
@@ -92,17 +83,13 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void editCartDeleteItemVerifyPlaceOrder() throws Exception{
-
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
+        HomePage homePage = landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, order.getStoreName());
         ordersPage.getSubItemInfo();
         ordersPage.assertEditCartDeleteItem();
@@ -115,16 +102,13 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void editCartSomethingElseVerifyPlaceOrder() throws Exception{
 
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser,PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
+        HomePage homePage = landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
         String aItem = ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, order.getStoreName());
         ordersPage.addAnotherNewItem();
         String eItem = ordersPage.editCartAndPlaceAnOrder(order.getCategorySUBWAYFreshFit(),remoteOrder, order.getStoreName());

@@ -33,19 +33,12 @@ public class UserLoginTest extends SubwayAppBaseTest {
     /*@Autowired
     Order order;*/
     MobileUser mobileUser;
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
-
-    }
 
 
     @Test
     public void userLogin() throws Exception {
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         loginPage.login(mobileUser);

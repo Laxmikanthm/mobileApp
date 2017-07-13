@@ -47,12 +47,12 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     @Test
     public void placeOrderAllSandwiches() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06460");
-        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, "I-95 East Northbound 1");
+        OrdersPage ordersPage=homePage.findStore("19428");
+        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, "200 W Ridge Pike");
         homePage.validateTokens(remoteOrderCustomer);
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }

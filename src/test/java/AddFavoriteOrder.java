@@ -51,12 +51,12 @@ RemoteOrderCustomer remoteOrderCustomer;
     @DirtiesContext
     public void addFavoriteOrder() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06460");
-        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 East Northbound 1");
+        OrdersPage ordersPage=homePage.findStore("19428");
+        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "200 W Ridge Pike");
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
@@ -67,13 +67,15 @@ RemoteOrderCustomer remoteOrderCustomer;
     @DirtiesContext
     public void UnFavouriteOrder()throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06460");
-        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser,store.getAddress1());
-        ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
+        OrdersPage ordersPage=homePage.findStore("19428");
+        ordersPage.removeFavouriteOrder(order1.getCategoryAllSandwiches(),mobileUser, "200 W Ridge Pike",remoteOrderCustomer);
+        //ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(),mobileUser, "200 W Ridge Pike");
+        homePage.validateTokens(remoteOrderCustomer);
+        //ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
 
 
     }

@@ -28,6 +28,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import pojos.user.RemoteOrderCustomer;
 import sun.management.HotspotMemoryMBean;
 import utils.*;
 import org.openqa.selenium.WebElement;
@@ -131,6 +132,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getUnFavouriteIcon() throws Exception;
     abstract MobileButton getRemoveFavourite() throws Exception;
     abstract MobileButton getErrorOk() throws Exception;
+    abstract MobileButton getpopupGotIt() throws Exception;
 
     Random random = new Random();
     public String favoriteOrderName=null;
@@ -220,6 +222,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getOrderValue();
             getPlaceOrder().click();
+            Thread.sleep(5000);
             getTokens(remoteOrder);
             getGotIt().click();
             Assert.assertEquals(homePage.tokenValue().toString(),String.valueOf(tokens));
@@ -965,7 +968,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void placeFavouriteRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+    public HomePage placeFavouriteRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
@@ -977,8 +980,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up" );
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().click();
-            getPlaceOrder().isReady();
+            Thread.sleep(5000);
             getPlaceOrder().click();
+            Thread.sleep(10000);
             getTokens(remoteOrder);
             scrollToElement(FavouriteIconLocator,0.9,0.5);
             getFavouriteIcon().click();
@@ -986,10 +990,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             favoriteOrderName="Subway"+random.nextInt(10);
             getFavouriteText().setText(favoriteOrderName);
             getFavouriteSave().click();
-
-            getGotIt().isReady();
+            getpopupGotIt().click();
             getGotIt().click();
             Assert.assertEquals(String.valueOf(tokens),homePage.tokenValue().toString());
+
+            return HomePage.get((AppiumDriver)driver);
 
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -1132,11 +1137,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
-    public void removeFavouriteOrder(MobileUser mobileUser, String storeName) throws Exception {
+    public void removeFavouriteOrder(String menuItem, MobileUser mobileUser, String storeName, RemoteOrderCustomer remoteOrderCustomer) throws Exception {
         try {
-
-            getDirections().isReady();
-            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up" );
+            HomePage homePage=placeFavouriteRandomOrder(menuItem,mobileUser,storeName);
+            homePage.validateTokens(remoteOrderCustomer);
+            //getDirections().isReady();
+          //  HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up" );
             homePage.addSomethingElse();
             getItems().isReady();
             getAllFavourites();
@@ -1153,9 +1159,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
     public void getTokens(RemoteOrder remoteOrder)throws Exception
     {
-        Thread.sleep(2000);
-
-
+        Thread.sleep(5000);
         scrollToElement(Subtotal,0.9,0.5);
         price=Double.parseDouble(getSubTotal().getText().substring(1));
         tokens1=remoteOrder.computeTokens(price);

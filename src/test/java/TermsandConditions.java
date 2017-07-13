@@ -29,20 +29,13 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class TermsandConditions extends SubwayAppBaseTest {
     MobileUser mobileUser;
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        return mobileUser;
-
-    }
 
     @Test
     @DirtiesContext
     public void verifyTermandConditions() throws Exception
     {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

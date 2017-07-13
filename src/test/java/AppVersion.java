@@ -30,20 +30,12 @@ import pojos.user.RegisterUser;
 public class AppVersion extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
-    @BeforeClass(alwaysRun = true)
-    public MobileUser userRegistration()throws Exception
-    {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-       // RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("lavi@mailinator.com");
-        mobileUser.setPassword("Subway1234");
-        return mobileUser;
-    }
-
 
     @Test
     public void verifyAppVersion() throws Exception
     {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

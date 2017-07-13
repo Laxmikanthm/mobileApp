@@ -184,6 +184,7 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
     }
     public String tokenValue()throws Exception
     {
+        Thread.sleep(20000);
         return getTokenValue().getText();
     }
     public String zeroTokenMessage()throws Exception

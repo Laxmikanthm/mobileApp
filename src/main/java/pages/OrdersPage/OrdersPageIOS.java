@@ -378,5 +378,9 @@ public class OrdersPageIOS extends OrdersPage {
         IOSButton button = new IOSButton((IOSDriver) driver, By.id(BaseTest.bundle.getString("errorOk")), "ErrorOk ");
         return button;
     }
+    public MobileButton getpopupGotIt() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("popupGot")), "Popup GotIt");
+        return button;
+    }
 
 }

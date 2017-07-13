@@ -35,17 +35,13 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
     @Autowired
     Order order;
     MobileUser mobileUser;
-    @BeforeClass
-    public void init() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        remoteOrder = mobileUser.getCart().getRemoteOrder();
 
-    }
     @Test
     @DirtiesContext
     public void OrderSpecialInstructions() throws Exception
     {
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
