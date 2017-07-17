@@ -11,6 +11,8 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
 import pages.HomePage.HomePage;
 import pojos.user.MobileUser;
 import utils.Logz;
@@ -42,6 +44,7 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
+    By nextLocator=By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("NextButton")+"']");
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -69,14 +72,20 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
 
     abstract MobileButton getSignUpButton() throws Exception;
 
+    abstract MobileButton getCheckboxOffers() throws Exception;
+
+
     public HomePage signUp() throws Exception {
         try {
             MobileUser user  = new MobileUser(false, Country.UnitedStates, 54588);
             getFirstName().isReady();
             getFirstName().setText(user.getFirstName());
+            getDriver().hideKeyboard();
+            getLastName().isReady();
             getLastName().setText(user.getLastName());
             getDriver().hideKeyboard();
             getPhone().setText(user.getPhoneTenDigits());
+            getDriver().hideKeyboard();
             getNextButton().click();
             getEmail().isReady();
             getEmail().setText(user.getEmailAddress());
@@ -84,9 +93,7 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
             getDriver().hideKeyboard();
             getConfirmPasswrod().setText(user.getPassword());
             getDriver().hideKeyboard();
-            getNextButton().click();
-            getSignUpButton().waitForClickable();
-            enterCode(getVerificationCode(user.getEmailAddress()));
+            getCheckboxOffers().click();
             getSignUpButton().click();
             return HomePage.get((AppiumDriver) driver);
         } catch (Exception ex) {

@@ -34,7 +34,7 @@ public class AppVersion extends SubwayAppBaseTest {
     @Test
     public void verifyAppVersion() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();

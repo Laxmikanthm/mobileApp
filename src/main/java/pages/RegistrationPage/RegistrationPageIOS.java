@@ -1,11 +1,13 @@
 package pages.RegistrationPage;
 
+import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.ios.IOSButton;
 import base.gui.controls.mobile.ios.IOSPasswordTextBox;
 import base.gui.controls.mobile.ios.IOSTextBox;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 
@@ -69,6 +71,11 @@ public class RegistrationPageIOS extends RegistrationPage {
     public IOSButton getSignUpButton() throws Exception {
 
         IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAButton[@label='" + BaseTest.bundle.getString("GetStarted") + "']"), "Get Started button");
+
+        return button;
+    }
+    public IOSButton getCheckboxOffers() throws Exception{
+        IOSButton button =new IOSButton((IOSDriver) driver, By.id(BaseTest.bundle.getString("OffersCheckbox")), "Offers checkbx");
 
         return button;
     }

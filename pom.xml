@@ -71,7 +71,7 @@
 
                     <systemPropertyVariables>
 
-                        <projectName>SubwayMobileApp</projectName>
+                        <ProjectName>SubwayMobileApp</ProjectName>
                         <spring.profiles.active>local</spring.profiles.active>
                         <!--<language>en</language>-->
                         <country>US</country>
@@ -91,7 +91,7 @@
                         <appiumVersion>1.5.3</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000588.apk</app>
+                        <app>/Users/e001599/Downloads/subwayE2eDebug5000610.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
@@ -127,7 +127,7 @@
                         <testObjectUser>dias_p</testObjectUser>
                         <testObjectApiKey>DB6DDA0FF3FF46C7B3803867B8BD8AF5</testObjectApiKey>
                         <testObjectDevice>Samsung_Galaxy_S7_real</testObjectDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000588.apk</app>
+                        <app>/Users/e001599/Downloads/subwayE2eDebug5000610.apk/app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <appName>R2-Mobile</appName>
                         <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>

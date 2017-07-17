@@ -50,7 +50,7 @@ public class PayPalPageAndroid extends PayPalPage {
     }
 
     public AndroidButton getBackBtn() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("BackBtn")), "Back button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("Backbutton")), "Back button");
         return button;
     }
 
