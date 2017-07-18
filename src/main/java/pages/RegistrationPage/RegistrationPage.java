@@ -11,8 +11,6 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
 import pages.HomePage.HomePage;
 import pojos.user.MobileUser;
 import utils.Logz;
@@ -73,7 +71,6 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
     abstract MobileButton getSignUpButton() throws Exception;
 
     abstract MobileButton getCheckboxOffers() throws Exception;
-
 
     public HomePage signUp() throws Exception {
         try {

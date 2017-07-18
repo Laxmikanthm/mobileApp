@@ -71,7 +71,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderBreakfast() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -90,7 +90,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderPersonalPizza() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
@@ -100,7 +100,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderChoppedSalads() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -110,7 +110,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderSUBWAYFreshFitforKids() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -120,7 +120,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderSides() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -130,7 +130,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderDrinks() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -141,7 +141,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void OrderAMeal() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -153,7 +153,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderforMoreThanSixTimes() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());

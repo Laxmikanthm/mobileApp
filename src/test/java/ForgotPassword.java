@@ -39,12 +39,11 @@ public class ForgotPassword extends SubwayAppBaseTest  {
     @DirtiesContext
     public void forgotPassword()throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         ForgotYourPasswordPage forgotPasswordPage= loginPage.forgotPassword();
-        mobileUser.setPassword(order.getUpdatePassword());
         loginPage = forgotPasswordPage.setNewPassword(mobileUser);
         landingPage.gotoLogInPage();
         loginPage.loginAfterResetPassoword(mobileUser);

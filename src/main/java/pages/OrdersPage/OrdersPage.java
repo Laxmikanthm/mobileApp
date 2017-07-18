@@ -993,7 +993,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getpopupGotIt().click();
             getGotIt().click();
             Assert.assertEquals(String.valueOf(tokens),homePage.tokenValue().toString());
-
             return HomePage.get((AppiumDriver)driver);
 
         } catch (Exception ex) {
@@ -1120,7 +1119,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     {
         getFavourites().click();
     }
-    public void placeFavouriteReOrder(MobileUser mobileUser, String storeName) throws Exception {
+    public void placeFavouriteReOrder(MobileUser mobileUser) throws Exception {
         try {
 
 

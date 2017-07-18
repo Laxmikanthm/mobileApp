@@ -60,9 +60,25 @@ RemoteOrderCustomer remoteOrderCustomer;
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
-        ordersPage.placeFavouriteReOrder(mobileUser, store.getAddress1());
 
     }
+    @Test
+    @DirtiesContext
+    public void addFavoriteReOrder() throws Exception
+    {
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore("19428");
+        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "200 W Ridge Pike");
+        homePage.validateTokens(remoteOrderCustomer);
+        homePage.addSomethingElse();
+        Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
+        ordersPage.placeFavouriteReOrder(mobileUser);
+
+    }
+
     @Test
     @DirtiesContext
     public void UnFavouriteOrder()throws Exception

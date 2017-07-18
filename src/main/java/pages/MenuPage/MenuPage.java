@@ -125,10 +125,8 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         }
     }
     public void logout() throws Exception
-
     {
         try {
-
             scrollToElement(logout,0.9,0.5);
             getLogOut().isReady();
             getLogOut().click();

@@ -142,6 +142,9 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
         try{
 
             getFindYourSubWay().click();
+
+
+
             return SearchStore.get((AppiumDriver)driver);
         }catch(Exception ex){
             throw new Exception(ex);
