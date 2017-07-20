@@ -20,6 +20,7 @@ import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
 import pojos.user.RemoteOrderCustomer;
+import utils.Logz;
 
 import java.util.List;
 
@@ -335,10 +336,16 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
     }
     public void validateTokens(RemoteOrderCustomer remoteOrderCustomer)throws Exception
     {
+        try {
 
-        int tokens=getTokens(remoteOrderCustomer);
-        tokenValue();
-        Assert.assertEquals(tokens,Integer.parseInt(tokenValue()));
+            int tokens=getTokens(remoteOrderCustomer);
+            tokenValue();
+            Assert.assertEquals(tokens, Integer.parseInt(tokenValue()));
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
     }
     public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer)throws Exception
     {

@@ -39,14 +39,22 @@
                 <include name="verifyTermandConditions"/>
             </methods>
         </class>
+        <class name="UpdateProfileTest">
+            <methods>
+                <include name="updateProfile"/>
+            </methods>
+        </class>
+        <class name="ForgotPassword">
+            <methods>
+                <include name="forgotPassword"/>
+            </methods>
+        </class>
          <class name="PaymentMethods">
 
              <methods>
                  <include name="addCreditCard"/>
 
-
                  <include name="addDebitCard"/>
-
 
                  <include name="addPayPal"/>
              </methods>
@@ -60,7 +68,6 @@
                  <include name="createUser"/>
              </methods>
          </class>
-
         <class name="PlaceRandomOrder">
 
             <methods>
@@ -81,7 +88,7 @@
         <class name="Certificates">
             <methods>
                 <include name="redeemCertificate"/>
-                <include name="verifyCertificate"/>
+              <!--  <include name="verifyCertificate"/>-->
             </methods>
         </class>
         <class name="AddFavoriteOrder">
@@ -89,11 +96,6 @@
                 <include name="addFavoriteOrder"/>
                 <include name="addFavoriteReOrder"/>
                 <include name="UnFavouriteOrder"/>
-            </methods>
-        </class>
-        <class name="UpdateProfileTest">
-            <methods>
-                <include name="updateProfile"/>
             </methods>
         </class>
 

@@ -57,7 +57,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             this.getLoginButton().click();
             return LoginPage.get((AppiumDriver) driver);
         } catch (Exception ex) {
-            throw new Exception(ex);
+            throw ex;
         }
     }
 

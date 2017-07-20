@@ -21,6 +21,7 @@ import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
+import utils.Logz;
 
 /**
  * Created by E001599 on 25-05-2017.
@@ -37,29 +38,32 @@ public class TokenGeneration extends SubwayAppBaseTest {
 
     @Test
     public void tokenGeneration() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser);
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        remoteOrder.placeRandomOrderForGivenNumberOfTokens(2, PaymentMethod.CREDITCARD);
-        MyWayRewards myWayRewards = homePage.getTokensSparkle();
-        myWayRewards.getSwipe();
-        if(homePage.getTokens(remoteOrderCustomer)>=200)
-        {
-            String MdmId=remoteOrderCustomer.getGuestID();
-            Kobie.generateCertificates(MdmId);
-            myWayRewards=homePage.getTokensSparkle();
-            myWayRewards.toolBarClose();
-            homePage.validateCertificate(remoteOrderCustomer);
+        try {
+            mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+            remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+            LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+            LoginPage loginPage = landingPage.gotoLogInPage();
+            HomePage homePage = loginPage.login(mobileUser);
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            remoteOrder.placeRandomOrderForGivenNumberOfTokens(2, PaymentMethod.CREDITCARD);
+            MyWayRewards myWayRewards = homePage.getTokensSparkle();
+            myWayRewards.getSwipe();
 
+
+            if (homePage.getTokens(remoteOrderCustomer) >= 200) {
+                String MdmId = remoteOrderCustomer.getGuestID();
+                Kobie.generateCertificates(MdmId);
+                myWayRewards = homePage.getTokensSparkle();
+                myWayRewards.toolBarClose();
+                homePage.validateCertificate(remoteOrderCustomer);
+
+            }
+            homePage.validateTokens(remoteOrderCustomer);
+
+        } catch (Exception ex) {
+            Logz.error("As tokens are not same as api");
+            throw ex;
         }
-        homePage.validateTokens(remoteOrderCustomer);
-
-
-
     }
-
 
 }

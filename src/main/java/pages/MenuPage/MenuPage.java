@@ -18,6 +18,7 @@ import pages.NamePage.NamePage;
 import pages.OrdersPage.OrdersPage;
 import pages.PhonePage.PhonePage;
 import pojos.user.MobileUser;
+import utils.Logz;
 
 import java.util.List;
 
@@ -213,6 +214,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             this.getHelp().click();
 
         }catch (Exception ex){
+            Logz.step("Not able to see help icon");
             throw new Exception(ex);
         }
     }
@@ -294,7 +296,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     public void assertHelpPageTexts() throws Exception {
         try {
             By helopPageLocator= By.id("com.subway.mobile.subwayapp03:id/question");
-            Assert.assertTrue(isElementPresent(helopPageLocator),"Help page has the expected Text");
+            Assert.assertEquals(isElementPresent(helopPageLocator),"Help page has the expected Text");
         } catch (Exception ex) {
             throw new Exception(ex);
         }

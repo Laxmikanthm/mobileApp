@@ -12,12 +12,12 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>3.3.0-SNAPSHOT</version>
+            <version>4.1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.1.8-SNAPSHOT</version>
+            <version>3.1.17-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -125,9 +125,9 @@
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>DB6DDA0FF3FF46C7B3803867B8BD8AF5</testObjectApiKey>
+                        <testObjectApiKey>DCAD109D67664430B2A35D611CF2D3CA</testObjectApiKey>
                         <testObjectDevice>Samsung_Galaxy_S7_real</testObjectDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000610.apk/app>
+                        <app>/Users/e001599/Downloads/subwayE2eDebug5000610.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <appName>R2-Mobile</appName>
                         <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>

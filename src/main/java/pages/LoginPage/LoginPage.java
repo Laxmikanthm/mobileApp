@@ -1,5 +1,6 @@
 package pages.LoginPage;
 
+import base.gui.controls.exceptions.ControlNotReadyException;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
@@ -12,6 +13,8 @@ import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.HomePage.HomePage;
 import pojos.user.MobileUser;
 import utils.Logz;
+
+import java.util.NoSuchElementException;
 
 /**
  * Created by test-user on 2/2/17.
@@ -53,8 +56,15 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     public HomePage login(MobileUser mobileUser) throws Exception {
         try {
-            getUserName().isReady();
-            getUserName().setText(mobileUser.getEmailAddress());
+            try {
+                getUserName().setText(mobileUser.getEmailAddress());
+            }
+            catch (ControlNotReadyException e) {
+                driver.findElementById("com.android.chrome:id/terms_accept").click();
+                driver.findElementById("com.android.chrome:id/negative_button").click();
+                getUserName().setText(mobileUser.getEmailAddress());
+            }
+
             getPassword().isReady();
             getPassword().setText(mobileUser.getPassword());
             HideKeyboard();

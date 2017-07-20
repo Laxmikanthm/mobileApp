@@ -70,7 +70,7 @@ public class MenuPageAndroid extends MenuPage {
     }
 
     public AndroidButton getAbout() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.RelativeLayout[@resource-id='"+BaseTest.bundle.getString("About")+"']"), "About button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("About")), "About button");
         return button;
     }
     public AndroidButton getEmail() throws Exception {

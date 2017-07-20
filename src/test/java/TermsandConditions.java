@@ -36,6 +36,8 @@ public class TermsandConditions extends SubwayAppBaseTest {
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        /*mobileUser.setEmailAddress("everetterridge@qasubway.com");
+        mobileUser.setPassword("Subway1234");*/
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
