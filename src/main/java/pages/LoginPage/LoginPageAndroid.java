@@ -17,17 +17,17 @@ public class LoginPageAndroid extends LoginPage {
     }
 
     public AndroidTextBox getUserName() throws Exception {
-        AndroidTextBox userNameTextbox = new AndroidTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@resource-id='"+BaseTest.bundle.getString("UserName")+"']"), "username text field");
+        AndroidTextBox userNameTextbox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("UserName")),"username text field");
         return userNameTextbox;
     }
 
     public AndroidPasswordTextBox getPassword() throws Exception {
-        AndroidPasswordTextBox passwordTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@resource-id='"+BaseTest.bundle.getString("Password")+"']"), "password text field");
+        AndroidPasswordTextBox passwordTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Password")), "password text field");
         return passwordTextBox;
     }
 
     public AndroidButton getLogin() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Login")), "Login button");
         return button;
     }
 
