@@ -58,6 +58,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         try {
             try {
                 driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-signInName']");
+                getUserName().setText(mobileUser.getEmailAddress());
             }
             catch (org.openqa.selenium.NoSuchElementException ex) {
                 driver.findElementById("com.android.chrome:id/terms_accept").click();
