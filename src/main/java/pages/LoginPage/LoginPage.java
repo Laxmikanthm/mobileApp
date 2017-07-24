@@ -65,6 +65,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
                 driver.findElementById("com.android.chrome:id/terms_accept").click();
                 driver.findElementById("com.android.chrome:id/negative_button").click();
             }
+            getUserName().getControl().clear();
             getUserName().setText(mobileUser.getEmailAddress());
             getPassword().isReady();
             getPassword().setText(mobileUser.getPassword());
