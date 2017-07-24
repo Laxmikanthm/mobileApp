@@ -48,9 +48,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderAllSandwiches() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
-       // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
@@ -62,9 +60,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderSubwayFreshFit() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
-       // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
@@ -74,10 +70,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     @Test
     public void placeOrderBreakfast() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
-       // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -96,9 +90,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderPersonalPizza() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        //remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
@@ -108,9 +100,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderChoppedSalads() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        //remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
@@ -119,10 +109,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     @Test
     public void placeOrderSUBWAYFreshFitforKids() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-       // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -131,11 +119,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     @Test
     public void placeOrderSides() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-       // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser); mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
-
+        mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
+       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -144,7 +129,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     @Test
     public void placeOrderDrinks() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
         //remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         mobileUser.setEmailAddress("everetterridge@qasubway.com");
         mobileUser.setPassword("Subway1234");
@@ -157,10 +142,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     @Test
     public void OrderAMeal() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-        //remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -171,10 +154,8 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     //Place Order for more than 6 times...R2
     @Test
     public void placeOrderforMoreThanSixTimes() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
-       // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());

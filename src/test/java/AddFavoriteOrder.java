@@ -52,9 +52,7 @@ RemoteOrderCustomer remoteOrderCustomer;
     public void addFavoriteOrder() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
-        //remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
@@ -69,9 +67,7 @@ RemoteOrderCustomer remoteOrderCustomer;
     public void addFavoriteReOrder() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
-       // remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
@@ -88,9 +84,7 @@ RemoteOrderCustomer remoteOrderCustomer;
     public void UnFavouriteOrder()throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        mobileUser.setEmailAddress("everetterridge@qasubway.com");
-        mobileUser.setPassword("Subway1234");
-       // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
