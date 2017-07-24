@@ -57,7 +57,6 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public HomePage login(MobileUser mobileUser) throws Exception {
         try {
             try {
-                Thread.sleep(6000);
                 driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-signInName']");
             }
             catch (org.openqa.selenium.NoSuchElementException ex) {
