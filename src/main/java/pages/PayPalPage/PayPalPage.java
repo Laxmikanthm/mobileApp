@@ -38,7 +38,7 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
     public MobileLabel getPageLabel() throws Exception {
         return null;
     }
-
+By agreeandContinue=By.id("com.subway.mobile.subwayapp03:id/confirmButtonTop");
     @Override
     protected void waitForPageToLoad() throws Exception {
 

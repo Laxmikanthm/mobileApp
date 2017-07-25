@@ -11,6 +11,7 @@ import pages.ChoosePaymentMethodPage.ChoosePaymentMethodPage;
 import pages.PayPalPage.PayPalPage;
 import pages.PaymentMethodsPage.PaymentMethodsPage;
 import pojos.user.MobileUser;
+import utils.Logz;
 
 /**
  * Created by e002243 on 01-03-2017.
@@ -36,6 +37,7 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     abstract MobileLabel getGiftCardType() throws Exception;
     abstract MobileLabel getPayPalType() throws Exception;
     abstract MobileButton getAddPaymentMethod() throws Exception;
+
 
 
     @Override
@@ -85,11 +87,9 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
             getCCV().setText(mobileUser.getCreditCards().get(0).getCsvCode());
             HideKeyboard();
             getNextButton().click();
-            getBillingStreetAddress().isReady();
             getBillingStreetAddress().setText(mobileUser.getStreetAddresss());
             getBillingZipCode().setText(mobileUser.getPostalCode());
             getReviewDetails().click();
-            getSavePaymentMethod().isReady();
             getSavePaymentMethod().click();
             return PaymentMethodsPage.get((AppiumDriver) driver);
 
@@ -116,14 +116,17 @@ public abstract class AddCardPage <T extends AppiumDriver> extends MobileBasePag
     }
     public void HideKeyboard()
     {
-        AppiumDriver d = (AppiumDriver)driver;
-        d.hideKeyboard();
+        try{
+            getDriver().hideKeyboard();
+        }
+        catch(Exception ex)
+        {
+            Logz.info("Keypad is in close");
+        }
     }
 
     public void selectBackButton()  throws Exception
     {
-
-
         getBackButton().click();
 
     }
