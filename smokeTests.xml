@@ -5,7 +5,7 @@
         <parameter name="platform" value="${platform}"></parameter>
         <parameter name="browserOrDevice" value="${deviceName}"></parameter>
         <parameter name="version" value="${platformVersions}"></parameter>
-        <parameter name="os" value="Windows"></parameter>
+        <parameter name="os" value="mac"></parameter>
         <parameter name="driverName" value="${driverName}"></parameter>
         <parameter name="appPaths" value="${app}"></parameter>
         <parameter name="projectName" value="${driverName}"></parameter>
@@ -14,19 +14,17 @@
             <class name="UserLoginTest">
                 <methods>
                     <include name="createUser"/>
-                    <include name="userLogout"/>
                 </methods>
             </class>
 
-            <class name="UpdateProfileTest">
-            </class>
-
-            <class name="ResetPasswordTest">
-            </class>
-
-            <class name="PlaceRandomOrder">
+            <class name="TokenGeneration">
                 <methods>
-                    <include name="placeOrderAllSandwiches"/>
+                    <include name="tokenGeneration"/>
+                </methods>
+            </class>
+            <class name="Certificates">
+                <methods>
+                    <include name="VerifyCertificates"/>
                 </methods>
             </class>
         </classes>
