@@ -25,6 +25,9 @@
             <class name="Certificates">
                 <methods>
                     <include name="VerifyCertificates"/>
+                    <exclude name="redeemExpiredCertificate"/>
+                    <exclude name="redeemMultipleCertificate"/>
+                    <exclude name="redeemCertificate"/>
                 </methods>
             </class>
         </classes>
