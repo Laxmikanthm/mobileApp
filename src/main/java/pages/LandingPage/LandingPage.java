@@ -63,15 +63,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
 
     public RegistrationPage gotoRegistrationPage() throws Exception {
-        try {
-            Thread.sleep(20000);
-            driver.findElementById("com.subway.mobile.subwayapp03:id/signUp");
 
-        }
-        catch (org.openqa.selenium.NoSuchElementException ex) {
-            driver.findElementById("com.android.chrome:id/terms_accept").click();
-            driver.findElementById("com.android.chrome:id/negative_button").click();
-        }
         getRegistrationButton().click();
         return RegistrationPage.get((AppiumDriver) driver);
     }

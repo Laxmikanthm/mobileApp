@@ -75,7 +75,14 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
     public HomePage signUp() throws Exception {
         try {
             MobileUser user  = new MobileUser(false, Country.UnitedStates, 54588);
-            getFirstName().isReady();
+            try {
+                Thread.sleep(20000);
+                driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-givenName']");
+            }
+            catch (org.openqa.selenium.NoSuchElementException ex) {
+                driver.findElementById("com.android.chrome:id/terms_accept").click();
+                driver.findElementById("com.android.chrome:id/negative_button").click();
+            }
             getFirstName().setText(user.getFirstName());
             getDriver().hideKeyboard();
             getLastName().isReady();
