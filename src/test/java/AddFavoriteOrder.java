@@ -76,6 +76,7 @@ RemoteOrderCustomer remoteOrderCustomer;
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
         ordersPage.placeFavouriteReOrder(mobileUser);
+        homePage.validateTokens(remoteOrderCustomer);
 
     }
 
@@ -89,7 +90,6 @@ RemoteOrderCustomer remoteOrderCustomer;
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
         ordersPage.removeFavouriteOrder(order1.getCategoryAllSandwiches(),mobileUser, "200 W Ridge Pike",remoteOrderCustomer);
-        //ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(),mobileUser, "200 W Ridge Pike");
         homePage.validateTokens(remoteOrderCustomer);
         //ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
 

@@ -45,6 +45,7 @@ public class Certificates extends SubwayAppBaseTest {
    //Store store = JdbcUtil.getStoreDetails();
 
     @Test
+
     public void redeemCertificate() throws Exception {
         mobileUser= new MobileUser(false, Country.UnitedStates, 12921);
        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
@@ -64,7 +65,6 @@ public class Certificates extends SubwayAppBaseTest {
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
         //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
 
-
     }
     @Test
 
@@ -78,17 +78,16 @@ public class Certificates extends SubwayAppBaseTest {
         String tokenMessage = homePage.tokenMessage(tokenValue);
         homePage.tokenTracker(tokenValue, tokenMessage);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+        remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
         homePage.validateCertificate(remoteOrderCustomer);
         homePage.validateTokens(remoteOrderCustomer);
 
 
-
     }
     @Test
-    @DirtiesContext
+
     public void redeemMultipleCertificate() throws Exception {
 
         mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates
@@ -107,8 +106,8 @@ public class Certificates extends SubwayAppBaseTest {
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
        // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
-
     }
+@Test
 
     public void redeemExpiredCertificate() throws Exception{
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
@@ -126,7 +125,6 @@ public class Certificates extends SubwayAppBaseTest {
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
         //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
-
 
     }
 }

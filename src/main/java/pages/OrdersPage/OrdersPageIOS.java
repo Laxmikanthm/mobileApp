@@ -382,5 +382,13 @@ public class OrdersPageIOS extends OrdersPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("popupGot")), "Popup GotIt");
         return button;
     }
+    public MobileLabel getTaxPrice() throws Exception{
+        IOSLabel button = new IOSLabel((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/tax_amount"), "Tax Price ");
+        return button;
+    }
+    public MobileButton getCustomizeOrder() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id(BaseTest.bundle.getString("CutomizeOrder")), "Popup GotIt");
+        return button;
+    }
 
 }

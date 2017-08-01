@@ -40,7 +40,8 @@ public class Offers extends SubwayAppBaseTest {
 
     public void redeemOffer() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.getUserWithOffers(1);
 
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);

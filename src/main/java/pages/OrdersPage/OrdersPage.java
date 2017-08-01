@@ -120,6 +120,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileLabel getOrderNumber() throws Exception;
     abstract MobileLabel getErrorTitle() throws Exception;
     abstract MobileLabel getErrorMessage() throws Exception;
+    abstract MobileLabel getTaxPrice() throws Exception;
+
 
     abstract MobileButton getExpandArrow() throws Exception;
     abstract MobileButton getSelectFlavor() throws Exception;
@@ -133,6 +135,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getRemoveFavourite() throws Exception;
     abstract MobileButton getErrorOk() throws Exception;
     abstract MobileButton getpopupGotIt() throws Exception;
+    abstract MobileButton getCustomizeOrder() throws Exception;
 
     Random random = new Random();
     public String favoriteOrderName=null;
@@ -152,6 +155,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By FavouriteIconLocator=By.id("favorite_animation");
     By ManageLocator=By.id("manage_rewards");
     By Subtotal=By.id("subtotal");
+    By taxPriceLocator=By.id("tax_amount");
+    By customizeLocator=By.id("customize");
 
     Random rn = new Random();
     int firstrandnum;
@@ -423,6 +428,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         boolean flag = false;
         while (getItems(locator).size() > 0) {
             List<WebElement> allElements = getElements(locator);
+            if(allElements.size()==0)
+            {
+
+            }
 
             for (int i = 0; i < allElements.size(); i++) {
                 if (allElements.get(i).getText().contains(itemName)) {
@@ -551,9 +560,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             getAddIngredient().isReady();
             getAddIngredient().click();
-            getAddIngredient().click();
-            getAddIngredient().click();
-            getAddIngredient().click();
+           // getAddIngredient().click();
+           // getAddIngredient().click();
+          //  getAddIngredient().click();
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -1368,6 +1377,46 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
+
+    public void placeRandomwithNoTax(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens=Integer.parseInt(homePage.tokenValue());
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
+            getAddToBag().click();
+            getTaxValue();
+            customizeOrder();
+            customizeOrder(mobileUser,order);
+            getTokens(remoteOrder);
+            getGotIt().click();
+            Assert.assertEquals(homePage.tokenValue().toString(),String.valueOf(tokens));
+
+            //return specific page
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+    public void getTaxValue()throws Exception
+    {
+        scrollToElement(taxPriceLocator,0.9,0.5);
+           String taxVal=getTaxPrice().getText();
+           double taxPrice=Double.parseDouble(taxVal.substring(1));
+       Assert.assertEquals(0.00,taxPrice);
+    }
+    public void customizeOrder()throws Exception
+    {
+        scrollToElement(customizeLocator,0.9,0.5);
+        getCustomizeOrder().click();
+
+
+    }
 }
 
 
