@@ -11,23 +11,10 @@
         <parameter name="projectName" value="${driverName}"></parameter>
         <classes>
 
-            <class name="UserLoginTest">
-                <methods>
-                    <include name="createUser"/>
-                </methods>
-            </class>
 
-            <class name="TokenGeneration">
-                <methods>
-                    <include name="tokenGeneration"/>
-                </methods>
-            </class>
             <class name="Certificates">
                 <methods>
-                    <include name="verifyCertificate"/>
-                    <exclude name="redeemExpiredCertificate"/>
-                    <exclude name="redeemMultipleCertificate"/>
-                    <exclude name="redeemCertificate"/>
+                    <include name="redeemCertificate"/>
                 </methods>
             </class>
         </classes>
