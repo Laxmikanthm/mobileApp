@@ -63,9 +63,9 @@ By agreeandContinue=By.id("com.subway.mobile.subwayapp03:id/confirmButtonTop");
         try {
             getPaypalUserName().isReady();
             getPaypalUserName().getControl().clear();
-            getPaypalUname().setText("upadhyaya_s@subway.com");
+            getPaypalUname().getControl().sendKeys("upadhyaya_s@subway.com");
             getPaypalPassword().getControl().clear();
-            getPaypalPwd().setText("Subway1965");
+            getPaypalPwd().getControl().sendKeys("Subway1965");
             getDriver().hideKeyboard();
             getLogIn().click();
             getPayWith().isReady();

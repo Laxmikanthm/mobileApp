@@ -70,11 +70,11 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     @Test
     public void placeOrderBreakfast() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        OrdersPage ordersPage=homePage.findStore("06405");
         Boolean timePresent = ordersPage.getTimeComparision(store);
         if (timePresent) {
             ordersPage.placeRandomOrder("Breakfast", mobileUser, store.getAddress1());
@@ -83,7 +83,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         } else {
             //Assert 'Breakfast Not available' alert popup message
             Logz.step("Breakfast time is over.");
-            ordersPage.placeRandomOrderForInvalidBreakfastTime("Breakfast", mobileUser, store.getAddress1());
+            ordersPage.placeRandomOrderForInvalidBreakfastTime("Breakfast", mobileUser, "I-95 Northbound");
         }
     }
 
