@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
+            <version>3.2.7-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -50,14 +50,20 @@
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
+            <artifactId>selenium-java</artifactId>
             <version>3.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <version>4.1.1.4</version>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>3.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-remote-driver</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -72,8 +78,8 @@
                     <systemPropertyVariables>
 
                         <ProjectName>SubwayMobileApp</ProjectName>
-                        <!--<spring.profiles.active>local</spring.profiles.active>-->
-                        <!--<language>en</language>-->
+                        <spring.profiles.active>local</spring.profiles.active>
+                        <language>en</language>
                         <country>US</country>
                         <language>us</language>
                         <locale>us_EN</locale>
@@ -88,10 +94,10 @@
                         <platform>mobile</platform>
                         <!-- driverName can be MobileApp/WebApp -->
                         <driverName>MobileApp</driverName>
-                        <appiumVersion>1.5.3</appiumVersion>
+                        <!--<appiumVersion>1.4.13</appiumVersion>-->
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000621.apk</app>
+                        <app>/Users/ramya/Documents/Docs/apks/E2ER2/subwayE2eDebug5000621.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>600</newCommandTimeout>
@@ -121,17 +127,17 @@
                         <appName>R2-Mobile</appName>
 
                         <!--Test Object-->
-                        <spring.profiles.active>testObject</spring.profiles.active>
-                        <driverName>MobileApp</driverName>
-                        <platform>mobile</platform>
-                        <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>0754962291744CF3B19E0DCA1B5C822B</testObjectApiKey>
-                        <testObjectDevice>Motorola_Moto_G_3rd_gen_real</testObjectDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000621.apk</app>
-                        <appPackage>com.subway.mobile.subwayapp03</appPackage>
-                        <appName>2507R2</appName>
-                        <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>
-                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
+                        <!--<spring.profiles.active>testObject</spring.profiles.active>-->
+                        <!--<driverName>MobileApp</driverName>-->
+                        <!--<platform>mobile</platform>-->
+                        <!--<testObjectUser>dias_p</testObjectUser>-->
+                        <!--<testObjectApiKey>0754962291744CF3B19E0DCA1B5C822B</testObjectApiKey>-->
+                        <!--<testObjectDevice>Motorola_Moto_G_3rd_gen_real</testObjectDevice>-->
+                        <!--<app>/Users/ramya/Documents/Docs/apks/E2ER2/subwayE2eDebug5000621.apk</app>-->
+                        <!--<appPackage>com.subway.mobile.subwayapp03</appPackage>-->
+                        <!--<appName>2507R2</appName>-->
+                        <!--<appiumVersion>1.5.2-updated-chromedriver</appiumVersion>-->
+                        <!--<testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>-->
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->
