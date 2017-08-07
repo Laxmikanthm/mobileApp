@@ -97,7 +97,6 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
             getDriver().hideKeyboard();
             getConfirmPasswrod().setText(user.getPassword());
             getDriver().hideKeyboard();
-            getCheckboxOffers().click();
             getSignUpButton().click();
             return HomePage.get((AppiumDriver) driver);
         } catch (Exception ex) {
