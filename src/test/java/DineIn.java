@@ -23,7 +23,7 @@ public class DineIn extends SubwayAppBaseTest{
 
     @Test
     public void dineInHotItems() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
         //remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
         mobileUser.setEmailAddress("DarelleToler@qasubway.com");
         mobileUser.setPassword("Subway1234");
@@ -34,5 +34,6 @@ public class DineIn extends SubwayAppBaseTest{
         homePage.validateTokens(remoteOrderCustomer);
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
+
 
 }

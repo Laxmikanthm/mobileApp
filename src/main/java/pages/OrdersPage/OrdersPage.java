@@ -14,6 +14,8 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.*;
 import org.testng.Assert;
+
+import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
 import pages.MenuPage.MenuPage;
 import pojos.Orders.Order;
@@ -136,12 +138,22 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getErrorOk() throws Exception;
     abstract MobileButton getpopupGotIt() throws Exception;
     abstract MobileButton getCustomizeOrder() throws Exception;
+    abstract MobileButton getToGo() throws Exception;
+    abstract MobileButton getTotalAmount() throws Exception;
+    //abstract MobileButton getTaxAmount() throws Exception;
+    abstract MobileButton getSubmitOrder() throws Exception;
+    abstract MobileButton getGrandTotalAmount() throws Exception;
+    abstract MobileButton getTotal() throws Exception;
+    abstract MobileButton getProfile() throws Exception;
+    abstract MobileButton getSeeDetails() throws Exception;
 
     Random random = new Random();
     public String favoriteOrderName=null;
     public String orderValue=null;
     RemoteOrder remoteOrder;
     public  int Rewards=0;
+    AddCardPage addCardPage;
+    MenuPage menuPage;
 
     /*This elements are for finding list of elements*/
     By storeNamesLocator = By.id("address");
@@ -157,6 +169,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By Subtotal=By.id("subtotal");
     By taxPriceLocator=By.id("tax_amount");
     By customizeLocator=By.id("customize");
+    By totalAmount=By.id("ordertotal_amount");
 
     Random rn = new Random();
     int firstrandnum;
@@ -215,7 +228,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void placeRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
-            remoteOrder = mobileUser.getCart().getRemoteOrder();
+        	remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
@@ -232,11 +245,48 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getGotIt().click();
             Assert.assertEquals(homePage.tokenValue().toString(),String.valueOf(tokens));
 
+
             //return specific page
         } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
+
+    public void placeRandomOrderKids(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+           HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens=Integer.parseInt(homePage.tokenValue());
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
+            getAddToBag().isReady();
+            getAddToBag().click();
+            getToGo().isReady();
+            getToGo().click();
+            scrollToElement(totalAmount, 0.9, 0.2);
+            verifyTaxCalculationInBag();
+           // addCardPage = menuPage.gotoAddPaymentMethods();
+            //addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+            getPlaceOrder().click();
+            getGotIt().isReady();
+            getGotIt().click();
+            getProfile().isReady();
+            //return specific page
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+    
+    public void verifyTaxCalculationInBag() throws Exception {
+    	String taxVal = getTaxPrice().getText();
+    	double taxPrice=Double.parseDouble(taxVal.substring(1));
+    	Assert.assertEquals(0.00,taxPrice);
+	}
+
     public void placeRandomOrderForInvalidBreakfastTime(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
             remoteOrder = mobileUser.getCart().getRemoteOrder();
@@ -1417,9 +1467,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
 
     }
+
+	public void verifyOrderConformationReceipt() throws Exception {
+		//have to be verify order conformation page
+		getSeeDetails().isReady();
+		getSeeDetails().click();
+		getTaxValue();
+	}
 }
-
-
-
-
-
