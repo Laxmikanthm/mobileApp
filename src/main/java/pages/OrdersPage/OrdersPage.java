@@ -136,6 +136,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getErrorOk() throws Exception;
     abstract MobileButton getpopupGotIt() throws Exception;
     abstract MobileButton getCustomizeOrder() throws Exception;
+    abstract MobileButton getDineIn() throws Exception;
 
     Random random = new Random();
     public String favoriteOrderName=null;
@@ -1416,6 +1417,31 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         getCustomizeOrder().click();
 
 
+    }
+
+    public void placeRandomwithDineInMeals(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens=Integer.parseInt(homePage.tokenValue());
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
+            getAddToBag().click();
+            // getTaxValue();
+            getDineIn().click();
+            getMakeItAMeal().click();
+            getTokens(remoteOrder);
+            getGotIt().click();
+            Assert.assertEquals(homePage.tokenValue().toString(),String.valueOf(tokens));
+
+            //return specific page
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
     }
 }
 

@@ -297,6 +297,10 @@ public class OrdersPageAndroid extends OrdersPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("CutomizeOrder")), "Popup GotIt");
         return button;
     }
+    public MobileButton getDineIn() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("DineIn")), "DineIn Button");
+        return button;
+    }
 
 
 }
