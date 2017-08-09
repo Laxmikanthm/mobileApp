@@ -324,7 +324,11 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
         int tokens=0;
         for(int i=0;i<summaries.size();i++)
         {
-            if(summaries.get(i).getRewardType().equals("Points"))
+            if(summaries.size()==0)
+            {
+                Logz.error("Summaries pojo returning null");
+            }
+            else if(summaries.get(i).getRewardType().equals("Points"))
             {
 
                 int tokens1=(int)Double.parseDouble(summaries.get(i).getAvailable());
@@ -344,20 +348,27 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
         }
         catch(Exception ex)
         {
-            throw ex;
+        Logz.error("Tokens are not same as Api");
         }
     }
     public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer)throws Exception
     {
-        if(getTokens(remoteOrderCustomer)>=200) {
-            String MdmId = remoteOrderCustomer.getGuestID();
-            Kobie.generateCertificates(MdmId);
-            MyWayRewards myWayRewards = getTokensSparkle();
-            myWayRewards.toolBarClose();
-            Loyalty loyalty = new Loyalty(remoteOrderCustomer);
-            remoteOrderCustomer = KobieClient.getLoyaltyLookup(loyalty, remoteOrderCustomer);
-            Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(), certsCount());
+        try {
+            if (getTokens(remoteOrderCustomer) >= 200) {
+                String MdmId = remoteOrderCustomer.getGuestID();
+                Kobie.generateCertificates(MdmId);
+                MyWayRewards myWayRewards = getTokensSparkle();
+                myWayRewards.toolBarClose();
+                Loyalty loyalty = new Loyalty(remoteOrderCustomer);
+                remoteOrderCustomer = KobieClient.getLoyaltyLookup(loyalty, remoteOrderCustomer);
+                Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(), certsCount());
+            }
         }
+        catch(Exception ex)
+        {
+            Logz.error("Tokens are getting updated in summaries pojo");
+        }
+
     }
 }
 

@@ -39,7 +39,7 @@ public class TokenGeneration extends SubwayAppBaseTest {
     @Test
     public void tokenGeneration() throws Exception {
         try {
-            mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+            mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
             remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
             LoginPage loginPage = landingPage.gotoLogInPage();
