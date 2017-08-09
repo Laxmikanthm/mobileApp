@@ -12,12 +12,12 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>4.1.1-SNAPSHOT</version>
+            <version>4.2.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
+            <version>3.2.6-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -54,9 +54,14 @@
             <version>3.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <version>4.1.1.4</version>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>5.0.0-BETA9</version>
         </dependency>
 
     </dependencies>
@@ -77,7 +82,7 @@
                         <country>US</country>
                         <language>us</language>
                         <locale>us_EN</locale>
-                        <ExplicitWaitTime>600</ExplicitWaitTime>
+                        <ExplicitWaitTime>60</ExplicitWaitTime>
                         <!--Override the values of the Maven properties below on command line by using
                          the -D switch; if we do not override its value, it will use
                           the value we have set in the POM as a default.-->
@@ -88,13 +93,13 @@
                         <platform>mobile</platform>
                         <!-- driverName can be MobileApp/WebApp -->
                         <driverName>MobileApp</driverName>
-                        <appiumVersion>1.5.3</appiumVersion>
+                        <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
                         <app>/Users/e001599/Downloads/subwayE2eDebug5000621.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
-                        <newCommandTimeout>600</newCommandTimeout>
+                        <newCommandTimeout>120</newCommandTimeout>
                         <operatingSystem>mac</operatingSystem>
                         <kobieEndpoint>Mobile</kobieEndpoint>
                         <environment>stage</environment>
@@ -125,12 +130,10 @@
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>0754962291744CF3B19E0DCA1B5C822B</testObjectApiKey>
-                        <testObjectDevice>Motorola_Moto_G_3rd_gen_real</testObjectDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000621.apk</app>
-                        <appPackage>com.subway.mobile.subwayapp03</appPackage>
-                        <appName>2507R2</appName>
-                        <appiumVersion>1.5.2-updated-chromedriver</appiumVersion>
+                        <testObjectApiKey>9447AD09111F4297A872D35449841285</testObjectApiKey>
+                        <testObjectDevice>OnePlus_3T_real_us</testObjectDevice>
+                        <appName>sujitAug7</appName>
+                        <appiumVersion>1.6.5</appiumVersion>
                         <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
                     </systemPropertyVariables>
                     <suiteXmlFiles>
