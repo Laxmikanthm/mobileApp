@@ -5,6 +5,7 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import enums.PaymentMethod;
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.AppiumDriver;
@@ -151,6 +152,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public String favoriteOrderName=null;
     public String orderValue=null;
     RemoteOrder remoteOrder;
+    RemoteOrderCustomer customer;
     public  int Rewards=0;
     AddCardPage addCardPage;
     MenuPage menuPage;
@@ -284,7 +286,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void verifyTaxCalculationInBag() throws Exception {
     	String taxVal = getTaxPrice().getText();
     	double taxPrice=Double.parseDouble(taxVal.substring(1));
-    	Assert.assertEquals(0.00,taxPrice);
+    	Assert.assertEquals(0.06,taxPrice);
 	}
 
     public void placeRandomOrderForInvalidBreakfastTime(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
@@ -1474,4 +1476,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 		getSeeDetails().click();
 		getTaxValue();
 	}
+
+	public void validateTax() throws Exception
+    {
+        System.out.println( "############################" + CartData.getCartPrice(customer).toString());
+    }
+
 }

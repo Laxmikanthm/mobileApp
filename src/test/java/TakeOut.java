@@ -43,6 +43,7 @@ public class TakeOut extends SubwayAppBaseTest {
 
     @Test
     public void kidsValueMealTax() throws Exception {
+        //ordersPage.validateTax();
         mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
         mobileUser.setEmailAddress("johnfrancis@qasubway.com");
         mobileUser.setPassword("Subway1234");
