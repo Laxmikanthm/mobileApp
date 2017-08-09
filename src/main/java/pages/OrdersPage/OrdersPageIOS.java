@@ -390,6 +390,10 @@ public class OrdersPageIOS extends OrdersPage {
         IOSButton button = new IOSButton((IOSDriver) driver, By.id(BaseTest.bundle.getString("CutomizeOrder")), "Popup GotIt");
         return button;
     }
+    public MobileButton getDineIn() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id(BaseTest.bundle.getString("DineIn")), "DineIn Button");
+        return button;
+    }
 
 
     public MobileButton getToGo() throws Exception {
