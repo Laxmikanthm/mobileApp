@@ -1,69 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE project [
-        <!ELEMENT project (modelVersion|groupId|artifactId|version|url|dependencies|build|profiles|distributionManagement|repositories|pluginRepositories)*>
-        <!ATTLIST project
-                xmlns CDATA #REQUIRED
-                xmlns:xsi CDATA #REQUIRED
-                xsi:schemaLocation CDATA #REQUIRED>
-        <!ELEMENT modelVersion (#PCDATA)>
-        <!ELEMENT groupId (#PCDATA)>
-        <!ELEMENT artifactId (#PCDATA)>
-        <!ELEMENT version (#PCDATA)>
-        <!ELEMENT url (#PCDATA)>
-        <!ELEMENT dependencies (dependency)*>
-        <!ELEMENT dependency (groupId|artifactId|version)*>
-        <!ELEMENT build (plugins)*>
-        <!ELEMENT plugins (plugin)*>
-        <!ELEMENT plugin (groupId|artifactId|version|configuration)*>
-        <!ELEMENT configuration (systemPropertyVariables|suiteXmlFiles|source|target)*>
-        <!ELEMENT systemPropertyVariables (ProjectName|country|language|locale|ExplicitWaitTime|mobilePlatform|platformVersions|deviceOrientation|newCommandTimeout|operatingSystem|kobieEndpoint|environment|environmentR1R2|azureEnv|roEnv|udid|executionPlatform|appName|spring.profiles.active|driverName|platform|testObjectUser|testObjectApiKey|testObjectDevice|app|appPackage|appiumVersion|testObjectURL)*>
-        <!ELEMENT ProjectName (#PCDATA)>
-        <!ELEMENT country (#PCDATA)>
-        <!ELEMENT language (#PCDATA)>
-        <!ELEMENT locale (#PCDATA)>
-        <!ELEMENT ExplicitWaitTime (#PCDATA)>
-        <!ELEMENT mobilePlatform (#PCDATA)>
-        <!ELEMENT platformVersions (#PCDATA)>
-        <!ELEMENT deviceOrientation (#PCDATA)>
-        <!ELEMENT newCommandTimeout (#PCDATA)>
-        <!ELEMENT operatingSystem (#PCDATA)>
-        <!ELEMENT kobieEndpoint (#PCDATA)>
-        <!ELEMENT environment (#PCDATA)>
-        <!ELEMENT environmentR1R2 (#PCDATA)>
-        <!ELEMENT azureEnv (#PCDATA)>
-        <!ELEMENT roEnv (#PCDATA)>
-        <!ELEMENT udid (#PCDATA)>
-        <!ELEMENT executionPlatform (#PCDATA)>
-        <!ELEMENT appName (#PCDATA)>
-        <!ELEMENT spring.profiles.active (#PCDATA)>
-        <!ELEMENT driverName (#PCDATA)>
-        <!ELEMENT platform (#PCDATA)>
-        <!ELEMENT testObjectUser (#PCDATA)>
-        <!ELEMENT testObjectApiKey (#PCDATA)>
-        <!ELEMENT testObjectDevice (#PCDATA)>
-        <!ELEMENT app (#PCDATA)>
-        <!ELEMENT appPackage (#PCDATA)>
-        <!ELEMENT appiumVersion (#PCDATA)>
-        <!ELEMENT testObjectURL (#PCDATA)>
-        <!ELEMENT suiteXmlFiles (suiteXmlFile)*>
-        <!ELEMENT suiteXmlFile (#PCDATA)>
-        <!ELEMENT profiles (profile)*>
-        <!ELEMENT profile (id|build)*>
-        <!ELEMENT id (#PCDATA)>
-        <!ELEMENT source (#PCDATA)>
-        <!ELEMENT target (#PCDATA)>
-        <!ELEMENT distributionManagement (snapshotRepository)*>
-        <!ELEMENT snapshotRepository (id|url)*>
-        <!ELEMENT repositories (repository)*>
-        <!ELEMENT repository (id|name|url|releases|snapshots|layout)*>
-        <!ELEMENT name (#PCDATA)>
-        <!ELEMENT releases (enabled)*>
-        <!ELEMENT enabled (#PCDATA)>
-        <!ELEMENT snapshots (enabled)*>
-        <!ELEMENT layout (#PCDATA)>
-        <!ELEMENT pluginRepositories (pluginRepository)*>
-        <!ELEMENT pluginRepository (id|name|url|releases|snapshots)*>
-        ]>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -128,15 +63,12 @@
             <artifactId>selenium-remote-driver</artifactId>
             <version>3.0.0</version>
         </dependency>
-
+        
 
     </dependencies>
 
     <build>
         <plugins>
-
-
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -162,7 +94,7 @@
                         <platform>mobile</platform>
                         <!-- driverName can be MobileApp/WebApp -->
                         <driverName>MobileApp</driverName>
-                        <appiumVersion>1.4.13</appiumVersion>
+                        <!--<appiumVersion>1.4.13</appiumVersion>-->
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
                         <app>/Users/ramya/Documents/Docs/apks/E2ER2/subwayE2eDebug5000645.apk</app>
@@ -209,14 +141,20 @@
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->
-                        <suiteXmlFile>smokeTests.xml</suiteXmlFile>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
 
 
                 </configuration>
             </plugin>
-
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -335,3 +273,4 @@
 
 
 </project>
+
