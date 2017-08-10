@@ -295,8 +295,18 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
 
     public void assertHelpPageTexts() throws Exception {
         try {
-            By helopPageLocator= By.id("com.subway.mobile.subwayapp03:id/question");
-            Assert.assertEquals(isElementPresent(helopPageLocator),"Help page has the expected Text");
+
+            By General=By.id("General");
+            Assert.assertEquals(isElementPresent(General),true);
+            By MyAccount=By.id("My Account");
+            Assert.assertEquals(isElementPresent(MyAccount),true);
+            By MenuandOrdering=By.id("Menu & Ordering");
+            Assert.assertEquals(isElementPresent(MenuandOrdering),true);
+            By payment=By.id("Payment");
+            Assert.assertEquals(isElementPresent(payment),true);
+            By subwaycardDetails=By.id("SUBWAY® Card");
+            Assert.assertEquals(isElementPresent(subwaycardDetails),true);
+
         } catch (Exception ex) {
             throw new Exception(ex);
         }
