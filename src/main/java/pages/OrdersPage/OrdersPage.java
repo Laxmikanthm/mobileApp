@@ -159,6 +159,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By taxPriceLocator=By.id("tax_amount");
     By customizeLocator=By.id("customize");
 
+
     Random rn = new Random();
     int firstrandnum;
     int nextrandnum;
@@ -1097,6 +1098,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
         }
     }
+    public void validateManageLocator()throws Exception
+    {
+        scrollToElement(ManageLocator,0.9,0.5);
+        getRewardsAmt().getText();
+
+
+    }
     public void placeRandomOrderwithRedeemCertificate(String menuItem,MobileUser mobileUser, String storeName) throws Exception {
         try {
 
@@ -1114,8 +1122,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getPlaceOrder().isReady();
             getOrderValue();
-            getRewardsAmt();
-            scrollToElement(ManageLocator,0.9,0.5);
+            validateManageLocator();
            getPlaceOrder().click();
             getTokens(remoteOrder);
             getGotIt().isReady();
