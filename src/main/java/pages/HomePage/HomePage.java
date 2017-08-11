@@ -9,6 +9,7 @@ import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import kobieApi.pojos.Loyalty;
+import kobieApi.pojos.SaleTerminal;
 import kobieApi.pojos.Summaries;
 import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;

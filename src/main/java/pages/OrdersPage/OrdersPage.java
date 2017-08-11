@@ -532,6 +532,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             List<WebElement> allElements = getElements(locator);
             if(allElements.size()==0)
             {
+                       Logz.error("no stores available");
 
             }
 
@@ -1201,8 +1202,17 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void validateManageLocator()throws Exception
     {
         scrollToElement(ManageLocator,0.9,0.5);
-        getRewardsAmt().getText();
+       // getRewardsAmt().getText();
 
+
+    }
+    public void storesAvailable()throws Exception{
+        try {
+            getDirections().isReady();
+        }
+        catch(Exception ex){
+            Logz.error("no stores available");
+        }
 
     }
     public void placeRandomOrderwithRedeemCertificate(String menuItem,MobileUser mobileUser, String storeName) throws Exception {
@@ -1210,7 +1220,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             RemoteOrder remoteOrder=mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
-            getDirections().isReady();
+            storesAvailable();
             HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
             tokens=Integer.parseInt(homePage.tokenValue());
             homePage.apply();
@@ -1223,7 +1233,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getPlaceOrder().isReady();
             getOrderValue();
             validateManageLocator();
-           getPlaceOrder().click();
+            Thread.sleep(20000);
+            getPlaceOrder().click();
             getTokens(remoteOrder);
             getGotIt().isReady();
             getGotIt().click();

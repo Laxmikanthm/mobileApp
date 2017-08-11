@@ -20,6 +20,7 @@ import pages.HomePage.HomePage;
 import pages.OrdersPage.OrdersPage;
 
 import pojos.user.MobileUser;
+import utils.Logz;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -165,8 +166,11 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
             okPopUp();
             allowPopUp();
             okPopUp();
+            Logz.info(driver.getSessionId().toString());
+            Thread.sleep(20000);
             toggleView();
             okPopUp();
+            toggleView();
             if(zipCode.contains("-"))
             {
                 zipCode=zipCode.split("-")[0];

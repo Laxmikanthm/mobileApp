@@ -5,6 +5,7 @@ import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
 import kobieApi.pojos.Loyalty;
+import kobieApi.pojos.SaleTerminal;
 import kobieApi.pojos.Summaries;
 import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;
@@ -43,6 +44,7 @@ public class Certificates extends SubwayAppBaseTest {
     RemoteOrderCustomer remoteOrderCustomer;
     Store store;
     //Store store = JdbcUtil.getStoreDetails();
+
 
     @Test
 
