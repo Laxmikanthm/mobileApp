@@ -433,6 +433,18 @@ public class OrdersPageIOS extends OrdersPage {
     }
 
 
+    public MobileButton getChips() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("Chips")+"']"), "Chips Button");
+        return button;
+
+    }
+
+    public MobileButton getChipsFlavor() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("ChipsFlavor")+"']"), "Chips Flavor Button");
+        return button;
+
+    }
+
 
 
 
