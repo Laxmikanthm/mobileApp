@@ -147,6 +147,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getTotal() throws Exception;
     abstract MobileButton getProfile() throws Exception;
     abstract MobileButton getSeeDetails() throws Exception;
+    abstract MobileButton getChips() throws Exception;
+    abstract MobileButton getChipsFlavor() throws Exception;
+
 
     Random random = new Random();
     public String favoriteOrderName=null;
@@ -172,6 +175,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By taxPriceLocator=By.id("tax_amount");
     By customizeLocator=By.id("customize");
     By totalAmount=By.id("ordertotal_amount");
+    By coldCutCombo=By.partialLinkText("Cold Cut Combo");
+    By coffee12oz=By.partialLinkText("12 oz Coffee");
+    By moreDrinks=By.id("com.subway.mobile.subwayapp03:id/drinks");
+
 
     Random rn = new Random();
     int firstrandnum;
@@ -288,6 +295,48 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     	double taxPrice=Double.parseDouble(taxVal.substring(1));
     	Assert.assertEquals(0.06,taxPrice);
 	}
+
+
+    public void placeRandomOrderFreshValueMeal(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens=Integer.parseInt(homePage.tokenValue());
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            scrollAndClick(coldCutCombo, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
+            getAddToBag().isReady();
+            getAddToBag().click();
+            scrollAndClick(moreDrinks,"Drinks","Up");
+            getDrinks().isReady();
+            swipe(coffee12oz,"12 oz Coffee","Right");
+            getAddToBag().click();
+            getChips().isReady();
+            getChips().click();
+            getSelectFlavor().click();
+            getChipsFlavor().click();
+            getAddToBag().isReady();
+            getAddToBag().click();
+            scrollToElement(totalAmount, 0.9, 0.2);
+            verifyTaxCalculationInBag();
+            // addCardPage = menuPage.gotoAddPaymentMethods();
+            //addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+            getPlaceOrder().click();
+            getGotIt().isReady();
+            getGotIt().click();
+            getProfile().isReady();
+            //return specific page
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+
+
+
 
     public void placeRandomOrderForInvalidBreakfastTime(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {

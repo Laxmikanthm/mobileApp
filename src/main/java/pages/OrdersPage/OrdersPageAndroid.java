@@ -305,11 +305,19 @@ public class OrdersPageAndroid extends OrdersPage {
 
 
 
-    public MobileButton getToGo() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/to_go_button"), "go to button");
+    public MobileButton getToGo() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ToGo")), "ToGo Button");
         return button;
     }
-    
+
+
+//    public MobileLabel getTotalAmount() throws Exception{
+//        AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("OrderTotalAmount")+"']"), "Order Total Amount");
+//        return switchNameLabel;
+//
+//    }
+//
+
     public MobileButton getTotalAmount() throws Exception {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/ordertotal_amount"), "get total amount");
         return button;
@@ -339,5 +347,25 @@ public class OrdersPageAndroid extends OrdersPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/check_details"), "See details link");
         return button;
     }
+
+
+    public MobileButton getChips() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("Chips")+"']"), "Chips Button");
+        return button;
+
+    }
+
+    public MobileButton getChipsFlavor() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("ChipsFlavor")+"']"), "Chips Flavor Button");
+        return button;
+
+    }
+
+
+
+
+
+
+
 
 }

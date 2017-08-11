@@ -55,6 +55,23 @@ public class TakeOut extends SubwayAppBaseTest {
     }
 
 
+    @Test
+    public void FreshValueMealWithCoffee() throws Exception {
+        //ordersPage.validateTax();
+        mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
+        mobileUser.setEmailAddress("johnfrancis@qasubway.com");
+        mobileUser.setPassword("Subway1234");
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore("95932");
+        ordersPage.placeRandomOrderFreshValueMeal("All Sandwiches", mobileUser, "1031 Bridge St");
+        ordersPage.verifyOrderConformationReceipt();
+    }
+
+
+
+
+
 
 
 }
