@@ -9,6 +9,7 @@ import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import kobieApi.pojos.Loyalty;
+import kobieApi.pojos.SaleTerminal;
 import kobieApi.pojos.Summaries;
 import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;
@@ -351,7 +352,7 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
         Logz.error("Tokens are not same as Api");
         }
     }
-    public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer)throws Exception
+    public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer,SaleTerminal salesterminal)throws Exception
     {
         try {
             if (getTokens(remoteOrderCustomer) >= 200) {
@@ -359,7 +360,7 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
                 Kobie.generateCertificates(MdmId);
                 MyWayRewards myWayRewards = getTokensSparkle();
                 myWayRewards.toolBarClose();
-                Loyalty loyalty = new Loyalty(remoteOrderCustomer);
+                Loyalty loyalty = new Loyalty(remoteOrderCustomer,salesterminal);
                 remoteOrderCustomer = KobieClient.getLoyaltyLookup(loyalty, remoteOrderCustomer);
                 Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(), certsCount());
             }

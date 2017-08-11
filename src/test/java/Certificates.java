@@ -5,6 +5,7 @@ import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
 import kobieApi.pojos.Loyalty;
+import kobieApi.pojos.SaleTerminal;
 import kobieApi.pojos.Summaries;
 import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;
@@ -42,6 +43,7 @@ public class Certificates extends SubwayAppBaseTest {
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
    Store store = JdbcUtil.getStoreDetails();
+   SaleTerminal salesterminal;
 
     @Test
 
@@ -55,7 +57,7 @@ public class Certificates extends SubwayAppBaseTest {
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
-        homePage.validateCertificate(remoteOrderCustomer);
+        homePage.validateCertificate(remoteOrderCustomer,salesterminal);
         homePage.validateTokens(remoteOrderCustomer);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         CartData.createNewCart(remoteOrderCustomer,store.getLocationCode());
@@ -80,7 +82,7 @@ public class Certificates extends SubwayAppBaseTest {
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
-        homePage.validateCertificate(remoteOrderCustomer);
+        homePage.validateCertificate(remoteOrderCustomer,salesterminal);
         homePage.validateTokens(remoteOrderCustomer);
 
 
@@ -98,7 +100,7 @@ public class Certificates extends SubwayAppBaseTest {
        remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
-        homePage.validateCertificate(remoteOrderCustomer);
+        homePage.validateCertificate(remoteOrderCustomer,salesterminal);
         homePage.validateTokens(remoteOrderCustomer);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser, store.getAddress1());
@@ -117,7 +119,7 @@ public class Certificates extends SubwayAppBaseTest {
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
-        homePage.validateCertificate(remoteOrderCustomer);
+        homePage.validateCertificate(remoteOrderCustomer,salesterminal);
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrderwithExpiredCertificate("All Sandwiches", mobileUser, store.getAddress1());
