@@ -52,9 +52,9 @@ public abstract class NamePage<T extends AppiumDriver> extends MobileBasePage {
         try{
             getFirstName().isReady();
             getFirstName().getControl().clear();
-            getFirstName().setText(mobileUser.getFirstName());
+            getFirstName().setText(mobileUser.getFirstName()+"subway");
             getLastName().getControl().clear();
-            getLastName().setText(mobileUser.getLastName());
+            getLastName().setText(mobileUser.getLastName()+"subway");
             getSave().waitForClickable();
             getSave().click();
             return ContactInformationPage.get((AppiumDriver) driver);

@@ -180,6 +180,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By moreDrinks=By.id("com.subway.mobile.subwayapp03:id/drinks");
 
 
+
     Random rn = new Random();
     int firstrandnum;
     int nextrandnum;
@@ -1197,6 +1198,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
         }
     }
+    public void validateManageLocator()throws Exception
+    {
+        scrollToElement(ManageLocator,0.9,0.5);
+        getRewardsAmt().getText();
+
+
+    }
     public void placeRandomOrderwithRedeemCertificate(String menuItem,MobileUser mobileUser, String storeName) throws Exception {
         try {
 
@@ -1214,8 +1222,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getPlaceOrder().isReady();
             getOrderValue();
-            getRewardsAmt();
-            scrollToElement(ManageLocator,0.9,0.5);
+            validateManageLocator();
            getPlaceOrder().click();
             getTokens(remoteOrder);
             getGotIt().isReady();
