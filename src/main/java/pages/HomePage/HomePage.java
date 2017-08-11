@@ -352,7 +352,7 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
         Logz.error("Tokens are not same as Api");
         }
     }
-    public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer,SaleTerminal salesterminal)throws Exception
+    public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer)throws Exception
     {
         try {
             if (getTokens(remoteOrderCustomer) >= 200) {
@@ -360,7 +360,7 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
                 Kobie.generateCertificates(MdmId);
                 MyWayRewards myWayRewards = getTokensSparkle();
                 myWayRewards.toolBarClose();
-                Loyalty loyalty = new Loyalty(remoteOrderCustomer,salesterminal);
+                Loyalty loyalty = new Loyalty(remoteOrderCustomer);
                 remoteOrderCustomer = KobieClient.getLoyaltyLookup(loyalty, remoteOrderCustomer);
                 Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(), certsCount());
             }
