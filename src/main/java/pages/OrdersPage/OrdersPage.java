@@ -324,8 +324,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             scrollToElement(totalAmount, 0.9, 0.2);
             verifyTaxCalculationInBag();
-            // addCardPage = menuPage.gotoAddPaymentMethods();
-            //addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
             getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
@@ -1233,7 +1231,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getPlaceOrder().isReady();
             getOrderValue();
-            validateManageLocator(homePage);
+            validateManageLocator();
             Thread.sleep(20000);
             getPlaceOrder().click();
             getTokens(remoteOrder);
