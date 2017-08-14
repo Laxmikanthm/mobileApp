@@ -1396,7 +1396,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().isReady();
             getAddToBag().click();
             getOrderValue();
-
             scrollToElement(ManageLocator,0.9,0.5);
             rewardsValue();
              getPlaceOrder().click();

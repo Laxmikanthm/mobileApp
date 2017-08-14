@@ -323,12 +323,17 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
         searchStore.findYourStore(zipCode);
         return OrdersPage.get((AppiumDriver) driver);
     }
+    public RemoteOrderCustomer getLoyalityUser(RemoteOrderCustomer remoteOrderCustomer)throws Exception
+    {
+        Loyalty loyalty = new Loyalty(remoteOrderCustomer);
+        remoteOrderCustomer = KobieClient.getLoyaltyLookup(loyalty, remoteOrderCustomer);
+        remoteOrderCustomer = RegisterUser.getLoyaltyLookup(remoteOrderCustomer);
+        return remoteOrderCustomer;
+    }
     public int getTokens(RemoteOrderCustomer remoteOrderCustomer) throws Exception
     {
 
-        Loyalty loyality=new Loyalty(remoteOrderCustomer);
-        remoteOrderCustomer= KobieClient.getLoyaltyLookup(loyality,remoteOrderCustomer);
-        remoteOrderCustomer = RegisterUser.getLoyaltyLookup(remoteOrderCustomer);
+        remoteOrderCustomer = getLoyalityUser(remoteOrderCustomer);
         List<Summaries> summaries=remoteOrderCustomer.getLoyaltyLookup().getLoyalty().getSummaries();
 
         int tokens=0;
@@ -369,9 +374,7 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
                 Kobie.generateCertificates(MdmId);
                 MyWayRewards myWayRewards = getTokensSparkle();
                 myWayRewards.toolBarClose();
-                Loyalty loyalty = new Loyalty(remoteOrderCustomer);
-                remoteOrderCustomer = KobieClient.getLoyaltyLookup(loyalty, remoteOrderCustomer);
-                remoteOrderCustomer = RegisterUser.getLoyaltyLookup(remoteOrderCustomer);
+                remoteOrderCustomer = getLoyalityUser(remoteOrderCustomer);
                 Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(), certsCount());
            }
         }

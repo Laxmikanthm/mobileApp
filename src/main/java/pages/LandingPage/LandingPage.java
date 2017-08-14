@@ -13,6 +13,7 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.RegistrationPage.RegistrationPage;
 import pojos.user.MobileUser;
+import utils.Logz;
 
 /**
  * Created by test-user on 3/1/17.
@@ -35,30 +36,35 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public static LandingPage get(AppiumDriver driver) throws Exception {
 
-      String platform = driver.getCapabilities().getCapability("mobilePlatform").toString();
+        String platform = driver.getCapabilities().getCapability("mobilePlatform").toString();
 
-       switch (platform) {
+        switch (platform) {
             case "iOS":
                 return new LandingPageIOS((IOSDriver) driver);
-           case "Android":
+            case "Android":
                 return new LandingPageAndroid((AndroidDriver) driver);
             default:
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
-                        }
+        }
     }
-    
+
     abstract MobileButton getLoginButton() throws Exception;
+
     abstract MobileButton getRegistrationButton() throws Exception;
+
     abstract MobileButton getSkipButton() throws Exception;
 
     public LoginPage gotoLogInPage() throws Exception {
         try {
+            driver.findElementById("signIn");
 
-            this.getLoginButton().click();
-            return LoginPage.get((AppiumDriver) driver);
-        } catch (Exception ex) {
-            throw ex;
+                   } catch (Exception ex) {
+            getSkipButton().click();
+            Logz.error("Skip button clicked");
+
         }
+        this.getLoginButton().click();
+        return LoginPage.get((AppiumDriver) driver);
     }
 
 
@@ -74,26 +80,32 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         getSkipButton().click();
     }
 
-    public static Class getLandingPageClass(){
+    public static Class getLandingPageClass() {
 
         String mobilePlatform = System.getProperty("mobilePlatform");
 
-        if(mobilePlatform.equalsIgnoreCase("IOS")) {
+        if (mobilePlatform.equalsIgnoreCase("IOS")) {
             return LandingPageIOS.class;
-        }else
+        } else
             return LandingPageAndroid.class;
     }
-    public HomePage getUserLoginAndAddingCard(MobileUser mobileUser,PaymentMethod paymentType)throws Exception
-    {
-        LoginPage loginPage = gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, paymentType);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
+
+    public HomePage getUserLoginAndAddingCard(MobileUser mobileUser, PaymentMethod paymentType) throws Exception {
+        try {
+            LoginPage loginPage = gotoLogInPage();
+            HomePage homePage = loginPage.login(mobileUser);
+            MenuPage menuPage = homePage.getUserDetails();
+            AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+            addCardPage.addPayment(mobileUser, paymentType);
+            addCardPage.selectBackButton();
+            menuPage.goHome();
+
+        } catch (Exception ex) {
+            getSkipButton().click();
+            Logz.error("Skip button clicked");
+        }
         return HomePage.get((AppiumDriver) driver);
     }
 
-
 }
+
