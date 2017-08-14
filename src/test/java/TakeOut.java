@@ -19,10 +19,13 @@ public class TakeOut extends SubwayAppBaseTest {
     Store store;
     RemoteOrderCustomer remoteOrderCustomer;
     // Store store = JdbcUtil.getStoreDetails();
+    HomePage homePage;
+    OrdersPage ordersPage;
+    LandingPage landingPage;
+    PlaceRandomOrder placeRandomOrder;
 
 
-
-    @Test
+   // @Test
     public void takeOutNoTax() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
         //remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
@@ -36,4 +39,45 @@ public class TakeOut extends SubwayAppBaseTest {
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
 
+
+
+    @Test
+    public void kidsValueMealTax() throws Exception {
+        //ordersPage.validateTax();
+        mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
+        mobileUser.setEmailAddress("johnfrancis@qasubway.com");
+        mobileUser.setPassword("Subway1234");
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore("95932");
+        ordersPage.placeRandomOrderKids("Kids' Meal", mobileUser, "1031 Bridge St");
+        ordersPage.verifyOrderConformationReceipt();
+    }
+
+
+    @Test
+    public void FreshValueMealWithCoffee() throws Exception {
+        //ordersPage.validateTax();
+        mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
+        mobileUser.setEmailAddress("johnfrancis@qasubway.com");
+        mobileUser.setPassword("Subway1234");
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore("95932");
+        ordersPage.placeRandomOrderFreshValueMeal("All Sandwiches", mobileUser, "1031 Bridge St");
+        ordersPage.verifyOrderConformationReceipt();
+    }
+
+
+
+
+
+
+
 }
+
+
+
+
+
+

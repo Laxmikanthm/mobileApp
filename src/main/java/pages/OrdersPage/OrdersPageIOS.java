@@ -395,4 +395,59 @@ public class OrdersPageIOS extends OrdersPage {
         return button;
     }
 
+
+    public MobileButton getToGo() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/to_go_button"), "go to button");
+        return button;
+    }
+
+    public MobileButton getTotalAmount() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/ordertotal_amount"), "get total amount");
+        return button;
+    }
+
+    public MobileButton getSubmitOrder() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/submit_order"), "submit order button");
+        return button;
+    }
+
+    public MobileButton getGrandTotalAmount() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/order_total_amount"), "get grand total amount");
+        return button;
+    }
+
+    public MobileButton getTotal() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/total"), "get total");
+        return button;
+    }
+
+    public MobileButton getProfile() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/profile"), "profile icon");
+        return button;
+    }
+
+    public MobileButton getSeeDetails() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/check_details"), "See details link");
+        return button;
+    }
+
+
+    public MobileButton getChips() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("Chips")+"']"), "Chips Button");
+        return button;
+
+    }
+
+    public MobileButton getChipsFlavor() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("ChipsFlavor")+"']"), "Chips Flavor Button");
+        return button;
+
+    }
+
+
+
+
+
+
 }
