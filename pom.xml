@@ -12,12 +12,12 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>4.2.4-SNAPSHOT</version>
+            <version>4.4.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.2.6-SNAPSHOT</version>
+            <version>3.3.5-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>5.0.0-BETA9</version>
+            <version>5.0.0-BETA2</version>
         </dependency>
 
     </dependencies>
@@ -77,8 +77,8 @@
                     <systemPropertyVariables>
 
                         <ProjectName>SubwayMobileApp</ProjectName>
-                        <!--<spring.profiles.active>local</spring.profiles.active>-->
-                        <!--<language>en</language>-->
+                        <spring.profiles.active>local</spring.profiles.active>
+                       <!-- <language>en</language>-->
                         <country>US</country>
                         <language>us</language>
                         <locale>us_EN</locale>
@@ -96,11 +96,11 @@
                         <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000621.apk</app>
+                        <app>/Users/e001599/Downloads/subwayE2eDebug5000657.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>120</newCommandTimeout>
-                        <operatingSystem>mac</operatingSystem>
+                        <operatingSystem>Windows</operatingSystem>
                         <kobieEndpoint>Mobile</kobieEndpoint>
                         <environment>stage</environment>
                         <environmentR1R2>r2</environmentR1R2>
@@ -126,15 +126,15 @@
                         <appName>R2-Mobile</appName>
 
                         <!--Test Object-->
-                        <spring.profiles.active>testObject</spring.profiles.active>
+                       <!-- <spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>9447AD09111F4297A872D35449841285</testObjectApiKey>
-                        <testObjectDevice>OnePlus_3T_real_us</testObjectDevice>
-                        <appName>sujitAug7</appName>
+                        <testObjectApiKey>7AB7ED11C3704063A590A83D16EEE4D2</testObjectApiKey>
+                        <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
+                        <appName>Aug9thR2</appName>
                         <appiumVersion>1.6.5</appiumVersion>
-                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
+                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>-->
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->
