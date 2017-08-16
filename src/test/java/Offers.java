@@ -32,24 +32,27 @@ import pojos.user.RemoteOrderCustomer;
 public class Offers extends SubwayAppBaseTest {
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
-    Store store = JdbcUtil.getStoreDetails();
+   // Store store = JdbcUtil.getStoreDetails();
+   Store store;
 
 
 
     @Test
     public void redeemOffer() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        //RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        remoteOrderCustomer=RegisterUser.getUserWithOffers(1);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("NappieKyston@qasubway.com");
+        mobileUser.setPassword("Subway1234");
+       // remoteOrderCustomer=RegisterUser.getUserWithOffers(1);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore("19428");
         ordersPage.placeRandomOrderwithRedeemOffers("All Sandwiches", mobileUser, "200 W Ridge Pike");
         //need to do offers validation As we are not able place order and not displaying offers in place order page
-        Assert.assertEquals(String.valueOf(ordersPage.tokens), homePage.tokenValue().toString());//tokenVerification
+      //  Assert.assertEquals(String.valueOf(ordersPage.tokens), homePage.tokenValue().toString());//tokenVerification
        // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//Order Verification
-        homePage.validateTokens(remoteOrderCustomer);
+       // homePage.validateTokens(remoteOrderCustomer);
 
 
     }

@@ -21,6 +21,11 @@
                     <include name="redeemCertificate"/>
                 </methods>
             </class>
+            <class name="Offers">
+                <methods>
+                    <include name="redeemOffer"/>
+                </methods>
+            </class>
         </classes>
     </test>
 

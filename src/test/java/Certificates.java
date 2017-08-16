@@ -42,13 +42,14 @@ public class Certificates extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
-   Store store = JdbcUtil.getStoreDetails();
+   //Store store = JdbcUtil.getStoreDetails();
+    Store store;
 
 
     @Test
 
     public void redeemCertificate() throws Exception {
-        mobileUser= new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser= new MobileUser(false, Country.UnitedStates, 54588);
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
@@ -57,13 +58,14 @@ public class Certificates extends SubwayAppBaseTest {
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
-        homePage.validateCertificate(remoteOrderCustomer);
+        remoteOrderCustomer=homePage.validateCertificate(remoteOrderCustomer);
         homePage.validateTokens(remoteOrderCustomer);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        CartData.createNewCart(remoteOrderCustomer,store.getLocationCode());
-        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",mobileUser, store.getAddress1());
-        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
-        Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
+        homePage.certsCount();
+        OrdersPage ordersPage=homePage.findStore("06405");
+        CartData.createNewCart(remoteOrderCustomer,54588);
+        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",mobileUser, "I-95 Northbound");
+        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certCount);
+        //Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
         //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
 
     }

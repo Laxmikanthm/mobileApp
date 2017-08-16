@@ -14,6 +14,7 @@ import kobieApi.pojos.Summaries;
 import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MenuPage.MenuPage;
@@ -74,17 +75,28 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
 
     public int certValue=0;
     public int certCount=0;
-
+//By.xpath("//android.widget.TextView[@id='']);
   //  By Offers=By.xpath("com.subway.mobile.subwayapp03:id/promo_card_stack");
    // By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@id='com.subway.mobile.subwayapp03:id/promo_card_stack']/android.support.v7.widget.RecyclerView");
 By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout");
-    public List<WebElement> getElements(By locator) {
+By OffersGetText=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout[@index="+0+"]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.Button[@index="+0+"]");
+public List<WebElement> getElements(By locator) {
         List<WebElement> elementsList = ((AndroidDriver) driver).findElements(locator);
 
         return elementsList;
     }
+    public void scrollToElement(By locator, double startpoint, double endpoint) {
+        while (getElements(locator).size() == 0) {
+            boolean flag = false;
+            Dimension dimensions = driver.manage().window().getSize();
+            int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
+            int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
+            ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+        }
+    }
 
     public void getOffers()throws Exception {
+        scrollToElement(OffersGetText, 0.9,  0.5 );
         List<WebElement> elements = getElements(Offers);
         for (int i = 0; i < elements.size(); i++) {
 
@@ -191,6 +203,7 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
     public String tokenValue()throws Exception
     {
         Thread.sleep(20000);
+        //scrollToElement(,0.5,0.9);
         return getTokenValue().getText();
     }
     public String zeroTokenMessage()throws Exception
@@ -361,7 +374,7 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
         Logz.error("Tokens are not same as Api");
         }
     }
-    public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer)throws Exception
+    public RemoteOrderCustomer validateCertificate(RemoteOrderCustomer remoteOrderCustomer)throws Exception
     {
         try {
             if (getTokens(remoteOrderCustomer) >= 200) {
@@ -374,12 +387,13 @@ By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.sup
                 remoteOrderCustomer = RegisterUser.getLoyaltyLookup(remoteOrderCustomer);
                 Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(), certsCount());
            }
+
         }
         catch(Exception ex)
         {
             Logz.error("Tokens are getting updated in summaries pojo");
         }
-
+        return remoteOrderCustomer;
     }
 }
 

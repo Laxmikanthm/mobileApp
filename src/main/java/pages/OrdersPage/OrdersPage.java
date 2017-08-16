@@ -1232,7 +1232,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getPlaceOrder().isReady();
             getOrderValue();
             validateManageLocator();
-            Thread.sleep(20000);
+            Thread.sleep(15000);
             getPlaceOrder().click();
             getTokens(remoteOrder);
             getGotIt().isReady();
@@ -1417,17 +1417,17 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             homePage.getOffers();
            // getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            //scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().isReady();
             getAddToBag().click();
             getPlaceOrder().isReady();
-            getOrderValue();
-            scrollToElement(ManageLocator,0.9,0.5);
-            getPlaceOrder().click();
-            getTokens(remoteOrder);
-            getGotIt().isReady();
-            getGotIt().click();
+            //getOrderValue();
+          //  scrollToElement(ManageLocator,0.9,0.5);
+         //   getPlaceOrder().click();
+         ////   getTokens(remoteOrder);
+           // getGotIt().isReady();
+           // getGotIt().click();
         } catch (Exception ex) {
             throw new Exception(ex);
         }
