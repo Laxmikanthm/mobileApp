@@ -45,7 +45,11 @@ public class Offers extends SubwayAppBaseTest {
         mobileUser.setPassword("Subway1234");
        // remoteOrderCustomer=RegisterUser.getUserWithOffers(1);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage = loginPage.login(mobileUser);
+        MenuPage menuPage = homePage.getUserDetails();
+        menuPage.goHome();
+       // HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore("19428");
         ordersPage.placeRandomOrderwithRedeemOffers("All Sandwiches", mobileUser, "200 W Ridge Pike");
