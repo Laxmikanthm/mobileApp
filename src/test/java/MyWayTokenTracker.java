@@ -39,8 +39,6 @@ public class MyWayTokenTracker extends SubwayAppBaseTest {
     MobileUser mobileUser;
     Store store=JdbcUtil.getStoreDetails();
 
-
-
     @Test
     @DirtiesContext
     public void tokenTracker()throws Exception {

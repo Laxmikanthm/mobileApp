@@ -2,6 +2,7 @@ import Base.SubwayAppBaseTest;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
+import kobieApi.pojos.SaleTerminal;
 import kobieApi.serviceUtils.Kobie;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -33,6 +34,7 @@ public class TokenGeneration extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
+
 
 
 

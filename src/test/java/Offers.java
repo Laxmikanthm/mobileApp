@@ -40,7 +40,7 @@ public class Offers extends SubwayAppBaseTest {
     @Test
     public void redeemOffer() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+       // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         mobileUser.setEmailAddress("NappieKyston@qasubway.com");
         mobileUser.setPassword("Subway1234");
        // remoteOrderCustomer=RegisterUser.getUserWithOffers(1);
