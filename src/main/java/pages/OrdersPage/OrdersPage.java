@@ -1229,10 +1229,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
             getAddToBag().isReady();
             getAddToBag().click();
-            getPlaceOrder().isReady();
             getOrderValue();
+            Thread.sleep(20000);
             validateManageLocator();
-            Thread.sleep(15000);
+            getPlaceOrder().waitForClickable();
             getPlaceOrder().click();
             getTokens(remoteOrder);
             getGotIt().isReady();
@@ -1414,6 +1414,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
             tokens=Integer.parseInt(homePage.tokenValue());
             homePage.getOffers();
+
            // getStartOrderButton().click();
             getItems().isReady();
             //scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
