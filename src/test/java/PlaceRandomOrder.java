@@ -119,12 +119,12 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     @Test
     public void placeOrderSides() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.placeRandomOrderSides("Sides", mobileUser, store.getAddress1());
+        OrdersPage ordersPage=homePage.findStore("06405");
+        ordersPage.placeRandomOrderSides("Sides", mobileUser, "I-95 Northbound");
     }
 
     @Test

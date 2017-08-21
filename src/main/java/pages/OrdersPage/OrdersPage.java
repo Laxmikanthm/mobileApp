@@ -368,7 +368,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             scrollAndClick(storeNamesLocator, storeName,  "Up" );
-            getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
@@ -398,8 +397,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            scrollAndClick(storeNamesLocator, storeName,  "Up" );
-            getSelectRestaurantButton().click();
+            HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
+            tokens=Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
@@ -409,6 +408,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getPlaceOrder().isReady();
             getPlaceOrder().click();
+            Thread.sleep(20000);
+            getTokens(remoteOrder);
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
@@ -455,7 +456,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             scrollAndClick(storeNamesLocator, storeName,  "Up");
-            getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
             String CategoryItem = order.getCart().getProductDetail().getProductClass().getName();
@@ -1547,5 +1547,42 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     {
         System.out.println( "############################" + CartData.getCartPrice(customer).toString());
     }
+
+    public void placeRandomOrderCertDiscountwithHotItems(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens=Integer.parseInt(homePage.tokenValue());
+            homePage.apply();
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            scrollAndClick(coldCutCombo, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
+            getAddToBag().isReady();
+            getAddToBag().click();
+            scrollAndClick(moreDrinks,"Drinks","Up");
+            getDrinks().isReady();
+            swipe(coffee12oz,"12 oz Coffee","Right");
+            getAddToBag().click();
+            getChips().isReady();
+            getChips().click();
+            getSelectFlavor().click();
+            getChipsFlavor().click();
+            getAddToBag().isReady();
+            getAddToBag().click();
+            scrollToElement(totalAmount, 0.9, 0.2);
+            verifyTaxCalculationInBag();
+            getPlaceOrder().click();
+            getGotIt().isReady();
+            getGotIt().click();
+            getProfile().isReady();
+            //return specific page
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
 
 }

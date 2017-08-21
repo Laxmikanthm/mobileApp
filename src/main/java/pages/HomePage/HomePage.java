@@ -96,7 +96,8 @@ public List<WebElement> getElements(By locator) {
     }
 
     public void getOffers()throws Exception {
-        scrollToElement(OffersGetText, 0.9,  0.5 );
+        scrollToElement(OffersGetText, 0.9,  0.8 );
+        Thread.sleep(2000L);
         List<WebElement> elements = getElements(Offers);
         for (int i = 0; i < elements.size(); i++) {
 
