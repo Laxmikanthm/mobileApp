@@ -32,9 +32,8 @@ public class Privacypolicy extends SubwayAppBaseTest {
 
 
 
-
+//DFA-9174
     @Test
-    @DirtiesContext
     public void verifyPrivacyPolicy() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, 19428);

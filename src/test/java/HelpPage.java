@@ -31,7 +31,7 @@ public class HelpPage extends SubwayAppBaseTest {
 
 
     MobileUser mobileUser;
-
+//DFA-9174
     @Test
     public void verifyHelpPage() throws Exception
     {

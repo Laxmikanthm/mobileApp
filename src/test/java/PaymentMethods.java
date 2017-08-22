@@ -41,7 +41,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
     MobileUser mobileUser;
 
 
-
+//DFA-9175
     @Test
     @DirtiesContext
     public void addCreditCard() throws Exception {
@@ -59,8 +59,9 @@ public class PaymentMethods extends SubwayAppBaseTest {
 
     }
 
+
+//DFA-9175
     @Test
-    @DirtiesContext
     public void addDebitCard() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
@@ -75,9 +76,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
         menuPage.logout();
 
     }
-
+//DFA-9177
     @Test
-    @DirtiesContext
     public void addGiftCard() throws Exception {
         try{
             mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
@@ -99,7 +99,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
             AzureIdentityApi.deleteUserFromAzure(mobileUser.getEmailAddress());
         }
     }
-
+//DFA-9175
     @Test
     @DirtiesContext
     public void addPayPal() throws Exception{

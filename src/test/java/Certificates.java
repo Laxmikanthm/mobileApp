@@ -45,7 +45,7 @@ public class Certificates extends SubwayAppBaseTest {
    //Store store = JdbcUtil.getStoreDetails();
     Store store;
 
-
+//DFA-9188
     @Test
 
     public void redeemCertificate() throws Exception {
@@ -89,6 +89,7 @@ public class Certificates extends SubwayAppBaseTest {
 
 
     }
+    //DFA-9167
     @Test
 
     public void redeemMultipleCertificate() throws Exception {
