@@ -36,11 +36,11 @@ public class Offers extends SubwayAppBaseTest {
    Store store;
 
 
-
+//DFA-9193
     @Test
     public void redeemOffer() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-       // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         mobileUser.setEmailAddress("NappieKyston@qasubway.com");
         mobileUser.setPassword("Subway1234");
        // remoteOrderCustomer=RegisterUser.getUserWithOffers(1);
@@ -61,9 +61,8 @@ public class Offers extends SubwayAppBaseTest {
 
     }
 
-
+//DFA-9320
     @Test
-    @DirtiesContext
     public void redeemOfferandCertificate() throws Exception {
 
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());

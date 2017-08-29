@@ -5,7 +5,9 @@ import enums.PaymentMethod;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
+import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
@@ -67,6 +69,23 @@ public class TakeOut extends SubwayAppBaseTest {
         ordersPage.placeRandomOrderFreshValueMeal("All Sandwiches", mobileUser, "1031 Bridge St");
         ordersPage.verifyOrderConformationReceipt();
     }
+
+@Test
+    public void certificateDiscountwithHotItems() throws Exception{
+
+    mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
+   RegisterUser.registerAUserWithoutCardLink(mobileUser);
+    landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+    homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+    RemoteOrder remoteOrder = remoteOrderCustomer.getCart().getRemoteOrder();
+    remoteOrderCustomer=remoteOrder.getCustomer();
+    remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
+    MyWayRewards myWayRewards=homePage.getTokensSparkle();
+    myWayRewards.getSwipe();
+    ordersPage=homePage.findStore("95932");
+    ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1031 Bridge St");
+
+}
 
     @Test
     public void kidsValueMealTaxwithToy() throws Exception {

@@ -29,9 +29,8 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class TermsandConditions extends SubwayAppBaseTest {
     MobileUser mobileUser;
-
+//DFA-9174
     @Test
-    @DirtiesContext
     public void verifyTermandConditions() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());

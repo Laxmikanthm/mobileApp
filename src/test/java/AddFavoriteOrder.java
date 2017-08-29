@@ -45,18 +45,18 @@ RemoteOrderCustomer remoteOrderCustomer;
 //Store store=JdbcUtil.getStoreDetails();
 
 
-
+//DFA-9157
 
     @Test
     @DirtiesContext
     public void addFavoriteOrder() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("19428");
-        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "200 W Ridge Pike");
+        OrdersPage ordersPage=homePage.findStore("06405");
+        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 Northbound");
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
@@ -71,7 +71,7 @@ RemoteOrderCustomer remoteOrderCustomer;
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
-        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "200 W Ridge Pike");
+        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 Northbound");
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
@@ -79,7 +79,7 @@ RemoteOrderCustomer remoteOrderCustomer;
         homePage.validateTokens(remoteOrderCustomer);
 
     }
-
+//DFA-9157
     @Test
     @DirtiesContext
     public void UnFavouriteOrder()throws Exception

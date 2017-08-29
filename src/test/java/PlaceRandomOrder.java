@@ -56,7 +56,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         homePage.validateTokens(remoteOrderCustomer);
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
-
+//DFA-9183
     @Test
     public void placeOrderSubwayFreshFit() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
@@ -67,7 +67,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, "I-95 Northbound");
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
-
+//DFA-9181
     @Test
     public void placeOrderBreakfast() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
@@ -96,7 +96,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         OrdersPage ordersPage=homePage.findStore("06405");
         ordersPage.placeRandomOrder("Personal Pizza", mobileUser, "I-95 Northbound");
     }
-
+//DFA-9183
     @Test
     public void placeOrderChoppedSalads() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
@@ -106,7 +106,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         OrdersPage ordersPage=homePage.findStore("06405");
         ordersPage.placeRandomOrder("Chopped Salads", mobileUser, "I-95 Northbound");
     }
-
+//DFA-9183
     @Test
     public void placeOrderSUBWAYFreshFitforKids() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
@@ -119,12 +119,12 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     @Test
     public void placeOrderSides() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.placeRandomOrderSides("Sides", mobileUser, store.getAddress1());
+        OrdersPage ordersPage=homePage.findStore("06405");
+        ordersPage.placeRandomOrderSides("Sides", mobileUser, "I-95 Northbound");
     }
 
     @Test
@@ -148,7 +148,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
         ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460", ordersPage);
         ordersPage.clickOnPlaceOrder();
     }
-
+//DFA-9165
     //Place Order for more than 6 times...R2
     @Test
     public void placeOrderforMoreThanSixTimes() throws Exception {
