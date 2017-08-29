@@ -119,4 +119,18 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
 
     }
+   public RemoteOrderCustomer validateTokensandCerts(HomePage homePage,RemoteOrderCustomer remoteOrderCustomer)throws Exception
+   {
+       getSwipe();
+       if (homePage.getTokens(remoteOrderCustomer) >= 200) {
+           /*String MdmId = remoteOrderCustomer.getGuestID();
+           Kobie.generateCertificates(MdmId);
+           homePage.getTokensSparkle();
+            toolBarClose();*/
+           remoteOrderCustomer= homePage.validateCertificate(remoteOrderCustomer);
+
+       }
+       homePage.validateTokens(remoteOrderCustomer);
+return remoteOrderCustomer;
+   }
 }

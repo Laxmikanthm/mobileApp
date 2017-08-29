@@ -1547,4 +1547,33 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         System.out.println( "############################" + CartData.getCartPrice(customer).toString());
     }
 
+    public void placeRandomOrderKidswithToy(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens=Integer.parseInt(homePage.tokenValue());
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
+            getAddToBag().isReady();
+            getAddToBag().click();
+            getToGo().isReady();
+            getToGo().click();
+            scrollToElement(totalAmount, 0.9, 0.2);
+            verifyTaxCalculationInBag();
+            // addCardPage = menuPage.gotoAddPaymentMethods();
+            //addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+            getPlaceOrder().click();
+            getGotIt().isReady();
+            getGotIt().click();
+            getProfile().isReady();
+            //return specific page
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
 }

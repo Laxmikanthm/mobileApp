@@ -68,8 +68,18 @@ public class TakeOut extends SubwayAppBaseTest {
         ordersPage.verifyOrderConformationReceipt();
     }
 
-
-
+    @Test
+    public void kidsValueMealTaxwithToy() throws Exception {
+        //ordersPage.validateTax();
+        mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
+        mobileUser.setEmailAddress("johnfrancis@qasubway.com");
+        mobileUser.setPassword("Subway1234");
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore("95932");
+        ordersPage.placeRandomOrderKidswithToy("Kids' Meal", mobileUser, "1031 Bridge St");
+        ordersPage.verifyOrderConformationReceipt();
+    }
 
 
 

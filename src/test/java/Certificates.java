@@ -57,9 +57,7 @@ public class Certificates extends SubwayAppBaseTest {
         remoteOrderCustomer=remoteOrder.getCustomer();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
-        myWayRewards.getSwipe();
-        remoteOrderCustomer=homePage.validateCertificate(remoteOrderCustomer);
-        homePage.validateTokens(remoteOrderCustomer);
+        remoteOrderCustomer=myWayRewards.validateTokensandCerts(homePage,remoteOrderCustomer);
         homePage.certsCount();
         OrdersPage ordersPage=homePage.findStore("06405");
         CartData.createNewCart(remoteOrderCustomer,54588);
@@ -83,9 +81,7 @@ public class Certificates extends SubwayAppBaseTest {
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
-        myWayRewards.getSwipe();
-        homePage.validateCertificate(remoteOrderCustomer);
-        homePage.validateTokens(remoteOrderCustomer);
+        myWayRewards.validateTokensandCerts(homePage,remoteOrderCustomer);
 
 
     }

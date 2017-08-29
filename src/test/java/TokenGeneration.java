@@ -35,9 +35,6 @@ public class TokenGeneration extends SubwayAppBaseTest {
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
 
-
-
-
     @Test
     public void tokenGeneration() throws Exception {
         try {
@@ -49,18 +46,7 @@ public class TokenGeneration extends SubwayAppBaseTest {
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             remoteOrder.placeRandomOrderForGivenNumberOfTokens(2, PaymentMethod.CREDITCARD);
             MyWayRewards myWayRewards = homePage.getTokensSparkle();
-            myWayRewards.getSwipe();
-
-
-            if (homePage.getTokens(remoteOrderCustomer) >= 200) {
-                String MdmId = remoteOrderCustomer.getGuestID();
-                Kobie.generateCertificates(MdmId);
-                myWayRewards = homePage.getTokensSparkle();
-                myWayRewards.toolBarClose();
-                homePage.validateCertificate(remoteOrderCustomer);
-
-            }
-            homePage.validateTokens(remoteOrderCustomer);
+            myWayRewards.validateTokensandCerts(homePage,remoteOrderCustomer);
 
         } catch (Exception ex) {
             Logz.error("As tokens are not same as api");
