@@ -445,9 +445,15 @@ public class OrdersPageIOS extends OrdersPage {
 
     }
 
+    public MobileLabel getOrderNumInOrderConfirmation() throws Exception{
+        IOSLabel switchNameLabel = new IOSLabel((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("orderNumber")+"']"), "OrderNumber");
+        return switchNameLabel;
+    }
 
-
-
+    public MobileLabel getItemName() throws Exception{
+        IOSLabel switchNameLabel = new IOSLabel((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("orderNumber")+"']"), "OrderNumber");
+        return switchNameLabel;
+    }
 
 
 }

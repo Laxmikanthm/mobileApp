@@ -361,10 +361,20 @@ public class OrdersPageAndroid extends OrdersPage {
 
     }
 
+    public MobileLabel getOrderNumInOrderConfirmation() throws Exception{
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("orderNum")), "OrderNumberInConfirmationPage");
+        return label;
+    }
 
+    public MobileLabel getItemName() throws Exception{
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("itemName")), "ItemNameInConfirmationPage");
+        return label;
+    }
 
-
-
+    public MobileLabel getOrderTotalAmount() throws Exception{
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
+    }
 
 
 

@@ -125,7 +125,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileLabel getErrorMessage() throws Exception;
     abstract MobileLabel getTaxPrice() throws Exception;
 
-
     abstract MobileButton getExpandArrow() throws Exception;
     abstract MobileButton getSelectFlavor() throws Exception;
     abstract MobileButton getItemSelectFlavor() throws Exception;
@@ -149,7 +148,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getSeeDetails() throws Exception;
     abstract MobileButton getChips() throws Exception;
     abstract MobileButton getChipsFlavor() throws Exception;
-
+    abstract MobileLabel getOrderNumInOrderConfirmation() throws Exception;
+    abstract MobileLabel getItemName() throws Exception;
+    abstract MobileLabel getOrderTotalAmount() throws Exception;
 
     Random random = new Random();
     public String favoriteOrderName=null;
@@ -524,6 +525,20 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
+    public String getOrderNum() throws Exception {
+        String orderNumber = getOrderNumInOrderConfirmation().getText();
+        return orderNumber;
+    }
+
+    public String getNameOfItem() throws Exception {
+        String ItemName = getItemName().getText();
+        return ItemName;
+    }
+
+    public String getOrderTotal() throws Exception{
+        String OrderInTotal=getOrderTotalAmount().getText();
+        return OrderInTotal;
+    }
 
     public HomePage scrollAndClick(By locator, String itemName, String direction)throws Exception {
         boolean flag = false;
