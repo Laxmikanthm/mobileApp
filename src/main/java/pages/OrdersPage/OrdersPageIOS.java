@@ -454,6 +454,10 @@ public class OrdersPageIOS extends OrdersPage {
         IOSLabel switchNameLabel = new IOSLabel((IOSDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("orderNumber")+"']"), "OrderNumber");
         return switchNameLabel;
     }
+    public MobileLabel getOrderTotalAmount() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
+    }
 
 
 }
