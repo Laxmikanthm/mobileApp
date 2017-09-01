@@ -1,5 +1,6 @@
 package pages.LoginPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.exceptions.ControlNotReadyException;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
@@ -41,7 +42,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     public static LoginPage get(AppiumDriver driver) throws Exception{
 
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+        String platform = SubwayAppBaseTest.platformName;
 
         switch (platform){
             case "iOS":
@@ -57,11 +58,12 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public HomePage login(MobileUser mobileUser) throws Exception {
         try {
             try {
-                Thread.sleep(20000);
+               Thread.sleep(5000);
                 driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-signInName']");
 
             }
             catch (org.openqa.selenium.NoSuchElementException ex) {
+
                 driver.findElementById("com.android.chrome:id/terms_accept").click();
                 driver.findElementById("com.android.chrome:id/negative_button").click();
             }

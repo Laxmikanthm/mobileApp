@@ -1,5 +1,6 @@
 package pages.MenuPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
@@ -54,7 +55,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
 
     public static MenuPage get(AppiumDriver driver) throws Exception{
 
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+        String platform = SubwayAppBaseTest.platformName;
 
         switch (platform){
             case "iOS":
@@ -169,11 +170,11 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     {
         try{
             getPaymentMethods().click();
-            return AddCardPage.get((AppiumDriver) driver);
 
         }catch(Exception ex){
-            throw new Exception(ex);
+            Logz.error("not able to click the Add payment method");
         }
+        return AddCardPage.get((AppiumDriver) driver);
     }
 
     public void goHome() throws Exception

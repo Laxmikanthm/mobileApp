@@ -1,5 +1,6 @@
 package pages.LandingPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
@@ -36,7 +37,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public static LandingPage get(AppiumDriver driver) throws Exception {
 
-        String platform = driver.getCapabilities().getCapability("mobilePlatform").toString();
+        String platform = SubwayAppBaseTest.platformName;
 
         switch (platform) {
             case "iOS":
@@ -56,6 +57,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public LoginPage gotoLogInPage() throws Exception {
         try {
+            Thread.sleep(5000);
             driver.findElementById("signIn");
 
                    } catch (Exception ex) {
@@ -101,8 +103,15 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             menuPage.goHome();
 
         } catch (Exception ex) {
-            getSkipButton().click();
-            Logz.error("Skip button clicked");
+
+                try {
+                    getSkipButton().click();
+                }
+                catch(Exception e) {
+                    Logz.error("Skip button not ready");
+                }
+
+
         }
         return HomePage.get((AppiumDriver) driver);
     }

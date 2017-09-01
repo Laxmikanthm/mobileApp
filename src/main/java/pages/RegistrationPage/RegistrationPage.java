@@ -1,5 +1,6 @@
 package pages.RegistrationPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
@@ -31,7 +32,7 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
 
     public static RegistrationPage get(AppiumDriver driver) throws Exception {
 
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+        String platform = SubwayAppBaseTest.platformName;
 
         switch (platform) {
             case "iOS":

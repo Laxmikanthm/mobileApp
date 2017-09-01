@@ -1,6 +1,7 @@
 package pages.SearchStore;
 
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
@@ -57,7 +58,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     }
     public static SearchStore get(AppiumDriver driver) throws Exception {
 
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+        String platform = SubwayAppBaseTest.platformName;
 
         switch (platform) {
             case "iOS":

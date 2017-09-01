@@ -29,6 +29,7 @@ public class SubwayAppBaseTest extends BaseTest {
     String driverName;
     private Object driver;
     public MobileUser mobileUser;
+    public static String platformName=System.getProperty("mobilePlatform");
 
 
 

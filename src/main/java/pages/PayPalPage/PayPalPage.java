@@ -1,5 +1,6 @@
 package pages.PayPalPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
@@ -46,7 +47,7 @@ By agreeandContinue=By.id("com.subway.mobile.subwayapp03:id/confirmButtonTop");
 
     public static PayPalPage get(AppiumDriver driver) throws Exception{
 
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+        String platform = SubwayAppBaseTest.platformName;
 
         switch (platform){
             case "iOS":

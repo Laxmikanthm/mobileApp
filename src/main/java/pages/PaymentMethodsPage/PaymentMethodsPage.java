@@ -1,5 +1,6 @@
 package pages.PaymentMethodsPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
@@ -29,7 +30,7 @@ public abstract class PaymentMethodsPage<T extends AppiumDriver> extends MobileB
 
     public static PaymentMethodsPage get(AppiumDriver driver) throws Exception{
 
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+        String platform = SubwayAppBaseTest.platformName;
 
         switch (platform){
             case "iOS":

@@ -1,5 +1,6 @@
 package pages.OrdersPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
@@ -206,7 +207,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public static OrdersPage get(AppiumDriver driver) throws Exception {
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+        String platform = SubwayAppBaseTest.platformName;
         switch (platform) {
             case "iOS":
                 return new OrdersPageIOS((IOSDriver) driver);

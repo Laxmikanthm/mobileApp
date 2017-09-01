@@ -1,5 +1,6 @@
 package pages.MobileOrderHistoryPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
@@ -39,7 +40,7 @@ public abstract class MobileOrderHistoryPage<T extends AppiumDriver> extends Mob
 
     public static MobileOrderHistoryPage get(AppiumDriver driver) throws Exception{
 
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+        String platform = SubwayAppBaseTest.platformName;
 
         switch (platform){
             case "iOS":
