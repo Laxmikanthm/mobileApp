@@ -6,8 +6,9 @@ import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.PasswordTextBox;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.SwipeElementDirection;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import kobieApi.pojos.Loyalty;
@@ -15,6 +16,7 @@ import kobieApi.pojos.Summaries;
 import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.HomePage.HomePage;
@@ -50,6 +52,7 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     abstract MobileButton getGotIt() throws Exception;
 
     abstract MobileButton getToolbarClose() throws Exception;
+    Dimension size;
 
     By Swipe = By.id("com.subway.mobile.subwayapp03:id/reward_page_text");
 
@@ -76,11 +79,28 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
             MobileElement element = (MobileElement) ele;
             Thread.sleep(3000L);
 
-            element.swipe(SwipeElementDirection.LEFT, 500);
+           // element.swipe(SwipeElementDirection.LEFT, 500);
+            swipeLeft(ele);
 
         }
         getGotIt().click();
         getToolbarClose().click();
+
+    }
+    public void swipeLeft(WebElement element)
+    {
+        size=driver.manage().window().getSize();
+        int x1 = (int) (size.width * 0.20);
+        TouchAction action = new TouchAction((MobileDriver)driver);
+        action.longPress(element).moveTo(x1,580).release().perform();
+
+    }
+    public void swipeRight(WebElement element)
+    {
+        size=driver.manage().window().getSize();
+        int x2 = (int) (size.width * 0.80);
+        TouchAction action = new TouchAction((MobileDriver)driver);
+        action.longPress(element).moveTo(x2,580).release().perform();
 
     }
     public void toolBarClose()throws Exception

@@ -35,9 +35,6 @@ import java.util.List;
 /**
  * Created by E001599 on 29-05-2017.
  */
-@ContextConfiguration({"classpath:MobileAppBeans.xml", "classpath:order-data.xml"})
-@TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class Certificates extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
@@ -47,8 +44,7 @@ public class Certificates extends SubwayAppBaseTest {
 
 //DFA-9188
     @Test
-
-    public void redeemCertificate() throws Exception {
+    public void redeemCertificate_9188() throws Exception {
         mobileUser= new MobileUser(false, Country.UnitedStates, 54588);
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -68,7 +64,6 @@ public class Certificates extends SubwayAppBaseTest {
 
     }
     @Test
-
     public void verifyCertificate() throws Exception {
 
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
@@ -87,7 +82,6 @@ public class Certificates extends SubwayAppBaseTest {
     }
     //DFA-9167
     @Test
-
     public void redeemMultipleCertificate() throws Exception {
 
         mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates

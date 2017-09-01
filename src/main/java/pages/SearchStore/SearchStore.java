@@ -7,14 +7,12 @@ import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.keyboard.AndroidKeyboard;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDeviceActionShortcuts;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.android.AndroidKeyMetastate;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.internal.KeysRelatedAction;
 import org.openqa.selenium.winium.KeyboardSimulatorType;
 import pages.HomePage.HomePage;
 import pages.OrdersPage.OrdersPage;
@@ -176,6 +174,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
                 zipCode=zipCode.split("-")[0];
             }
             searchStoreByZipCode(zipCode);
+            toggleView();
             return OrdersPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);

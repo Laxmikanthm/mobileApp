@@ -27,14 +27,16 @@ import pojos.user.RegisterUser;
  * Created by e002243 on 17-04-2017.
  */
 
+/*
 @ContextConfiguration("classpath:Order-data.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+*/
 public class AddMoreItemsatCheckout extends SubwayAppBaseTest {
 
     RemoteOrder remoteOrder;
-    @Autowired
-    Base.Order order;
+    /*@Autowired
+    Base.Order order;*/
     MobileUser mobileUser;
     @BeforeClass
     public void init() throws Exception {
@@ -59,8 +61,8 @@ public class AddMoreItemsatCheckout extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.addMoreItemsatCheckOut(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName());
+       // OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+       // ordersPage.addMoreItemsatCheckOut(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName());
         menuPage= homePage.gotoMenuPage();
         MobileOrderHistoryPage mobileOrderHistoryPage= menuPage.getOrderHistory();
         mobileOrderHistoryPage.addFavoriteOrder();

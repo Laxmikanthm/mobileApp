@@ -24,9 +24,6 @@ import pojos.user.RegisterUser;
 /**
  * Created by e002243 on 18-04-2017.
  */
-@ContextConfiguration({"classpath:MobileAppBeans.xml"})
-@TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class HelpPage extends SubwayAppBaseTest {
 
 

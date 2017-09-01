@@ -83,6 +83,7 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
                 driver.findElementById("com.android.chrome:id/terms_accept").click();
                 driver.findElementById("com.android.chrome:id/negative_button").click();
             }
+            Thread.sleep(5000);
             getFirstName().setText(user.getFirstName());
             getDriver().hideKeyboard();
             getLastName().isReady();

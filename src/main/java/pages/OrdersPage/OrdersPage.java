@@ -7,9 +7,10 @@ import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import enums.PaymentMethod;
-import io.appium.java_client.SwipeElementDirection;
+import io.appium.java_client.MobileDriver;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
@@ -150,7 +151,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getChips() throws Exception;
     abstract MobileButton getChipsFlavor() throws Exception;
 
-
+    Dimension size;
     Random random = new Random();
     public String favoriteOrderName=null;
     public String orderValue=null;
@@ -159,6 +160,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public  int Rewards=0;
     AddCardPage addCardPage;
     MenuPage menuPage;
+    TouchAction action = new TouchAction((MobileDriver)driver);
 
     /*This elements are for finding list of elements*/
     By storeNamesLocator = By.id("address");
@@ -548,10 +550,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 int x = ele.getLocation().getX();
                 int y = ele.getLocation().getY();
                 if(direction.equals("Up")) {
-                    ((AppiumDriver) driver).swipe(x, y - 50, x, 150, 5000);
+                   // ((AppiumDriver) driver).swipe(x, y - 50, x, 150, 5000);
+                    action.moveTo(x,y);
                 }else{
 
-                    ((AppiumDriver) driver).swipe(x, 150, x, y-50, 5000);
+                   // ((AppiumDriver) driver).swipe(x, 150, x, y-50, 5000);
+                    action.moveTo(x,y);
                 }
             }
             if (flag == true) {
@@ -582,9 +586,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                     MobileElement element = (MobileElement) ele;
                     Thread.sleep(10000L);
                     if (direction.equals("Left")) {
-                        element.swipe(SwipeElementDirection.LEFT, 500);
+                        //element.swipe(SwipeElementDirection.LEFT, 500);
                     } else {
-                        element.swipe(SwipeElementDirection.RIGHT, 500);
+                        //element.swipe(SwipeElementDirection.RIGHT, 500);
                     }
                 }
             }
@@ -913,10 +917,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             WebElement ele = driver.findElement(By.id("category_tabs"));
             int width = ele.getSize().getWidth();
             AndroidElement veggies = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='Veggies']"));
-            if (veggies.getLocation().getX() > width / 2)
-                veggies.swipe(SwipeElementDirection.LEFT, 500);
+            if (veggies.getLocation().getX() > width / 2) {
+                // veggies.swipe(SwipeElementDirection.LEFT, 500);
+            }
             else
-                veggies.swipe(SwipeElementDirection.RIGHT, 500);
+            {
+
+                //  veggies.swipe(SwipeElementDirection.RIGHT, 500);
+            }
             List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
 
             for (int m = 0; m < order.getCart().getOptions().length; m++) {
@@ -936,8 +944,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                     try {
                         if (extraIngredients.get(i).getText().equalsIgnoreCase("veggies") ||
                                 extraIngredients.get(i).getText().equalsIgnoreCase("sauces") ||
-                                extraIngredients.get(i).getText().equalsIgnoreCase("seasonings"))
-                            veggies.swipe(SwipeElementDirection.LEFT, 1200);
+                                extraIngredients.get(i).getText().equalsIgnoreCase("seasonings"));
+                           // veggies.swipe(SwipeElementDirection.LEFT, 1200);
                     } catch (Exception e) {
                         Logz.info("End of screen");
                     }
@@ -1027,7 +1035,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             Dimension dimensions = driver.manage().window().getSize();
             int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
-            ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+            //((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+            action.moveTo(Startpoint,EndPoint);
         }
     }
 
@@ -1141,7 +1150,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             List<WebElement> toppingBeforeDelete = ((AndroidDriver) driver).findElements(toppings);
             WebElement element=toppingBeforeDelete.get(4);
             MobileElement mobileElement= (MobileElement)element;
-            mobileElement.swipe(SwipeElementDirection.LEFT,500);
+            swipeLeft(element);
+          //  mobileElement.swipe(SwipeElementDirection.LEFT,500);
             //Get count after deleting toppings
             List<WebElement> toppingAfterDelete = ((AndroidDriver) driver).findElements(toppings);
             Assert.assertEquals(toppingAfterDelete.size(),toppingBeforeDelete.size()-1);
@@ -1191,12 +1201,21 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 MobileElement ele = (MobileElement) element;
                 int x = ele.getLocation().getX();
                 int y = ele.getLocation().getY();
-                ((AppiumDriver) driver).swipe(x, y, x, y - endY, 3000);
+               // ((AppiumDriver) driver).swipe(x, y, x, y - endY, 3000);
+                swipeLeft(element);
             }
             if (flag == true) {
                 break;
             }
         }
+    }
+    public void swipeLeft(WebElement element)
+    {
+        size=driver.manage().window().getSize();
+        int x1 = (int) (size.width * 0.20);
+        TouchAction action = new TouchAction((MobileDriver)driver);
+        action.longPress(element).moveTo(x1,580).release().perform();
+
     }
     public void validateManageLocator()throws Exception
     {

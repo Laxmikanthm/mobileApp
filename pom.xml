@@ -12,36 +12,36 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>4.4.1-SNAPSHOT</version>
+            <version>4.6.16-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.3.5-SNAPSHOT</version>
+            <version>3.3.15-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>4.3.1.RELEASE</version>
+            <version>4.3.10.RELEASE</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.3.1.RELEASE</version>
+            <version>4.3.10.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>4.3.1.RELEASE</version>
+            <version>4.3.10.RELEASE</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-beans -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>4.3.1.RELEASE</version>
+            <version>4.3.10.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -49,19 +49,22 @@
             <version>6.9.10</version>
         </dependency>
         <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.3.10.RELEASE</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-remote-driver</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.appium</groupId>
-            <artifactId>java-client</artifactId>
-            <version>5.0.0-BETA2</version>
+            <version>LATEST</version>
         </dependency>
 
     </dependencies>
@@ -77,10 +80,10 @@
                     <systemPropertyVariables>
 
                         <ProjectName>SubwayMobileApp</ProjectName>
-                        <!--<spring.profiles.active>local</spring.profiles.active>-->
-                       <!-- <language>en</language>-->
+                       <!-- <spring.profiles.active>local</spring.profiles.active>-->
+                        <language>en</language>
                         <country>US</country>
-                        <language>us</language>
+                      <!--  <language>us</language>-->
                         <locale>us_EN</locale>
                         <ExplicitWaitTime>60</ExplicitWaitTime>
                         <!--Override the values of the Maven properties below on command line by using
@@ -96,7 +99,7 @@
                         <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000674.apk</app>
+                        <app>/Users/e001599/Downloads/subwayE2eDebug5000703.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>120</newCommandTimeout>
@@ -130,9 +133,9 @@
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>CBACB96C75E744DF935B7CB549500AC1</testObjectApiKey>
+                        <testObjectApiKey>501970C24092410F98977C01C563F1CB</testObjectApiKey>
                         <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
-                        <appName>Aug16thR2</appName>
+                        <appName>Aug29th</appName>
                         <appiumVersion>1.6.5</appiumVersion>
                         <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
                     </systemPropertyVariables>

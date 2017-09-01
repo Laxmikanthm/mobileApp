@@ -33,7 +33,7 @@ import java.util.List;
  * Created by e002243 on 03-03-2017.
  */
 
-@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class PaymentMethods extends SubwayAppBaseTest {

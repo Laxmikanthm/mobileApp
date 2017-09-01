@@ -4,8 +4,9 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.SwipeElementDirection;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import kobieApi.pojos.Loyalty;
@@ -75,6 +76,8 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
 
     public int certValue=0;
     public int certCount=0;
+    Dimension size;
+    TouchAction action = new TouchAction((MobileDriver)driver);
 //By.xpath("//android.widget.TextView[@id='']);
   //  By Offers=By.xpath("com.subway.mobile.subwayapp03:id/promo_card_stack");
    // By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@id='com.subway.mobile.subwayapp03:id/promo_card_stack']/android.support.v7.widget.RecyclerView");
@@ -91,10 +94,10 @@ public List<WebElement> getElements(By locator) {
             Dimension dimensions = driver.manage().window().getSize();
             int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
-            ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+          //  ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+            action.moveTo(Startpoint,EndPoint);
         }
     }
-
     public void getOffers()throws Exception {
         scrollToElement(OffersGetText, 0.9,  0.8 );
         Thread.sleep(2000L);
@@ -116,11 +119,19 @@ public List<WebElement> getElements(By locator) {
                  List<WebElement> elements1=getElements(offerElement);
                  WebElement ele = elements1.get(0);
                  MobileElement element = (MobileElement) ele;
-                 element.swipe(SwipeElementDirection.LEFT, 500);
+                // element.swipe(SwipeElementDirection.LEFT, 500);
+                 swipeLeft(ele);
              }
 
 
         }
+    }
+    public void swipeLeft(WebElement element)
+    {
+        size=driver.manage().window().getSize();
+        int x1 = (int) (size.width * 0.20);
+        action.longPress(element).moveTo(x1,580).release().perform();
+
     }
 
     @Override

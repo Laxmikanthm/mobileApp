@@ -25,7 +25,7 @@ import pojos.user.RegisterUser;
 /**
  * Created by E003705 on 28-02-2017.
  */
-@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class ForgotPassword extends SubwayAppBaseTest  {
@@ -34,7 +34,7 @@ public class ForgotPassword extends SubwayAppBaseTest  {
     Order order;
     MobileUser mobileUser;
 
-
+    //DFA-9172
     @Test
     @DirtiesContext
     public void forgotPassword()throws Exception

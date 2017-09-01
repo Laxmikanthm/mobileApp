@@ -27,7 +27,7 @@ import utils.Logz;
 /**
  * Created by E001599 on 25-05-2017.
  */
-@ContextConfiguration({"classpath:MobileAppBeans.xml", "classpath:order-data.xml"})
+@ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class TokenGeneration extends SubwayAppBaseTest {

@@ -12,19 +12,15 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.ITestContext;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import pojos.user.MobileUser;
-import pojos.user.RegisterUser;
-import utils.Logz;
+
 
 import java.lang.reflect.Method;
 
 /**
  * Created by test-user on 1/30/17.
  */
-
 @ContextConfiguration({"classpath:MobileAppBeans.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})

@@ -70,7 +70,7 @@ By agreeandContinue=By.id("com.subway.mobile.subwayapp03:id/confirmButtonTop");
             getLogIn().click();
             getPayWith().isReady();
             Thread.sleep(5000);
-            ((AppiumDriver) driver).swipe(200, 700, 200, 100, 4000);
+           // ((AppiumDriver) driver).swipe(200, 700, 200, 100, 4000);
             getAgreeAndContinue().click();
             getBackBtn().click();
             return PaymentMethodsPage.get((AppiumDriver) driver);
@@ -86,7 +86,7 @@ By agreeandContinue=By.id("com.subway.mobile.subwayapp03:id/confirmButtonTop");
             Dimension dimensions = driver.manage().window().getSize();
             int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
-            ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 4000);
+          //  ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 4000);
         }
     }
 

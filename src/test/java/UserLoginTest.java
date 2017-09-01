@@ -25,9 +25,11 @@ import pojos.user.RemoteOrderCustomer;
 /**
  * Created by Sujit on 1/26/17.
  */
-@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+/*
+@ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+*/
 public class UserLoginTest extends SubwayAppBaseTest {
 
     /*@Autowired

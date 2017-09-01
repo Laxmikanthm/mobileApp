@@ -33,7 +33,7 @@ import utils.Logz;
 /**
  * Created by e002243 on 10-03-2017.
  */
-@ContextConfiguration({"classpath:MobileAppBeans.xml", "classpath:order-data.xml"})
+@ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class PlaceRandomOrder extends SubwayAppBaseTest {

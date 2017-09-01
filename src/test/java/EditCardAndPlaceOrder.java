@@ -30,7 +30,7 @@ import java.util.List;
  */
 
 
-@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 

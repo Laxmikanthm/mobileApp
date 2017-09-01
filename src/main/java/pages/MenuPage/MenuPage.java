@@ -122,7 +122,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             Dimension dimensions = driver.manage().window().getSize();
             int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
-            ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+          //  ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
         }
     }
     public void logout() throws Exception

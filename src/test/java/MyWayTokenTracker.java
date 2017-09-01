@@ -30,7 +30,7 @@ import pojos.user.RegisterUser;
 /**
  * Created by E001599 on 17-05-2017.
  */
-@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
+@ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class MyWayTokenTracker extends SubwayAppBaseTest {
