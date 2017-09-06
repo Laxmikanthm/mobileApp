@@ -117,4 +117,21 @@ public class MenuPageIOS extends MenuPage {
 
         return button;
     }
+    public By getGeneralTab() throws Exception {
+        By general= By.xpath("//android.view.View [@content-desc='"+BaseTest.bundle.getString("general")+"']");
+        return general;
+    }
+    public By getAccountTab() throws Exception {
+        By general= By.xpath("//android.view.View [@content-desc='"+BaseTest.bundle.getString("myAccount")+"']");
+        return general;
+    }
+    public By getMenuTab() throws Exception {
+        By general= By.xpath("//android.view.View [@content-desc='"+BaseTest.bundle.getString("menu")+"']");
+        return general;
+    }
+    public By getPaymentTab() throws Exception {
+        By general= By.xpath("//android.view.View [@content-desc='"+BaseTest.bundle.getString("payment")+"']");
+        return general;
+    }
+
 }

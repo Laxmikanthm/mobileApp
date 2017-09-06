@@ -57,7 +57,6 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public LoginPage gotoLogInPage() throws Exception {
         try {
-            Thread.sleep(5000);
             driver.findElementById("signIn");
 
                    } catch (Exception ex) {

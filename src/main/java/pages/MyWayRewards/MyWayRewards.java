@@ -24,7 +24,9 @@ import pages.HomePage.HomePage;
 import pages.LoginPage.LoginPageAndroid;
 import pages.LoginPage.LoginPageIOS;
 import pojos.user.RemoteOrderCustomer;
+import org.openqa.selenium.interactions.touch.FlickAction;
 
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -77,10 +79,10 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         List<WebElement> elements = getElements(Swipe);
         for (int i = 0; i < 3; i++) {
             WebElement ele = elements.get(0);
-            MobileElement element = (MobileElement) ele;
-            Thread.sleep(3000L);
+           // MobileElement element = (MobileElement) ele;
+           // Thread.sleep(3000L);
 
-           // element.swipe(SwipeElementDirection.LEFT, 500);
+           //element.swipe(SwipeElementDirection.LEFT, 500);
             swipeLeft(ele);
 
         }
@@ -93,7 +95,14 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         size=driver.manage().window().getSize();
         int x1 = (int) (size.width * 0.20);
         TouchAction action = new TouchAction((MobileDriver)driver);
-        action.longPress(element).moveTo(x1,580).release().perform();
+        int startY = element.getLocation().getY() + (element.getSize().getHeight() / 2);
+        int startX = element.getLocation().getX() + (element.getSize().getWidth() / 2);
+
+        int endX = element.getLocation().getX() + (element.getSize().getWidth() / 2);
+        int endY = element.getLocation().getY() + (element.getSize().getHeight() / 2);
+
+        action.press(startX, startY).waitAction(Duration.ofSeconds(2)).moveTo(endX, endY).release().perform();
+       /* action.press(element).moveTo(x1,580).release().perform();*/
 
     }
     public void swipeRight(WebElement element)

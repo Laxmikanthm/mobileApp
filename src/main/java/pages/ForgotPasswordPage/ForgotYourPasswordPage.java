@@ -1,5 +1,6 @@
 package pages.ForgotPasswordPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
@@ -39,7 +40,7 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
     public LoginPage setNewPassword(MobileUser mobileUser) throws Exception {
         try {
             getEmailAddress().isReady();
-            getEmailAddress().getControl().clear();
+           // getEmailAddress().getControl().clear();
             getEmailAddress().setText(mobileUser.getEmailAddress());
             getNextButton().click();
             enterCode(getVerificationCode(mobileUser.getEmailAddress()));
@@ -71,7 +72,7 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
 
     public static ForgotYourPasswordPage get(AppiumDriver driver) throws Exception {
 
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+        String platform = SubwayAppBaseTest.platformName;
 
         switch (platform) {
             case "iOS":
@@ -97,4 +98,5 @@ public abstract class ForgotYourPasswordPage<T extends AppiumDriver> extends Mob
             codes.get(0).sendKeys(code);
         }
     }
+
 }

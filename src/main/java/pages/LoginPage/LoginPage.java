@@ -58,12 +58,10 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public HomePage login(MobileUser mobileUser) throws Exception {
         try {
             try {
-               Thread.sleep(5000);
+               Thread.sleep(15000);
                 driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-signInName']");
-
             }
-            catch (org.openqa.selenium.NoSuchElementException ex) {
-
+           catch (org.openqa.selenium.NoSuchElementException ex) {
                 driver.findElementById("com.android.chrome:id/terms_accept").click();
                 driver.findElementById("com.android.chrome:id/negative_button").click();
             }

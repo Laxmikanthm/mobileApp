@@ -1,5 +1,6 @@
 package pages.ContactInformationPage;
 
+import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
@@ -38,7 +39,7 @@ public abstract  class ContactInformationPage<T extends AppiumDriver> extends Mo
 
     public static ContactInformationPage get(AppiumDriver driver) throws Exception{
 
-        String platform = driver.getCapabilities().getCapability("platformName").toString();
+        String platform = SubwayAppBaseTest.platformName;
 
         switch (platform){
             case "iOS":

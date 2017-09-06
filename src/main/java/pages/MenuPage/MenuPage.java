@@ -47,6 +47,12 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getPrivacyPolicyShare() throws Exception;
     abstract MobileButton getTermsandConditions() throws Exception;
     abstract MobileLabel getPrivacyStatement() throws Exception;
+    abstract By getGeneralTab() throws Exception;
+    abstract By getAccountTab() throws Exception;
+    abstract By getMenuTab() throws Exception;
+    abstract By getPaymentTab() throws Exception;
+
+
     //abstract MobileLabel getOrderNumber() throws Exception;
 
 
@@ -297,16 +303,18 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     public void assertHelpPageTexts() throws Exception {
         try {
 
-            By General=By.id("General");
+            By General=getGeneralTab();
+            Thread.sleep(5000);
             Assert.assertEquals(isElementPresent(General),true);
-            By MyAccount=By.id("My Account");
+            By MyAccount=getAccountTab();
+            Thread.sleep(5000);
             Assert.assertEquals(isElementPresent(MyAccount),true);
-            By MenuandOrdering=By.id("Menu & Ordering");
+            By MenuandOrdering=getMenuTab();
+            Thread.sleep(5000);
             Assert.assertEquals(isElementPresent(MenuandOrdering),true);
-            By payment=By.id("Payment");
+            By payment=getPaymentTab();
+            Thread.sleep(5000);
             Assert.assertEquals(isElementPresent(payment),true);
-            By subwaycardDetails=By.id("SUBWAY® Card");
-            Assert.assertEquals(isElementPresent(subwaycardDetails),true);
 
         } catch (Exception ex) {
             throw new Exception(ex);

@@ -1051,10 +1051,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         while (getElements(locator).size() == 0) {
             boolean flag = false;
             Dimension dimensions = driver.manage().window().getSize();
-            int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
+            int StartPoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
             //((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
-            action.moveTo(Startpoint,EndPoint);
+            action.moveTo(StartPoint,EndPoint);
+
         }
     }
 
