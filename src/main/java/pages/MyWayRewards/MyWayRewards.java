@@ -80,7 +80,7 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         for (int i = 0; i < 3; i++) {
             WebElement ele = elements.get(0);
            // MobileElement element = (MobileElement) ele;
-           // Thread.sleep(3000L);
+           Thread.sleep(3000L);
 
            //element.swipe(SwipeElementDirection.LEFT, 500);
             swipeLeft(ele);
@@ -90,14 +90,13 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         getToolbarClose().click();
 
     }
-    public void swipeLeft(WebElement element)
+    public void swipeLeft(WebElement element)throws Exception
     {
         size=driver.manage().window().getSize();
         int x1 = (int) (size.width * 0.20);
+        Thread.sleep(2000);
         TouchAction action = new TouchAction((MobileDriver)driver);
         action.longPress(element.getLocation().getX()+800, element.getLocation().getY()).moveTo(100, 1500).release().perform();
-
-
 
     }
     public void swipeRight(WebElement element)
