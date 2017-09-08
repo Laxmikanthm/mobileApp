@@ -396,10 +396,10 @@ public List<WebElement> getElements(By locator) {
     {
         try {
             if (getTokens(remoteOrderCustomer) >= 200) {
-                String MdmId = remoteOrderCustomer.getGuestID();
+              /*  String MdmId = remoteOrderCustomer.getGuestID();
                 Kobie.generateCertificates(MdmId);
                 MyWayRewards myWayRewards = getTokensSparkle();
-                myWayRewards.toolBarClose();
+                myWayRewards.toolBarClose();*/
                 remoteOrderCustomer=getLoyalityUser(remoteOrderCustomer);
                 Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(), certsCount());
            }

@@ -95,14 +95,9 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         size=driver.manage().window().getSize();
         int x1 = (int) (size.width * 0.20);
         TouchAction action = new TouchAction((MobileDriver)driver);
-        int startY = element.getLocation().getY() + (element.getSize().getHeight() / 2);
-        int startX = element.getLocation().getX() + (element.getSize().getWidth() / 2);
+        action.longPress(element.getLocation().getX()+800, element.getLocation().getY()).moveTo(100, 1500).release().perform();
 
-        int endX = element.getLocation().getX() + (element.getSize().getWidth() / 2);
-        int endY = element.getLocation().getY() + (element.getSize().getHeight() / 2);
 
-        action.press(startX, startY).waitAction(Duration.ofSeconds(2)).moveTo(endX, endY).release().perform();
-       /* action.press(element).moveTo(x1,580).release().perform();*/
 
     }
     public void swipeRight(WebElement element)

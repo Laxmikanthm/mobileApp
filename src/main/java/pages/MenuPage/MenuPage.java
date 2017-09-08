@@ -294,6 +294,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         try {
             By appVersionLocator = By.id("com.subway.mobile.subwayapp03:id/version");
             Assert.assertTrue(isElementPresent(appVersionLocator), "App version is existed in the About page");
+            Logz.step("Validated Appversion Successfully");
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -315,6 +316,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             By payment=getPaymentTab();
             Thread.sleep(5000);
             Assert.assertEquals(isElementPresent(payment),true);
+            Logz.step("Validated help page Successfully");
 
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -326,6 +328,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         try {
             By privacyPolicyLocator = By.id("android:id/content");
             Assert.assertTrue(isElementPresent(privacyPolicyLocator),"Privacy Statment Text present in the Privacypolicy");
+            Logz.step("Validated Privacy Policy Successfully");
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -336,6 +339,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         try {
             By termsAndConditionsTextLocator = By.id("android:id/content");
             Assert.assertTrue(isElementPresent(termsAndConditionsTextLocator),"Terms and conditions Text present in the Terms and conditions page");
+            Logz.step("Validated Terms&Conditions Successfully");
         } catch (Exception ex) {
             throw new Exception(ex);
         }

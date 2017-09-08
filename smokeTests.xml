@@ -10,15 +10,15 @@
         <parameter name="appPaths" value="${app}"></parameter>
         <parameter name="projectName" value="${driverName}"></parameter>
         <classes>
-            <class name="UserLoginTest">
+           <!-- <class name="UserLoginTest">
                 <methods>
                     <include name="createUser"/>
                 </methods>
-            </class>
-
+            </class>-->
             <class name="Certificates">
                 <methods>
                     <include name="redeemCertificate"/>
+
                 </methods>
             </class>
             <class name="Offers">
