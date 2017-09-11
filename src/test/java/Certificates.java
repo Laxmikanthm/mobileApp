@@ -39,25 +39,25 @@ public class Certificates extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
-   //Store store = JdbcUtil.getStoreDetails();
-    Store store;
+   Store store = JdbcUtil.getStoreDetails();
+    //Store store;
 
 //DFA-9188
     @Test
-    public void redeemCertificate_9188() throws Exception {
-        mobileUser= new MobileUser(false, Country.UnitedStates, 12921);
-        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+    public void redeemCertificate() throws Exception {
+        mobileUser= new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        RemoteOrder remoteOrder = remoteOrderCustomer.getCart().getRemoteOrder();
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrderCustomer=remoteOrder.getCustomer();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         remoteOrderCustomer=myWayRewards.validateTokensandCerts(homePage,remoteOrderCustomer);
-        homePage.certsCount();
-        OrdersPage ordersPage=homePage.findStore("19428");
-        CartData.createNewCart(remoteOrderCustomer,12921);
-        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",mobileUser, "200 W Ridge Pike");
+         homePage.certsCount();
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+       CartData.createNewCart(remoteOrderCustomer,store.getLocationCode());
+        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",mobileUser, store.getAddress1());
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certCount);
         //Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
         //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
@@ -101,8 +101,7 @@ public class Certificates extends SubwayAppBaseTest {
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
        // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
     }
-@Test
-
+    @Test
     public void redeemExpiredCertificate() throws Exception{
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);

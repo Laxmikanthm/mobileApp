@@ -1,5 +1,6 @@
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.pojos.Store;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
 import org.testng.annotations.Test;
@@ -18,21 +19,18 @@ import pojos.user.RemoteOrderCustomer;
 public class TakeOut extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
-    Store store;
     RemoteOrderCustomer remoteOrderCustomer;
-    // Store store = JdbcUtil.getStoreDetails();
+    Store store = JdbcUtil.getStoreDetails();
     HomePage homePage;
     OrdersPage ordersPage;
     LandingPage landingPage;
     PlaceRandomOrder placeRandomOrder;
 
 
-   // @Test
+   @Test
     public void takeOutNoTax() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        //remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("DarelleToler@qasubway.com");
-        mobileUser.setPassword("Subway1234");
+        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("95932");
@@ -41,14 +39,10 @@ public class TakeOut extends SubwayAppBaseTest {
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
 
-
-
     @Test
     public void kidsValueMealTax() throws Exception {
-        //ordersPage.validateTax();
         mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        mobileUser.setEmailAddress("johnfrancis@qasubway.com");
-        mobileUser.setPassword("Subway1234");
+        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
         ordersPage=homePage.findStore("95932");
@@ -61,8 +55,7 @@ public class TakeOut extends SubwayAppBaseTest {
     public void FreshValueMealWithCoffee() throws Exception {
         //ordersPage.validateTax();
         mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        mobileUser.setEmailAddress("johnfrancis@qasubway.com");
-        mobileUser.setPassword("Subway1234");
+        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
         ordersPage=homePage.findStore("95932");
@@ -70,11 +63,11 @@ public class TakeOut extends SubwayAppBaseTest {
         ordersPage.verifyOrderConformationReceipt();
     }
 
-@Test
+    @Test
     public void certificateDiscountwithHotItems() throws Exception{
 
     mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-   RegisterUser.registerAUserWithoutCardLink(mobileUser);
+    remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
     landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
     homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
     RemoteOrder remoteOrder = remoteOrderCustomer.getCart().getRemoteOrder();
@@ -89,10 +82,8 @@ public class TakeOut extends SubwayAppBaseTest {
 
     @Test
     public void kidsValueMealTaxwithToy() throws Exception {
-        //ordersPage.validateTax();
         mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        mobileUser.setEmailAddress("johnfrancis@qasubway.com");
-        mobileUser.setPassword("Subway1234");
+        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
         ordersPage=homePage.findStore("95932");

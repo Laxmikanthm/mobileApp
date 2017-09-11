@@ -16,6 +16,8 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.touch.TouchActions;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.Assert;
 
 import pages.AddCardPage.AddCardPage;
@@ -567,14 +569,33 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 MobileElement ele = (MobileElement) element;
                 int x = ele.getLocation().getX();
                 int y = ele.getLocation().getY();
-                if(direction.equals("Up")) {
-                   // ((AppiumDriver) driver).swipe(x, y - 50, x, 150, 5000);
-                    action.moveTo(x,y);
-                }else{
 
-                   // ((AppiumDriver) driver).swipe(x, 150, x, y-50, 5000);
-                    action.moveTo(x,y);
+                   // ((AppiumDriver) driver).swipe(x, y - 50, x, 150, 5000);
+                   /* Dimension dimensions = driver.manage().window().getSize();
+                    int height=dimensions.height/2;
+                    int width=dimensions.width/2;
+                int lowerY=(int)((dimensions.height)*0.9);
+                int upperY=(int)((dimensions.height)*0.5);
+*/
+             /*   int Startpoint = element.getLocation().getX();
+                    int scrollEnd =  element.getLocation().getY();*/
+                Dimension dimensions = driver.manage().window().getSize();
+                Double screenHeightStart = dimensions.getHeight() * 0.9;
+                int scrollStart = screenHeightStart.intValue();
+                Double screenHeightEnd = dimensions.getHeight() * 0.5;
+                int scrollEnd = screenHeightEnd.intValue();
+                //driver.swipe(0,scrollStart,0,scrollEnd,2000);
+
+                TouchAction action = new TouchAction((MobileDriver)driver);
+                while(!element.isDisplayed()) {
+                    action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
                 }
+                element.click();
+
+
+
+
+
             }
             if (flag == true) {
                 break;
@@ -1054,7 +1075,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             int StartPoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
             //((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
-            action.moveTo(StartPoint,EndPoint);
+            action.longPress(200,StartPoint).moveTo(0,EndPoint).release().perform();
+
 
         }
     }
@@ -1257,10 +1279,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             RemoteOrder remoteOrder=mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
-            storesAvailable();
+           // storesAvailable();
             HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
             tokens=Integer.parseInt(homePage.tokenValue());
-            homePage.apply();
+           // homePage.apply();
             getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up" );

@@ -39,20 +39,20 @@ import utils.Logz;
 public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
-   Store store;
+  // Store store;
     RemoteOrderCustomer remoteOrderCustomer;
-   // Store store = JdbcUtil.getStoreDetails();
+   Store store = JdbcUtil.getStoreDetails();
 
 
 
     @Test
     public void placeOrderAllSandwiches() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06405");
-        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, "I-95 Northbound");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
         homePage.validateTokens(remoteOrderCustomer);
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }

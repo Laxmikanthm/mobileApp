@@ -164,18 +164,21 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         try{
             okPopUp();
             allowPopUp();
+            Thread.sleep(5000);
             okPopUp();
+            Thread.sleep(5000);
             Logz.info(driver.getSessionId().toString());
             Thread.sleep(20000);
             toggleView();
+            Thread.sleep(5000);
             okPopUp();
-            toggleView();
+            //toggleView();
             if(zipCode.contains("-"))
             {
                 zipCode=zipCode.split("-")[0];
             }
             searchStoreByZipCode(zipCode);
-            toggleView();
+            //toggleView();
             return OrdersPage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);
