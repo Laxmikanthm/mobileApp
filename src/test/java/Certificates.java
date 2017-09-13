@@ -56,7 +56,7 @@ public class Certificates extends SubwayAppBaseTest {
         remoteOrderCustomer=myWayRewards.validateTokensandCerts(homePage,remoteOrderCustomer);
          homePage.certsCount();
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-       CartData.createNewCart(remoteOrderCustomer,store.getLocationCode());
+        CartData.createNewCart(remoteOrderCustomer,store.getLocationCode());
         ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",mobileUser, store.getAddress1());
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certCount);
         //Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens

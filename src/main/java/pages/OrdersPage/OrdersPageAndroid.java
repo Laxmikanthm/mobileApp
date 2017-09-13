@@ -259,11 +259,11 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
     public MobileLabel getSubTotal() throws Exception{
-        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/subtotal"), "Remove Favourites ");
+        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/subtotal"), "Sub Total Amount");
         return button;
     }
     public MobileLabel getRewardsAmt() throws Exception{
-        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_amount"), "Remove Favourites ");
+        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_amount"), "Rewards Amount");
         return button;
     }
     public MobileLabel getOrderNumber() throws Exception{
@@ -271,12 +271,12 @@ public class OrdersPageAndroid extends OrdersPage {
         return switchNameLabel;
     }
     public MobileLabel getErrorTitle() throws Exception{
-        AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("errorTitle")+"']"), "OrderNumber");
+        AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("errorTitle")+"']"), "Error Title");
         return switchNameLabel;
 
     }
     public MobileLabel getErrorMessage() throws Exception{
-        AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("errorMessage")+"']"), "OrderNumber");
+        AndroidLabel switchNameLabel = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("errorMessage")+"']"), "Error Message");
         return switchNameLabel;
 
     }
@@ -294,16 +294,13 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
     public MobileButton getCustomizeOrder() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("CutomizeOrder")), "Popup GotIt");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("CutomizeOrder")), "Customize Order Button");
         return button;
     }
     public MobileButton getDineIn() throws Exception{
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("DineIn")), "DineIn Button");
         return button;
     }
-
-
-
 
     public MobileButton getToGo() throws Exception{
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ToGo")), "ToGo Button");

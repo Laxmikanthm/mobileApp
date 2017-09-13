@@ -1293,8 +1293,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
     public void validateManageLocator()throws Exception
     {
+        Logz.step("Manage Button verification in rewards has started ");
         scrollToElement(ManageLocator,0.9,0.5);
-       // getRewardsAmt().getText();
+        if (getRewardsAmt().getText().contains("$2 in Rewards"))
+        {
+            Logz.step("Rewards are available");
+        }else {
+            Logz.error("Rewards are not available to redeem/Zero rewards are getting displayed");
+        }
 
 
     }
@@ -1312,10 +1318,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             RemoteOrder remoteOrder=mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
-           // storesAvailable();
+            storesAvailable();
             HomePage homePage=scrollAndClick(storeNamesLocator, storeName,  "Up" );
             tokens=Integer.parseInt(homePage.tokenValue());
-           // homePage.apply();
+            homePage.apply();
             getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up" );
