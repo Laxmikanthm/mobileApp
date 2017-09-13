@@ -12,12 +12,12 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>4.6.17-SNAPSHOT</version>
+            <version>4.6.18-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.3.15-SNAPSHOT</version>
+            <version>3.3.19-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 
@@ -80,7 +80,7 @@
                     <systemPropertyVariables>
 
                         <ProjectName>SubwayMobileApp</ProjectName>
-                        <spring.profiles.active>local</spring.profiles.active>
+                        <!--<spring.profiles.active>local</spring.profiles.active>-->
                         <language>en</language>
                         <country>US</country>
                       <!--  <language>us</language>-->
@@ -99,7 +99,7 @@
                         <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/e001599/Downloads/subwayE2eDebug5000703.apk</app>
+                        <app>C:/Subway/SubWayApps/Sep13th/subwayE2eDebug5000724.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>120</newCommandTimeout>
@@ -108,7 +108,7 @@
                         <environment>stage</environment>
                         <environmentR1R2>r2</environmentR1R2>
                         <azureEnv>qa</azureEnv>
-                        <roEnv>https://qe-order.remote-order.com</roEnv>
+                        <roEnv>https://qe-order.remote-order.com/LoyaltyPilot.aspx</roEnv>
                         <!-- R2/E2E-->
                         <!--<environment>stage</environment>
                         <environmentR1R2>r2</environmentR1R2>
@@ -129,15 +129,15 @@
                         <appName>R2-Mobile</appName>
 
                         <!--Test Object-->
-                       <!-- <spring.profiles.active>testObject</spring.profiles.active>
+                        <spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>501970C24092410F98977C01C563F1CB</testObjectApiKey>
+                        <testObjectApiKey>DCAD109D67664430B2A35D611CF2D3CA</testObjectApiKey>
                         <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
-                        <appName>Aug29th</appName>
+                        <appName>R2-Mobile</appName>
                         <appiumVersion>1.6.5</appiumVersion>
-                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>-->
+                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->
