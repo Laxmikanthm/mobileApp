@@ -143,6 +143,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getpopupGotIt() throws Exception;
     abstract MobileButton getCustomizeOrder() throws Exception;
     abstract MobileButton getToGo() throws Exception;
+    abstract MobileButton getCustomizebread() throws Exception;
+    abstract MobileButton getlooksgoodbutton() throws Exception;
     abstract MobileButton getTotalAmount() throws Exception;
     //abstract MobileButton getTaxAmount() throws Exception;
     abstract MobileButton getSubmitOrder() throws Exception;
@@ -264,6 +266,37 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getGotIt().click();
             Assert.assertEquals(homePage.tokenValue().toString(),String.valueOf(tokens));
 
+
+            //return specific page
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+    public void placeRandomToastedKidsMeal(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens=Integer.parseInt(homePage.tokenValue());
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
+            getCustomize().click();
+            getCustomizebread().click();
+            getToastIt().click();
+            getlooksgoodbutton().click();
+            getAddToBag().click();
+            scrollToElement(totalAmount, 0.9, 0.2);
+            verifyTaxCalculationInBag();
+            getOrderValue();
+            getPlaceOrder().click();
+            Thread.sleep(5000);
+            getTokens(remoteOrder);
+            getGotIt().click();
+            Assert.assertEquals(homePage.tokenValue().toString(),String.valueOf(tokens));
 
             //return specific page
         } catch (Exception ex) {
@@ -1643,7 +1676,44 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
+    public void  placeRandomwithDineInHotTax(String menuItem, MobileUser mobileUser, String storeName) throws  Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            getDirections().isReady();
+            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens=Integer.parseInt(homePage.tokenValue());
+            getStartOrderButton().click();
+            getItems().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
+            getAddToBag().click();
+            verifyTaxCalculationInBag();
+            customizeOrder();
+            customizeOrder(mobileUser,order);
+            verifyTaxCalculationInBag();
+            getChips().click();
+            getSelectFlavor().isReady();
+            getSelectFlavor().click();
+            getItemSelectFlavor().isReady();
+            getItemSelectFlavor().click();
+            getAddToBag().click();
+            verifyTaxCalculationInBag();
+            getDrinks().click();
+            getAddToBag().click();
+            verifyTaxCalculationInBag();
+            getPlaceOrder().isReady();
+            getPlaceOrder().click();
+            Thread.sleep(20000);
+            getTokens(remoteOrder);
+            getGotIt().isReady();
+            getGotIt().click();
+            Assert.assertEquals(homePage.tokenValue().toString(),String.valueOf(tokens));
 
+        } catch(Exception ex){
+            throw new Exception(ex);
+        }
+    }
 
     public void placeRandomOrderKidswithToy(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {

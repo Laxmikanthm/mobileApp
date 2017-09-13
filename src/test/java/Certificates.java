@@ -42,7 +42,7 @@ public class Certificates extends SubwayAppBaseTest {
    Store store = JdbcUtil.getStoreDetails();
     //Store store;
 
-//DFA-9188
+//DFA-9188_ DFA-10892
     @Test
     public void redeemCertificate() throws Exception {
         mobileUser= new MobileUser(false, Country.UnitedStates, store.getLocationCode());
@@ -80,7 +80,7 @@ public class Certificates extends SubwayAppBaseTest {
 
 
     }
-    //DFA-9167
+    //DFA-9167_DFA-5049
     @Test
     public void redeemMultipleCertificate() throws Exception {
 
@@ -101,6 +101,8 @@ public class Certificates extends SubwayAppBaseTest {
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
        // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
     }
+
+    ///DFA-9167`
     @Test
     public void redeemExpiredCertificate() throws Exception{
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());

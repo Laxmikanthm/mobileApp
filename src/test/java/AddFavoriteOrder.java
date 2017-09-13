@@ -54,6 +54,7 @@ RemoteOrderCustomer remoteOrderCustomer;
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
 
     }
+    //DFA-7675_DFA-7241
     @Test
     @DirtiesContext
     public void addFavoriteReOrder() throws Exception
@@ -71,7 +72,7 @@ RemoteOrderCustomer remoteOrderCustomer;
         homePage.validateTokens(remoteOrderCustomer);
 
     }
-//DFA-9157
+//DFA-9157_DFA-8352
     @Test
     @DirtiesContext
     public void UnFavouriteOrder()throws Exception

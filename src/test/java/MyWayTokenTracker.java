@@ -38,7 +38,7 @@ public class MyWayTokenTracker extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     Store store=JdbcUtil.getStoreDetails();
-
+    //DFA-9139_DFA-7615_DFA-7112
     @Test
     @DirtiesContext
     public void tokenTracker()throws Exception {

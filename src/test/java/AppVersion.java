@@ -27,7 +27,7 @@ import pojos.user.RegisterUser;
 public class AppVersion extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
-
+    // DFA-10048_DFA-9134
     @Test
     public void verifyAppVersion() throws Exception
     {

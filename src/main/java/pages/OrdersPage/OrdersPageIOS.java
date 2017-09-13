@@ -459,5 +459,12 @@ public class OrdersPageIOS extends OrdersPage {
         return label;
     }
 
-
+    public MobileButton getCustomizebread() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/check_details"), "See details link");
+        return button;
+    }
+    public MobileButton getlooksgoodbutton() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/check_details"), "See details link");
+        return button;
+    }
 }

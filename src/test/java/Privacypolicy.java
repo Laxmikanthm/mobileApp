@@ -32,7 +32,7 @@ public class Privacypolicy extends SubwayAppBaseTest {
 
 
 
-//DFA-9174
+//DFA-9174_DFA-9134
     @Test
     public void verifyPrivacyPolicy() throws Exception
     {

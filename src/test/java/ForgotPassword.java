@@ -34,7 +34,7 @@ public class ForgotPassword extends SubwayAppBaseTest  {
     Order order;
     MobileUser mobileUser;
 
-    //DFA-9172
+    //DFA-9172_DFA-5490_DFA-5489_DFA-5488_DFA-5487_DFA-5486_DFA-5485_DFA-5484
     @Test
     @DirtiesContext
     public void forgotPassword()throws Exception

@@ -27,7 +27,7 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class EmailPreferences extends SubwayAppBaseTest {
 
-
+    //DFA-10885
     @Test
     public void verifyEmailPreferencesPage() throws Exception
     {

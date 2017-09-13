@@ -43,7 +43,7 @@ public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
        // remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
-
+    //DFA-7122
     @Test
     @DirtiesContext
     public void orderWithGiftCardCredit() throws  Exception

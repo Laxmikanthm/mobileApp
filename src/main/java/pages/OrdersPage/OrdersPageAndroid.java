@@ -354,6 +354,14 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
 
     }
+    public MobileButton getCustomizebread() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SelectBread")), "Select Bread");
+        return button;
+    }
+    public MobileButton getlooksgoodbutton() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Looksgood")), "Looks Good Button");
+        return button;
+    }
 
     public MobileButton getChipsFlavor() throws Exception{
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("ChipsFlavor")+"']"), "Chips Flavor Button");
