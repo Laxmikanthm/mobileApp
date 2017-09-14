@@ -31,7 +31,7 @@ public class EmailPreferences extends SubwayAppBaseTest {
     @Test
     public void verifyEmailPreferencesPage() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
