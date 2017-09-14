@@ -60,11 +60,10 @@
             <artifactId>spring-test</artifactId>
             <version>4.3.10.RELEASE</version>
         </dependency>
-
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
-            <version>LATEST</version>
+            <groupId>com.fwq.qa</groupId>
+            <artifactId>jwtgenerator</artifactId>
+            <version>1.0</version>
         </dependency>
 
     </dependencies>
@@ -254,10 +253,15 @@
 
         </repository>
         <repository>
-            <id>mavencentral</id>
-            <name>Maven Central</name>
-            <url>https://repo1.maven.org/maven2/</url>
-            <layout>default</layout>
+            <id>JWTGenerator</id>
+            <name>JWTGenerator</name>
+            <url>http://10.49.128.10:8090/repository/JWTGenerator/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
 
     </repositories>
@@ -285,7 +289,17 @@
                 <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
-
+        <pluginRepository>
+            <id>JWTGenerator</id>
+            <name>JWTGenerator</name>
+            <url>http://10.49.128.10:8090/repository/JWTGenerator/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
     </pluginRepositories>
 
 
