@@ -12,7 +12,7 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>4.6.18-SNAPSHOT</version>
+            <version>4.6.20-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
@@ -57,7 +57,6 @@
                     <systemPropertyVariables>
 
                         <ProjectName>SubwayMobileApp</ProjectName>
-                        <!--<spring.profiles.active>local</spring.profiles.active>-->
                         <language>en</language>
                         <country>US</country>
                       <!--  <language>us</language>-->
@@ -76,7 +75,7 @@
                         <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>C:/Subway/SubWayApps/Sep13th/subwayE2eDebug5000724.apk</app>
+                        <app>C:/Users/E001599/Downloads/subwayE2eDebug5000733.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>120</newCommandTimeout>
@@ -104,7 +103,7 @@
 
                         <executionPlatform></executionPlatform>
                         <appName>R2-Mobile</appName>
-
+                        <!--<spring.profiles.active>local</spring.profiles.active>-->
                         <!--Test Object-->
                         <spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
