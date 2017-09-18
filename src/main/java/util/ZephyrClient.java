@@ -1,4 +1,5 @@
 package util;
+import com.thed.zephyr.cloud.rest.client.JwtGenerator;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -8,10 +9,12 @@ import org.apache.http.util.EntityUtils;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.testng.ITestResult;
 
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,6 +33,7 @@ public class ZephyrClient {
     private static String API_ADD_TESTS = JWTGenerator.zephyrBaseUrl+"/public/rest/api/1.0/executions/add/cycle/";
     private static String API_GET_EXECUTIONS = JWTGenerator.zephyrBaseUrl+"/public/rest/api/1.0/executions/search/cycle/";
     private static String API_UPDATE_EXECUTION = JWTGenerator.zephyrBaseUrl+"/public/rest/api/1.0/execution/";
+    private static String API_GETALLCycles_CYCLE=JWTGenerator.zephyrBaseUrl+"/public/rest/api/1.0/cycles/search?";
     static String projectId, versionId;
 
     public ZephyrClient(String projectId, String versioId){
@@ -79,7 +83,7 @@ public class ZephyrClient {
     }
 
 
-    public static void addTestsToCycle(String cycleId) throws URISyntaxException, JSONException {
+    public static void addTestsToCycle(String cycleId,String cloneCycleId) throws URISyntaxException, JSONException {
 
         final String addTestsUri = API_ADD_TESTS + cycleId;
 
@@ -88,7 +92,7 @@ public class ZephyrClient {
         addTestsObj.put("method", "3");
         addTestsObj.put("projectId", projectId);
         addTestsObj.put("versionId", versionId);
-        addTestsObj.put("fromCycleId", "0001503322415192-242ac112-0001");
+        addTestsObj.put("fromCycleId", cloneCycleId);
 
         StringEntity addTestsJSON = null;
         try {
@@ -163,11 +167,21 @@ public class ZephyrClient {
         return map;
     }
 
-    public static String updateExecutions(List<String> ids, String cycleId) throws URISyntaxException, JSONException, IOException {
+    public static String updateExecutions(List<String> ids, String cycleId, ITestResult result) throws URISyntaxException, JSONException, IOException {
 
         final String updateExecutionUri =  API_UPDATE_EXECUTION + ids.get(0);
         JSONObject statusObj = new JSONObject();
-        statusObj.put("id", "1");
+        if(result.getStatus()==1) {
+            statusObj.put("id", "1");
+        }
+        else if (result.getStatus()==2)
+        {
+            statusObj.put("id",2);
+        }
+        else if(result.getStatus()==3)
+        {
+            statusObj.put("id",3);
+        }
 
         JSONObject executeTestsObj = new JSONObject();
         executeTestsObj.put("status", statusObj);
@@ -222,14 +236,45 @@ public class ZephyrClient {
         return executionStatus;
     }
 
+    public static String getAllCycle(String cycleName)throws URISyntaxException ,JSONException {
+        String cycleId="null";
+        final String ExecutionUri = API_GETALLCycles_CYCLE + "versionId=" + versionId + "&projectId=" + projectId;
+        HttpResponse response = GET(ExecutionUri);
+        int statusCode = response.getStatusLine().getStatusCode();
+
+            if (statusCode >= 200 && statusCode < 300) {
+                HttpEntity entity = response.getEntity();
+                String obj = null;
+                try {
+                    obj = EntityUtils.toString(entity);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                JSONArray allIssues = new JSONArray(obj);
+                for (int j = 0; j <= allIssues.length() - 1; j++) {
+                    JSONObject jobj1 = allIssues.getJSONObject(j);
+                    String name=jobj1.getString("name");
+                    if(name.equals(cycleName))
+                    {
+                         cycleId=jobj1.getString("cycleIndex");
+                         j=allIssues.length()-1;
+                    }
+
+                }
+        }
+        return cycleId;
+    }
+
     public static void main(String[] args) throws Exception {
         DateFormat dateFormatee = new SimpleDateFormat("yyyy-MMM-dd-HH_mm");
         Date date = new Date();
         ZephyrClient jwt = new ZephyrClient("10001", "10401");
         String cycleID = jwt.createCycle("Automation cycle - "+dateFormatee.format(date));
-        jwt.addTestsToCycle(cycleID);
+        //jwt.addTestsToCycle(cycleID);
         Map<String, List<String>> map = jwt.getExecutionsByCycleId(cycleID);
-        jwt.updateExecutions(map.get("DFA-9188"), cycleID);
-        jwt.updateExecutions(map.get("DFA-5306"), cycleID);
+       /* jwt.updateExecutions(map.get("DFA-9188"), cycleID);
+        jwt.updateExecutions(map.get("DFA-5306"), cycleID);*/
     }
 }

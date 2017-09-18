@@ -40,6 +40,7 @@ public class JWTGenerator {
         HttpResponse response = null;
         HttpClient restClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(uri);
+      //  httpGet.setHeader("Content-Type","application/json");
         httpGet.setHeader("Authorization", jwt);
         httpGet.setHeader("zapiAccessKey", accessKey);
 
@@ -107,6 +108,35 @@ public class JWTGenerator {
             e.printStackTrace();
         }
         return response;
+    }
+
+    public static HttpResponse getLifeCycle(String url)throws URISyntaxException
+    {
+        URI uri = new URI(url);
+        int expirationInSec = 300;
+        JwtGenerator jwtGenerator = client.getJwtGenerator();
+        String jwt = jwtGenerator.generateJWT("Get", uri, expirationInSec);
+        System.out.println("FINAL API : " +uri.toString());
+        System.out.println("JWT Token : " +jwt);
+
+        HttpResponse response = null;
+        HttpClient restClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(uri);
+        httpGet.addHeader("Content-Type", "application/json");
+        httpGet.setHeader("Authorization", jwt);
+        httpGet.setHeader("zapiAccessKey", accessKey);
+
+
+        try {
+            response = restClient.execute(httpGet);
+        } catch (ClientProtocolException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        return response;
+
     }
 
 }

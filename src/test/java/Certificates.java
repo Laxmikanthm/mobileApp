@@ -42,11 +42,13 @@ public class Certificates extends SubwayAppBaseTest {
    Store store = JdbcUtil.getStoreDetails();
     //Store store;
 
-//DFA-9188_ DFA-10892
+//DFA-9188
     @Test
-    public void redeemCertificate() throws Exception {
+    public void redeemCertificate_9188() throws Exception {
         mobileUser= new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+      // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser.setEmailAddress("RonnicaShakelady@qasubway.com");
+        mobileUser.setPassword("Subway1234");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
@@ -80,9 +82,9 @@ public class Certificates extends SubwayAppBaseTest {
 
 
     }
-    //DFA-9167_DFA-5049
+    //DFA-5049
     @Test
-    public void redeemMultipleCertificate() throws Exception {
+    public void redeemMultipleCertificate_5049() throws Exception {
 
         mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates
         mobileUser.setPassword("Subway2017");
@@ -104,7 +106,7 @@ public class Certificates extends SubwayAppBaseTest {
 
     ///DFA-9167`
     @Test
-    public void redeemExpiredCertificate() throws Exception{
+    public void redeemExpiredCertificate_9167() throws Exception{
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

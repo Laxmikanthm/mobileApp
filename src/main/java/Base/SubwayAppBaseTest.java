@@ -40,19 +40,21 @@ public class SubwayAppBaseTest extends BaseTest {
     DateFormat dateFormatee = new SimpleDateFormat("yyyy-MMM-dd-HH_mm");
     ZephyrClient jwt = new ZephyrClient("10001", "10401");
     Map<String, List<String>> map;
-    String cycleID;
-    Boolean flag = false;
+    String cycleID,cloneCycleId;
+    Boolean flag = Boolean.parseBoolean(System.getProperty("zephyrUpdate"));
 
     @BeforeSuite(alwaysRun = true)
     public void setupSuite1(ITestContext testContext) throws Exception {
         context = new FileSystemXmlApplicationContext("src/test/resources/MobileAppBeans.xml");
-        executors = (Executors) context.getBean("executors");
+        executors = (Executors)context.getBean("executors");
         driverName = testContext.getCurrentXmlTest().getParameter("driverName");
         BaseTest.EXPLICIT_WAIT_TIME = 300;
         if(flag) {
-            cycleID = jwt.createCycle("Automation cycle - " + dateFormatee.format(date));
-            jwt.addTestsToCycle(cycleID);
-            map = jwt.getExecutionsByCycleId(cycleID);
+            cloneCycleId=jwt.getAllCycle("Regression Test Clone cycle");
+           cycleID = jwt.createCycle("Regression cycle - " + dateFormatee.format(date));
+           jwt.addTestsToCycle(cycleID,cloneCycleId);
+           map = jwt.getExecutionsByCycleId(cycleID);
+
         }
     }
 
@@ -66,13 +68,12 @@ public class SubwayAppBaseTest extends BaseTest {
            not use driver.close() to clean up. It will throw an error if something happened during
            your test that caused the WebDriver instance to close early. The close and clean up
            command in the WebDriver API is driver.quit(). You would normally use driver.close()
-           if your test opens multiple windows and you want to shut some of them.
-         */
+           if your test opens multiple windows and you want to shut some of them.*/
         try {
             eyes.close();
             if(flag) {
-                for (int i = 0; i < result.getMethod().getMethodName().split("_").length; i++) {
-                    jwt.updateExecutions(map.get("DFA-" + result.getMethod().getMethodName().split("_")[i + 1]), cycleID);
+                for (int i = 0; i < result.getMethod().getMethodName().split("_").length-1; i++) {
+                    jwt.updateExecutions(map.get("DFA-" + result.getMethod().getMethodName().split("_")[i + 1]), cycleID,result);
                 }
             }
             drivers = driverThread.get();
@@ -97,7 +98,6 @@ public class SubwayAppBaseTest extends BaseTest {
         }
 
     }
-
     @Override
     @AfterSuite(alwaysRun = true)
     protected void endSuite(ITestContext testContext) throws Exception{
@@ -114,7 +114,6 @@ public class SubwayAppBaseTest extends BaseTest {
         executors.terminate();
         CommonUtils.archiveTestResults();
     }
-
 
 
 }

@@ -47,7 +47,7 @@ public class UserLoginTest extends SubwayAppBaseTest {
     }
 
     @Test
-    public void createUser() throws Exception {
+    public void createUser_4929() throws Exception {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
         registrationPage.signUp();
