@@ -13,12 +13,16 @@
             <class name="UserLoginTest">
                 <methods>
                     <include name="createUser"/>
+                    <exclude name="userLogout"/>
+                    <exclude name="userLogin"/>
                 </methods>
             </class>
             <class name="Certificates">
                 <methods>
                     <include name="redeemCertificate"/>
-
+                    <exclude name="verifyCertificate"/>
+                    <exclude name="redeemMultipleCertificate_5049"/>
+                    <exclude name="redeemExpiredCertificate_9167"/>
                 </methods>
             </class>
             <class name="Offers">

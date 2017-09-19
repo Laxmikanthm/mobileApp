@@ -10,7 +10,27 @@
         <parameter name="appPaths" value="${app}"></parameter>
         <parameter name="projectName" value="${driverName}"></parameter>
         <classes>
+            <class name="AppVersion">
+                <methods>
+                    <include name="verifyAppVersion"/>
+                </methods>
+            </class>
+            <class name="EmailPreferences">
+                <methods>
+                    <include name="verifyEmailPreferencesPage"/>
+                </methods>
+            </class>
+            <class name="HelpPage">
+                <methods>
+                    <include name="verifyHelpPage"/>
+                </methods>
+            </class>
 
+            <class name="ResetPasswordTest">
+                <methods>
+                    <include name="resetPassword"/>
+                </methods>
+            </class>
 
        <class name="ForgotPassword">
            <methods>
@@ -68,6 +88,30 @@
                  <include name="UnFavouriteOrder"/>
              </methods>
          </class>
+            <class name="OrderwithSpecialInstructions">
+                <methods>
+                    <include name="OrderSpecialInstructions"/>
+                </methods>
+            </class>
+            <class name="Certificates">
+                <methods>
+                    <include name="verifyCertificate"/>
+                    <include name="redeemMultipleCertificate_5049"/>
+                </methods>
+            </class>
+            <class name="TokenGeneration">
+                <methods>
+                    <include name="tokenGeneration"/>
+                </methods>
+            </class>
+            <class name="EditCardAndPlaceOrder">
+                <methods>
+                    <include name="editCartVerifyPlaceOrder"/>
+                    <include name="editCartAddAnotherVerifyPlaceOrder"/>
+                    <include name="editCartDeleteItemVerifyPlaceOrder"/>
+                    <include name="editCartSomethingElseVerifyPlaceOrder"/>
+                </methods>
+            </class>
         </classes>
     </test>
 

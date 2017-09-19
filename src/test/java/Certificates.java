@@ -46,9 +46,7 @@ public class Certificates extends SubwayAppBaseTest {
     @Test
     public void redeemCertificate_9188() throws Exception {
         mobileUser= new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-      // remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        mobileUser.setEmailAddress("RonnicaShakelady@qasubway.com");
-        mobileUser.setPassword("Subway1234");
+       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
