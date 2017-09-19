@@ -1295,7 +1295,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     {
         Logz.step("Manage Button verification in rewards has started ");
         scrollToElement(ManageLocator,0.9,0.5);
-        if (getRewardsAmt().getText().contains("$2 in Rewards"))
+        if (getRewardsAmt().getText().contains("$2 Reward"))
         {
             Logz.step("Rewards are available");
         }else {
