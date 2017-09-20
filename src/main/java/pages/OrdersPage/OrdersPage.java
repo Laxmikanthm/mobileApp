@@ -1207,7 +1207,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up" );
 
-
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -1252,7 +1251,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollToItemAndClick1(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), driver.manage().window().getSize().getHeight()-300);
             getAddToBag().isReady();
             getAddToBag().click();
-
             getGotIt().click();
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -1295,7 +1293,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     {
         Logz.step("Manage Button verification in rewards has started ");
         scrollToElement(ManageLocator,0.9,0.5);
-        if (getRewardsAmt().getText().contains("$2 Reward"))
+        Thread.sleep(5000);
+        if (getRewardsAmt().getText().contains("2"))
         {
             Logz.step("Rewards are available");
         }else {
