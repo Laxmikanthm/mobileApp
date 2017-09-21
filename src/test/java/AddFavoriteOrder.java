@@ -43,12 +43,12 @@ RemoteOrderCustomer remoteOrderCustomer;
     @Test
     public void addFavoriteOrder() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06405");
-       // ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 Northbound");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
@@ -64,7 +64,7 @@ RemoteOrderCustomer remoteOrderCustomer;
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
-       // ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 Northbound");
+        //ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 Northbound");
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);

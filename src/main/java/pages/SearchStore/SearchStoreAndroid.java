@@ -1,8 +1,10 @@
 package pages.SearchStore;
 
 import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.android.AndroidLabel;
 import base.gui.controls.mobile.android.AndroidTextBox;
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileLabel;
 import base.test.BaseTest;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -82,4 +84,23 @@ public class SearchStoreAndroid extends SearchStore {
 
     }
 
+    public MobileButton getSelectRestaurantButton() throws Exception {
+        AndroidButton selectRestaurantButton = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+BaseTest.bundle.getString("SelectRestaurant")+"']"), "Select Restaurant Button");
+        return selectRestaurantButton;
+    }
+
+    public MobileButton getSearchArea() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SearchArea")), "Search This Area Button");
+        return button;
+    }
+
+    public MobileButton getLocaion() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("LocationImage")), "LocationImage Button");
+        return button;
+    }
+
+    public MobileLabel getMapView() throws Exception{
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("MapView")),"Map View Image");
+        return label;
+    }
 }

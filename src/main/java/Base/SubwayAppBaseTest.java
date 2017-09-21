@@ -1,5 +1,6 @@
 package Base;
 
+
 import base.test.BaseTest;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
@@ -30,6 +31,7 @@ public class SubwayAppBaseTest extends BaseTest {
     private Object driver;
     public MobileUser mobileUser;
     public static String platformName=System.getProperty("mobilePlatform");
+    public static String countryName=System.getProperty("country");
 
 
 
@@ -37,11 +39,12 @@ public class SubwayAppBaseTest extends BaseTest {
 
 
     @BeforeSuite(alwaysRun = true)
-    public void setupSuite1(ITestContext testContext) throws Exception {
+    public void createSuite(ITestContext testContext) throws Exception {
         context = new FileSystemXmlApplicationContext("src/test/resources/MobileAppBeans.xml");
         executors = (Executors) context.getBean("executors");
         driverName = testContext.getCurrentXmlTest().getParameter("driverName");
         BaseTest.EXPLICIT_WAIT_TIME = 300;
+
     }
 
 

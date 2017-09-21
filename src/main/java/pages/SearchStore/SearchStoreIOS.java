@@ -110,4 +110,30 @@ public class SearchStoreIOS extends SearchStore {
 
         return button;
     }
+
+    public IOSButton getSelectRestaurantButton() throws Exception {
+
+        IOSButton selectRestaurantButton = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+
+        return selectRestaurantButton;
+    }
+
+    public IOSButton getSearchArea() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SearchKey")), "Search button");
+
+        return button;
+    }
+
+    public IOSButton getLocaion() throws Exception {
+
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SearchKey")), "Search button");
+
+        return button;
+    }
+
+    public IOSLabel getMapView() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver)driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SearchKey")), "Search button");
+        return label;
+    }
 }

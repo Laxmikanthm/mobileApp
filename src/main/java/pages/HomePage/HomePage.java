@@ -4,6 +4,7 @@ import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
+import cardantApiFramework.pojos.Store;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
@@ -168,11 +169,8 @@ public List<WebElement> getElements(By locator) {
     public SearchStore findYourSubWay() throws Exception
     {
         try{
-
+            Thread.sleep(5000);
             getFindYourSubWay().click();
-
-
-
             return SearchStore.get((AppiumDriver)driver);
         }catch(Exception ex){
             throw new Exception(ex);
@@ -343,12 +341,21 @@ public List<WebElement> getElements(By locator) {
 
         }
     }
+
     public OrdersPage findStore(String zipCode)throws Exception
     {
         SearchStore searchStore = findYourSubWay();
         searchStore.findYourStore(zipCode);
         return OrdersPage.get((AppiumDriver) driver);
     }
+
+    public OrdersPage findYourStore(Store store)throws Exception
+    {
+        SearchStore searchStore = findYourSubWay();
+        searchStore.findLocationOfStore(store);
+        return OrdersPage.get((AppiumDriver) driver);
+    }
+
     public  RemoteOrderCustomer getLoyalityUser(RemoteOrderCustomer remoteOrderCustomer) throws Exception
     {
         Loyalty loyality=new Loyalty(remoteOrderCustomer);

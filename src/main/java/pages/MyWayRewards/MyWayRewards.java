@@ -79,17 +79,14 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         List<WebElement> elements = getElements(Swipe);
         for (int i = 0; i < 3; i++) {
             WebElement ele = elements.get(0);
-           // MobileElement element = (MobileElement) ele;
-           Thread.sleep(3000L);
-
-           //element.swipe(SwipeElementDirection.LEFT, 500);
+            Thread.sleep(3000L);
             swipeLeft(ele);
-
         }
         getGotIt().click();
         getToolbarClose().click();
 
     }
+
     public void swipeLeft(WebElement element)throws Exception
     {
 
@@ -147,6 +144,7 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
    public RemoteOrderCustomer validateTokensandCerts(HomePage homePage,RemoteOrderCustomer remoteOrderCustomer)throws Exception
    {
        getSwipe();
+       Thread.sleep(3000);
        if (homePage.getTokens(remoteOrderCustomer) >= 200) {
            /*String MdmId = remoteOrderCustomer.getGuestID();
            Kobie.generateCertificates(MdmId);
@@ -156,6 +154,6 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
 
        }
        homePage.validateTokens(remoteOrderCustomer);
-return remoteOrderCustomer;
+       return remoteOrderCustomer;
    }
 }

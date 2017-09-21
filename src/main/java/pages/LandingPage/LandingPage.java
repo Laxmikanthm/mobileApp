@@ -58,13 +58,13 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     public LoginPage gotoLogInPage() throws Exception {
         try {
             driver.findElementById("signIn");
-
-                   } catch (Exception ex) {
+            }
+        catch (Exception ex) {
             getSkipButton().click();
             Logz.error("Skip button clicked");
-
         }
-        this.getLoginButton().click();
+        //this.getLoginButton().click();
+        driver.findElementById("signIn").click();
         return LoginPage.get((AppiumDriver) driver);
     }
 
