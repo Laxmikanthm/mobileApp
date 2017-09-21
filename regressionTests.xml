@@ -25,6 +25,11 @@
                     <include name="verifyHelpPage"/>
                 </methods>
             </class>
+            <class name="Privacypolicy">
+                <methods>
+                    <include name="verifyPrivacyPolicy"/>
+                </methods>
+            </class>
 
             <class name="ResetPasswordTest">
                 <methods>
@@ -68,17 +73,12 @@
                 <include name="placeOrderSUBWAYFreshFitforKids"/>
                 <include name="placeOrderDrinks"/>
                 <include name="placeOrderBreakfast"/>
+                <include name="placeOrderforMoreThanSixTimes"/>
             </methods>
         </class>
          <class name="TokenGeneration">
              <methods>
                  <include name="tokenGeneration"/>
-             </methods>
-         </class>
-         <class name="Certificates">
-             <methods>
-                 <include name="redeemCertificate"/>
-                 <include name="verifyCertificate"/>
              </methods>
          </class>
          <class name="AddFavoriteOrder">
@@ -110,6 +110,36 @@
                     <include name="editCartAddAnotherVerifyPlaceOrder"/>
                     <include name="editCartDeleteItemVerifyPlaceOrder"/>
                     <include name="editCartSomethingElseVerifyPlaceOrder"/>
+                </methods>
+            </class>
+            <class name="TermsandConditions">
+                <methods>
+                    <include name="verifyTermandConditions"/>
+                </methods>
+            </class>
+            <class name="AddMoreItemsatCheckout">
+                <methods>
+                    <include name="addMoreItemsAtCheckOut"/>
+                </methods>
+            </class>
+            <class name="CustomizeOrder">
+                <methods>
+                    <include name="placeCustomizeOrderAllSandwiches"/>
+                </methods>
+            </class>
+            <class name="DeleteTopppings">
+                <methods>
+                    <include name="placeRandomOrderAndDeleteToppings"/>
+                </methods>
+            </class>
+            <class name="MyWayTokenTracker">
+                <methods>
+                    <include name="tokenTracker"/>
+                </methods>
+            </class>
+            <class name="OrderHistory">
+                <methods>
+                    <include name="verifyOrderHistory"/>
                 </methods>
             </class>
         </classes>
