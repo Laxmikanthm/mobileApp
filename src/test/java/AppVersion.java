@@ -27,9 +27,9 @@ import pojos.user.RegisterUser;
 public class AppVersion extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
-    // DFA-10048_DFA-9134
+    //DFA-9134
     @Test
-    public void verifyAppVersion() throws Exception
+    public void verifyAppVersion_9134() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
        RegisterUser.registerAUserWithoutCardLink(mobileUser);

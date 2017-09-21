@@ -1,6 +1,7 @@
 import Base.Order;
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.utils.JdbcUtil;
+import com.twilio.rest.api.v2010.account.availablephonenumbercountry.Mobile;
 import enums.Country;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class Privacypolicy extends SubwayAppBaseTest {
     @Test
     public void verifyPrivacyPolicy() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();

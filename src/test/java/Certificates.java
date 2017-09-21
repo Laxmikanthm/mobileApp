@@ -39,19 +39,14 @@ public class Certificates extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
-    Store store = JdbcUtil.getStoreDetails();
+   Store store = JdbcUtil.getStoreDetails();
     //Store store;
-    String country = SubwayAppBaseTest.countryName;
 
-//DFA-9188_ DFA-10892
+//DFA-9188
     @Test
-    public void redeemCertificate() throws Exception {
-        if(country.equalsIgnoreCase("US")) {
-            mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        }else{
-            mobileUser = new MobileUser(false, Country.Canada, store.getLocationCode());
-        }
-        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+    public void redeemCertificate_9188() throws Exception {
+        mobileUser= new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
@@ -59,7 +54,7 @@ public class Certificates extends SubwayAppBaseTest {
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         remoteOrderCustomer=myWayRewards.validateTokensandCerts(homePage,remoteOrderCustomer);
-        homePage.certsCount();
+         homePage.certsCount();
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         CartData.createNewCart(remoteOrderCustomer,store.getLocationCode());
         ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",mobileUser, store.getAddress1());
@@ -71,11 +66,7 @@ public class Certificates extends SubwayAppBaseTest {
     @Test
     public void verifyCertificate() throws Exception {
 
-        if(country.equalsIgnoreCase("US")) {
-            mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        }else{
-            mobileUser = new MobileUser(false, Country.Canada, store.getLocationCode());
-        }
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
@@ -89,21 +80,17 @@ public class Certificates extends SubwayAppBaseTest {
 
 
     }
-    //DFA-9167_DFA-5049
+    //DFA-5049
     @Test
-    public void redeemMultipleCertificate() throws Exception {
-        if(country.equalsIgnoreCase("US")) {
-            mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        }else{
-            mobileUser = new MobileUser(false, Country.Canada, store.getLocationCode());
-        }
+    public void redeemMultipleCertificate_5049() throws Exception {
+
         mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates
         mobileUser.setPassword("Subway2017");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrderCustomer=remoteOrder.getCustomer();
-        remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+       remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
         homePage.validateCertificate(remoteOrderCustomer);
@@ -117,12 +104,8 @@ public class Certificates extends SubwayAppBaseTest {
 
     ///DFA-9167`
     @Test
-    public void redeemExpiredCertificate() throws Exception{
-        if(country.equalsIgnoreCase("US")) {
-            mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        }else{
-            mobileUser = new MobileUser(false, Country.Canada, store.getLocationCode());
-        }
+    public void redeemExpiredCertificate_9167() throws Exception{
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
@@ -137,28 +120,6 @@ public class Certificates extends SubwayAppBaseTest {
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
         //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
-
-    }
-
-    @Test
-    public void storeSearchForCanada() throws Exception {
-        if(country.equalsIgnoreCase("US")) {
-            mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        }else{
-            mobileUser = new MobileUser(false, Country.Canada, store.getLocationCode());
-        }
-        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        remoteOrderCustomer=remoteOrder.getCustomer();
-        remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
-        MyWayRewards myWayRewards=homePage.getTokensSparkle();
-        remoteOrderCustomer=myWayRewards.validateTokensandCerts(homePage,remoteOrderCustomer);
-        homePage.certsCount();
-        OrdersPage ordersPage=homePage.findYourStore(store);
-        ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",mobileUser, store.getAddress1());
-        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certCount);
 
     }
 }

@@ -33,22 +33,24 @@ import pojos.user.RemoteOrderCustomer;
 public class AddFavoriteOrder extends SubwayAppBaseTest {
 
 MobileUser mobileUser;
-Store store;
+//Store store;
 RemoteOrderCustomer remoteOrderCustomer;
+@Autowired
+    Base.Order order1;
 
-//Store store=JdbcUtil.getStoreDetails();
+Store store=JdbcUtil.getStoreDetails();
 
 
 //DFA-9157
     @Test
-    public void addFavoriteOrder() throws Exception
+    public void addFavoriteOrder_9157() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
         remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
+        OrdersPage ordersPage=homePage.findStore("06405");
+        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 Northbound");
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
@@ -57,14 +59,14 @@ RemoteOrderCustomer remoteOrderCustomer;
     //DFA-7675_DFA-7241
     @Test
     @DirtiesContext
-    public void addFavoriteReOrder() throws Exception
+    public void addFavoriteReOrder_7675_7241() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
         remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
-        //ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 Northbound");
+        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, "I-95 Northbound");
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
@@ -72,17 +74,17 @@ RemoteOrderCustomer remoteOrderCustomer;
         homePage.validateTokens(remoteOrderCustomer);
 
     }
-//DFA-9157_DFA-8352
+//DFA-9157
     @Test
     @DirtiesContext
-    public void UnFavouriteOrder()throws Exception
+    public void UnFavouriteOrder_9157()throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore("19428");
-       // ordersPage.removeFavouriteOrder(order1.getCategoryAllSandwiches(),mobileUser, "200 W Ridge Pike",remoteOrderCustomer);
+        ordersPage.removeFavouriteOrder(order1.getCategoryAllSandwiches(),mobileUser, "200 W Ridge Pike",remoteOrderCustomer);
         homePage.validateTokens(remoteOrderCustomer);
         //ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
 

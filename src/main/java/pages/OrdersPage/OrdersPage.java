@@ -172,7 +172,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     /*This elements are for finding list of elements*/
     By storeNamesLocator = By.id("address");
-    By nameOfStores = By.id("address1");
     By categoryLocator = By.id("product_group_header");
     By sidesOrDrinks = By.id("view_pager");
     By someThingElseLocator= By.id("something_else_text");
@@ -253,7 +252,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         	remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+           HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
             tokens=Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
@@ -269,35 +268,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
 
             //return specific page
-        } catch (Exception ex) {
-            throw new Exception(ex);
-        }
-    }
-
-    public void placeOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
-        try {
-            remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
-            //getDirections().isReady();
-            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
-            //HomePage homePage = swipeAndClick(nameOfStores,storeName,"Left");
-            /*if (getSelectRestaurantButton().getControl().isDisplayed()) {
-                getSelectRestaurantButton().click();
-            } else {
-                Logz.error("Select Restaurant button is not available");
-            }*/
-            //tokens=Integer.parseInt(homePage.tokenValue());
-            getStartOrderButton().click();
-            getItems().isReady();
-            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
-            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up");
-            getAddToBag().click();
-            getOrderValue();
-            getPlaceOrder().click();
-            Thread.sleep(5000);
-            getTokens(remoteOrder);
-            getGotIt().click();
-            //Assert.assertEquals(homePage.tokenValue().toString(),String.valueOf(tokens));
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -339,7 +309,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
+           HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up");
             tokens=Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
@@ -616,7 +586,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             List<WebElement> allElements = getElements(locator);
             if(allElements.size()==0)
             {
-               Logz.error("no stores available");
+                       Logz.error("no stores available");
+
             }
 
             for (int i = 0; i < allElements.size(); i++) {
@@ -653,6 +624,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                     action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
                 }
                 element.click();
+
+
+
+
+
             }
             if (flag == true) {
                 break;
@@ -1231,7 +1207,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(),  "Up" );
 
-
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -1276,7 +1251,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollToItemAndClick1(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), driver.manage().window().getSize().getHeight()-300);
             getAddToBag().isReady();
             getAddToBag().click();
-
             getGotIt().click();
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -1310,18 +1284,17 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void swipeLeft(WebElement element)
     {
         size=driver.manage().window().getSize();
-        int width=element.getSize().getWidth();
-        int height=element.getSize().getHeight();
+        int x1 = (int) (size.width * 0.20);
         TouchAction action = new TouchAction((MobileDriver)driver);
-        action.longPress(element.getLocation().getX()+ (int)(width +300), element.getLocation().getY()).moveTo(100, 1500).release().perform();
-
+        action.longPress(element).moveTo(x1,580).release().perform();
 
     }
     public void validateManageLocator()throws Exception
     {
         Logz.step("Manage Button verification in rewards has started ");
         scrollToElement(ManageLocator,0.9,0.5);
-        if (getRewardsAmt().getText().contains("$2 Rewards"))
+        Thread.sleep(5000);
+        if (getRewardsAmt().getText().contains("2"))
         {
             Logz.step("Rewards are available");
         }else {
@@ -1775,15 +1748,5 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
-
-    public void swipeRight(WebElement element)
-    {
-        size=driver.manage().window().getSize();
-        int x2 = (int) (size.width * 0.80);
-        TouchAction action = new TouchAction((MobileDriver)driver);
-        action.longPress(element).moveTo(x2,580).release().perform();
-
-    }
-
 
 }

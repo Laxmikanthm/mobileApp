@@ -10,7 +10,32 @@
         <parameter name="appPaths" value="${app}"></parameter>
         <parameter name="projectName" value="${driverName}"></parameter>
         <classes>
+            <class name="AppVersion">
+                <methods>
+                    <include name="verifyAppVersion"/>
+                </methods>
+            </class>
+            <class name="EmailPreferences">
+                <methods>
+                    <include name="verifyEmailPreferencesPage"/>
+                </methods>
+            </class>
+            <class name="HelpPage">
+                <methods>
+                    <include name="verifyHelpPage"/>
+                </methods>
+            </class>
+            <class name="Privacypolicy">
+                <methods>
+                    <include name="verifyPrivacyPolicy"/>
+                </methods>
+            </class>
 
+            <class name="ResetPasswordTest">
+                <methods>
+                    <include name="resetPassword"/>
+                </methods>
+            </class>
 
        <class name="ForgotPassword">
            <methods>
@@ -48,17 +73,12 @@
                 <include name="placeOrderSUBWAYFreshFitforKids"/>
                 <include name="placeOrderDrinks"/>
                 <include name="placeOrderBreakfast"/>
+                <include name="placeOrderforMoreThanSixTimes"/>
             </methods>
         </class>
          <class name="TokenGeneration">
              <methods>
                  <include name="tokenGeneration"/>
-             </methods>
-         </class>
-         <class name="Certificates">
-             <methods>
-                 <include name="redeemCertificate"/>
-                 <include name="verifyCertificate"/>
              </methods>
          </class>
          <class name="AddFavoriteOrder">
@@ -68,6 +88,60 @@
                  <include name="UnFavouriteOrder"/>
              </methods>
          </class>
+            <class name="OrderwithSpecialInstructions">
+                <methods>
+                    <include name="OrderSpecialInstructions"/>
+                </methods>
+            </class>
+            <class name="Certificates">
+                <methods>
+                    <include name="verifyCertificate"/>
+                    <include name="redeemMultipleCertificate_5049"/>
+                </methods>
+            </class>
+            <class name="TokenGeneration">
+                <methods>
+                    <include name="tokenGeneration"/>
+                </methods>
+            </class>
+            <class name="EditCardAndPlaceOrder">
+                <methods>
+                    <include name="editCartVerifyPlaceOrder"/>
+                    <include name="editCartAddAnotherVerifyPlaceOrder"/>
+                    <include name="editCartDeleteItemVerifyPlaceOrder"/>
+                    <include name="editCartSomethingElseVerifyPlaceOrder"/>
+                </methods>
+            </class>
+            <class name="TermsandConditions">
+                <methods>
+                    <include name="verifyTermandConditions"/>
+                </methods>
+            </class>
+            <class name="AddMoreItemsatCheckout">
+                <methods>
+                    <include name="addMoreItemsAtCheckOut"/>
+                </methods>
+            </class>
+            <class name="CustomizeOrder">
+                <methods>
+                    <include name="placeCustomizeOrderAllSandwiches"/>
+                </methods>
+            </class>
+            <class name="DeleteTopppings">
+                <methods>
+                    <include name="placeRandomOrderAndDeleteToppings"/>
+                </methods>
+            </class>
+            <class name="MyWayTokenTracker">
+                <methods>
+                    <include name="tokenTracker"/>
+                </methods>
+            </class>
+            <class name="OrderHistory">
+                <methods>
+                    <include name="verifyOrderHistory"/>
+                </methods>
+            </class>
         </classes>
     </test>
 

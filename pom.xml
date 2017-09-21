@@ -12,21 +12,18 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>4.6.18-SNAPSHOT</version>
+            <version>4.6.20-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
             <version>3.3.19-SNAPSHOT</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>4.3.10.RELEASE</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -37,36 +34,16 @@
             <artifactId>spring-core</artifactId>
             <version>4.3.10.RELEASE</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-beans -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>4.3.10.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.9.10</version>
+            <groupId>com.fwq.qa</groupId>
+            <artifactId>jwtgenerator</artifactId>
+            <version>1.0</version>
         </dependency>
-        <dependency>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-            <version>1.4.01</version>
-            <scope>compile</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>4.3.10.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
-            <version>LATEST</version>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -80,7 +57,6 @@
                     <systemPropertyVariables>
 
                         <ProjectName>SubwayMobileApp</ProjectName>
-                        <!--<spring.profiles.active>local</spring.profiles.active>-->
                         <language>en</language>
                         <country>US</country>
                       <!--  <language>us</language>-->
@@ -99,7 +75,7 @@
                         <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>C:/Subway/SubWayApps/Sep13th/subwayE2eDebug5000724.apk</app>
+                        <app>C:/Users/E001599/Downloads/subwayE2eDebug5000733.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>120</newCommandTimeout>
@@ -109,6 +85,7 @@
                         <environmentR1R2>r2</environmentR1R2>
                         <azureEnv>qa</azureEnv>
                         <roEnv>https://qe-order.remote-order.com/LoyaltyPilot.aspx</roEnv>
+                        <zephyrUpdate>false</zephyrUpdate>
                         <!-- R2/E2E-->
                         <!--<environment>stage</environment>
                         <environmentR1R2>r2</environmentR1R2>
@@ -127,15 +104,15 @@
 
                         <executionPlatform></executionPlatform>
                         <appName>R2-Mobile</appName>
-
+                       <!-- <spring.profiles.active>local</spring.profiles.active>-->
                         <!--Test Object-->
                         <spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>DCAD109D67664430B2A35D611CF2D3CA</testObjectApiKey>
+                        <testObjectApiKey>7309A4455C6F4FE393D204E510B83B45</testObjectApiKey>
                         <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
-                        <appName>R2-Mobile</appName>
+                        <appName>R218thsep</appName>
                         <appiumVersion>1.6.5</appiumVersion>
                         <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
                     </systemPropertyVariables>
@@ -254,12 +231,22 @@
 
         </repository>
         <repository>
+            <id>JWTGenerator</id>
+            <name>JWTGenerator</name>
+            <url>http://10.49.128.10:8090/repository/JWTGenerator/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>mavencentral</id>
             <name>Maven Central</name>
             <url>https://repo1.maven.org/maven2/</url>
             <layout>default</layout>
         </repository>
-
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -285,7 +272,17 @@
                 <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
-
+        <pluginRepository>
+            <id>JWTGenerator</id>
+            <name>JWTGenerator</name>
+            <url>http://10.49.128.10:8090/repository/JWTGenerator/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
     </pluginRepositories>
 
 
