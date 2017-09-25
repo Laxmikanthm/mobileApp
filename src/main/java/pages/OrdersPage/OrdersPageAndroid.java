@@ -263,7 +263,7 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
     public MobileLabel getRewardsAmt() throws Exception{
-        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_amount"), "Rewards Amount");
+        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView"), "Rewards Amount");
         return button;
     }
     public MobileLabel getOrderNumber() throws Exception{
