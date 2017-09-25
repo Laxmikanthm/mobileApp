@@ -39,14 +39,14 @@ public class Certificates extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
-   Store store = JdbcUtil.getStoreDetails();
+   Store store = JdbcUtil.getLoyaltyStoreDetails();
     //Store store;
 
 //DFA-9188
     @Test
     public void redeemCertificate_9188() throws Exception {
         mobileUser= new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
@@ -54,7 +54,7 @@ public class Certificates extends SubwayAppBaseTest {
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         remoteOrderCustomer=myWayRewards.validateTokensandCerts(homePage,remoteOrderCustomer);
-         homePage.certsCount();
+        homePage.certsCount();
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         CartData.createNewCart(remoteOrderCustomer,store.getLocationCode());
         ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",mobileUser, store.getAddress1());

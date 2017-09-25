@@ -37,7 +37,7 @@ public class Privacypolicy extends SubwayAppBaseTest {
     @Test
     public void verifyPrivacyPolicy() throws Exception
     {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getLoyaltyStoreDetails().getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();

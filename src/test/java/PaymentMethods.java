@@ -44,7 +44,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
 //DFA-9175
     @Test
     @DirtiesContext
-    public void addCreditCard() throws Exception {
+    public void addCreditCard_8818() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

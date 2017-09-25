@@ -1,5 +1,6 @@
 import Base.SubwayAppBaseTest;
 import Base.Order;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
@@ -40,6 +41,7 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @Autowired
     Order order;
     MobileUser mobileUser;
+    Store store=JdbcUtil.getLoyaltyStoreDetails();
     @BeforeClass
     public void init() throws Exception {
 
@@ -50,14 +52,14 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void editCartVerifyPlaceOrder() throws Exception{
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         remoteOrder = mobileUser.getCart().getRemoteOrder();
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage = landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
-        ordersPage.assertProduct(ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, order.getStoreName()),ordersPage.getSubItemInfo());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
+        ordersPage.assertProduct(ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, store.getAddress1()),ordersPage.getSubItemInfo());
         ordersPage.placeAnOrder();
     }
 
@@ -65,12 +67,12 @@ public class EditCardAndPlaceOrder extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void editCartAddAnotherVerifyPlaceOrder() throws Exception{
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage = landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(JdbcUtil.getStoreDetails().getZipCode());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
         remoteOrder = mobileUser.getCart().getRemoteOrder();
         ordersPage.editCartAndPlaceAnOrder(order.getCategoryAllSandwiches(),remoteOrder, order.getStoreName());
         ordersPage.getSubItemInfo();

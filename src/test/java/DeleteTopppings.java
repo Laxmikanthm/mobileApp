@@ -1,4 +1,5 @@
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import org.openqa.selenium.WebElement;
@@ -34,10 +35,10 @@ public class DeleteTopppings  extends SubwayAppBaseTest {
     @Autowired
     Base.Order ord;
     MobileUser mobileUser;
+    Store store=JdbcUtil.getLoyaltyStoreDetails();
     @BeforeClass
     public void init() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+
         remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
@@ -45,14 +46,15 @@ public class DeleteTopppings  extends SubwayAppBaseTest {
     @Test
     public void placeRandomOrderAndDeleteToppings() throws Exception
     {
-
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct(ord.getCategoryAllSandwiches());
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage =searchStore.findYourStore(ord.getZipCode());
-        ordersPage.placeCustomizeOrder(ord.getCategoryAllSandwiches(), ord.getStoreName(),order);
+        OrdersPage ordersPage =searchStore.findYourStore(store.getZipCode());
+        ordersPage.placeCustomizeOrder("All Sandwiches", store.getAddress1(),order);
         ordersPage.selectItemTypeAndClickCustomize(order);
         ordersPage.deleteToppings();
 

@@ -33,7 +33,7 @@ public class HelpPage extends SubwayAppBaseTest {
     public void verifyHelpPage() throws Exception
     {
         try {
-            mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
+            mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getLoyaltyStoreDetails().getLocationCode());
             RegisterUser.registerAUserWithoutCardLink(mobileUser);
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
             LoginPage loginPage = landingPage.gotoLogInPage();

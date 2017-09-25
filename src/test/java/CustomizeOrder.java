@@ -1,4 +1,5 @@
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,10 @@ public class CustomizeOrder extends SubwayAppBaseTest {
     @Autowired
     Base.Order ord;
     MobileUser mobileUser;
+    Store store=JdbcUtil.getLoyaltyStoreDetails();
     @BeforeClass
     public void init() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+
         remoteOrder = mobileUser.getCart().getRemoteOrder();
 
     }
@@ -42,6 +43,8 @@ public class CustomizeOrder extends SubwayAppBaseTest {
     @Test
     public void placeCustomizeOrderAllSandwiches() throws Exception
     {
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);

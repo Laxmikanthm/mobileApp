@@ -1,5 +1,6 @@
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,12 @@ public class UserLoginTest extends SubwayAppBaseTest {
     /*@Autowired
     Order order;*/
     MobileUser mobileUser;
+    Store store=JdbcUtil.getLoyaltyStoreDetails();
 
 
     @Test
     public void userLogin() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
@@ -54,9 +56,9 @@ public class UserLoginTest extends SubwayAppBaseTest {
     }
 
     @Test
-    public void userLogout() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-       RegisterUser.registerAUserWithoutCardLink(mobileUser);
+    public void userLogout_8820() throws Exception {
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);

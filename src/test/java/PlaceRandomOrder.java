@@ -41,13 +41,13 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     MobileUser mobileUser;
   // Store store;
     RemoteOrderCustomer remoteOrderCustomer;
-   Store store = JdbcUtil.getStoreDetails();
+   Store store = JdbcUtil.getLoyaltyStoreDetails();
 
 
 
     @Test
     public void placeOrderAllSandwiches() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser = new MobileUser(false, Country.Canada, store.getLocationCode());
        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
@@ -59,22 +59,23 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 //DFA-9183
     @Test
     public void placeOrderSubwayFreshFit() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06405");
-        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, "I-95 Northbound");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeRandomOrder("SUBWAY Fresh Fit®", mobileUser, store.getAddress1());
+        homePage.validateTokens(remoteOrderCustomer);
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
 //DFA-9181
     @Test
     public void placeOrderBreakfast() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06405");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         Boolean timePresent = ordersPage.getTimeComparision(store);
         if (timePresent) {
             ordersPage.placeRandomOrder("Breakfast", mobileUser, store.getAddress1());
@@ -89,70 +90,73 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
 
     @Test
     public void placeOrderPersonalPizza() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06405");
-        ordersPage.placeRandomOrder("Personal Pizza", mobileUser, "I-95 Northbound");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeRandomOrder("Personal Pizza", mobileUser, store.getAddress1());
+        homePage.validateTokens(remoteOrderCustomer);
     }
 //DFA-9183
     @Test
     public void placeOrderChoppedSalads() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06405");
-        ordersPage.placeRandomOrder("Chopped Salads", mobileUser, "I-95 Northbound");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeRandomOrder("Chopped Salads", mobileUser, store.getAddress1());
+        homePage.validateTokens(remoteOrderCustomer);
     }
 //DFA-9183
     @Test
     public void placeOrderSUBWAYFreshFitforKids() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06405");
-        ordersPage.placeRandomOrder("Kids' Meal", mobileUser, "I-95 Northbound");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeRandomOrder("Kids' Meal", mobileUser, store.getAddress1());
+        homePage.validateTokens(remoteOrderCustomer);
     }
 
     @Test
     public void placeOrderSides() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06405");
-        ordersPage.placeRandomOrderSides("Sides", mobileUser, "I-95 Northbound");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeRandomOrderSides("Sides", mobileUser, store.getAddress1());
     }
 
     @Test
     public void placeOrderDrinks() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 54588);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("06405");
-        ordersPage.placeRandomOrderDrinks("Drinks", mobileUser, "I-95 Northbound");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeRandomOrderDrinks("Drinks", mobileUser, store.getAddress1());
     }
 
 
     @Test
     public void OrderAMeal() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, "CT Turpike West Southbound 2, Milford, CT 06460", ordersPage);
+        ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, store.getAddress1(), ordersPage);
         ordersPage.clickOnPlaceOrder();
     }
 //DFA-9165
     //Place Order for more than 6 times...R2
     @Test
     public void placeOrderforMoreThanSixTimes() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);

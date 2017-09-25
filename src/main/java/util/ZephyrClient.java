@@ -132,7 +132,7 @@ public class ZephyrClient {
     public static Map<String, List<String>> getExecutionsByCycleId(String cycleId) throws URISyntaxException, JSONException {
         Map<String, List<String>> map = new HashMap<String, List<String>>();
 
-        final String getExecutionsUri = API_GET_EXECUTIONS + cycleId + "?projectId=" + projectId + "&versionId=" + versionId;
+        String getExecutionsUri = API_GET_EXECUTIONS + cycleId + "?projectId=" + projectId + "&versionId=" + versionId+ "&offset=0&size=50&sortBy=issueId";
         HttpResponse response = GET(getExecutionsUri);
         int statusCode = response.getStatusLine().getStatusCode();
 
@@ -164,6 +164,41 @@ public class ZephyrClient {
                 System.out.println("Execution id: "+executionId);
             }
         }
+
+
+            getExecutionsUri = API_GET_EXECUTIONS + cycleId + "?projectId=" + projectId + "&versionId=" + versionId+ "&offset=50&size=15&sortBy=issueId";
+            response = GET(getExecutionsUri);
+            statusCode = response.getStatusLine().getStatusCode();
+
+            if (statusCode >= 200 && statusCode < 300) {
+                HttpEntity entity = response.getEntity();
+                String obj = null;
+                try {
+                    obj = EntityUtils.toString(entity);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                JSONObject allIssues = new JSONObject(obj);
+                JSONArray IssuesArray = allIssues.getJSONArray("searchObjectList");
+                if (IssuesArray.length() == 0) {
+                    return map;
+                }
+                for (int j = 0; j <= IssuesArray.length() - 1; j++) {
+                    JSONObject jobj1 = IssuesArray.getJSONObject(j);
+                    JSONObject jobj2 = jobj1.getJSONObject("execution");
+                    String executionId = jobj2.getString("id");
+                    long IssueId = jobj2.getLong("issueId");
+                    String testId = jobj1.getString("issueKey");
+                    List<String> valSet = new ArrayList<String>();
+                    valSet.add(executionId);
+                    valSet.add(String.valueOf(IssueId));
+                    map.put(testId, valSet);
+                    System.out.println("Execution id: "+executionId);
+                }
+            }
+
         return map;
     }
 
@@ -171,16 +206,16 @@ public class ZephyrClient {
 
         final String updateExecutionUri =  API_UPDATE_EXECUTION + ids.get(0);
         JSONObject statusObj = new JSONObject();
-        if(result.getStatus()==1) {
-            statusObj.put("id", "1");
+        if(result.getStatus()==ResultEnum.Pass.getValue()) {
+            statusObj.put("id", ResultEnum.Pass.getValue());
         }
-        else if (result.getStatus()==2)
+        else if (result.getStatus()==ResultEnum.Fail.getValue())
         {
-            statusObj.put("id",2);
+            statusObj.put("id",ResultEnum.Fail.getValue());
         }
-        else if(result.getStatus()==3)
+        else if(result.getStatus()==ResultEnum.Skip.getValue())
         {
-            statusObj.put("id",3);
+            statusObj.put("id",ResultEnum.Skip.getValue());
         }
 
         JSONObject executeTestsObj = new JSONObject();

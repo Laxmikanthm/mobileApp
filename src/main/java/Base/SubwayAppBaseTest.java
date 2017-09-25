@@ -39,8 +39,8 @@ public class SubwayAppBaseTest extends BaseTest {
     Date date = new Date();
     DateFormat dateFormatee = new SimpleDateFormat("yyyy-MMM-dd-HH_mm");
     ZephyrClient jwt = new ZephyrClient("10001", "10401");
-    Map<String, List<String>> map;
-    String cycleID,cloneCycleId;
+    public static Map<String, List<String>> map = null;
+    public static String cycleID,cloneCycleId;
     Boolean flag = Boolean.parseBoolean(System.getProperty("zephyrUpdate"));
 
     @BeforeSuite(alwaysRun = true)
