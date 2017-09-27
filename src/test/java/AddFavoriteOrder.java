@@ -25,9 +25,6 @@ MobileUser mobileUser;
 Store store=JdbcUtil.getLoyaltyStoreDetails();
 RemoteOrderCustomer remoteOrderCustomer;
 
-@Autowired
-    Base.Order order1;
-
 
 
 //DFA-9157
@@ -39,7 +36,7 @@ RemoteOrderCustomer remoteOrderCustomer;
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, store.getAddress1());
+        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
@@ -55,7 +52,7 @@ RemoteOrderCustomer remoteOrderCustomer;
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, store.getAddress1());
+        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
@@ -73,7 +70,7 @@ RemoteOrderCustomer remoteOrderCustomer;
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.removeFavouriteOrder(order1.getCategoryAllSandwiches(),mobileUser, store.getAddress1(),remoteOrderCustomer);
+        ordersPage.removeFavouriteOrder("All Sandwiches",mobileUser, store.getAddress1(),remoteOrderCustomer);
         homePage.validateTokens(remoteOrderCustomer);
         //ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
 
