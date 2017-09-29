@@ -1,5 +1,8 @@
+package orderTest;
+
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
@@ -23,35 +26,35 @@ import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
 /**
- * Created by e002243 on 23-03-2017.
+ * Created by e002243 on 27-04-2017.
  */
-
-@ContextConfiguration({"classpath:order-data.xml"})
+@ContextConfiguration({"classpath:MobileAppBeans.xml","classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
+public class OrderwithGiftcardCredit extends SubwayAppBaseTest {
 
-    RemoteOrder remoteOrder;
+   // RemoteOrder remoteOrder;
     @Autowired
     Order order;
     MobileUser mobileUser;
-
-    @Test
-    @DirtiesContext
-    public void OrderSpecialInstructions() throws Exception
-    {
+    Store store=JdbcUtil.getStoreDetails();
+    @BeforeClass
+    public void init() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
+       // remoteOrder = mobileUser.getCart().getRemoteOrder();
+
+    }
+    //DFA-7122
+    @Test
+    @DirtiesContext
+    public void orderWithGiftCardCredit() throws  Exception
+    {
+        String paymentTypeCreditCard = "CreditCard";
+        String paymentTypeGiftCard="GiftCard";
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrderSpecialInstructions(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName(), order.getSpecialInstructions());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeRandomOrder(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName());
     }
 }

@@ -1,8 +1,11 @@
+package orderTest;
+
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
+import orderTest.PlaceRandomOrder;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;

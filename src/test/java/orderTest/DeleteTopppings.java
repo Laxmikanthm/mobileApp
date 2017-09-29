@@ -1,7 +1,10 @@
+package orderTest;
+
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
+import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -19,14 +22,16 @@ import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
+import java.util.List;
+
 /**
- * Created by E003705 on 05-04-2017.
+ * Created by e002243 on 23-05-2017.
  */
 
 @ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class CustomizeOrder extends SubwayAppBaseTest {
+public class DeleteTopppings  extends SubwayAppBaseTest {
 
     RemoteOrder remoteOrder;
     @Autowired
@@ -41,20 +46,19 @@ public class CustomizeOrder extends SubwayAppBaseTest {
     }
 
     @Test
-    public void placeCustomizeOrderAllSandwiches() throws Exception
+    public void placeRandomOrderAndDeleteToppings() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        Order order = remoteOrder.placeRandomOrderWithSpecificProduct(ord.getCategoryAllSandwiches());
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage =searchStore.findYourStore(ord.getZipCode());
-        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct(ord.getCategoryAllSandwiches());
+        OrdersPage ordersPage =searchStore.findYourStore(store.getZipCode());
+        ordersPage.placeCustomizeOrder("All Sandwiches", store.getAddress1(),order);
         ordersPage.selectItemTypeAndClickCustomize(order);
-        ordersPage.customizeOrder(mobileUser,order);
-        ordersPage.addToCartAndPlaceOrder();
+        ordersPage.deleteToppings();
 
     }
 }

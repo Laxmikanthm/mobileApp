@@ -1,36 +1,21 @@
+package myLoyaltyTest;
+
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
-import kobieApi.pojos.Loyalty;
-import kobieApi.pojos.SaleTerminal;
-import kobieApi.pojos.Summaries;
-import kobieApi.serviceUtils.Kobie;
-import kobieApi.serviceUtils.KobieClient;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
-import pages.LoginPage.LoginPage;
-import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
-import pages.SearchStore.SearchStore;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
-
-import java.util.List;
 
 /**
  * Created by E001599 on 29-05-2017.
@@ -97,7 +82,7 @@ public class Certificates extends SubwayAppBaseTest {
         homePage.validateTokens(remoteOrderCustomer);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser, store.getAddress1());
-        Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
+        Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating myLoyaltyTest.Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
        // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
     }
@@ -117,7 +102,7 @@ public class Certificates extends SubwayAppBaseTest {
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrderwithExpiredCertificate("All Sandwiches", mobileUser, store.getAddress1());
-        Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating Certificates
+        Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating myLoyaltyTest.Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
         //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
 

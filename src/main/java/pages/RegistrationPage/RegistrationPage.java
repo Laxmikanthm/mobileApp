@@ -12,6 +12,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.HomePage.HomePage;
 import pojos.user.MobileUser;
 import utils.Logz;
@@ -75,7 +76,7 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
 
     public HomePage signUp() throws Exception {
         try {
-            MobileUser user  = new MobileUser(false, Country.UnitedStates, 54588);
+            MobileUser user  = new MobileUser(false, Country.UnitedStates, Integer.parseInt(BaseTest.getStringfromBundleFile("StoreNumber")));
             try {
                 Thread.sleep(5000);
                 driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-givenName']");

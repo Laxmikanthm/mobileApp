@@ -1,9 +1,13 @@
 package pages.LandingPage;
 
 import Base.SubwayAppBaseTest;
+import azureApi.serviceUtils.AzureClient;
+import azureApi.serviceUtils.AzureIdentityApi;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
+import base.test.BaseTest;
+import enums.Country;
 import enums.PaymentMethod;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -14,6 +18,9 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.RegistrationPage.RegistrationPage;
 import pojos.user.MobileUser;
+import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
+import pojos.user.WebUser;
 import utils.Logz;
 
 /**
@@ -113,6 +120,24 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
         }
         return HomePage.get((AppiumDriver) driver);
+    }
+    public MobileUser registerUser() throws Exception {
+
+        return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.UnitedStates,Integer.valueOf(BaseTest.getStringfromBundleFile("storeNumber"))));//JdbcUtil.getOnlineStore()));////
+    }
+    public MobileUser registerUser(String email) throws Exception {
+        MobileUser user = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("storeNumber")));
+        user.setEmailAddress(email);
+        String[] nameSplit = email.split("(?=\\p{Upper})");
+        user.setFirstName(nameSplit[0]);
+        user.setLastName(nameSplit[1].replaceAll("@qasubway.com", ""));
+        String objectId = AzureIdentityApi.getUserFromAzure(AzureClient.getAzureAccessToken(), email);
+        if (objectId == null) {
+            return RegisterUser.registerAUserWithoutCardLink(user);
+        } else {
+            user.getReltioAuthorizationToken();
+            return user;
+        }
     }
 
 }

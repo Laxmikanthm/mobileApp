@@ -1,9 +1,9 @@
+package userIdentityTest;
+
 import Base.Order;
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.utils.JdbcUtil;
-import com.twilio.rest.api.v2010.account.availablephonenumbercountry.Mobile;
 import enums.Country;
-import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,28 +23,28 @@ import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
 /**
- * Created by e002243 on 20-04-2017.
+ * Created by e002243 on 17-02-2017.
  */
 
 @ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class Privacypolicy extends SubwayAppBaseTest {
+public class UpdateProfileTest extends SubwayAppBaseTest {
 
-
-
-//DFA-9174_DFA-9134
+    MobileUser mobileUser;
+//DFA-9172
     @Test
-    public void verifyPrivacyPolicy() throws Exception
+    public void updateProfile()throws Exception
     {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getLoyaltyStoreDetails().getLocationCode());
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage = loginPage.login(mobileUser);
+        HomePage homePage=loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        menuPage.getabout();
-        menuPage.navigatetoPrivacyPolicy();
-        menuPage.assertPrivacyPolicyTexts();
+        menuPage= menuPage.updateProfileInfo(mobileUser);
+        menuPage.assertUpdateProfile(mobileUser);
+        menuPage.logout();
     }
 }
+

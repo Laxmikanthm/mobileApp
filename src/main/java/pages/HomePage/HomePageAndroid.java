@@ -42,6 +42,10 @@ public class HomePageAndroid extends HomePage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("FindYourSubWay")+"']"), "FindYourSubWay button");
         return button;
     }
+   /* public MobileButton getFindYourSubWays() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.linkText(BaseTest.getStringfromBundleFile("FindYourSubWay")), "");
+        return button;
+    }*/
 
     public MobileButton getFindSubWayNearYou() throws Exception {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("FindNearbySubway")+"']"), "FindASubwayNearYou button");

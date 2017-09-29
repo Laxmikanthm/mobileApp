@@ -1,6 +1,9 @@
+package userIdentityTest;
+
 import Base.Order;
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.utils.JdbcUtil;
+import com.twilio.rest.api.v2010.account.availablephonenumbercountry.Mobile;
 import enums.Country;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +25,28 @@ import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
 /**
- * Created by e002243 on 19-04-2017.
+ * Created by e002243 on 20-04-2017.
  */
+
 @ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class TermsandConditions extends SubwayAppBaseTest {
-    MobileUser mobileUser;
-//DFA-9174
+public class Privacypolicy extends SubwayAppBaseTest {
+
+
+
+//DFA-9174_DFA-9134
     @Test
-    public void verifyTermandConditions() throws Exception
+    public void verifyPrivacyPolicy() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getLoyaltyStoreDetails().getLocationCode());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
         menuPage.getabout();
-        menuPage.navigatetoTermsandConditions();
-        menuPage.assertTermsAndConditionsTexts();
+        menuPage.navigatetoPrivacyPolicy();
+        menuPage.assertPrivacyPolicyTexts();
     }
 }

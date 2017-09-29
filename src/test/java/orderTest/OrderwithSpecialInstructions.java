@@ -1,62 +1,59 @@
+package orderTest;
+
+import Base.Order;
 import Base.SubwayAppBaseTest;
-import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
-import org.openqa.selenium.WebElement;
+import enums.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
+import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
-import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
-import java.util.List;
-
 /**
- * Created by e002243 on 23-05-2017.
+ * Created by e002243 on 23-03-2017.
  */
 
 @ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class DeleteTopppings  extends SubwayAppBaseTest {
+public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
 
     RemoteOrder remoteOrder;
     @Autowired
-    Base.Order ord;
+    Order order;
     MobileUser mobileUser;
-    Store store=JdbcUtil.getLoyaltyStoreDetails();
-    @BeforeClass
-    public void init() throws Exception {
-
-        remoteOrder = mobileUser.getCart().getRemoteOrder();
-
-    }
 
     @Test
-    public void placeRandomOrderAndDeleteToppings() throws Exception
+    @DirtiesContext
+    public void OrderSpecialInstructions() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        Order order = remoteOrder.placeRandomOrderWithSpecificProduct(ord.getCategoryAllSandwiches());
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
+        MenuPage menuPage = homePage.getUserDetails();
+        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
+        addCardPage.selectBackButton();
+        menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage =searchStore.findYourStore(store.getZipCode());
-        ordersPage.placeCustomizeOrder("All Sandwiches", store.getAddress1(),order);
-        ordersPage.selectItemTypeAndClickCustomize(order);
-        ordersPage.deleteToppings();
-
+        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        ordersPage.placeRandomOrderSpecialInstructions(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName(), order.getSpecialInstructions());
     }
 }

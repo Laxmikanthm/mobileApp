@@ -4,7 +4,9 @@ import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
+import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
@@ -21,6 +23,7 @@ import pages.PhonePage.PhonePage;
 import pojos.user.MobileUser;
 import utils.Logz;
 
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -132,16 +135,18 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
           //  ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
         }
     }
-    public void logout() throws Exception
+   
+    public MenuPage logout() throws Exception
     {
         try {
-            scrollToElement(logout,0.9,0.5);
+          scrollToElement(logout,0.9,0.5);
             getLogOut().isReady();
             getLogOut().click();
             logOutInpopupButton();
         } catch (Exception ex) {
             throw new Exception(ex);
         }
+        return MenuPage.get((AppiumDriver) driver);
     }
 
 
@@ -354,6 +359,20 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
         } catch (Exception ex) {
             throw new Exception(ex);
         }
+    }
+
+    public HomePage assertUserLoggedOut() throws Exception{
+        try {
+            Logz.step("Asserting user is logged out ");
+            String actualUser =  driver.findElementById("signIn").getText();
+            String expectedUser = BaseTest.getStringfromBundleFile("SignInWithExistingAccount");
+            Assert.assertEquals(actualUser, expectedUser);
+            Logz.step("Asserted user is logged out ");
+        }catch (Exception ex){
+            throw new Exception("Unable to assert user is logged Out\n" +ex.getMessage());
+        }
+
+        return HomePage.get((AppiumDriver) driver);
     }
 
 }

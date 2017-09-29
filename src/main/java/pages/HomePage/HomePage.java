@@ -4,6 +4,7 @@ import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
+import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
@@ -12,9 +13,7 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import kobieApi.pojos.Loyalty;
-import kobieApi.pojos.SaleTerminal;
 import kobieApi.pojos.Summaries;
-import kobieApi.serviceUtils.Kobie;
 import kobieApi.serviceUtils.KobieClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -24,6 +23,8 @@ import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
+import pages.UserProfilePage.UserProfile;
+import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
 import utils.Logz;
@@ -418,6 +419,33 @@ public List<WebElement> getElements(By locator) {
         }
         return remoteOrderCustomer;
     }
+
+    public MenuPage assertUserLoggedIn(MobileUser mobileUser) throws Exception{
+        try {
+            Logz.step("Asserting user is logged in ");
+            String actualUser = getOrderButton().getText();
+            String expectedUser = BaseTest.getStringfromBundleFile("OrderButton");
+            Assert.assertEquals(actualUser, expectedUser);
+            Logz.step("Asserted user is logged in ");
+            UserProfile userProfile = goToUserProfilePage();
+            userProfile.assertEmailDisplayName(mobileUser);
+
+        }catch (Exception ex){
+            throw new Exception("Unable to assert user is logged in\n" +ex.getMessage());
+        }
+
+        return MenuPage.get((AppiumDriver) driver);
+    }
+    public UserProfile goToUserProfilePage() throws Exception{
+        try {
+            this.getMenu().click();
+            return UserProfile.get((AppiumDriver) driver);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+
 }
 
 

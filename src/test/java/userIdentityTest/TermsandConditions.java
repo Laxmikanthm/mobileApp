@@ -1,7 +1,10 @@
+package userIdentityTest;
+
 import Base.Order;
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
+import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,28 +24,25 @@ import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 
 /**
- * Created by e002243 on 17-02-2017.
+ * Created by e002243 on 19-04-2017.
  */
-
 @ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class UpdateProfileTest extends SubwayAppBaseTest {
-
+public class TermsandConditions extends SubwayAppBaseTest {
     MobileUser mobileUser;
-//DFA-9172
+//DFA-9174
     @Test
-    public void updateProfile()throws Exception
+    public void verifyTermandConditions() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
+        HomePage homePage = loginPage.login(mobileUser);
         MenuPage menuPage = homePage.getUserDetails();
-        menuPage= menuPage.updateProfileInfo(mobileUser);
-        menuPage.assertUpdateProfile(mobileUser);
-        menuPage.logout();
+        menuPage.getabout();
+        menuPage.navigatetoTermsandConditions();
+        menuPage.assertTermsAndConditionsTexts();
     }
 }
-
