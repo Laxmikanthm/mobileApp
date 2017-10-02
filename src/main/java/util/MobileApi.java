@@ -59,4 +59,10 @@ public class MobileApi {
             count++;
         }
     }
+    public static void addCreditCard(RemoteOrderCustomer user) throws Exception{
+        Logz.step("##### Adding credit card to user through API ##### ");
+        pojos.tenders.CreditCard creditCard = new pojos.tenders.CreditCard();
+        creditCard.addGuestCreditPayment(user);
+        Logz.step("##### Added credit card to user through API ##### ");
+    }
 }

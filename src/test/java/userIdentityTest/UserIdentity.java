@@ -21,14 +21,15 @@ import pages.MenuPage.MenuPage;
 import pages.RegistrationPage.RegistrationPage;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
+
 @ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 
 public class UserIdentity extends SubwayAppBaseTest {
     @Autowired
-    Order order;
-    MobileUser mobileUser;
+    RemoteOrderCustomer mobileUser;
     Store store=JdbcUtil.getLoyaltyStoreDetails();
     LandingPage landingPage;
     LoginPage loginPage;
@@ -42,7 +43,8 @@ public class UserIdentity extends SubwayAppBaseTest {
     public void testRegisterNewUser() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         registrationPage = landingPage.gotoRegistrationPage();
-        homePage = registrationPage.signUp();
+        mobileUser = landingPage.getUser();
+        homePage = registrationPage.signUp(mobileUser);
         homePage.assertUserLoggedIn(mobileUser);
     }
 
@@ -56,7 +58,7 @@ public class UserIdentity extends SubwayAppBaseTest {
         menuPage.logout().assertUserLoggedOut();
     }
 
-    @Test
+   /* @Test
     @DirtiesContext
     public void resetPassword()throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -97,5 +99,5 @@ public class UserIdentity extends SubwayAppBaseTest {
         menuPage.getabout();
         menuPage.navigatetoTermsandConditions();
         menuPage.assertTermsAndConditionsTexts();
-    }
+    }*/
 }

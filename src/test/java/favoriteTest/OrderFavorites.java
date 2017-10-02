@@ -4,54 +4,65 @@ import Base.SubwayAppBaseTest;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.Enums.BreadSize;
+import pages.Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
+import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
-import pojos.user.MobileUser;
+import pages.PurchaseHistoryPage.PurchaseHistoryPage;
+import pages.UserProfilePage.UserProfilePage;
 import pojos.user.RemoteOrderCustomer;
-import util.MobileApi;
 
 public class OrderFavorites extends SubwayAppBaseTest {
 
-    MobileUser mobileUser;
+    RemoteOrderCustomer mobileUser;
     Store store = JdbcUtil.getLoyaltyStoreDetails();
-    RemoteOrderCustomer remoteOrderCustomer;
+    // RemoteOrderCustomer user;
     LandingPage landingPage;
-    HomePage homePage;
     OrdersPage ordersPage;
+    LoginPage loginPage;
+    HomePage homePage;
+    UserProfilePage userProfilePagePage;
+    PurchaseHistoryPage purchaseHistoryPage ;
 
-    @Autowired
-    Base.Order order1;
+
+
+    public OrderFavorites() throws Exception {
+    }
 
 
     //DFA-9157
     @Test
-    public void addFavoriteOrder() throws Exception {
+    public void addOrderAsFavorite() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
-        //homePage = landingPage.logIn(mobileUser);
+       // mobileUser = landingPage.registerUser();
+        mobileUser =  landingPage.registerUser("LarisaWoolliams@qasubway.com");
+        loginPage = landingPage.gotoLogInPage();
+        HomePage homePage =  loginPage.login(mobileUser);
+        //HomePage homePage = landingPage.logInAddCreditCard(mobileUser);
         ordersPage = homePage.findStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, store.getAddress1());
-        homePage.validateTokens(remoteOrderCustomer);
+        ordersPage.placeFavouriteRandomOrder(BaseTest.getStringfromBundleFile("AllSandwiches"), mobileUser, store.getAddress1());
+        homePage.validateTokens(mobileUser);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
 
+
     }
 
-    @Test
+
+   /* @Test
     @DirtiesContext
     public void reOrderFavorites() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("FavoriteUser"));
+        user = landingPage.registerUser(BaseTest.getStringfromBundleFile("FavoriteUser"));
       //  homePage = landingPage.logIn(mobileUser);
         ordersPage = homePage.findStore(store.getZipCode());
         MobileApi.removeAddFavorite(mobileUser, 2);
         ordersPage.placeFavouriteReOrder(mobileUser);
-        homePage.validateTokens(remoteOrderCustomer);
+        homePage.validateTokens(user);
 
     }
 
@@ -60,16 +71,16 @@ public class OrderFavorites extends SubwayAppBaseTest {
     @DirtiesContext
     public void UnFavouriteOrder() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("FavoriteUser"));
+        user = landingPage.registerUser(BaseTest.getStringfromBundleFile("FavoriteUser"));
        // homePage = landingPage.logIn(mobileUser);
         ordersPage = homePage.findStore(store.getZipCode());
         MobileApi.removeAddFavorite(mobileUser, 2);
-        ordersPage.removeFavouriteOrder(order1.getCategoryAllSandwiches(), mobileUser, store.getAddress1(), remoteOrderCustomer);
-        homePage.validateTokens(remoteOrderCustomer);
+        ordersPage.removeFavouriteOrder(order1.getCategoryAllSandwiches(), mobileUser, store.getAddress1(), user);
+        homePage.validateTokens(user);
         //ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
 
 
-    }
+    }*/
 
     //orderFavoritesWithSubwayCard
     // orderFavoritesWithDebitCard

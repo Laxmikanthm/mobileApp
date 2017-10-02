@@ -135,7 +135,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
           //  ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
         }
     }
-   
+
     public MenuPage logout() throws Exception
     {
         try {

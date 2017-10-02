@@ -23,8 +23,7 @@ import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
-import pages.UserProfilePage.UserProfile;
-import pojos.user.MobileUser;
+import pages.UserProfilePage.UserProfilePage;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
 import utils.Logz;
@@ -349,6 +348,18 @@ public List<WebElement> getElements(By locator) {
         searchStore.findYourStore(zipCode);
         return OrdersPage.get((AppiumDriver) driver);
     }
+    public HomePage selectStore(String zipCode)throws Exception
+    {
+        try {
+            Logz.step(" ##### Selecting a Store #####");
+            SearchStore searchStore = findYourSubWay();
+            searchStore.findYourStore(zipCode);
+            Logz.step(" ##### Selected a Store #####");
+        }catch (Exception ex){
+            throw new Exception("Unable to Selected a Store\n" +ex.getMessage());
+        }
+        return HomePage.get((AppiumDriver) driver);
+    }
 
     public OrdersPage findYourStore(Store store)throws Exception
     {
@@ -420,15 +431,15 @@ public List<WebElement> getElements(By locator) {
         return remoteOrderCustomer;
     }
 
-    public MenuPage assertUserLoggedIn(MobileUser mobileUser) throws Exception{
+    public MenuPage assertUserLoggedIn(RemoteOrderCustomer mobileUser) throws Exception{
         try {
             Logz.step("Asserting user is logged in ");
             String actualUser = getOrderButton().getText();
             String expectedUser = BaseTest.getStringfromBundleFile("OrderButton");
             Assert.assertEquals(actualUser, expectedUser);
+            UserProfilePage userProfilePage = goToUserProfilePage();
+            userProfilePage.assertEmailDisplayName(mobileUser);
             Logz.step("Asserted user is logged in ");
-            UserProfile userProfile = goToUserProfilePage();
-            userProfile.assertEmailDisplayName(mobileUser);
 
         }catch (Exception ex){
             throw new Exception("Unable to assert user is logged in\n" +ex.getMessage());
@@ -436,13 +447,17 @@ public List<WebElement> getElements(By locator) {
 
         return MenuPage.get((AppiumDriver) driver);
     }
-    public UserProfile goToUserProfilePage() throws Exception{
+    public UserProfilePage goToUserProfilePage() throws Exception{
         try {
             this.getMenu().click();
-            return UserProfile.get((AppiumDriver) driver);
+            return UserProfilePage.get((AppiumDriver) driver);
         } catch (Exception ex) {
             throw new Exception(ex);
         }
+    }
+    public OrdersPage goToOrderPage() throws Exception{
+    getOrderButton().click();
+    return OrdersPage.get((AndroidDriver)driver);
     }
 
 

@@ -18,7 +18,7 @@ public class HomePageAndroid extends HomePage {
         super(driver);
     }
     public MobileButton getMenu() throws Exception {
-        AndroidButton menuPageButton = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("UserProfile")), "UserProfile field");
+        AndroidButton menuPageButton = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("UserProfile")), "UserProfilePage field");
         return menuPageButton;
     }
 

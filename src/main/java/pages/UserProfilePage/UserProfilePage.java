@@ -8,23 +8,24 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.testng.Assert;
 import pages.HomePage.HomePage;
-import pojos.user.MobileUser;
+import pages.PurchaseHistoryPage.PurchaseHistoryPage;
+import pojos.user.RemoteOrderCustomer;
 import utils.Logz;
 
-public abstract class UserProfile<T extends AppiumDriver> extends MobileBasePage {
+public abstract class UserProfilePage<T extends AppiumDriver> extends MobileBasePage {
 
-    public UserProfile(AppiumDriver driver) {
+    public UserProfilePage(AppiumDriver driver) {
         super(driver);
     }
-    public static UserProfile get(AppiumDriver driver) throws Exception {
+    public static UserProfilePage get(AppiumDriver driver) throws Exception {
 
         String platform = SubwayAppBaseTest.platformName;
 
         switch (platform) {
             case "iOS":
-                return new UserProfileIOS((IOSDriver) driver);
+                return new UserProfilePageIOS((IOSDriver) driver);
             case "Android":
-                return new UserProfileAndroid((AndroidDriver) driver);
+                return new UserProfilePageAndroid((AndroidDriver) driver);
             default:
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
@@ -32,8 +33,9 @@ public abstract class UserProfile<T extends AppiumDriver> extends MobileBasePage
     abstract MobileButton getEmailAddress() throws Exception;
     abstract MobileButton getFullName() throws Exception;
     abstract MobileButton getInitials() throws Exception;
+    abstract MobileButton getPurchaseHistory() throws Exception;
 
-    public HomePage assertEmailDisplayName(MobileUser mobileUser) throws Exception{
+    public HomePage assertEmailDisplayName(RemoteOrderCustomer mobileUser) throws Exception{
         try {
             Logz.step("Asserting user email in menu page ");
             String initials = mobileUser.getFirstName().substring(0, 1) +""+ mobileUser.getLastName().substring(0, 1);
@@ -46,5 +48,9 @@ public abstract class UserProfile<T extends AppiumDriver> extends MobileBasePage
         }
 
         return HomePage.get((AppiumDriver) driver);
+    }
+    public PurchaseHistoryPage goToPurchaseHistoryPage() throws Exception{
+        getPurchaseHistory().click();
+        return PurchaseHistoryPage.get((AndroidDriver)driver);
     }
 }

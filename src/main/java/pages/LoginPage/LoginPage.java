@@ -13,6 +13,7 @@ import io.appium.java_client.ios.IOSDriver;
 import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.HomePage.HomePage;
 import pojos.user.MobileUser;
+import pojos.user.RemoteOrderCustomer;
 import utils.Logz;
 
 import java.util.NoSuchElementException;
@@ -74,6 +75,30 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         }catch (Exception ex){
             Logz.step("Unable to Login");
             throw new Exception("unable to Login");
+        }
+        return HomePage.get((AppiumDriver) driver);
+
+    }
+    public HomePage login(RemoteOrderCustomer mobileUser) throws Exception {
+        Logz.step("##### User is logging in ##### ");
+        try {
+            try {
+                Thread.sleep(15000);
+                driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-signInName']");
+            }
+            catch (org.openqa.selenium.NoSuchElementException ex) {
+                driver.findElementById("com.android.chrome:id/terms_accept").click();
+                driver.findElementById("com.android.chrome:id/negative_button").click();
+            }
+            // getUserName().getControl().clear();
+            getUserName().setText(mobileUser.getEmailAddress());
+            getPassword().isReady();
+            getPassword().setText(mobileUser.getPassword());
+            HideKeyboard();
+            getLogin().click();
+            Logz.step("##### User is logged in ##### ");
+        }catch (Exception ex){
+            throw new Exception("Unable to Login\n" +ex.getMessage());
         }
         return HomePage.get((AppiumDriver) driver);
 

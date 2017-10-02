@@ -3,14 +3,12 @@ package pages.UserProfilePage;
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
-import base.gui.controls.mobile.generic.MobileTextBox;
-import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 
-public class UserProfileAndroid extends  UserProfile{
-    public UserProfileAndroid(AppiumDriver driver) {
+public class UserProfilePageAndroid extends UserProfilePage {
+    public UserProfilePageAndroid(AppiumDriver driver) {
         super(driver);
     }
 
@@ -28,6 +26,11 @@ public class UserProfileAndroid extends  UserProfile{
     @Override
     MobileButton getInitials() throws Exception {
         return new AndroidButton((AndroidDriver) driver,By.id("user_initials"), "getInitials");
+    }
+
+    @Override
+    MobileButton getPurchaseHistory() throws Exception {
+        return null;
     }
 
     @Override

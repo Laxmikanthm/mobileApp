@@ -16,11 +16,13 @@ import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
 import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
+import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
 import pojos.user.WebUser;
+import util.MobileApi;
 import utils.Logz;
 
 /**
@@ -63,15 +65,16 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     abstract MobileButton getSkipButton() throws Exception;
 
     public LoginPage gotoLogInPage() throws Exception {
+
         try {
             driver.findElementById("signIn");
-            }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             getSkipButton().click();
             Logz.error("Skip button clicked");
         }
         //this.getLoginButton().click();
         driver.findElementById("signIn").click();
+        Logz.step("##### going to login page ##### ");
         return LoginPage.get((AppiumDriver) driver);
     }
 
@@ -110,23 +113,24 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
         } catch (Exception ex) {
 
-                try {
-                    getSkipButton().click();
-                }
-                catch(Exception e) {
-                    Logz.error("Skip button not ready");
-                }
+            try {
+                getSkipButton().click();
+            } catch (Exception e) {
+                Logz.error("Skip button not ready");
+            }
 
 
         }
         return HomePage.get((AppiumDriver) driver);
     }
+
     public MobileUser registerUser() throws Exception {
 
-        return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.UnitedStates,Integer.valueOf(BaseTest.getStringfromBundleFile("storeNumber"))));//JdbcUtil.getOnlineStore()));////
+        return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
     }
-    public MobileUser registerUser(String email) throws Exception {
-        MobileUser user = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("storeNumber")));
+
+    public RemoteOrderCustomer registerUser(String email) throws Exception {
+        RemoteOrderCustomer user = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));
         user.setEmailAddress(email);
         String[] nameSplit = email.split("(?=\\p{Upper})");
         user.setFirstName(nameSplit[0]);
@@ -140,5 +144,30 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
+    public RemoteOrderCustomer getUser() throws Exception {
+        RemoteOrderCustomer mobileUser = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));//JdbcUtil.getOnlineStore()));////
+        mobileUser.setEmailAddress(mobileUser.getFirstName() + mobileUser.getLastName() + "@qasubway.com");
+        return mobileUser;
+    }
+//logIn
+
+    public HomePage logInAddCreditCard(RemoteOrderCustomer mobileUser) throws Exception {
+        LoginPage loginPage = gotoLogInPage();
+        loginPage.login(mobileUser);
+        MobileApi.addCreditCard(mobileUser);
+        return HomePage.get((AppiumDriver) driver);
+    }
+
+    public OrdersPage logInSelectStore(RemoteOrderCustomer mobileUser, String zipCode) throws Exception {
+        try {
+            LoginPage loginPage = gotoLogInPage();
+            HomePage homePage = loginPage.login(mobileUser);
+            //HomePage homePage = logInAddCreditCard(mobileUser);
+            homePage.selectStore(zipCode).goToOrderPage();
+        } catch (Exception ex) {
+            throw new Exception("Unable to assert user email in menu page\n" + ex.getMessage());
+        }
+        return OrdersPage.get((AndroidDriver) driver);
+    }
 }
 

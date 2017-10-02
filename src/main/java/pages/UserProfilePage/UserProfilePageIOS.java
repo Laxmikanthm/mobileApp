@@ -2,11 +2,10 @@ package pages.UserProfilePage;
 
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
-import base.gui.controls.mobile.generic.MobileTextBox;
 import io.appium.java_client.AppiumDriver;
 
-public class UserProfileIOS  extends  UserProfile{
-    public UserProfileIOS(AppiumDriver driver) {
+public class UserProfilePageIOS extends UserProfilePage {
+    public UserProfilePageIOS(AppiumDriver driver) {
         super(driver);
     }
 
@@ -22,6 +21,11 @@ public class UserProfileIOS  extends  UserProfile{
 
     @Override
     MobileButton getInitials() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileButton getPurchaseHistory() throws Exception {
         return null;
     }
 

@@ -15,6 +15,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.HomePage.HomePage;
 import pojos.user.MobileUser;
+import pojos.user.RemoteOrderCustomer;
 import utils.Logz;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +78,38 @@ public abstract class RegistrationPage<T extends AppiumDriver> extends MobileBas
     public HomePage signUp() throws Exception {
         try {
             MobileUser user  = new MobileUser(false, Country.UnitedStates, Integer.parseInt(BaseTest.getStringfromBundleFile("StoreNumber")));
+            try {
+                Thread.sleep(5000);
+                driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-givenName']");
+            }
+            catch (org.openqa.selenium.NoSuchElementException ex) {
+                driver.findElementById("com.android.chrome:id/terms_accept").click();
+                driver.findElementById("com.android.chrome:id/negative_button").click();
+            }
+            getFirstName().setText(user.getFirstName());
+            getDriver().hideKeyboard();
+            getLastName().isReady();
+            getLastName().setText(user.getLastName());
+            getDriver().hideKeyboard();
+            getPhone().setText(user.getPhoneTenDigits());
+            getDriver().hideKeyboard();
+            getNextButton().click();
+            getEmail().isReady();
+            getEmail().setText(user.getEmailAddress());
+            getPassword().setText(user.getPassword());
+            getDriver().hideKeyboard();
+            getConfirmPasswrod().setText(user.getPassword());
+            getDriver().hideKeyboard();
+            getSignUpButton().click();
+            return HomePage.get((AppiumDriver) driver);
+        } catch (Exception ex) {
+            Logz.step("");
+            throw new Exception(ex);
+
+        }
+    }
+    public HomePage signUp(RemoteOrderCustomer user) throws Exception {
+        try {
             try {
                 Thread.sleep(5000);
                 driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-givenName']");
