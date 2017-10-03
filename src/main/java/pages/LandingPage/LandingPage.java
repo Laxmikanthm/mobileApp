@@ -154,7 +154,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     public HomePage logInAddCreditCard(RemoteOrderCustomer mobileUser) throws Exception {
         LoginPage loginPage = gotoLogInPage();
         loginPage.login(mobileUser);
-        MobileApi.addCreditCard(mobileUser);
+      //  MobileApi.addCreditCard(mobileUser);
         return HomePage.get((AppiumDriver) driver);
     }
 

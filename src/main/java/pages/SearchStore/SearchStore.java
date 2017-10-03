@@ -259,4 +259,40 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         action.longPress(element).moveTo(x2,580).release().perform();
 
     }
+
+    public OrdersPage findStore(String zipCode) throws Exception {
+        try {
+            okPopUp();
+            allowPopUp();
+            /*Thread.sleep(5000);
+            okPopUp();
+            Thread.sleep(5000);
+            Logz.info(driver.getSessionId().toString());
+            Thread.sleep(20000);
+            toggleView();
+            Thread.sleep(5000);
+            okPopUp();*/
+            //toggleView();
+            if (zipCode.contains("-")) {
+                zipCode = zipCode.split("-")[0];
+            }
+            searchAStoreByZipCode(zipCode);
+            //toggleView();
+            return OrdersPage.get((AppiumDriver) driver);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+    public void searchAStoreByZipCode(String store) throws Exception {
+       // okPopUp();
+        getSearchButton().click();
+        getSearchByZipCode().isReady();
+        getSearchByZipCode().getControl().clear();
+        /*if (driver instanceof AndroidDriver)
+            ((AndroidDriver) driver).pressKeyCode(EditorInfo.IME_ACTION_SEARCH);
+        else
+            getSearchKeyButton().tap();*/
+        getSearchByZipCode().setText(store);
+        getSearchKeyButton().click();
+    }
 }
