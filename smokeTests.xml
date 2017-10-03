@@ -10,14 +10,14 @@
         <parameter name="appPaths" value="${app}"></parameter>
         <parameter name="projectName" value="${driverName}"></parameter>
         <classes>
-            <class name="UserLoginTest">
+            <class name="userIdentityTest.UserLoginTest">
                 <methods>
                     <include name="createUser"/>
                     <exclude name="userLogout"/>
                     <exclude name="userLogin"/>
                 </methods>
             </class>
-            <class name="Certificates">
+            <class name="myLoyaltyTest.Certificates">
                 <methods>
                     <include name="redeemCertificate"/>
                     <exclude name="verifyCertificate"/>
@@ -25,7 +25,7 @@
                     <exclude name="redeemExpiredCertificate_9167"/>
                 </methods>
             </class>
-            <class name="Offers">
+            <class name="myLoyaltyTest.Offers">
                 <methods>
                     <include name="redeemOffer"/>
                 </methods>

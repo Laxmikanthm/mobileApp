@@ -17,7 +17,7 @@
                  <include name="verifyAppVersion"/>
              </methods>
          </class>
-         <class name="EmailPreferences">
+         <class name="userIdentityTest.EmailPreferences">
              <methods>
 
                  <include name="verifyEmailPreferencesPage"/>
@@ -29,27 +29,27 @@
                  <include name="verifyHelpPage"/>
              </methods>
          </class>
-        <class name="Privacypolicy">
+        <class name="userIdentityTest.Privacypolicy">
             <methods>
                 <include name="verifyPrivacyPolicy"/>
             </methods>
         </class>
-        <class name="TermsandConditions">
+        <class name="userIdentityTest.TermsandConditions">
             <methods>
                 <include name="verifyTermandConditions"/>
             </methods>
         </class>
-        <class name="UpdateProfileTest">
+        <class name="userIdentityTest.UpdateProfileTest">
             <methods>
                 <include name="updateProfile"/>
             </methods>
         </class>
-        <class name="ForgotPassword">
+        <class name="userIdentityTest.ForgotPassword">
             <methods>
                 <include name="forgotPassword"/>
             </methods>
         </class>
-         <class name="PaymentMethods">
+         <class name="orderTest.PaymentMethods">
 
              <methods>
                  <include name="addCreditCard"/>
@@ -60,7 +60,7 @@
              </methods>
 
          </class>
-         <class name="UserLoginTest">
+         <class name="userIdentityTest.UserLoginTest">
              <methods>
 
                  <include name="userLogin"/>
@@ -68,7 +68,7 @@
                  <include name="createUser"/>
              </methods>
          </class>
-        <class name="PlaceRandomOrder">
+        <class name="orderTest.PlaceRandomOrder">
 
             <methods>
 
@@ -80,12 +80,12 @@
                 <include name="placeOrderDrinks"/>
             </methods>
         </class>
-        <class name="TokenGeneration">
+        <class name="myLoyaltyTest.TokenGeneration">
             <methods>
                 <include name="tokenGeneration"/>
             </methods>
         </class>
-        <class name="Certificates">
+        <class name="myLoyaltyTest.Certificates">
             <methods>
                 <include name="redeemCertificate"/>
               <!--  <include name="verifyCertificate"/>-->
