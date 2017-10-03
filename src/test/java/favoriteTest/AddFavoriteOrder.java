@@ -43,17 +43,32 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
     Base.Order order1;
 
 
-
-    //DFA-7675_DFA-7241
+    //DFA-9157
     @Test
-    @DirtiesContext
-    public void addFavoriteReOrder_7675_7241() throws Exception {
+    public void addFavoriteOrder_9157() throws Exception
+    {
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
         remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage = landingPage.logInAddCreditCard(mobileUser);
-        OrdersPage ordersPage = homePage.findStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder(order1.getCategoryAllSandwiches(), mobileUser, store.getAddress1());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
+        homePage.validateTokens(remoteOrderCustomer);
+        homePage.addSomethingElse();
+        Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
+
+    }
+    //DFA-7675_DFA-7241
+    @Test
+    @DirtiesContext
+    public void addFavoriteReOrder_7675_7241() throws Exception
+    {
+        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
         homePage.validateTokens(remoteOrderCustomer);
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
@@ -61,50 +76,21 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
         homePage.validateTokens(remoteOrderCustomer);
 
     }
-
     //DFA-9157
     @Test
     @DirtiesContext
-    public void UnFavouriteOrder_9157() throws Exception {
+    public void UnFavouriteOrder_9157()throws Exception
+    {
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage = landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage = homePage.findStore(store.getZipCode());
-        ordersPage.removeFavouriteOrder(order1.getCategoryAllSandwiches(), mobileUser, store.getAddress1(), remoteOrderCustomer);
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.removeFavouriteOrder("All Sandwiches",mobileUser, store.getAddress1(),remoteOrderCustomer);
         homePage.validateTokens(remoteOrderCustomer);
         //ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
 
 
     }
 
-
-    //DFA-9157
-  /*  @Test
-    public void addFavoriteOrder_9157() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage = landingPage.logInAddCreditCard(mobileUser);
-        OrdersPage ordersPage = homePage.findStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder(BaseTest.getStringfromBundleFile("AllSandwiches"), mobileUser, store.getAddress1());
-        homePage.validateTokens(remoteOrderCustomer);
-        homePage.addSomethingElse();
-        Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
-
-    }*/
-    @Test
-    public void addFavoriteOrder_9157() throws Exception {
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        RemoteOrderCustomer user = landingPage.registerUser("LarisaWoolliams@qasubway.com");
-        //HomePage homePage = landingPage.logInAddCreditCard(mobileUser);
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage =  loginPage.login(user);
-        OrdersPage ordersPage = homePage.findStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder(BaseTest.getStringfromBundleFile("AllSandwiches"), remoteOrderCustomer, store.getAddress1());
-        homePage.validateTokens(remoteOrderCustomer);
-        homePage.addSomethingElse();
-        Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
-
-    }
 }

@@ -1,3 +1,5 @@
+package findStoreTest;
+
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;

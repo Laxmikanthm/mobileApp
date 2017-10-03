@@ -12,7 +12,7 @@
 
 
         <classes>
-            <class name="AppVersion">
+            <class name="userProfileTest.AppVersion">
                 <methods>
                     <include name="verifyAppVersion"/>
                 </methods>
@@ -27,7 +27,7 @@
                     <include name="addPayPal"/>
                 </methods>
             </class>
-            <class name="HelpPage">
+            <class name="userProfileTest.HelpPage">
                 <methods>
                     <include name="verifyHelpPage"/>
                 </methods>
@@ -86,7 +86,7 @@
                  <include name="tokenGeneration"/>
              </methods>
          </class>
-         <class name="AddFavoriteOrder">
+         <class name="favoriteTest.AddFavoriteOrder">
              <methods>
                  <include name="addFavoriteOrder"/>
                  <include name="addFavoriteReOrder"/>
