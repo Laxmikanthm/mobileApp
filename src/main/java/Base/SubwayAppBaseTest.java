@@ -70,7 +70,7 @@ public class SubwayAppBaseTest extends BaseTest {
            command in the WebDriver API is driver.quit(). You would normally use driver.close()
            if your test opens multiple windows and you want to shut some of them.*/
         try {
-            eyes.close();
+           // eyes.close();
             if(flag) {
                 for (int i = 0; i < result.getMethod().getMethodName().split("_").length-1; i++) {
                     jwt.updateExecutions(map.get("DFA-" + result.getMethod().getMethodName().split("_")[i + 1]), cycleID,result);
@@ -91,7 +91,7 @@ public class SubwayAppBaseTest extends BaseTest {
                 }
             });
             Logz.endTestCase(result);
-            eyes.abortIfNotClosed();
+         //   eyes.abortIfNotClosed();
         }
         catch (Exception e){
             Logz.fatal("After method failed");

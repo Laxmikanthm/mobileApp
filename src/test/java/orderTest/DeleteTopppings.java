@@ -38,18 +38,12 @@ public class DeleteTopppings  extends SubwayAppBaseTest {
     Base.Order ord;
     MobileUser mobileUser;
     Store store=JdbcUtil.getLoyaltyStoreDetails();
-    @BeforeClass
-    public void init() throws Exception {
-
-        remoteOrder = mobileUser.getCart().getRemoteOrder();
-
-    }
 
     @Test
     public void placeRandomOrderAndDeleteToppings() throws Exception
     {
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct(ord.getCategoryAllSandwiches());
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
