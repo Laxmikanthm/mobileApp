@@ -212,7 +212,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By specialInstructionsLabel = By.id("instructions_header");
     By FavouriteIconLocator = By.id("favorite_animation");
     By ManageLocator = By.id("manage_rewards");
-    By Subtotal = By.id("subtotal");
+    By itemPrice = By.id("item_price");
     By taxPriceLocator = By.id("tax_amount");
     By customizeLocator = By.id("customize");
     By rewardsAmt = By.id("rewards_amount");
@@ -290,9 +290,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().click();
             getOrderValue();
-            getPlaceOrder().click();
-            Thread.sleep(5000);
             getTokens(remoteOrder);
+            getPlaceOrder().click();
             getGotIt().click();
             Assert.assertEquals(homePage.tokenValue().toString(), String.valueOf(tokens));
 
@@ -1116,7 +1115,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             int StartPoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
             //((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
-            action.longPress(200, StartPoint).moveTo(0, EndPoint).release().perform();
+            action.longPress(0, StartPoint).moveTo(0, EndPoint).release().perform();
 
 
         }
@@ -1391,8 +1390,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void getTokens(RemoteOrder remoteOrder) throws Exception {
-        Thread.sleep(5000);
-        scrollToElement(Subtotal, 0.9, 0.5);
+        Thread.sleep(2000);
+        scrollToElement(itemPrice, 0.9, 0.5);
         price = Double.parseDouble(getSubTotal().getText().substring(1));
         tokens1 = remoteOrder.computeTokens(price);
         tokens = tokens + tokens1;

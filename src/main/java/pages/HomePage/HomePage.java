@@ -85,6 +85,7 @@ String platform = SubwayAppBaseTest.platformName;
    // By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@id='com.subway.mobile.subwayapp03:id/promo_card_stack']/android.support.v7.widget.RecyclerView");
 By Offers=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout");
 By OffersGetText=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout[@index="+0+"]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.Button[@index="+0+"]");
+By tokenValue=By.id("loyalty_token_count");
 public List<WebElement> getElements(By locator) {
         List<WebElement> elementsList = ((AndroidDriver) driver).findElements(locator);
 
@@ -94,10 +95,13 @@ public List<WebElement> getElements(By locator) {
         while (getElements(locator).size() == 0) {
             boolean flag = false;
             Dimension dimensions = driver.manage().window().getSize();
-            int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
+            int StartPoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
-          //  ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
-            action.moveTo(Startpoint,EndPoint);
+            //((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+            action.longPress(0, StartPoint).moveTo(0, EndPoint).release().perform();
+
+
+
         }
     }
     public void getOffers()throws Exception {
@@ -213,8 +217,8 @@ public List<WebElement> getElements(By locator) {
     }
     public String tokenValue()throws Exception
     {
-        Thread.sleep(20000);
-        //scrollToElement(,0.5,0.9);
+        Thread.sleep(2000);
+        scrollToElement(tokenValue,0.5,0.9);
         return getTokenValue().getText();
     }
     public String zeroTokenMessage()throws Exception
@@ -329,6 +333,13 @@ public List<WebElement> getElements(By locator) {
         myWayRewards.getSwipe();
        String tokenValue = tokenValue();
        return tokenValue;
+    }
+    public String getToolBarClose()throws Exception
+    {
+       MyWayRewards myWayRewards=getTokensSparkle();
+       myWayRewards.toolBarClose();
+        String tokenValue = tokenValue();
+        return tokenValue;
     }
 
     public void assertFavoriteOrder(String actualFavoriteOrderName, String expectedFacoriteOrderName)

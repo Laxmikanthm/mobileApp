@@ -259,7 +259,7 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
     public MobileLabel getSubTotal() throws Exception{
-        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/subtotal"), "Sub Total Amount");
+        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/item_price"), "Sub Total Amount");
         return button;
     }
     public MobileLabel getRewardsAmt() throws Exception{
