@@ -12,12 +12,25 @@
 
 
         <classes>
-            <class name="userProfileTest.AppVersion">
+           <!-- favoriteTest-->
+            <class name="favoriteTest.AddFavoriteOrder"/>
+            <!-- findStoreTest-->
+            <!-- myLoyaltyTest-->
+            <class name="myLoyaltyTest.TokenGeneration"/>
+            <class name="myLoyaltyTest.Certificates">
                 <methods>
-                    <include name="verifyAppVersion"/>
+                    <include name="verifyCertificate"/>
+                    <include name="redeemMultipleCertificate_5049"/>
                 </methods>
             </class>
-
+            <class name="myLoyaltyTest.MyWayTokenTracker">
+                <methods>
+                    <include name="tokenTracker"/>
+                </methods>
+            </class>
+            <!-- orderManagementTest-->
+            <class name="orderManagementTest.OrderHistory"/>
+            <!-- orderTest-->
             <class name="orderTest.PaymentMethods">
                 <methods>
                     <include name="addCreditCard"/>
@@ -27,88 +40,21 @@
                     <include name="addPayPal"/>
                 </methods>
             </class>
-            <class name="userProfileTest.HelpPage">
+            <class name="orderTest.PlaceRandomOrder">
+
                 <methods>
-                    <include name="verifyHelpPage"/>
+
+                    <include name="placeOrderAllSandwiches"/>
+                    <include name="placeOrderSubwayFreshFit"/>
+                    <include name="placeOrderPersonalPizza"/>
+                    <include name="placeOrderChoppedSalads"/>
+                    <include name="placeOrderSUBWAYFreshFitforKids"/>
+                    <include name="placeOrderDrinks"/>
+                    <include name="placeOrderBreakfast"/>
+                    <include name="placeOrderforMoreThanSixTimes"/>
                 </methods>
             </class>
-            <class name="userIdentityTest.Privacypolicy">
-                <methods>
-                    <include name="verifyPrivacyPolicy"/>
-                </methods>
-            </class>
-            <class name="userIdentityTest.ResetPasswordTest">
-                <methods>
-                    <include name="resetPassword"/>
-                </methods>
-            </class>
-
-       <class name="userIdentityTest.ForgotPassword">
-           <methods>
-               <include name="forgotPassword"/>
-           </methods>
-       </class>
-        <class name="orderTest.PaymentMethods">
-            <methods>
-                <include name="addCreditCard"/>
-
-                <include name="addDebitCard"/>
-
-                <include name="addPayPal"/>
-            </methods>
-
-        </class>
-        <class name="userIdentityTest.ResetPasswordTest">
-            <methods>
-
-                <include name="userLogin"/>
-                <include name="userLogout"/>
-                <include name="createUser"/>
-            </methods>
-        </class>
-
-       <class name="orderTest.PlaceRandomOrder">
-
-            <methods>
-
-               <include name="placeOrderAllSandwiches"/>
-                <include name="placeOrderSubwayFreshFit"/>
-                <include name="placeOrderPersonalPizza"/>
-                <include name="placeOrderChoppedSalads"/>
-                <include name="placeOrderSUBWAYFreshFitforKids"/>
-                <include name="placeOrderDrinks"/>
-                <include name="placeOrderBreakfast"/>
-                <include name="placeOrderforMoreThanSixTimes"/>
-            </methods>
-        </class>
-         <class name="myLoyaltyTest.TokenGeneration">
-             <methods>
-                 <include name="tokenGeneration"/>
-             </methods>
-         </class>
-         <class name="favoriteTest.AddFavoriteOrder">
-             <methods>
-                 <include name="addFavoriteOrder"/>
-                 <include name="addFavoriteReOrder"/>
-                 <include name="UnFavouriteOrder"/>
-             </methods>
-         </class>
-            <class name="orderTest.OrderwithSpecialInstructions">
-                <methods>
-                    <include name="OrderSpecialInstructions"/>
-                </methods>
-            </class>
-            <class name="myLoyaltyTest.Certificates">
-                <methods>
-                    <include name="verifyCertificate"/>
-                    <include name="redeemMultipleCertificate_5049"/>
-                </methods>
-            </class>
-            <class name="myLoyaltyTest.TokenGeneration">
-                <methods>
-                    <include name="tokenGeneration"/>
-                </methods>
-            </class>
+            <class name="orderTest.OrderwithSpecialInstructions"/>
             <class name="orderTest.EditCardAndPlaceOrder">
                 <methods>
                     <include name="editCartVerifyPlaceOrder"/>
@@ -117,16 +63,12 @@
                     <include name="editCartSomethingElseVerifyPlaceOrder"/>
                 </methods>
             </class>
-            <class name="userIdentityTest.TermsandConditions">
-                <methods>
-                    <include name="verifyTermandConditions"/>
-                </methods>
-            </class>
             <class name="orderTest.AddMoreItemsatCheckout">
                 <methods>
                     <include name="addMoreItemsAtCheckOut"/>
                 </methods>
             </class>
+
             <class name="orderTest.CustomizeOrder">
                 <methods>
                     <include name="placeCustomizeOrderAllSandwiches"/>
@@ -137,16 +79,15 @@
                     <include name="placeRandomOrderAndDeleteToppings"/>
                 </methods>
             </class>
-            <class name="myLoyaltyTest.MyWayTokenTracker">
-                <methods>
-                    <include name="tokenTracker"/>
-                </methods>
-            </class>
-            <class name="orderManagement.OrderHistory">
-                <methods>
-                    <include name="verifyOrderHistory"/>
-                </methods>
-            </class>
+            <!-- userIdentityTest-->
+            <class name="userIdentityTest.Privacypolicy"/>
+            <class name="userIdentityTest.ResetPasswordTest"/>
+            <class name="userIdentityTest.ForgotPassword"/>
+            <class name="userIdentityTest.UserLoginTest"/>
+            <class name="userIdentityTest.TermsandConditions"/>
+            <!-- userProfileTest-->
+            <class name="userProfileTest.AppVersion"/>
+            <class name="userProfileTest.HelpPage"/>
         </classes>
     </test>
 
