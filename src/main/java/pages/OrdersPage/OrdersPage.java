@@ -537,8 +537,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getMakeItAMeal().isReady();
             getMakeItAMeal().click();
-            getExpandArrow().isReady();
-            getExpandArrow().click();
+            /*getExpandArrow().isReady();
+            getExpandArrow().click();*/
             getPlaceOrder().isReady();
             assertTexts(ordersPage);
         } catch (Exception ex) {
@@ -795,7 +795,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             scrollAndClick(storeNamesLocator, storeName, "Up");
-            getSelectRestaurantButton().click();
+            //getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");

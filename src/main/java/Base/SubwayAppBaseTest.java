@@ -1,6 +1,9 @@
 package Base;
 
 import base.test.BaseTest;
+import cardantApiFramework.pojos.Store;
+import cardantApiFramework.utils.JdbcUtil;
+import enums.Country;
 import execution.platform.Executors;
 import io.appium.java_client.AppiumDriver;
 import org.springframework.context.ApplicationContext;
@@ -14,6 +17,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import pojos.user.MobileUser;
 import util.ZephyrClient;
 import utils.CommonUtils;
 import utils.Logz;
@@ -42,6 +46,9 @@ public class SubwayAppBaseTest extends BaseTest {
     public static Map<String, List<String>> map = null;
     public static String cycleID,cloneCycleId;
     Boolean flag = Boolean.parseBoolean(System.getProperty("zephyrUpdate"));
+    MobileUser mobileUser;
+    Store store= JdbcUtil.getLoyaltyStoreDetails();
+    public static String countryName;
 
     @BeforeSuite(alwaysRun = true)
     public void setupSuite1(ITestContext testContext) throws Exception {
@@ -113,6 +120,20 @@ public class SubwayAppBaseTest extends BaseTest {
         });        Logz.info("Completed running the test suite " + testContext.getCurrentXmlTest().getSuite().getName());
         executors.terminate();
         CommonUtils.archiveTestResults();
+    }
+
+    public MobileUser setCountryName() throws Exception {
+        countryName = System.getProperty("country");
+        Logz.step("Country " +countryName+ " is selected");
+        String localeName = System.getProperty("locale");
+        Logz.step("Locale " +localeName+ " is selected");
+        if(countryName.equals("US") && localeName.equalsIgnoreCase("en_US")) {
+            mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        }
+        else if(countryName.equals("CA") && localeName.equalsIgnoreCase("en_CA")) {
+            mobileUser = new MobileUser(false, Country.Canada, store.getLocationCode());
+        }
+        return mobileUser;
     }
 
 

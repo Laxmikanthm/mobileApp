@@ -63,7 +63,7 @@ public class Offers extends SubwayAppBaseTest {
     @Test
     public void redeemOfferandCertificate() throws Exception {
 
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser=setCountryName();
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
@@ -74,8 +74,8 @@ public class Offers extends SubwayAppBaseTest {
         addCardPage.selectBackButton();
         menuPage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage = searchStore.findYourStore("19428");
-        ordersPage.placeOrderwithRedeemOffersandCertificates("All Sandwiches", mobileUser, "200 W Ridge Pike");
+        OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
+        ordersPage.placeOrderwithRedeemOffersandCertificates("All Sandwiches", mobileUser, store.getAddress1());
         Assert.assertEquals(String.valueOf(ordersPage.tokens), homePage.tokenValue().toString());//tokenVerification
         menuPage.assertMobileOrderHistory(ordersPage.orderValue);//Order Verification
         //need to do error log

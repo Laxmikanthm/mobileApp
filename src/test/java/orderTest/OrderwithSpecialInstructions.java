@@ -2,6 +2,7 @@ package orderTest;
 
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
@@ -35,19 +36,20 @@ public class OrderwithSpecialInstructions extends SubwayAppBaseTest {
 
     RemoteOrder remoteOrder;
     @Autowired
-    Order order;
+
     MobileUser mobileUser;
+    Order order;
+    Store store = JdbcUtil.getLoyaltyStoreDetails();
 
     @Test
     @DirtiesContext
     public void OrderSpecialInstructions() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        mobileUser=setCountryName();
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.placeRandomOrderSpecialInstructions(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName(), order.getSpecialInstructions());
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        ordersPage.placeRandomOrderSpecialInstructions("All Sandwiches", mobileUser, store.getAddress1(), order.getSpecialInstructions());
     }
 }

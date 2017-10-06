@@ -41,7 +41,9 @@ public abstract class PayPalPage<T extends AppiumDriver> extends MobileBasePage 
     public MobileLabel getPageLabel() throws Exception {
         return null;
     }
-By agreeandContinue=By.id("com.subway.mobile.subwayapp03:id/confirmButtonTop");
+    //By agreeandContinue=By.id("com.subway.mobile.subwayapp03:id/confirmButtonTop");
+    TouchAction action = new TouchAction((MobileDriver)driver);
+    By AgreeAndContinue = By.id("confirmButtonTop");
     @Override
     protected void waitForPageToLoad() throws Exception {
 
@@ -74,8 +76,9 @@ By agreeandContinue=By.id("com.subway.mobile.subwayapp03:id/confirmButtonTop");
            // getPayWith().isReady();
             Thread.sleep(5000);
            //((AppiumDriver) driver).swipe(200, 700, 200, 100, 4000);
-            TouchAction action = new TouchAction((MobileDriver)driver);
-            action.longPress(200,700).moveTo(200,100).release().perform();
+            /*TouchAction action = new TouchAction((MobileDriver)driver);
+            action.longPress(200,700).moveTo(200,100).release().perform();*/
+            scrollToElement(AgreeAndContinue,0.9,0.2);
             getAgreeAndContinue().click();
             getBackBtn().click();
             return PaymentMethodsPage.get((AppiumDriver) driver);
