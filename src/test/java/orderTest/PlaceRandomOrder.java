@@ -50,7 +50,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderAllSandwiches() throws Exception {
         mobileUser = new MobileUser(false, Country.Canada, store.getLocationCode());
-       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
@@ -159,7 +159,7 @@ public class PlaceRandomOrder extends SubwayAppBaseTest {
     @Test
     public void placeOrderforMoreThanSixTimes() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
-       remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
