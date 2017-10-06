@@ -29,7 +29,7 @@
                 </methods>
             </class>
             <!-- orderManagementTest-->
-            <class name="orderManagementTest.OrderHistory"/>
+            <class name="orderManagement.OrderHistory"/>
             <!-- orderTest-->
             <class name="orderTest.PaymentMethods">
                 <methods>
