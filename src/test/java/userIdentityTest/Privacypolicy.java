@@ -33,13 +33,14 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class Privacypolicy extends SubwayAppBaseTest {
 
-
+    MobileUser mobileUser;
 
 //DFA-9174_DFA-9134
     @Test
     public void verifyPrivacyPolicy() throws Exception
     {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getLoyaltyStoreDetails().getLocationCode());
+
+        mobileUser=setCountryName();
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();

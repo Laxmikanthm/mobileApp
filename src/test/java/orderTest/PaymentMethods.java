@@ -47,7 +47,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void addCreditCard_8818() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
+        mobileUser=setCountryName();
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
@@ -65,7 +65,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
 //DFA-9175
     @Test
     public void addDebitCard() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
+        mobileUser=setCountryName();
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
@@ -82,7 +82,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
     @Test
     public void addGiftCard() throws Exception {
         try{
-            mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
+            mobileUser=setCountryName();
             RegisterUser.registerAUserWithoutCardLink(mobileUser);
             cards.add(0,SubwayCard.getSubwayCardFromDB(pojos.enums.Lock.TRUE));
             mobileUser.setSubwayCards(cards);
@@ -105,7 +105,7 @@ public class PaymentMethods extends SubwayAppBaseTest {
     @Test
     @DirtiesContext
     public void addPayPal() throws Exception{
-        mobileUser = new MobileUser(false, Country.UnitedStates, 19428);
+        mobileUser=setCountryName();
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();

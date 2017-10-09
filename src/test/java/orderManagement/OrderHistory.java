@@ -39,7 +39,7 @@ public class OrderHistory extends SubwayAppBaseTest {
     @Test
     public void verifyOrderHistory() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
+        mobileUser=setCountryName();
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         PaymentResponse paymentResponse=remoteOrder.placeRandomOrder(1, PaymentMethod.CREDITCARD);

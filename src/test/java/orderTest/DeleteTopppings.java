@@ -42,7 +42,7 @@ public class DeleteTopppings  extends SubwayAppBaseTest {
     @Test
     public void placeRandomOrderAndDeleteToppings() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser=setCountryName();
         mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         Order order = remoteOrder.placeRandomOrderWithSpecificProduct(ord.getCategoryAllSandwiches());
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

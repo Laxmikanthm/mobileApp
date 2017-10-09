@@ -45,7 +45,7 @@ public class AddMoreItemsatCheckout extends SubwayAppBaseTest {
     @DirtiesContext
     public void addMoreItemsAtCheckOut() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser=setCountryName();
         remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();

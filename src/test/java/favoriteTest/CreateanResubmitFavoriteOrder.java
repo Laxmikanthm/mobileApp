@@ -1,6 +1,7 @@
 package favoriteTest;
 
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
@@ -24,6 +25,7 @@ import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
 
 /**
  * Created by e002243 on 20-04-2017.
@@ -38,27 +40,19 @@ public class CreateanResubmitFavoriteOrder extends SubwayAppBaseTest {
     @Autowired
     Base.Order order;
     MobileUser mobileUser;
-    @BeforeClass
-    public void init() throws Exception {
-        mobileUser = new MobileUser(false, Country.UnitedStates, JdbcUtil.getOnlineStore());
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        remoteOrder = mobileUser.getCart().getRemoteOrder();
+    RemoteOrderCustomer remoteOrderCustomer;
+    Store store=JdbcUtil.getLoyaltyStoreDetails();
+    MenuPage menuPage;
 
-    }
     @Test
     @DirtiesContext
     public void resubmitFavoriteOrder() throws Exception
     {
+        mobileUser=setCountryName();
+        remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        LoginPage loginPage = landingPage.gotoLogInPage();
-        HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
-        addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
-        addCardPage.selectBackButton();
-        menuPage.goHome();
-        SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrder(order.getCategoryAllSandwiches(), mobileUser, order.getStoreName());
         menuPage= homePage.gotoMenuPage();
         MobileOrderHistoryPage mobileOrderHistoryPage= menuPage.getOrderHistory();

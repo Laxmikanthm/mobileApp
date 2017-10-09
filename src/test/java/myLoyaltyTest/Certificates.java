@@ -24,13 +24,13 @@ public class Certificates extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
-   Store store = JdbcUtil.getLoyaltyStoreDetails();
+    Store store = JdbcUtil.getLoyaltyStoreDetails();
     //Store store;
 
 //DFA-9188
     @Test
     public void redeemCertificate_9188() throws Exception {
-        mobileUser= new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser=setCountryName();
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
@@ -51,7 +51,7 @@ public class Certificates extends SubwayAppBaseTest {
     @Test
     public void verifyCertificate() throws Exception {
 
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser=setCountryName();
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
@@ -69,7 +69,8 @@ public class Certificates extends SubwayAppBaseTest {
     @Test
     public void redeemMultipleCertificate_5049() throws Exception {
 
-
+        mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates
+        mobileUser.setPassword("Subway2017");
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
@@ -90,7 +91,7 @@ public class Certificates extends SubwayAppBaseTest {
     ///DFA-9167`
     @Test
     public void redeemExpiredCertificate_9167() throws Exception{
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser=setCountryName();
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
