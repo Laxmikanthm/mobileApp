@@ -644,7 +644,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 for (int i = 0; i < allElements.size(); i++) {
                     while(!(allElements.get(i).getText().contains(itemName))){
                         TouchAction action = new TouchAction((MobileDriver) driver);
-                        action.longPress(200, scrollStart).moveTo(200, scrollEnd).release().perform();
+                        action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
                         boolean elementflag=false;
                         for (int j = 0; j < allElements.size(); j++) {
 

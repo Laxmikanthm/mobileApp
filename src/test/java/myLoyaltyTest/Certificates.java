@@ -69,18 +69,18 @@ public class Certificates extends SubwayAppBaseTest {
     @Test
     public void redeemMultipleCertificate_5049() throws Exception {
 
-        mobileUser.setEmailAddress("test4_may15_2017@mailinator.com");//user who is having multiple certificates
-        mobileUser.setPassword("Subway2017");
+
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrderCustomer=remoteOrder.getCustomer();
-       remoteOrder.placeRandomOrderForGivenNumberOfTokens(50, PaymentMethod.CREDITCARD);
+        remoteOrder.placeRandomOrderForGivenNumberOfTokens(400, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
         homePage.validateCertificate(remoteOrderCustomer);
         homePage.validateTokens(remoteOrderCustomer);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        CartData.createNewCart(remoteOrderCustomer,store.getLocationCode());
         ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser, store.getAddress1());
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating myLoyaltyTest.Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
