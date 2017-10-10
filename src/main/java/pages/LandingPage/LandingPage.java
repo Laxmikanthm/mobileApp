@@ -7,6 +7,7 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
+import cardantApiFramework.pojos.Store;
 import enums.Country;
 import enums.PaymentMethod;
 import io.appium.java_client.AppiumDriver;
@@ -18,6 +19,7 @@ import pages.LoginPage.LoginPage;
 import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
+import pages.UserProfilePage.UserProfilePage;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
@@ -74,7 +76,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
         //this.getLoginButton().click();
         driver.findElementById("signIn").click();
-        Logz.step("##### going to login page ##### ");
+        Logz.step("##### Navigating to login page .......##### ");
         return LoginPage.get((AppiumDriver) driver);
     }
 
@@ -156,20 +158,22 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     public HomePage logInAddCreditCard(RemoteOrderCustomer mobileUser) throws Exception {
         LoginPage loginPage = gotoLogInPage();
         loginPage.login(mobileUser);
-      //  MobileApi.addCreditCard(mobileUser);
+       MobileApi.addCreditCard(mobileUser);
         return HomePage.get((AppiumDriver) driver);
     }
 
-    public OrdersPage logInSelectStore(RemoteOrderCustomer mobileUser, String zipCode) throws Exception {
+    public HomePage logInSelectStore(RemoteOrderCustomer mobileUser, Store store) throws Exception {
         try {
-            LoginPage loginPage = gotoLogInPage();
-            HomePage homePage = loginPage.login(mobileUser);
-            //HomePage homePage = logInAddCreditCard(mobileUser);
-            homePage.selectStore(zipCode).goToOrderPage();
+          /* LoginPage loginPage = gotoLogInPage();
+           HomePage homePage = loginPage.login(mobileUser);*/
+
+           HomePage homePage = logInAddCreditCard(mobileUser);
+            homePage.selectStore(store);
         } catch (Exception ex) {
-            throw new Exception("Unable to assert user email in menu page\n" + ex.getMessage());
+            throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
         }
-        return OrdersPage.get((AndroidDriver) driver);
+        return HomePage.get((AndroidDriver) driver);
     }
+
 }
 

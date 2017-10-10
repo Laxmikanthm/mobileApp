@@ -1,9 +1,14 @@
 package util;
 
 import base.test.BaseTest;
+import cardantApiFramework.pojos.Store;
+import cardantApiFramework.utils.JdbcUtil;
+import pages.Enums.BreadSize;
 import utils.Logz;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 public class Utils {
@@ -27,7 +32,7 @@ public class Utils {
     public static String convert12inchToFootLong(String itemName) throws Exception{
         try{
             if(itemName.contains("12\""))
-                return itemName.replace("12\"", BaseTest.getStringfromBundleFile("FootLong"));
+                return itemName.replace("12\"", BreadSize.FOOTLONG.toString());
             else
                 return itemName;
         }catch(Exception ex){
@@ -36,4 +41,49 @@ public class Utils {
         }
 
     }
+    public static String getConnectionString(String connection, String start, String end, int index) throws Exception {
+        String value = connection.toString();
+        int startPoint = value.indexOf(start) + index;
+        int endPoint = value.indexOf(end);
+        return value.substring(startPoint, endPoint);
+    }
+    public static String getConnectionString(String connection, String start) throws Exception {
+        String value = connection.toString();
+        int startPoint = value.indexOf(start);
+        return value.substring(startPoint);
+    }
+    public static String getConnectionString(String connection, int start, String end) throws Exception {
+        String value = connection.toString();
+        int endPoint = value.indexOf(end);
+        return value.substring(start, endPoint);
+    }
+    public static String getConnectionString(String connection, String start, String end) throws Exception {
+        String value = connection.toString();
+        int startPoint = value.indexOf(start);
+        int endPoint = value.indexOf(end);
+        return value.substring(startPoint, endPoint);
+    }
+    public static String formatDateTime(String dt, String currentFormat, String newFormat) throws Exception{
+        try{
+            SimpleDateFormat oldFormat = new SimpleDateFormat(currentFormat);//"yyyy-MM-dd hh:mm:ss a"
+            Date temDate = oldFormat.parse(dt);//"2017-05-03 05:35:03 PM"
+
+            SimpleDateFormat formatter = new SimpleDateFormat(newFormat);//"MMM d, yyyy | h:m:a"
+            Logz.step("After date format: "+formatter.format(temDate));//May 3, 2017 | 5:35:PM
+            return formatter.format(temDate);
+        }catch(Exception ex){
+            Logz.step("Unable to format date.\\n" + ex.getMessage());
+            throw new Exception(("Unable to format date.\n" + ex.getMessage()));
+        }
+    }
+    public static void setZipCode(Store store) throws Exception{
+        String zipCode = store.getZipCode();
+        if (zipCode.contains("-")) {
+            zipCode = zipCode.split("-")[0];
+            store.setZipCode(zipCode);
+        }
+
+    }
+
+
 }

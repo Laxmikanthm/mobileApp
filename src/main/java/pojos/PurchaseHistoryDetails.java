@@ -4,7 +4,7 @@ import utils.Logz;
 
 import java.util.List;
 
-public class OrderHistoryDetails {
+public class PurchaseHistoryDetails {
     private String pickupDateTime;
     private String storeAddress;
     private String orderNumber;
@@ -12,8 +12,8 @@ public class OrderHistoryDetails {
     private String total;
     private  List<PaymentDetails>  paymentDetails;
 
-
-    public OrderHistoryDetails(String pickupDateTime, String storeAddress, String orderNumber, List<CartItemList> cartItemList, String total,List<PaymentDetails> paymentDetails) {
+public PurchaseHistoryDetails(){}
+    public PurchaseHistoryDetails(String pickupDateTime, String storeAddress, String orderNumber, List<CartItemList> cartItemList, String total, List<PaymentDetails> paymentDetails) {
         this.pickupDateTime = pickupDateTime;
         this.storeAddress = storeAddress;
         this.orderNumber = orderNumber;
@@ -76,32 +76,36 @@ public class OrderHistoryDetails {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof OrderHistoryDetails)) return false;
+        if (!(o instanceof PurchaseHistoryDetails)) return false;
 
-        OrderHistoryDetails that = (OrderHistoryDetails) o;
+        PurchaseHistoryDetails that = (PurchaseHistoryDetails) o;
 
         if (getPickupDateTime() != null ? !getPickupDateTime().equals(that.getPickupDateTime()) : that.getPickupDateTime() != null){
             Logz.step("Pick up date expected: "+getPickupDateTime()+"But act: "+that.getPickupDateTime());
             return false;
         }
         if (getStoreAddress() != null ? !getStoreAddress().equals(that.getStoreAddress()) : that.getStoreAddress() != null){
-            Logz.step("Strore address expected: "+getStoreAddress()+"But act: "+that.getStoreAddress());
+            Logz.step("Strore address expected: "+getStoreAddress()+" But act: "+that.getStoreAddress());
             return false;
         }
         if (getOrderNumber() != null ? !getOrderNumber().equals(that.getOrderNumber()) : that.getOrderNumber() != null){
-            Logz.step("Order number expected: "+getOrderNumber()+"But act: "+that.getOrderNumber());
+            Logz.step("Order number expected: "+getOrderNumber()+" But act: "+that.getOrderNumber());
             return false;
         }
         if (getCartItemList() != null ? !getCartItemList().equals(that.getCartItemList()) : that.getCartItemList() != null){
-            Logz.step("Item name and ingredients expected: "+getCartItemList()+"But act: "+that.getCartItemList());
+            Logz.step("Item name and ingredients expected: "+getCartItemList()+" But act: "+that.getCartItemList());
             return false;
         }
 
         if (getPaymentDetails() != null ? !getPaymentDetails().equals(that.getPaymentDetails()) : that.getPaymentDetails() != null){
-            Logz.step("Payment type and card number expected: "+getPaymentDetails()+"But act: "+that.getPaymentDetails());
+            Logz.step("Payment type and card number expected: "+getPaymentDetails()+" But act: "+that.getPaymentDetails());
             return false;
         }
-        return getTotal() != null ? getTotal().trim().equals(that.getTotal().trim()) : that.getTotal() == null;
+        if (getTotal() != null ? !getTotal().equals(that.getTotal()) : that.getTotal() != null){
+            Logz.step("get Total expected: "+getTotal()+" But act: "+that.getTotal());
+            return false;
+        }
+        return true;
     }
 
     @Override

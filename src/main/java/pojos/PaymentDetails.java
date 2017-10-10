@@ -6,8 +6,6 @@ public class PaymentDetails {
     private String cardType;
     private String cardEndingNumber;
     private String imagePath;
-
-
     private String amount;
 
 

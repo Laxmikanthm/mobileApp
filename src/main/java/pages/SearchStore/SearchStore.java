@@ -5,32 +5,22 @@ import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
-import base.gui.controls.mobile.keyboard.AndroidKeyboard;
 import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
-import cardantApiFramework.utils.JdbcUtil;
 import io.appium.java_client.*;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidKeyCode;
-import io.appium.java_client.android.AndroidKeyMetastate;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.html5.Location;
-import org.openqa.selenium.winium.KeyboardSimulatorType;
-import pages.HomePage.HomePage;
+import pages.CommonElements.CommonElements;
 import pages.OrdersPage.OrdersPage;
 
-import pojos.user.MobileUser;
+import util.Utils;
 import utils.Logz;
 
-import javax.swing.*;
-import java.awt.event.KeyEvent;
 import java.util.List;
-
-import static java.awt.event.KeyEvent.VK_ENTER;
 
 /**
  * Created by E003705 on 17-03-2017.
@@ -78,7 +68,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     By Address = MobileBy.AccessibilityId("Google Map");
     By storeNamesLocator = By.id("address");
     Dimension size;
-
+    CommonElements commonElements = new CommonElements((AppiumDriver)driver);
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -103,11 +93,19 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-    public void searchStoreByZipCode(String store) throws Exception {
+    public void searchStoreByZipCode(Store store) throws Exception {
         okPopUp();
         getSearchButton().click();
         getSearchByZipCode().isReady();
-        getSearchByZipCode().getControl().clear();
+        getSearchByZipCode().setText(store.getZipCode());
+        getSearchKeyButton().click();
+        commonElements.scrollAndClick(By.id("address"), By.id("address"), store.getAddress1());
+    }
+    public void searchStoreByZipCode(String  store) throws Exception {
+        okPopUp();
+        getSearchButton().click();
+        getSearchByZipCode().isReady();
+        // getSearchByZipCode().getControl().clear();
         /*if (driver instanceof AndroidDriver)
             ((AndroidDriver) driver).pressKeyCode(EditorInfo.IME_ACTION_SEARCH);
         else
@@ -115,7 +113,6 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         getSearchByZipCode().setText(store);
         getSearchKeyButton().click();
     }
-
 
     public void allowPopUp() throws Exception {
         try {
@@ -135,6 +132,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         } catch (Exception ex) {
             throw new Exception(ex);
         }
+
 
     }
 
@@ -179,6 +177,8 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
+
+
     public OrdersPage findYourStore(String zipCode) throws Exception {
         try {
             okPopUp();
@@ -202,6 +202,8 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
             throw new Exception(ex);
         }
     }
+
+
 
     public OrdersPage findLocationOfStore(Store store) throws Exception {
         try {
@@ -276,23 +278,34 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
             if (zipCode.contains("-")) {
                 zipCode = zipCode.split("-")[0];
             }
-            searchAStoreByZipCode(zipCode);
+            searchSubwayByZipCode(zipCode);
             //toggleView();
             return OrdersPage.get((AppiumDriver) driver);
         } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
-    public void searchAStoreByZipCode(String store) throws Exception {
-       // okPopUp();
+    public void searchSubwayByZipCode(String store) throws Exception {
         getSearchButton().click();
         getSearchByZipCode().isReady();
         getSearchByZipCode().getControl().clear();
-        /*if (driver instanceof AndroidDriver)
-            ((AndroidDriver) driver).pressKeyCode(EditorInfo.IME_ACTION_SEARCH);
-        else
-            getSearchKeyButton().tap();*/
         getSearchByZipCode().setText(store);
         getSearchKeyButton().click();
     }
+    public OrdersPage findYourSubway(Store store) throws Exception {
+        try {
+            okPopUp();
+            allowPopUp();
+            Thread.sleep(5000);
+            okPopUp();
+            Utils.setZipCode(store);
+            toggleView();
+            searchStoreByZipCode(store);
+            return OrdersPage.get((AppiumDriver) driver);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+
 }
