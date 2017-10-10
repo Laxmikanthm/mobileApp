@@ -45,7 +45,7 @@ public class CustomizeOrder extends SubwayAppBaseTest {
     @Test
     public void placeCustomizeOrderAllSandwiches() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser=setCountryName();
         RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();

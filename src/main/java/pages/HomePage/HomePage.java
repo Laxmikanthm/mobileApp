@@ -104,6 +104,21 @@ public List<WebElement> getElements(By locator) {
 
         }
     }
+    public void scrollToUp(By locator, double startpoint, double endpoint) {
+        while (getElements(locator).size() == 0) {
+            boolean flag = false;
+            Dimension dimensions = driver.manage().window().getSize();
+            int StartPoint = (int) (dimensions.getHeight() * startpoint);//0.9
+            int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
+            //((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+            TouchAction action =new TouchAction((MobileDriver)driver);
+            action.longPress(0, EndPoint).moveTo(0, StartPoint).release().perform();
+            action.longPress(0, StartPoint).moveTo(0, EndPoint).release().perform();
+
+
+
+        }
+    }
     public void getOffers()throws Exception {
         scrollToElement(OffersGetText, 0.9,  0.8 );
         Thread.sleep(2000L);
@@ -220,7 +235,7 @@ public List<WebElement> getElements(By locator) {
     public String tokenValue()throws Exception
     {
         Thread.sleep(2000);
-        scrollToElement(tokenValue,0.5,0.9);
+        scrollToUp(tokenValue,0.5,0.9);
         return getTokenValue().getText();
     }
     public String zeroTokenMessage()throws Exception

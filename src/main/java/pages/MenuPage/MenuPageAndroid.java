@@ -45,10 +45,12 @@ public class MenuPageAndroid extends MenuPage {
         return button;
     }
 
+
     public AndroidButton getPaymentMethods() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("PaymentMethods")), "Payment methods button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("PaymentMethods")+"']"), "Payment methods button");
         return button;
     }
+
 
     public AndroidButton getGoHome() throws Exception {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/x_icon"), "Back button");        return button;

@@ -47,7 +47,7 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
     @Test
     public void addFavoriteOrder_9157() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser=setCountryName();
         remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
@@ -63,7 +63,7 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void addFavoriteReOrder_7675_7241() throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser=setCountryName();
         remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
@@ -81,7 +81,7 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void UnFavouriteOrder_9157()throws Exception
     {
-        mobileUser = new MobileUser(false, Country.UnitedStates, store.getLocationCode());
+        mobileUser=setCountryName();
         remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);

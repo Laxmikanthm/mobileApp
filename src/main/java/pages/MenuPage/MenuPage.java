@@ -6,6 +6,7 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -133,6 +134,8 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
             int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
           //  ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 2000);
+            TouchAction action = new TouchAction((MobileDriver) driver);
+            action.longPress(200, Startpoint).moveTo(200, EndPoint).release().perform();
         }
     }
 
@@ -180,6 +183,7 @@ public abstract  class MenuPage<T extends AppiumDriver> extends MobileBasePage {
     public AddCardPage gotoAddPaymentMethods() throws  Exception
     {
         try{
+            Thread.sleep(10000);
             getPaymentMethods().click();
 
         }catch(Exception ex){

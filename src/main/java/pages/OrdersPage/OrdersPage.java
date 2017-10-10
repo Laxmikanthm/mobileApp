@@ -303,7 +303,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             //return specific page
         } catch (Exception ex) {
-            throw new Exception(ex);
+          Logz.error(ex.toString());
         }
     }
 
@@ -326,9 +326,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollToElement(totalAmount, 0.9, 0.2);
             verifyTaxCalculationInBag();
             getOrderValue();
-            getPlaceOrder().click();
             Thread.sleep(5000);
             getTokens(remoteOrder);
+            getPlaceOrder().click();
             getGotIt().click();
             Assert.assertEquals(homePage.tokenValue().toString(), String.valueOf(tokens));
 
@@ -478,10 +478,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             swipe(sidesOrDrinks, subCategoryName, "Left");
             getAddToBag().isReady();
             getAddToBag().click();
-            getPlaceOrder().isReady();
-            getPlaceOrder().click();
             Thread.sleep(20000);
             getTokens(remoteOrder);
+            getPlaceOrder().isReady();
+            getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
@@ -542,8 +542,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getMakeItAMeal().isReady();
             getMakeItAMeal().click();
-            getExpandArrow().isReady();
-            getExpandArrow().click();
+            /*getExpandArrow().isReady();
+            getExpandArrow().click();*/
             getPlaceOrder().isReady();
             assertTexts(ordersPage);
         } catch (Exception ex) {
@@ -646,12 +646,27 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 Double screenHeightEnd = dimensions.getHeight() * 0.5;
                 int scrollEnd = screenHeightEnd.intValue();
                 //driver.swipe(0,scrollStart,0,scrollEnd,2000);
+                for (int i = 0; i < allElements.size(); i++) {
+                    while(!(allElements.get(i).getText().contains(itemName))){
+                        TouchAction action = new TouchAction((MobileDriver) driver);
+                        action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
+                        boolean elementflag=false;
+                        for (int j = 0; j < allElements.size(); j++) {
 
-                TouchAction action = new TouchAction((MobileDriver) driver);
-                while (!element.isDisplayed()) {
-                    action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
+                            if (allElements.get(j).getText().contains(itemName)) {
+                                allElements.get(j).click();
+                                elementflag = true;
+                                break;
+                            }
+                        }
+                        if(elementflag==true) {
+                            break;
+                        }
+                    }
+                    i=allElements.size();
                 }
-                element.click();
+
+
 
 
             }
@@ -789,7 +804,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
             scrollAndClick(storeNamesLocator, storeName, "Up");
-            getSelectRestaurantButton().click();
+            //getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
@@ -1189,9 +1204,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().click();
             Thread.sleep(5000);
+            getTokens(remoteOrder);
             getPlaceOrder().click();
             Thread.sleep(10000);
-            getTokens(remoteOrder);
             scrollToElement(FavouriteIconLocator, 0.9, 0.5);
             getFavouriteIcon().click();
             // getFavouriteText().click;
@@ -1343,10 +1358,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getAddToBag().click();
             getOrderValue();
             Thread.sleep(20000);
+            getTokens(remoteOrder);
             validateManageLocator();
             getPlaceOrder().waitForClickable();
             getPlaceOrder().click();
-            getTokens(remoteOrder);
             getGotIt().isReady();
             getGotIt().click();
             Assert.assertEquals(String.valueOf(tokens), homePage.tokenValue().toString());
