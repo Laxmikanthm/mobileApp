@@ -36,7 +36,7 @@ public class OrderFavorites extends SubwayAppBaseTest {
 
     //DFA-9157
     @Test
-    public void addOrderAsFavorite() throws Exception {
+    public void testAddOrderAsFavoriteFromOrderConfirmationPage() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
        // mobileUser = landingPage.registerUser();
         mobileUser =  landingPage.registerUser("LarisaWoolliams@qasubway.com");
@@ -49,44 +49,41 @@ public class OrderFavorites extends SubwayAppBaseTest {
         homePage.addSomethingElse();
         Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
 
-
     }
-
-
-   /* @Test
-    @DirtiesContext
-    public void reOrderFavorites() throws Exception {
-        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        user = landingPage.registerUser(BaseTest.getStringfromBundleFile("FavoriteUser"));
-      //  homePage = landingPage.logIn(mobileUser);
-        ordersPage = homePage.findStore(store.getZipCode());
-        MobileApi.removeAddFavorite(mobileUser, 2);
-        ordersPage.placeFavouriteReOrder(mobileUser);
-        homePage.validateTokens(user);
-
-    }
-
-    //DFA-9157
     @Test
-    @DirtiesContext
-    public void UnFavouriteOrder() throws Exception {
-        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        user = landingPage.registerUser(BaseTest.getStringfromBundleFile("FavoriteUser"));
-       // homePage = landingPage.logIn(mobileUser);
-        ordersPage = homePage.findStore(store.getZipCode());
-        MobileApi.removeAddFavorite(mobileUser, 2);
-        ordersPage.removeFavouriteOrder(order1.getCategoryAllSandwiches(), mobileUser, store.getAddress1(), user);
-        homePage.validateTokens(user);
-        //ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
+    public void testAddOrderAsFavoriteFromHomePage() throws Exception {
+        //assert item is added as favorite in favorite page
 
 
-    }*/
+    }
+    @Test
+    public void testReorderFavoritesFromFavoritePage() throws Exception {
 
-    //orderFavoritesWithSubwayCard
-    // orderFavoritesWithDebitCard
-    //orderFavoritesWithSplitPayment
-    //addFavoriteFromOrderHistory
-    //orderMaxFavoriteItems(Assert max alert pop up)
-    //
+    }
+    @Test
+    public void testCustomizeFavoritesFromFavoritePage() throws Exception {
+
+    }
+    @Test
+    public void testUnFavoritesFromFavoritePage() throws Exception {
+
+    }
+    @Test
+    public void testOrderFavoritesWithSubwayCard() throws Exception {
+
+    }
+    @Test
+    public void testOrderFavoritesWithDebitCard() throws Exception {
+
+    }
+    @Test
+    public void testOrderFavoritesWithSplitPayment() throws Exception {
+
+    }
+    @Test
+    public void testOrderMaxFavoriteItems() throws Exception {
+
+    }
+
 
 }

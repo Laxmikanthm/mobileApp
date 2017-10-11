@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
+import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
 import pojos.RemoteOrder;
@@ -22,6 +23,7 @@ import pojos.user.RemoteOrderCustomer;
  */
 public class Certificates extends SubwayAppBaseTest {
 
+    MenuPage menuPage;
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
     Store store = JdbcUtil.getLoyaltyStoreDetails();
@@ -37,6 +39,7 @@ public class Certificates extends SubwayAppBaseTest {
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         remoteOrderCustomer=remoteOrder.getCustomer();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
+
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         remoteOrderCustomer=myWayRewards.validateTokensandCerts(homePage,remoteOrderCustomer);
         homePage.certsCount();
@@ -44,8 +47,8 @@ public class Certificates extends SubwayAppBaseTest {
         CartData.createNewCart(remoteOrderCustomer,store.getLocationCode());
         ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches",mobileUser, store.getAddress1());
         Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certCount);
-        //Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
-        //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
+        Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
+        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
 
     }
     @Test
@@ -85,7 +88,7 @@ public class Certificates extends SubwayAppBaseTest {
         ordersPage.placeRandomOrderwithRedeemMultipleCertificate("All Sandwiches", mobileUser, store.getAddress1());
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating myLoyaltyTest.Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
-       // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
+        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
     }
 
     ///DFA-9167`
@@ -105,7 +108,7 @@ public class Certificates extends SubwayAppBaseTest {
         ordersPage.placeRandomOrderwithExpiredCertificate("All Sandwiches", mobileUser, store.getAddress1());
         Assert.assertEquals(ordersPage.Rewards,homePage.certValue);//validating myLoyaltyTest.Certificates
         Assert.assertEquals(String.valueOf(ordersPage.tokens),homePage.tokenValue().toString());//validating tokens
-        //menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
+        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
 
     }
 }

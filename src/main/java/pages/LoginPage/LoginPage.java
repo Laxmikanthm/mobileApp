@@ -80,7 +80,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
     public HomePage login(RemoteOrderCustomer mobileUser) throws Exception {
-        Logz.step("##### User is logging in ##### ");
+        Logz.step("##### "+mobileUser.getEmailAddress()+" is logging in ##### ");
         try {
             try {
                 Thread.sleep(15000);
@@ -96,7 +96,6 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
             getPassword().setText(mobileUser.getPassword());
             HideKeyboard();
             getLogin().click();
-            Logz.step("##### User is logged in ##### ");
         }catch (Exception ex){
             throw new Exception("Unable to Login\n" +ex.getMessage());
         }

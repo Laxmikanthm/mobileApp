@@ -50,7 +50,37 @@ public abstract class UserProfilePage<T extends AppiumDriver> extends MobileBase
         return HomePage.get((AppiumDriver) driver);
     }
     public PurchaseHistoryPage goToPurchaseHistoryPage() throws Exception{
+        Logz.step("##### Navigating to Purchase History Page #####");
+
         getPurchaseHistory().click();
+        Logz.step("##### Navigated to Purchase History Page #####");
         return PurchaseHistoryPage.get((AndroidDriver)driver);
+    }
+    public UserProfilePage assertUserLoggedIn(RemoteOrderCustomer mobileUser) throws Exception{
+        try {
+            Logz.step("Asserting user is logged in ");
+           /* String actualUser = getOrderButton().getText();
+            String expectedUser = BaseTest.getStringfromBundleFile("OrderButton");
+            Assert.assertEquals(actualUser, expectedUser);*/
+            assertEmailDisplayName(mobileUser);
+            Logz.step("Asserted user is logged in ");
+
+        }catch (Exception ex){
+            throw new Exception("Unable to assert user is logged in\n" +ex.getMessage());
+        }
+
+        return UserProfilePage.get((AppiumDriver) driver);
+    }
+    public UserProfilePage logout() throws Exception
+    {
+        try {
+            /*scrollToElement(logout,0.9,0.5);
+            getLogOut().isReady();
+            getLogOut().click();
+            logOutInpopupButton();*/
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+        return UserProfilePage.get((AppiumDriver) driver);
     }
 }

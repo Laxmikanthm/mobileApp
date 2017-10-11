@@ -55,4 +55,13 @@ public class SwitchStore extends SubwayAppBaseTest {
 
 
     }
+
+    @Test(enabled = false)
+    public void testFindAnotherSubwaySelectionInHomePage() throws Exception{
+
+    }
+    @Test(enabled = false)
+    public void testFindAnotherSubwaySelectionInMenuPage() throws Exception{
+
+    }
 }
