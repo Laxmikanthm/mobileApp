@@ -27,8 +27,10 @@ import pages.Enums.BreadSize;
 import pages.Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.MenuPage.MenuPage;
+import pages.OrderConfirmationPage.OrderConfirmationPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
 import pages.UserProfilePage.UserProfilePage;
+import pages.YourOrderPage.YourOrderPage;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
@@ -204,7 +206,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     AddCardPage addCardPage;
     MenuPage menuPage;
     TouchAction action = new TouchAction((MobileDriver) driver);
-    CommonElements elements = new CommonElements((AppiumDriver)driver) ;
+    CommonElements elements = new CommonElements((AppiumDriver) driver);
 
 
     /*This elements are for finding list of elements*/
@@ -304,7 +306,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             //return specific page
         } catch (Exception ex) {
-          Logz.error(ex.toString());
+            Logz.error(ex.toString());
         }
     }
 
@@ -648,10 +650,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 int scrollEnd = screenHeightEnd.intValue();
                 //driver.swipe(0,scrollStart,0,scrollEnd,2000);
                 for (int i = 0; i < allElements.size(); i++) {
-                    while(!(allElements.get(i).getText().contains(itemName))){
+                    while (!(allElements.get(i).getText().contains(itemName))) {
                         TouchAction action = new TouchAction((MobileDriver) driver);
                         action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
-                        boolean elementflag=false;
+                        boolean elementflag = false;
                         for (int j = 0; j < allElements.size(); j++) {
 
                             if (allElements.get(j).getText().contains(itemName)) {
@@ -660,14 +662,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                                 break;
                             }
                         }
-                        if(elementflag==true) {
+                        if (elementflag == true) {
                             break;
                         }
                     }
-                    i=allElements.size();
+                    i = allElements.size();
                 }
-
-
 
 
             }
@@ -718,10 +718,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         return elementsList;
     }
 
-    public List<WebElement> getElementList(By locator) throws Exception{
+    public List<WebElement> getElementList(By locator) throws Exception {
         return new Generic((AndroidDriver) driver, By.id(""), "").getWebElements(By.linkText(""), "");
 
     }
+
     public List<WebElement> getItems(By locator) {
         List<WebElement> storesList = ((AndroidDriver) driver).findElements(locator);
         return storesList;
@@ -1837,14 +1838,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
-//##########################################################################################################################
-    public HomePage placeDefaultOrder(Menu menuCategories,  BreadSize breadSize) throws Exception {
+
+    //##########################################################################################################################
+    public HomePage placeDefaultOrder(Menu menuCategories, BreadSize breadSize) throws Exception {
         try {
 
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             //Get Menu Categories - click menuCategories
             itemName = menuCategories.toString();
-            List<WebElement> ProductCategoriesList =   elements.scrollToElement(By.id("product_group_layout"),By.id("product_group_header"), menuCategories.toString());
+            List<WebElement> ProductCategoriesList = elements.scrollToElement(By.id("product_group_layout"), By.id("product_group_header"), menuCategories.toString());
             int i = 0;
             while (i < ProductCategoriesList.size()) {
                 if (ProductCategoriesList.get(i).getText().contains(itemName)) {
@@ -1853,14 +1855,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                     //Get Product Details - click random one
                     selectRandomProduct(ProductList, breadSize);
                     //Click Add to bag
-                   // elements.okPopUp();
+                    // elements.okPopUp();
                     getAddToBag().click();//product_add_to_bag
                     break;
                 }
                 i++;
             }
             //Assert orderDetails(object) in order detail page
-          // assertOrderSummaryInOrderDetailPage();
+            // assertOrderSummaryInOrderDetailPage();
             //click place order
             getPlaceOrder().click();
             getGotIt().click();
@@ -1871,8 +1873,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         return HomePage.get((AndroidDriver) driver);
 
     }
+
     public HomePage goToHomePage() throws Exception {
-       Logz.step("going to home page...");
+        Logz.step("going to home page...");
         return HomePage.get((AndroidDriver) driver);
 
     }
@@ -1882,7 +1885,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             //Get Menu Categories - click menuCategories
-            List<WebElement> ProductCategoriesList = elements.getElements(By.id(""),By.id(""));
+            List<WebElement> ProductCategoriesList = elements.getElements(By.id(""), By.id(""));
             int i = 0;
             while (i < ProductCategoriesList.size()) {
                 if (ProductCategoriesList.get(i).getText().contains(menuCategories.toString())) {
@@ -1899,8 +1902,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 }
                 i++;
             }
-            //Assert orderDetails(object) in order detail page
-            // assertOrderSummaryInOrderDetailPage();
+            YourOrderPage yourOrderPage = homePage.goToYourOrderPage();
+            OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertTotalAmountInYourOrderPage();
+            orderConfirmationPage.assertTotalAmountInYourOrderPage();
             //click place order
             getPlaceOrder().click();
             UserProfilePage userProfilePagePage = homePage.goToUserProfilePage();
@@ -1917,9 +1921,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         //Assert orderDetails(object) in order detail page
         return PurchaseHistoryPage.get((AndroidDriver) driver);
     }
-    private CustomizePage goToCustomizePage() throws Exception{
+
+    private CustomizePage goToCustomizePage() throws Exception {
         getCustomize().click();
-        return CustomizePage.get((AndroidDriver)driver);
+        return CustomizePage.get((AndroidDriver) driver);
+    }
+
+    private YourOrderPage goToYourOrderPage() throws Exception {
+        getCustomize().click();
+        return YourOrderPage.get((AndroidDriver) driver);
     }
 
     private void selectRandomProduct(List<WebElement> ProductList, BreadSize breadSize) throws Exception {
@@ -1938,24 +1948,41 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
 
     }
-
-    private void assertOrderSummaryInOrderDetailPage() throws Exception {
+    private void selectRandomProduct1(BreadSize breadSize) throws Exception {
         try {
-            Logz.step("##### Asserting Order Summary In Order Detail Page #####");
-            OrderSummary actualOrderSummary = new OrderSummary();
-            actualOrderSummary.setItemname("");
-            actualOrderSummary.setItemprice(0);
-            actualOrderSummary.setTotal(0);
-            OrderSummary expectedOrderSummary = new OrderSummary();
-            Assert.assertEquals(actualOrderSummary, expectedOrderSummary);
-            Logz.step("##### Asserted Order Summary In Order Detail Page #####");
+            Logz.step("##### Selecting a random product #####");
+            List<WebElement> ProductList = elements.getElements(By.id(""), By.id("product_group_header"));//product_list
+            int getProductCount = ProductList.size();
+            getProductCount = Utils.selectRandomItem(getProductCount);
+            ProductList.get(getProductCount).click();
+            if (!(breadSize.toString().contains("Footlong") || breadSize.toString().contains("none"))) {
+                getSixInchOption().click();
+            }
+            Logz.step("##### Selected a random product #####");
         } catch (Exception ex) {
-            throw new Exception("Unable to Assert Order Summary In Order Detail Page\n" + ex.getMessage());
+            throw new Exception("Unable to select Random Product\n" + ex.getMessage());
         }
+
+
+    }
+
+    private void selectRandomMenu() throws Exception {
+        try {
+            Logz.step("##### Selecting a random menu #####");
+            List<WebElement> ProductCategoriesList = elements.scrollToElement(By.id("product_group_layout"), By.id("product_group_header"), Utils.selectRandomMenu());
+            int getProductMenuIndex = ProductCategoriesList.size();
+            getProductMenuIndex = Utils.selectRandomItem(getProductMenuIndex);
+            ProductCategoriesList.get(getProductMenuIndex).click();
+            Logz.step("##### Selected a random menu #####");
+        } catch (Exception ex) {
+            throw new Exception("Unable to select Random menu\n" + ex.getMessage());
+        }
+
+
     }
 
     public HomePage scrollAndClick(WebElement element) throws Exception {
-        if(!element.isDisplayed()) {
+        if (!element.isDisplayed()) {
             Dimension dimensions = driver.manage().window().getSize();
             Double screenHeightStart = dimensions.getHeight() * 0.9;
             int scrollStart = screenHeightStart.intValue();
@@ -1972,39 +1999,71 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
         return HomePage.get((AppiumDriver) driver);
     }
-    public String scrollAndGetText(WebElement element) throws Exception {
-        Dimension dimensions = driver.manage().window().getSize();
-        Double screenHeightStart = dimensions.getHeight() * 0.9;
-        int scrollStart = screenHeightStart.intValue();
-        Double screenHeightEnd = dimensions.getHeight() * 0.5;
-        int scrollEnd = screenHeightEnd.intValue();
-        //driver.swipe(0,scrollStart,0,scrollEnd,2000);
 
-        TouchAction action = new TouchAction((MobileDriver) driver);
-        while (!element.isDisplayed()) {
-            action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
+
+    public HomePage placeRandomOrder() throws Exception {
+        try {
+
+            Logz.step("##### Started placing Random Order #####");
+            selectRandomItem();
+            placeOrderAndAssert();
+            Logz.step("##### Ended placing Random Order #####");
+        } catch (Exception ex) {
+           throw new Exception("Unable to place Random Order:\n" + ex.getMessage());
         }
-      return   element.getText();
-
+        return HomePage.get((AndroidDriver) driver);
 
     }
-    public int scrollAndGetElementCount(WebElement element) throws Exception {
-        Dimension dimensions = driver.manage().window().getSize();
-        Double screenHeightStart = dimensions.getHeight() * 0.9;
-        int scrollStart = screenHeightStart.intValue();
-        Double screenHeightEnd = dimensions.getHeight() * 0.5;
-        int scrollEnd = screenHeightEnd.intValue();
-        //driver.swipe(0,scrollStart,0,scrollEnd,2000);
+    public HomePage placeRandomOrderMyLoyalty() throws Exception {
+        try {
 
-        TouchAction action = new TouchAction((MobileDriver) driver);
-        while (!element.isDisplayed()) {
-            action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
+            Logz.step("##### Started placing Random Order #####");
+            selectRandomItem();
+            placeLoyaltyOrderAndAssert();
+            Logz.step("##### Ended placing Random Order #####");
+        } catch (Exception ex) {
+            throw new Exception("Unable to place Random Order:\n" + ex.getMessage());
         }
+        return HomePage.get((AndroidDriver) driver);
 
-        return   0;
+    }
+    public YourOrderPage selectItem() throws Exception {
+        try {
 
+            Logz.step("##### Started placing Random Order #####");
+            selectRandomItem();
+            Logz.step("##### Ended placing Random Order #####");
+        } catch (Exception ex) {
+            throw new Exception("Unable to place Random Order:\n" + ex.getMessage());
+        }
+        return YourOrderPage.get((AndroidDriver) driver);
 
     }
 
+    private void selectRandomItem() throws Exception {
+        Logz.step("##### Started placing Default Order #####");
+        //Get Menu Categories - click random menuCategories
+        selectRandomMenu();
+        //Get Product Details - click random Product
+        selectRandomProduct1(BreadSize.NONE);
+        //Click Add to bag
+        getAddToBag().click();
+
+    }
+
+    private void placeOrderAndAssert() throws Exception {
+        YourOrderPage yourOrderPage = goToYourOrderPage();
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertTotalAmountInYourOrderPage();
+        getPlaceOrder().click();
+        orderConfirmationPage.assertTotalAmountInYourOrderPage();
+        getGotIt().click();
+    }
+    private void placeLoyaltyOrderAndAssert() throws Exception {
+        YourOrderPage yourOrderPage = goToYourOrderPage();
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertLoyaltyDisplay();
+        getPlaceOrder().click();
+        orderConfirmationPage.assertLoyaltyDisplay();
+        getGotIt().click();
+    }
 
 }

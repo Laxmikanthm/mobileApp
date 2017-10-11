@@ -38,10 +38,10 @@ public class Offers extends SubwayAppBaseTest {
     @Test
     public void redeemOffer() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
-        //remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        //user=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         mobileUser.setEmailAddress("j0tJQ6jI7u@qasubway.com");
         mobileUser.setPassword("Subway1234");
-        // remoteOrderCustomer=RegisterUser.getUserWithOffers(1);
+        // user=RegisterUser.getUserWithOffers(1);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
@@ -54,7 +54,7 @@ public class Offers extends SubwayAppBaseTest {
         //need to do offers validation As we are not able place order and not displaying offers in place order page
       //  Assert.assertEquals(String.valueOf(ordersPage.tokens), homePage.tokenValue().toString());//tokenVerification
        // menuPage.assertMobileOrderHistory(ordersPage.orderValue);//Order Verification
-       // homePage.validateTokens(remoteOrderCustomer);
+       // homePage.validateTokens(user);
 
 
     }

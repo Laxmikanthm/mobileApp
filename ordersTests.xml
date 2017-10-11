@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="UserLoginTest">
+<suite name="userIdentityTest.UserLoginTest">
 <test name="single">
     <parameter name="platform" value="${platform}"></parameter>
     <parameter name="browserOrDevice" value="${deviceName}"></parameter>
@@ -11,7 +11,7 @@
     <parameter name="projectName" value="${driverName}"></parameter>
     <classes>
 
-         <class name="PlaceRandomOrder">
+         <class name="orderTest.PlaceRandomOrder">
 
              <methods>
 
@@ -24,7 +24,7 @@
              </methods>
          </class>
 
-         <class name="AddFavoriteOrder">
+         <class name="favoriteTest.AddFavoriteOrder">
              <methods>
                  <include name="addFavoriteOrder"/>
                  <include name="addFavoriteReOrder"/>

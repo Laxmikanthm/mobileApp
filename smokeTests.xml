@@ -10,26 +10,17 @@
         <parameter name="appPaths" value="${app}"></parameter>
         <parameter name="projectName" value="${driverName}"></parameter>
         <classes>
-            <class name="userIdentityTest.UserLoginTest">
+            <class name="orderTest.PlaceDefaultOrder">
                 <methods>
-                    <include name="createUser"/>
-                    <exclude name="userLogout"/>
-                    <exclude name="userLogin"/>
+                    <include name="testPlaceDefaultOrderSubwayFreshFitSixInch"/>
                 </methods>
             </class>
-            <class name="myLoyaltyTest.Certificates">
+           <!-- <class name="myLoyaltyTest.Certificates">
                 <methods>
-                    <include name="redeemCertificate"/>
-                    <exclude name="verifyCertificate"/>
-                    <exclude name="redeemMultipleCertificate_5049"/>
-                    <exclude name="redeemExpiredCertificate_9167"/>
+                    <include name="redeemCertificate_9188"/>
                 </methods>
-            </class>
-            <class name="myLoyaltyTest.Offers">
-                <methods>
-                    <include name="redeemOffer"/>
-                </methods>
-            </class>
+            </class>-->
+
         </classes>
     </test>
 
