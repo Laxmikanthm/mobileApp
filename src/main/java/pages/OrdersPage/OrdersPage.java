@@ -204,7 +204,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     /*This elements are for finding list of elements*/
     By storeNamesLocator = By.id("address");
     By categoryLocator = By.id("product_group_header");
-    By sidesOrDrinks = By.id("view_pager");
+    By sidesOrDrinks = By.id("product_title");
     By someThingElseLocator = By.id("something_else_text");
     By ItemList = By.id("item_options");
     By ItemFromSides = By.id("side_title_1");
@@ -219,7 +219,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By totalAmount = By.id("ordertotal_amount");
     By coldCutCombo = By.partialLinkText("Cold Cut Combo");
     By coffee12oz = By.partialLinkText("12 oz Coffee");
-    By moreDrinks = By.id("com.subway.mobile.subwayapp03:id/drinks");
+    By moreDrinks = By.id("drinks");
 
 
     Random rn = new Random();
@@ -480,7 +480,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
-            throw new Exception(ex);
+            Logz.error(ex.toString());
         }
     }
 
@@ -636,7 +636,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
              /*   int Startpoint = element.getLocation().getX();
                     int scrollEnd =  element.getLocation().getY();*/
                 Dimension dimensions = driver.manage().window().getSize();
-                Double screenHeightStart = dimensions.getHeight() * 0.9;
+                Double screenHeightStart = dimensions.getHeight() * 0.5;
                 int scrollStart = screenHeightStart.intValue();
                 Double screenHeightEnd = dimensions.getHeight() * 0.5;
                 int scrollEnd = screenHeightEnd.intValue();
@@ -646,13 +646,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                         TouchAction action = new TouchAction((MobileDriver) driver);
                         action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
                         boolean elementflag=false;
-                        for (int j = 0; j < allElements.size(); j++) {
+                        for (int j = 0; j <allElements.size(); j++) {
 
                             if (allElements.get(j).getText().contains(itemName)) {
                                 allElements.get(j).click();
                                 elementflag = true;
                                 break;
                             }
+
                         }
                         if(elementflag==true) {
                             break;
@@ -688,10 +689,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                     flag = true;
                     break;
                 } else {
-                    WebElement ele = allElements.get(0);
-                    MobileElement element = (MobileElement) ele;
-                    Thread.sleep(10000L);
+                    WebElement element = allElements.get(0);
+                    MobileElement ele = (MobileElement) element;
+                    Thread.sleep(5000L);
                     if (direction.equals("Left")) {
+                        size=driver.manage().window().getSize();
+                        int width=element.getSize().getWidth();
+                        int height=element.getSize().getHeight();
+                        TouchAction action = new TouchAction((MobileDriver)driver);
+                        action.longPress(element.getLocation().getX()+ (int)(width +500), element.getLocation().getY()).moveTo(100, 1500).release().perform();
+
                         //element.swipe(SwipeElementDirection.LEFT, 500);
                     } else {
                         //element.swipe(SwipeElementDirection.RIGHT, 500);
@@ -1536,8 +1543,18 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             // getStartOrderButton().click();
             getItems().isReady();
             //scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
-            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
-            getAddToBag().isReady();
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            String subCategoryName = order.getCart().getProductDetail().getName();
+            if (subCategoryName.equalsIgnoreCase("Apple Slices")) {
+                getAddToBag().isReady();
+            } else {
+                swipe(sidesOrDrinks, subCategoryName, "Left");
+                getSelectFlavor().isReady();
+                getSelectFlavor().click();
+                getItemSelectFlavor().isReady();
+                getItemSelectFlavor().click();
+                getAddToBag().isReady();
+            }
             getAddToBag().click();
             getPlaceOrder().isReady();
             //getOrderValue();
