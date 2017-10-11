@@ -376,7 +376,7 @@ public List<WebElement> getElements(By locator) {
         searchStore.findYourStore(zipCode);
         return OrdersPage.get((AppiumDriver) driver);
     }
-    public HomePage selectStore(Store store)throws Exception
+    public OrdersPage selectStore(Store store)throws Exception
     {
         try {
             Logz.step(" ##### Selecting a Store #####");
@@ -386,7 +386,7 @@ public List<WebElement> getElements(By locator) {
         }catch (Exception ex){
             throw new Exception("Unable to Selected a Store\n" +ex.getMessage());
         }
-        return HomePage.get((AppiumDriver) driver);
+        return OrdersPage.get((AppiumDriver) driver);
     }
 
     public OrdersPage findYourStore(Store store)throws Exception

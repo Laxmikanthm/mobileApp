@@ -3,12 +3,14 @@ package util;
 import base.gui.controls.mobile.generic.MobileButton;
 import cardantApiFramework.pojos.StringUtils;
 import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.FavoriteItems;
+import enums.PaymentMethod;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import kobieApi.serviceUtils.KobieClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
@@ -17,6 +19,7 @@ import pages.HomePage.HomePage;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RemoteOrderCustomer;
+import snaplogicApi.serviceUtils.SnaplogicClient;
 import utils.Logz;
 
 import java.util.List;
@@ -78,6 +81,19 @@ public class MobileApi {
         pojos.tenders.CreditCard creditCard = new pojos.tenders.CreditCard();
         creditCard.addGuestCreditPayment(user);
         Logz.step("##### Added credit card to user through API ##### ");
+    }
+    public static RemoteOrderCustomer getLoyaltyLookUp(RemoteOrderCustomer user) throws Exception {
+        SnaplogicClient client = new SnaplogicClient();
+        user = client.getProfileByGuestId(user);
+        return KobieClient.getLoyalty(user);
+    }
+    public static RemoteOrderCustomer placeOrderWithNoOfToken(RemoteOrderCustomer user, int tokenCount) throws Exception {
+        RemoteOrder ex = user.getCart().getRemoteOrder();
+        ex.customer = user;
+        ex.placeRandomOrderForGivenNumberOfTokens(tokenCount, PaymentMethod.CREDITCARD);
+        SnaplogicClient client = new SnaplogicClient();
+        user = client.getProfileByGuestId(user);
+        return KobieClient.getLoyalty(user);
     }
 
 }

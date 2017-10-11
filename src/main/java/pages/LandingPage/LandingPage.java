@@ -129,8 +129,13 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public MobileUser registerUser() throws Exception {
+        if (System.getProperty("country").contains("US")) {
+            return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
 
-        return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
+        } else {
+            return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.Canada, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
+
+        }
     }
 
     public RemoteOrderCustomer registerUser(String email) throws Exception {
@@ -141,7 +146,13 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         user.setLastName(nameSplit[1].replaceAll("@qasubway.com", ""));
         String objectId = AzureIdentityApi.getUserFromAzure(AzureClient.getAzureAccessToken(), email);
         if (objectId == null) {
-            return RegisterUser.registerAUserWithoutCardLink(user);
+            if (System.getProperty("country").contains("US")) {
+                return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
+
+            } else {
+                return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.Canada, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
+
+            }
         } else {
             user.getReltioAuthorizationToken();
             return user;
@@ -149,7 +160,13 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public RemoteOrderCustomer getUser() throws Exception {
-        RemoteOrderCustomer mobileUser = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));//JdbcUtil.getOnlineStore()));////
+        RemoteOrderCustomer mobileUser;
+        if (System.getProperty("country").contains("US")) {
+            mobileUser = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));//JdbcUtil.getOnlineStore()));////
+        } else {
+            mobileUser = new MobileUser(false, Country.Canada, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));//JdbcUtil.getOnlineStore()));////
+
+        }
         mobileUser.setEmailAddress(mobileUser.getFirstName() + mobileUser.getLastName() + "@qasubway.com");
         return mobileUser;
     }
@@ -158,16 +175,16 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     public HomePage logInAddCreditCard(RemoteOrderCustomer mobileUser) throws Exception {
         LoginPage loginPage = gotoLogInPage();
         loginPage.login(mobileUser);
-       MobileApi.addCreditCard(mobileUser);
+        MobileApi.addCreditCard(mobileUser);
         return HomePage.get((AppiumDriver) driver);
     }
 
     public HomePage logInSelectStore(RemoteOrderCustomer mobileUser, Store store) throws Exception {
         try {
-          /* LoginPage loginPage = gotoLogInPage();
-           HomePage homePage = loginPage.login(mobileUser);*/
+           // LoginPage loginPage = gotoLogInPage();
+          //  HomePage homePage = loginPage.login(mobileUser);
 
-           HomePage homePage = logInAddCreditCard(mobileUser);
+            HomePage homePage = logInAddCreditCard(mobileUser);
             homePage.selectStore(store);
         } catch (Exception ex) {
             throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
