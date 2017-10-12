@@ -642,7 +642,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
              /*   int Startpoint = element.getLocation().getX();
                     int scrollEnd =  element.getLocation().getY();*/
                 Dimension dimensions = driver.manage().window().getSize();
-                Double screenHeightStart = dimensions.getHeight() * 0.5;
+                Double screenHeightStart = dimensions.getHeight() * 0.9;
                 int scrollStart = screenHeightStart.intValue();
                 Double screenHeightEnd = dimensions.getHeight() * 0.5;
                 int scrollEnd = screenHeightEnd.intValue();
@@ -1385,7 +1385,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void placeFavouriteReOrder(MobileUser mobileUser) throws Exception {
         try {
 
-
             getItems().isReady();
             getAllFavourites();
             getFavouriteAddToBag().isReady();
@@ -1403,9 +1402,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void removeFavouriteOrder(String menuItem, MobileUser mobileUser, String storeName, RemoteOrderCustomer remoteOrderCustomer) throws Exception {
         try {
             HomePage homePage = placeFavouriteRandomOrder(menuItem, mobileUser, storeName);
-            homePage.validateTokens(remoteOrderCustomer);
-            //getDirections().isReady();
-            //  HomePage homePage= scrollAndClick(storeNamesLocator, storeName, "Up" );
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             homePage.addSomethingElse();
             getItems().isReady();
             getAllFavourites();
@@ -1413,6 +1410,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getUnFavouriteIcon().click();
             getRemoveFavourite().isReady();
             getRemoveFavourite().click();
+            getAddToBag().click();
+            Thread.sleep(5000);
+            getTokens(remoteOrder);
+            getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
 
