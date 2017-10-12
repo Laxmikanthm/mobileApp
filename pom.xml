@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.3.20-SNAPSHOT</version>
+            <version>3.3.27-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -75,7 +75,7 @@
                         <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>/Users/sultana_m/Documents/AndroidApp/Subway_R2_QE_8.0.0.0_5000728.apk</app>
+                        <app>C:/Users/E001599/Downloads/Subway_R2_QE_8.0.0.0_5000749.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>120</newCommandTimeout>
