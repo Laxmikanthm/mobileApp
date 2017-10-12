@@ -6,7 +6,6 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
-import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV1.dto.accountDTO.OrderSummary;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
@@ -187,13 +186,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     abstract MobileButton getChipsFlavor() throws Exception;
 
-    Dimension size;
-
     abstract MobileLabel getOrderNumInOrderConfirmation() throws Exception;
 
     abstract MobileLabel getItemName() throws Exception;
 
     abstract MobileLabel getOrderTotalAmount() throws Exception;
+
+    abstract MobileButton getDineIn() throws Exception;
+
+    Dimension size;
 
     Random random = new Random();
     public String favoriteOrderName = null;
@@ -373,6 +374,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         double taxPrice = Double.parseDouble(taxVal.substring(1));
         Assert.assertEquals(0.06, taxPrice);
     }
+
 
 
     public void placeRandomOrderFreshValueMeal(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
@@ -1658,6 +1660,28 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         Assert.assertEquals(0.00, taxPrice);
     }
 
+    public void verifyTaxValueForDineIn() throws Exception {
+        scrollToElement(taxPriceLocator, 0.9, 0.5);
+        String aTaxVal = "0.00";
+        String eTaxVal = getTaxPrice().getText();
+        if (!eTaxVal.contains("0.00")){
+            Logz.step("Validated Tax for Hot/Cold item in DineIn successfully");
+        }
+        //double taxPrice = Double.parseDouble(taxVal.substring(1));
+        Assert.assertNotEquals(aTaxVal, eTaxVal);
+    }
+
+    public void verifyTaxValueForToGo() throws Exception {
+        scrollToElement(taxPriceLocator, 0.9, 0.5);
+        String aTaxVal = "0.00";
+        String eTaxVal = getTaxPrice().getText();
+        if (eTaxVal.contains(aTaxVal)){
+            Logz.step("Validated Tax for Cold item in ToGo successfully");
+        }
+        //double taxPrice = Double.parseDouble(taxVal.substring(1));
+        Assert.assertNotEquals(aTaxVal, eTaxVal);
+    }
+
     public void customizeOrder() throws Exception {
         scrollToElement(customizeLocator, 0.9, 0.5);
         getCustomizeOrder().click();
@@ -1712,6 +1736,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
+
+
+
     public void placeRandomwithDineInHotTax(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
             remoteOrder = mobileUser.getCart().getRemoteOrder();
@@ -1750,6 +1777,79 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception(ex);
         }
     }
+
+    public void placeOrderForHotColdItemsInDineIn(String menuItem, MobileUser mobileUser, String storeName, cardantApiFramework.pojos.Menu menu) throws Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(String.valueOf(menuItem));
+            getDirections().isReady();
+            HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens = Integer.parseInt(homePage.tokenValue());
+            getStartOrderButton().click();
+            getItems().isReady();
+            String[] strMenuItemName =menu.getProductName().split(" ",2);
+            scrollAndClick(categoryLocator, menu.getProductClassGroupName(), "Up");
+            scrollAndClick(categoryLocator, strMenuItemName[1], "Up");
+            if ((!strMenuItemName[0].contains("12")) || (!strMenuItemName[0].contains("FOOTLONG"))){
+                getSixInchOption().click();
+            }
+            getAddToBag().click();
+            if(getDineIn().getControl().isDisplayed()){
+                Logz.step("DineIn button got displayed in Your Order page");
+            }else{
+                Logz.error("DineIn button is not visible");
+            }
+            getDineIn().click();
+            verifyTaxValueForDineIn();
+            getPlaceOrder().isReady();
+            getPlaceOrder().click();
+            Thread.sleep(20000);
+            getTokens(remoteOrder);
+            getGotIt().isReady();
+            getGotIt().click();
+            Assert.assertEquals(homePage.tokenValue().toString(), String.valueOf(tokens));
+
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+    public void placeOrderForHotColdItemsInToGo(String menuItem, MobileUser mobileUser, String storeName, cardantApiFramework.pojos.Menu menu) throws Exception {
+        try {
+            remoteOrder = mobileUser.getCart().getRemoteOrder();
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(String.valueOf(menuItem));
+            getDirections().isReady();
+            HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens = Integer.parseInt(homePage.tokenValue());
+            getStartOrderButton().click();
+            getItems().isReady();
+            String[] strMenuItemName =menu.getProductName().split(" ",2);
+            scrollAndClick(categoryLocator, menu.getProductClassGroupName(), "Up");
+            scrollAndClick(categoryLocator, strMenuItemName[1], "Up");
+            if ((!strMenuItemName[0].contains("12")) || (!strMenuItemName[0].contains("FOOTLONG"))){
+                getSixInchOption().click();
+            }
+            getAddToBag().click();
+            if(getDineIn().getControl().isDisplayed()){
+                Logz.step("DineIn button got displayed in Your Order page");
+            }else{
+                Logz.error("DineIn button is not visible");
+            }
+            getToGo().click();
+            verifyTaxValueForToGo();
+            getPlaceOrder().isReady();
+            getPlaceOrder().click();
+            Thread.sleep(20000);
+            getTokens(remoteOrder);
+            getGotIt().isReady();
+            getGotIt().click();
+            Assert.assertEquals(homePage.tokenValue().toString(), String.valueOf(tokens));
+
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
 
     public void placeRandomOrderKidswithToy(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {

@@ -107,14 +107,13 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         try {
             LoginPage loginPage = gotoLogInPage();
             HomePage homePage = loginPage.login(mobileUser);
-            MenuPage menuPage = homePage.getUserDetails();
-       /*     AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+            /*MenuPage menuPage = homePage.getUserDetails();
+            AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
             addCardPage.addPayment(mobileUser, paymentType);
-            addCardPage.selectBackButton();*/
+            addCardPage.selectBackButton();
+            menuPage.goHome();*/
             pojos.tenders.CreditCard creditCard = new pojos.tenders.CreditCard();
             creditCard.addGuestCreditPayment(mobileUser);
-            menuPage.goHome();
-
         } catch (Exception ex) {
 
             try {
