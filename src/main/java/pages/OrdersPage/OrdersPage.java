@@ -649,15 +649,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 Double screenHeightEnd = dimensions.getHeight() * 0.5;
                 int scrollEnd = screenHeightEnd.intValue();
                 //driver.swipe(0,scrollStart,0,scrollEnd,2000);
-                for (int i = 0; i < allElements.size(); i++) {
-                    while(!(allElements.get(i).getText().contains(itemName))){
+                for (int i = 0; i < getElements(locator).size(); i++) {
+                    while(!(getElements(locator).get(i).getText().contains(itemName))){
                         TouchAction action = new TouchAction((MobileDriver) driver);
                         action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
                         boolean elementflag=false;
-                        for (int j = 0; j <allElements.size(); j++) {
+                        for (int j = 0; j <getElements(locator).size(); j++) {
 
-                            if (allElements.get(j).getText().contains(itemName)) {
-                                allElements.get(j).click();
+                            if (getElements(locator).get(j).getText().contains(itemName)) {
+                                getElements(locator).get(j).click();
                                 elementflag = true;
                                 break;
                             }
@@ -667,7 +667,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                             break;
                         }
                     }
-                    i=allElements.size();
+                    i=getElements(locator).size();
                 }
 
 
@@ -1552,10 +1552,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
             tokens = Integer.parseInt(homePage.tokenValue());
             homePage.getOffers();
-
-            // getStartOrderButton().click();
+            getStartOrderButton().click();
             getItems().isReady();
-            //scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(),  "Up");
             scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
             String subCategoryName = order.getCart().getProductDetail().getName();
             if (subCategoryName.equalsIgnoreCase("Apple Slices")) {
