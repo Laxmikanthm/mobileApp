@@ -4,6 +4,7 @@ import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import pages.Enums.BreadSize;
+import pages.Enums.Menu;
 import utils.Logz;
 
 import java.text.DecimalFormat;
@@ -12,10 +13,19 @@ import java.util.Date;
 import java.util.Random;
 
 public class Utils {
-
+   private static Random rand ;
     public static int selectRandomItem(int givenValue) throws Exception{
-        Random rand = new Random();
+        rand = new Random();
         return rand.nextInt(givenValue);
+    }
+
+    public static String selectRandomMenu() throws Exception{
+       Enum menuName = randomEnum(Menu.class);
+       String menu ="";
+       if(!(menuName.toString().contains("Sides") || menuName.toString().contains("Drinks"))){
+           menu =  menuName.toString();
+       }
+       return menu;
     }
     public static String removeTrailingZero(String value)  {
         value = value.replaceAll("\\$","").trim();
@@ -82,8 +92,11 @@ public class Utils {
             zipCode = zipCode.split("-")[0];
             store.setZipCode(zipCode);
         }
-
+        Logz.step("ZipCode is: " + store.getZipCode());
     }
-
+    public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
+        int x = rand.nextInt(clazz.getEnumConstants().length);
+        return clazz.getEnumConstants()[x];
+    }
 
 }

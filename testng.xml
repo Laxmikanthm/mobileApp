@@ -11,7 +11,7 @@
     <parameter name="projectName" value="${driverName}"></parameter>
     <classes>
 
-         <class name="AppVersion">
+         <class name="userProfileTest.AppVersion">
              <methods>
 
                  <include name="verifyAppVersion"/>
@@ -23,7 +23,7 @@
                  <include name="verifyEmailPreferencesPage"/>
              </methods>
          </class>
-         <class name="HelpPage">
+         <class name="userProfileTest.HelpPage">
              <methods>
 
                  <include name="verifyHelpPage"/>
@@ -91,7 +91,7 @@
               <!--  <include name="verifyCertificate"/>-->
             </methods>
         </class>
-        <class name="AddFavoriteOrder">
+        <class name="favoriteTest.AddFavoriteOrder">
             <methods>
                 <include name="addFavoriteOrder"/>
                 <include name="addFavoriteReOrder"/>

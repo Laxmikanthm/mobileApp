@@ -9,6 +9,7 @@ import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import enums.Country;
+import enums.CountryOffer;
 import enums.PaymentMethod;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -20,6 +21,7 @@ import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 import pages.UserProfilePage.UserProfilePage;
+import pojos.enums.OfferPLU;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
@@ -136,6 +138,20 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
         }
     }
+    public MobileUser registerOfferUser( MobileUser mobileUser)throws Exception
+    {
+        RemoteOrderCustomer remoteOrderCustomer;
+        if (System.getProperty("country").contains("US")) {
+            //remoteOrderCustomer= RegisterUser.getUserWithOffers(1, CountryOffer.US, OfferPLU.US_FREE_BAG_OF_CHIPS.getValue());
+            mobileUser.setEmailAddress("GradyWilliscroft@qasubway.com");
+            mobileUser.setPassword("Subway1234");
+        }
+        else
+        {
+            remoteOrderCustomer= RegisterUser.getUserWithOffers(1, CountryOffer.US, OfferPLU.US_FREE_BAG_OF_CHIPS.getValue());
+        }
+        return  mobileUser;
+    }
 
     public RemoteOrderCustomer registerUser(String email) throws Exception {
         RemoteOrderCustomer user = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));
@@ -185,6 +201,15 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
             HomePage homePage = logInAddCreditCard(mobileUser);
             homePage.selectStore(store);
+        } catch (Exception ex) {
+            throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
+        }
+        return HomePage.get((AndroidDriver) driver);
+    }
+    public HomePage logIn(RemoteOrderCustomer mobileUser) throws Exception {
+        try {
+           LoginPage loginPage = gotoLogInPage();
+          loginPage.login(mobileUser);
         } catch (Exception ex) {
             throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
         }

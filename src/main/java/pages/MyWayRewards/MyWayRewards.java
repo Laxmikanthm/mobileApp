@@ -6,6 +6,7 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.PasswordTextBox;
 import base.pages.mobile.MobileBasePage;
+import com.amazonaws.services.opsworks.model.App;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
@@ -55,6 +56,7 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     abstract MobileButton getGotIt() throws Exception;
 
     abstract MobileButton getToolbarClose() throws Exception;
+
     Dimension size;
 
     By Swipe = By.id("com.subway.mobile.subwayapp03:id/reward_page_text");
@@ -87,73 +89,75 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
 
     }
 
-    public void swipeLeft(WebElement element)throws Exception
-    {
+    public void swipeLeft(WebElement element) throws Exception {
 
-        size=driver.manage().window().getSize();
-        int width=element.getSize().getWidth();
-        int height=element.getSize().getHeight();
-        TouchAction action = new TouchAction((MobileDriver)driver);
-        action.longPress(element.getLocation().getX()+ (int)(width +200), element.getLocation().getY()).moveTo(100, 1500).release().perform();
+        size = driver.manage().window().getSize();
+        int width = element.getSize().getWidth();
+        int height = element.getSize().getHeight();
+        TouchAction action = new TouchAction((MobileDriver) driver);
+        action.longPress(element.getLocation().getX() + (int) (width + 200), element.getLocation().getY()).moveTo(100, 1500).release().perform();
 
     }
-    public void swipeRight(WebElement element)
-    {
-        size=driver.manage().window().getSize();
+
+    public void swipeRight(WebElement element) {
+        size = driver.manage().window().getSize();
         int x2 = (int) (size.width * 0.80);
-        TouchAction action = new TouchAction((MobileDriver)driver);
-        action.longPress(element).moveTo(x2,580).release().perform();
+        TouchAction action = new TouchAction((MobileDriver) driver);
+        action.longPress(element).moveTo(x2, 580).release().perform();
 
     }
-    public void toolBarClose()throws Exception
-    {
+
+    public void toolBarClose() throws Exception {
         getToolbarClose().click();
     }
-    public int getTokens(RemoteOrderCustomer remoteOrderCustomer) throws Exception
-    {
-        List<Summaries> summaries=remoteOrderCustomer.getLoyaltyLookup().getLoyalty().getSummaries();
-        int tokens=0;
-        for(int i=0;i<summaries.size();i++)
-        {
-            if(summaries.get(i).getRewardType()=="Points")
-            {
 
-                tokens=Integer.parseInt(summaries.get(i).getAvailable());
-                tokens=+tokens;
+    public int getTokens(RemoteOrderCustomer remoteOrderCustomer) throws Exception {
+        List<Summaries> summaries = remoteOrderCustomer.getLoyaltyLookup().getLoyalty().getSummaries();
+        int tokens = 0;
+        for (int i = 0; i < summaries.size(); i++) {
+            if (summaries.get(i).getRewardType() == "Points") {
+
+                tokens = Integer.parseInt(summaries.get(i).getAvailable());
+                tokens = +tokens;
             }
         }
         return tokens;
 
     }
 
-    public void validateTokens(RemoteOrderCustomer remoteOrderCustomer, HomePage homePage)throws Exception
-    {
-            int tokens=getTokens(remoteOrderCustomer);
-             homePage.tokenValue();
-        Assert.assertEquals(tokens,Integer.parseInt(homePage.tokenValue()));
+    public void validateTokens(RemoteOrderCustomer remoteOrderCustomer, HomePage homePage) throws Exception {
+        int tokens = getTokens(remoteOrderCustomer);
+        homePage.tokenValue();
+        Assert.assertEquals(tokens, Integer.parseInt(homePage.tokenValue()));
     }
-    public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer, HomePage homePage)throws Exception
-    {
-        String MdmId=remoteOrderCustomer.getGuestID();
+
+    public void validateCertificate(RemoteOrderCustomer remoteOrderCustomer, HomePage homePage) throws Exception {
+        String MdmId = remoteOrderCustomer.getGuestID();
         Kobie.generateCertificates(MdmId);
-        Loyalty loyalty=new Loyalty(remoteOrderCustomer);
-        remoteOrderCustomer= KobieClient.getLoyaltyLookup(loyalty,remoteOrderCustomer);
-        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(),homePage.certsCount());
+        Loyalty loyalty = new Loyalty(remoteOrderCustomer);
+        remoteOrderCustomer = KobieClient.getLoyaltyLookup(loyalty, remoteOrderCustomer);
+        Assert.assertEquals(remoteOrderCustomer.getLoyaltyLookup().getCertificates().getCertificateCount(), homePage.certsCount());
 
     }
-   public RemoteOrderCustomer validateTokensandCerts(HomePage homePage,RemoteOrderCustomer remoteOrderCustomer)throws Exception
-   {
-       getSwipe();
-       Thread.sleep(3000);
-       if (homePage.getTokens(remoteOrderCustomer) >= 200) {
+
+    public RemoteOrderCustomer validateTokensandCerts(HomePage homePage, RemoteOrderCustomer remoteOrderCustomer) throws Exception {
+        getSwipe();
+        Thread.sleep(3000);
+        if (homePage.getTokens(remoteOrderCustomer) >= 200) {
            /*String MdmId = remoteOrderCustomer.getGuestID();
            Kobie.generateCertificates(MdmId);
            homePage.getTokensSparkle();
             toolBarClose();*/
-           remoteOrderCustomer= homePage.validateCertificate(remoteOrderCustomer);
+            remoteOrderCustomer = homePage.validateCertificate(remoteOrderCustomer);
 
-       }
-       homePage.validateTokens(remoteOrderCustomer);
-       return remoteOrderCustomer;
-   }
+        }
+        homePage.validateTokens(remoteOrderCustomer);
+        return remoteOrderCustomer;
+    }
+
+    public HomePage assertTokensAndCertificates(RemoteOrderCustomer user) throws Exception {
+        //user MyLoyalty object for assertion
+        //Get expected data from API, Get actual data from mobile ui
+        return HomePage.get((AppiumDriver) driver);
+    }
 }

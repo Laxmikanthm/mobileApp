@@ -14,8 +14,8 @@
         <classes>
            <!-- favoriteTest-->
             <class name="favoriteTest.AddFavoriteOrder"/>
-            <!-- findStoreTest-->
-            <!-- myLoyaltyTest-->
+           <!-- &lt;!&ndash; findStoreTest&ndash;&gt;
+            &lt;!&ndash; myLoyaltyTest&ndash;&gt;
             <class name="myLoyaltyTest.TokenGeneration"/>
             <class name="myLoyaltyTest.Certificates">
                 <methods>
@@ -28,9 +28,9 @@
                     <include name="tokenTracker"/>
                 </methods>
             </class>
-            <!-- orderManagementTest-->
-            <class name="orderManagement.OrderHistory"/>
-            <!-- orderTest-->
+            &lt;!&ndash; orderManagementTest&ndash;&gt;
+            <class name="orderManagementTest.OrderHistory"/>
+            &lt;!&ndash; orderTest&ndash;&gt;
             <class name="orderTest.PaymentMethods">
                 <methods>
                     <include name="addCreditCard"/>
@@ -79,15 +79,15 @@
                     <include name="placeRandomOrderAndDeleteToppings"/>
                 </methods>
             </class>
-            <!-- userIdentityTest-->
+            &lt;!&ndash; userIdentityTest&ndash;&gt;
             <class name="userIdentityTest.Privacypolicy"/>
             <class name="userIdentityTest.ResetPasswordTest"/>
             <class name="userIdentityTest.ForgotPassword"/>
             <class name="userIdentityTest.UserLoginTest"/>
             <class name="userIdentityTest.TermsandConditions"/>
-            <!-- userProfileTest-->
+            &lt;!&ndash; userProfileTest&ndash;&gt;
             <class name="userProfileTest.AppVersion"/>
-            <class name="userProfileTest.HelpPage"/>
+            <class name="userProfileTest.HelpPage"/>-->
         </classes>
     </test>
 

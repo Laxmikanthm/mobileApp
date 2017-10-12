@@ -24,6 +24,7 @@ import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
 import pages.SearchStore.SearchStore;
 import pages.UserProfilePage.UserProfilePage;
+import pages.YourOrderPage.YourOrderPage;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
 import utils.Logz;
@@ -314,6 +315,8 @@ public List<WebElement> getElements(By locator) {
         getAnimationSparkle().click();
         return MyWayRewards.get((AppiumDriver) driver);
     }
+
+
     public OrdersPage addSomethingElse()throws Exception
     {
 
@@ -471,12 +474,33 @@ public List<WebElement> getElements(By locator) {
         }
     }
     public OrdersPage goToOrderPage() throws Exception{
-        Logz.step("##### Navigating to User Order Page ...... #####");
+        Logz.step("##### Navigating to Order Page ...... #####");
     getOrderButton().click();
-        Logz.step("##### Navigated to User Order Page ...... #####");
+        Logz.step("##### Navigated to Order Page ...... #####");
     return OrdersPage.get((AndroidDriver)driver);
     }
 
+public YourOrderPage goToYourOrderPage() throws Exception{
+    Logz.step("##### Navigating to your Order Page ...... #####");
+
+    Logz.step("##### Navigated to your Order Page ...... #####");
+    return YourOrderPage.get((AndroidDriver)driver);
+}
+    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user) throws Exception{
+        Logz.step("##### Asserting tokens and certificates in home Page#####");
+        //assert n# token and n# certificate in home page
+        //user MyLoyalty object for assertion
+        //Get expected data from API, Get actual data from mobile ui
+        Logz.step("##### Asserted tokens and certificates in home Page#####");
+        return UserProfilePage.get((AndroidDriver)driver);
+    }
+    public MyWayRewards goToMyWayRewardsPage() throws Exception{
+
+        Logz.step("##### Navigating to My Way Rewards Page ...... #####");
+        getAnimationSparkle().click();
+        Logz.step("##### Navigated to My Way Rewards Page ...... #####");
+        return MyWayRewards.get((AndroidDriver)driver);
+    }
 
 }
 
