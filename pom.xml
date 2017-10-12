@@ -12,12 +12,12 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>4.6.20-SNAPSHOT</version>
+            <version>4.7.8-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.3.27-SNAPSHOT</version>
+            <version>3.3.30-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -67,7 +67,7 @@
                           the value we have set in the POM as a default.-->
                         <!--Mobile-->
                         <mobilePlatform>Android</mobilePlatform>
-                        <platformVersions>6.0.1</platformVersions>
+                        <platformVersions>7.0</platformVersions>
                         <deviceName>Subway</deviceName>
                         <platform>mobile</platform>
                         <!-- driverName can be MobileApp/WebApp -->
@@ -75,11 +75,11 @@
                         <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>C:/Users/E001599/Downloads/Subway_R2_QE_8.0.0.0_5000749.apk</app>
+                        <app>C:/Users/E001599/Downloads/subwayE2eDebug5000733.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>120</newCommandTimeout>
-                        <operatingSystem>mac</operatingSystem>
+                        <operatingSystem>Windows</operatingSystem>
                         <kobieEndpoint>Mobile</kobieEndpoint>
                         <environment>stage</environment>
                         <environmentR1R2>r2</environmentR1R2>
@@ -104,17 +104,17 @@
 
                         <executionPlatform></executionPlatform>
                         <appName>R2-Mobile</appName>
-                     <!--   <spring.profiles.active>local</spring.profiles.active>-->
+                        <spring.profiles.active>local</spring.profiles.active>
                         <!--Test Object-->
-                        <spring.profiles.active>testObject</spring.profiles.active>
+                       <!-- <spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>00A5E8BFB8E54818BDF11E35D289D62D</testObjectApiKey>
-                        <testObjectDevice>Samsung_note_5_real_us</testObjectDevice>
-                        <appName>subway-marium</appName>
+                        <testObjectApiKey>7309A4455C6F4FE393D204E510B83B45</testObjectApiKey>
+                        <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
+                        <appName>R218thsep</appName>
                         <appiumVersion>1.6.5</appiumVersion>
-                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
+                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>-->
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->
