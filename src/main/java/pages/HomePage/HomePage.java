@@ -30,7 +30,6 @@ import pages.UserProfilePage.UserProfilePage;
 import pages.YourOrderPage.YourOrderPage;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
-import sun.util.resources.LocaleData;
 import util.MobileApi;
 import utils.Logz;
 
