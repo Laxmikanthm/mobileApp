@@ -26,6 +26,7 @@ import pages.LoginPage.LoginPageAndroid;
 import pages.LoginPage.LoginPageIOS;
 import pojos.user.RemoteOrderCustomer;
 import org.openqa.selenium.interactions.touch.FlickAction;
+import util.MobileApi;
 
 import java.time.Duration;
 import java.util.List;
@@ -54,6 +55,8 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     }
 
     abstract MobileButton getGotIt() throws Exception;
+
+    abstract MobileLabel gettokensmyreward() throws Exception;
 
     abstract MobileButton getToolbarClose() throws Exception;
 
@@ -156,6 +159,11 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     }
 
     public HomePage assertTokensAndCertificates(RemoteOrderCustomer user) throws Exception {
+        user = MobileApi.getLoyaltyLookUp(user);
+        String tokencount=gettokensmyreward().getText();
+        Assert.assertEquals(user.getConfirmToken(),tokencount);
+
+       // Assert.assertEquals();
         //user MyLoyalty object for assertion
         //Get expected data from API, Get actual data from mobile ui
         return HomePage.get((AppiumDriver) driver);

@@ -21,6 +21,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import pages.Enums.MyLoyalty;
 import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
@@ -337,10 +338,28 @@ public List<WebElement> getElements(By locator) {
     }
     public int certsCount() throws Exception
     {
-        String cert[]=getCertificatesMessage().getText().split(" ");
+            String cert[]=getCertificatesMessage().getText().split(" ");
         certValue=Integer.parseInt(cert[0].substring(1));
         certCount=certValue/2;
+
         return certCount;
+
+    }
+    public int certificatescount() throws Exception
+    {
+        if(getCertificatesMessage().getControl().isDisplayed())
+        {
+            Logz.step("Verifying certificate count has started");
+            String cert[]=getCertificatesMessage().getText().split(" ");
+            certValue=Integer.parseInt(cert[0].substring(1));
+            certCount=certValue/2;}
+            else{
+            Logz.step("Certificates are not available");
+
+        }
+
+        return certCount;
+
     }
     public SearchStore apply()throws Exception
     {
@@ -515,10 +534,16 @@ public YourOrderPage goToYourOrderPage() throws Exception{
     public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user) throws Exception{
         Logz.step("##### Asserting tokens and certificates in home Page#####");
         user = MobileApi.getLoyaltyLookUp(user);
+        if(user.getConfirmToken()!= null) {
+            Assert.assertEquals(user.getConfirmToken(), Integer.parseInt(tokenValue()));
+        }
+        else{Logz.step("Tokens are not available");}
+        Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(),certificatescount());
         //assert n# token and n# certificate in home page
         //user MyLoyalty object for assertion
         //Get expected data from API, Get actual data from mobile ui
         Logz.step("##### Asserted tokens and certificates in home Page#####");
+
         return UserProfilePage.get((AndroidDriver)driver);
     }
     public MyWayRewards goToMyWayRewardsPage() throws Exception{
