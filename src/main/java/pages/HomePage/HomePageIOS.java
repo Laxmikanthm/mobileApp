@@ -56,7 +56,7 @@ public class HomePageIOS extends HomePage {
         return backButton;
     }
     public MobileLabel getTokenValue() throws Exception{
-        IOSLabel token = new IOSLabel((IOSDriver) driver,By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TokenValue")+"']"), "Get Token Value from Dashboard");
+        IOSLabel token = new IOSLabel((IOSDriver) driver,By.xpath("(//XCUIElementTypeImage[@name='"+BaseTest.bundle.getString("TokenValueiOS")+"']/following-sibling::XCUIElementTypeStaticText)[1]"), "Get Token Value from Dashboard");
         return token;
     }
     public MobileLabel getZeroTokenMessage() throws Exception{
