@@ -27,11 +27,6 @@ public class HomePageAndroid extends HomePage {
         return orderButton;
     }
 
-    public MobileButton getFindButton() throws Exception {
-        AndroidButton findButton = new AndroidButton ((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='" + BaseTest.bundle.getString("FindButton") + "']"), "Find Button");
-        return findButton;
-    }
-
     public MobileButton getBackButton() throws Exception {
         //AndroidButton backButton = new AndroidButton ((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='" + BaseTest.bundle.getString("FindButton") + "']"), "Find Button");
         AndroidButton backButton = new AndroidButton((AndroidDriver) driver, By.className("android.widget.ImageButton"), "Back button");
@@ -41,24 +36,6 @@ public class HomePageAndroid extends HomePage {
     public MobileButton getFindYourSubWay() throws Exception {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("FindYourSubWay")+"']"), "FindYourSubWay button");
         return button;
-    }
-   /* public MobileButton getFindYourSubWays() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.linkText(BaseTest.getStringfromBundleFile("FindYourSubWay")), "");
-        return button;
-    }*/
-
-    public MobileButton getFindSubWayNearYou() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("FindNearbySubway")+"']"), "FindASubwayNearYou button");
-        return button;
-    }
-
-    public MobileButton getAllowLocation() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//*[@text='"+BaseTest.bundle.getString("AllowLocation")+"']"), "AllowLocation button");
-        return button;
-    }
-    public MobileButton getStoreView() throws Exception {
-        AndroidButton storeViewButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toggle_view"), "StoreView button");
-        return storeViewButton;
     }
     public MobileButton getFindAnotherSubway() throws Exception {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("FindAnotherSubway")+"']"), "Find Another Subway button");
