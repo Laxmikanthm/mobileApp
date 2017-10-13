@@ -1,6 +1,7 @@
 package orderTest;
 
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Menu;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
@@ -15,6 +16,7 @@ import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
+import utils.Logz;
 
 /**
  * Created by e001599 on 27/07/17.
@@ -28,36 +30,42 @@ public class TakeOut extends SubwayAppBaseTest {
     OrdersPage ordersPage;
     LandingPage landingPage;
     PlaceRandomOrder placeRandomOrder;
+    Menu menu;
+    String strMenuCategoryName="All Sandwiches";
+    String strTaxCategoryName="HOT";
+    String strOrderType="INDIVIDUAL";
 
 @Test
     //DFA-9359
     public void takeOutNoTaxforCA() throws Exception {
-        store= JdbcUtil.getStateSpecificStoreDetails("CA",true);
-        mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        // mobileUser.setEmailAddress("DarelleToler@qasubway.com");
-        //mobileUser.setPassword("Subway1234");
+        Store store = JdbcUtil.getStoreDetails("CA",false,true);
+        mobileUser=setCountryName();
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("95932");
-        ordersPage.placeRandomwithNoTax("All Sandwiches", mobileUser, "1031 Bridge St");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item");
+        ordersPage.placeOrderForHotColdItemsInDineIn("All Sandwiches", mobileUser, store.getAddress1(),menu);
         homePage.validateTokens(remoteOrderCustomer);
-        //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
+
     }
     //DFA-9483
     @Test
     public void takeOutNoTaxforOH() throws Exception {
-        store= JdbcUtil.getStateSpecificStoreDetails("OH",true);
-        mobileUser = new MobileUser(false, Country.UnitedStates, 10846);
-        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        //mobileUser.setEmailAddress("aug30user@qasubway.com");
-        //mobileUser.setPassword("Subway123");
+        Store store = JdbcUtil.getStoreDetails("OH",false,true);
+        mobileUser=setCountryName();
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("43056");
-        ordersPage.placeRandomwithNoTax("All Sandwiches", mobileUser, "1134 Hebron Rd., Heath");
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item");
+        ordersPage.placeOrderForHotColdItemsInDineIn("All Sandwiches", mobileUser, store.getAddress1(),menu);
         homePage.validateTokens(remoteOrderCustomer);
-        //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
+
     }
 
     @Test

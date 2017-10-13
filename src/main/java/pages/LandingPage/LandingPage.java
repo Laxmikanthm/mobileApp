@@ -9,6 +9,7 @@ import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import enums.Country;
+import enums.CountryOffer;
 import enums.PaymentMethod;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -20,6 +21,7 @@ import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 import pages.UserProfilePage.UserProfilePage;
+import pojos.enums.OfferPLU;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
@@ -107,14 +109,13 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         try {
             LoginPage loginPage = gotoLogInPage();
             HomePage homePage = loginPage.login(mobileUser);
-            MenuPage menuPage = homePage.getUserDetails();
-       /*     AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+            /*MenuPage menuPage = homePage.getUserDetails();
+            AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
             addCardPage.addPayment(mobileUser, paymentType);
-            addCardPage.selectBackButton();*/
+            addCardPage.selectBackButton();
+            menuPage.goHome();*/
             pojos.tenders.CreditCard creditCard = new pojos.tenders.CreditCard();
             creditCard.addGuestCreditPayment(mobileUser);
-            menuPage.goHome();
-
         } catch (Exception ex) {
 
             try {
@@ -136,6 +137,20 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.Canada, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
 
         }
+    }
+    public MobileUser registerOfferUser( MobileUser mobileUser)throws Exception
+    {
+        RemoteOrderCustomer remoteOrderCustomer;
+        if (System.getProperty("country").contains("US")) {
+            //remoteOrderCustomer= RegisterUser.getUserWithOffers(1, CountryOffer.US, OfferPLU.US_FREE_BAG_OF_CHIPS.getValue());
+            mobileUser.setEmailAddress("GradyWilliscroft@qasubway.com");
+            mobileUser.setPassword("Subway1234");
+        }
+        else
+        {
+            remoteOrderCustomer= RegisterUser.getUserWithOffers(1, CountryOffer.US, OfferPLU.US_FREE_BAG_OF_CHIPS.getValue());
+        }
+        return  mobileUser;
     }
 
     public RemoteOrderCustomer registerUser(String email) throws Exception {
