@@ -56,7 +56,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     }
 
 
-    public HomePage login(MobileUser mobileUser) throws Exception {
+    public HomePage dlogin(MobileUser mobileUser) throws Exception {
         try {
             try {
                Thread.sleep(15000);

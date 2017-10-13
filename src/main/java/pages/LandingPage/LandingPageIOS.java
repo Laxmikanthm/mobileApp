@@ -16,7 +16,7 @@ public class LandingPageIOS extends LandingPage {
 
     public IOSButton getLoginButton() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("LoginButton")), "Login button");
+        IOSButton button = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("SignInWithExistingAccount")), "Login button");
 
         return button;
     }
@@ -30,7 +30,7 @@ public class LandingPageIOS extends LandingPage {
 
     public IOSButton getSkipButton() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("SkipButton")), "Skip button");
+        IOSButton button = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("OK")), "Click OK on Debug app notification");
 
         return button;
     }
