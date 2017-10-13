@@ -191,6 +191,18 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
         return HomePage.get((AndroidDriver) driver);
     }
+    public HomePage logInSelectStore(RemoteOrderCustomer mobileUser, String store) throws Exception {
+        try {
+             LoginPage loginPage = gotoLogInPage();
+             HomePage homePage = loginPage.login(mobileUser);
+
+           // HomePage homePage = logInAddCreditCard(mobileUser);
+            homePage.selectStore(store);
+        } catch (Exception ex) {
+            throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
+        }
+        return HomePage.get((AndroidDriver) driver);
+    }
     public HomePage logIn(RemoteOrderCustomer mobileUser) throws Exception {
         try {
            LoginPage loginPage = gotoLogInPage();
@@ -200,6 +212,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
         return HomePage.get((AndroidDriver) driver);
     }
+
 
 }
 

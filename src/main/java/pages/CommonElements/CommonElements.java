@@ -54,14 +54,14 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
 
 
     public HomePage scrollAndClick(By locatorIOS, By locatorAndroid, String itemName) throws Exception {
-        boolean flag = false;
-        List<WebElement> allElements = getElements(locatorAndroid, locatorIOS);
-        while (allElements.size() > 0) {
+        Logz.step("Scrolling to element and get element list");
+        List<WebElement> allElements = getElements(locatorIOS, locatorAndroid);
+        try {
+            flag = false;
             if (allElements.size() == 0) {
-                Logz.error("no stores available");
-
+                throw new Exception("No element is available\n" + allElements.size());
             }
-
+            allElements = getElements(locatorIOS, locatorAndroid);
             for (int i = 0; i < allElements.size(); i++) {
                 if (allElements.get(i).getText().contains(itemName)) {
                     allElements.get(i).click();
@@ -69,24 +69,26 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
                     break;
                 }
             }
-            if (flag == false) {
+            while (flag == false) {
                 WebElement element = allElements.get(allElements.size() - 1);
-                dimensions = driver.manage().window().getSize();
-                Double screenHeightStart = dimensions.getHeight() * 0.9;
-                int scrollStart = screenHeightStart.intValue();
-                Double screenHeightEnd = dimensions.getHeight() * 0.5;
-                int scrollEnd = screenHeightEnd.intValue();
-                while (!element.isDisplayed()) {
-                    action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
-
+                MobileElement ele = (MobileElement) element;
+                int startY = ele.getLocation().getY();
+                int endY = (int) (startY * 0.3);
+                action.longPress(0, startY).moveTo(0, endY).release().perform();
+                allElements = getElements(locatorIOS, locatorAndroid);
+                for (int j = 0; j < allElements.size(); j++) {
+                    if (allElements.get(j).getText().contains(itemName)) {
+                        allElements.get(j).click();
+                        flag = true;
+                        break;
+                    }
                 }
-                element.click();
-                flag = true;
             }
-            if (flag == true) {
-                break;
-            }
+
+        } catch (Exception ex) {
+            throw new Exception("Unable to scroll and click element \n" + ex.getMessage());
         }
+        Logz.step("Scrolled to element and get element list");
         return HomePage.get((AppiumDriver) driver);
     }
 

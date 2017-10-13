@@ -1,6 +1,7 @@
 package pages.OrderConfirmationPage;
 
 import Base.SubwayAppBaseTest;
+import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
@@ -29,12 +30,13 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
-
+    abstract MobileButton getGotIt() throws Exception;
     public HomePage assertTotalAmountInYourOrderPage() throws Exception{
-
+        getGotIt().click();
         return HomePage.get((AppiumDriver)driver);
     }
     public HomePage assertLoyaltyDisplay() throws Exception{
+        getGotIt().click();
         return HomePage.get((AppiumDriver)driver);
     }
     public HomePage assertOrderSummaryInYourOrderPage() throws Exception{

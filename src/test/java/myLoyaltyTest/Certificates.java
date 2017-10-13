@@ -142,10 +142,8 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        user = MobileApi.getLoyaltyLookUp(user);
         homePage.assertTokensCertificates(user);
         user = MobileApi.placeOrderWithNoOfToken(user, 300);
-        user = MobileApi.getLoyaltyLookUp(user);
         homePage.assertTokensCertificates(user);
         ordersPage = homePage.selectStore(store);
         homePage = ordersPage.placeRandomOrderMyLoyalty();
@@ -160,10 +158,8 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        user = MobileApi.getLoyaltyLookUp(user);
         homePage.assertTokensCertificates(user);
         user = MobileApi.placeOrderWithNoOfToken(user, 300);
-        user = MobileApi.getLoyaltyLookUp(user);
         homePage.assertTokensCertificates(user);
         myWayRewards = homePage.goToMyWayRewardsPage();
         homePage = myWayRewards.assertTokensAndCertificates(user);
@@ -178,10 +174,8 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        user = MobileApi.getLoyaltyLookUp(user);
         homePage.assertTokensCertificates(user);
         user = MobileApi.placeOrderWithNoOfToken(user, 500);
-        user = MobileApi.getLoyaltyLookUp(user);
         homePage.assertTokensCertificates(user);
         ordersPage = homePage.selectStore(store);
         homePage = ordersPage.placeRandomOrderMyLoyalty();
@@ -221,6 +215,18 @@ public class Certificates extends SubwayAppBaseTest {
         // click apply from home page
         // add an item to cart less than certificate amount(any sides, or drinks)
         //assert the total in your order page
+        //place order
+        //assert is certificate still available in home page
+
+    }
+    @Test
+    public void testApplyRedeemCertificateAtEndOfOrder() throws Exception {
+
+        // set to get 2 certificates
+        // don't click apply from home page
+        // add an item to cart
+        //assert certificate is not applied, no option to apply certificate, and the total in your order page
+        //go back, apply the certificate
         //place order
         //assert is certificate still available in home page
 

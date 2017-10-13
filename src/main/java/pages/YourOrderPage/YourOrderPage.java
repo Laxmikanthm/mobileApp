@@ -1,6 +1,7 @@
 package pages.YourOrderPage;
 
 import Base.SubwayAppBaseTest;
+import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
@@ -36,16 +37,21 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     protected void waitForPageToLoad() throws Exception {
 
     }
+    abstract MobileButton getPlaceOrder() throws Exception;
+
+
+
     public OrderConfirmationPage assertLoyaltyDisplay() throws Exception{
         //user MyLoyalty object for assertion
         //Get expected data from API, Get actual data from mobile ui
+        getPlaceOrder().click();
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
     public OrderConfirmationPage assertOrderSummaryInYourOrderPage() throws Exception{
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
     public OrderConfirmationPage assertTotalAmountInYourOrderPage() throws Exception{
-
+        getPlaceOrder().click();
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
     public ManageRewardsPage goToManageRewardPage() throws Exception{

@@ -37,4 +37,25 @@ public class MyLoyalty {
     public void setOffers(List<Offers> offers) {
         this.offers = offers;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MyLoyalty myLoyalty = (MyLoyalty) o;
+
+        if (tokens != null ? !tokens.equals(myLoyalty.tokens) : myLoyalty.tokens != null) return false;
+        if (certificates != null ? !certificates.equals(myLoyalty.certificates) : myLoyalty.certificates != null)
+            return false;
+        return offers != null ? offers.equals(myLoyalty.offers) : myLoyalty.offers == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = tokens != null ? tokens.hashCode() : 0;
+        result = 31 * result + (certificates != null ? certificates.hashCode() : 0);
+        result = 31 * result + (offers != null ? offers.hashCode() : 0);
+        return result;
+    }
 }

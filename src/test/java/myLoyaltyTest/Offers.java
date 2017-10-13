@@ -1,7 +1,9 @@
 package myLoyaltyTest;
 
 import Base.SubwayAppBaseTest;
+import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,9 +16,14 @@ import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
+import pages.ManageRewardsPage.ManageRewardsPage;
 import pages.MenuPage.MenuPage;
+import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
+import pages.PurchaseHistoryPage.PurchaseHistoryPage;
 import pages.SearchStore.SearchStore;
+import pages.UserProfilePage.UserProfilePage;
+import pages.YourOrderPage.YourOrderPage;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
@@ -29,12 +36,21 @@ import pojos.user.RemoteOrderCustomer;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class Offers extends SubwayAppBaseTest {
     MobileUser mobileUser;
-    RemoteOrderCustomer remoteOrderCustomer;
-   // Store store = JdbcUtil.getStoreDetails();
-   Store store;
+    RemoteOrderCustomer user;
+   Store store = JdbcUtil.getStoreDetails();
+    LandingPage landingPage;
+    OrdersPage ordersPage;
+    HomePage homePage;
+    PurchaseHistoryPage purchaseHistoryPage;
+    UserProfilePage userProfilePagePage;
+    YourOrderPage yourOrderPage;
+    ManageRewardsPage manageRewardsPage;
+    MyWayRewards myWayRewards;
+    LoginPage loginPage;
 
 
-//DFA-9193
+
+   //DFA-9193
     @Test
     public void redeemOffer() throws Exception {
         mobileUser = new MobileUser(false, Country.UnitedStates, 12921);
@@ -82,6 +98,58 @@ public class Offers extends SubwayAppBaseTest {
 
 
     }
+    //############################################################################################
+    //DFA-9193
+    @Test
+    public void testRedeemOneOffer() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        //user =  RegisterUser.getUserWithOffers(1);
+        user = landingPage.registerUser("StephenieLenglet@qasubway.com");
+        ordersPage = landingPage.logInSelectStore(user, BaseTest.getStringfromBundleFile("StoreNumber")).goToOrderPage();
+        homePage = ordersPage.placeSpecificOrderRedeemOffers(user);
+        purchaseHistoryPage = homePage.assertOfferIsNotPresent().goToPurchaseHistoryPage();
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+    }
+
+    @Test
+    public void testOffersDisplay() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        // user =   RegisterUser.getUserWithOffers(1);
+        user = landingPage.registerUser("StephenieLenglet@qasubway.com");
+        homePage = landingPage.logIn(user).assertOffersDisplay();
+        ordersPage =  homePage.selectStore(BaseTest.getStringfromBundleFile("StoreNumber"));
+        homePage.assertOffersDisplay();
+        //add item to cart
+        //
+
+    }
+    @Test
+    public void testOffersRemoved() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        // user =   RegisterUser.getUserWithOffers(1);
+        user = landingPage.registerUser("StephenieLenglet@qasubway.com");
+        ordersPage = landingPage.logInSelectStore(user, BaseTest.getStringfromBundleFile("StoreNumber")).goToOrderPage();
+        homePage.assertOffersDisplay();
+        //add item to cart
+        // remove offers
+        //place order
+        //assert offer is not redeemed
+
+    }
+    @Test
+    public void testOffersAddedAfterItemAddedToCart() throws Exception {
+
+    }
+    @Test
+    public void testRedeemMultipleOffers() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        //user =  RegisterUser.getUserWithOffers(1);
+        user = landingPage.registerUser("StephenieLenglet@qasubway.com");
+        ordersPage = landingPage.logInSelectStore(user, BaseTest.getStringfromBundleFile("StoreNumber")).goToOrderPage();
+        //
+    }
+
+
 
 
 }

@@ -6,6 +6,8 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.LocationData;
+import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.StoreDetail;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
@@ -22,14 +24,18 @@ import org.testng.Assert;
 import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
+import pages.PurchaseHistoryPage.PurchaseHistoryPage;
 import pages.SearchStore.SearchStore;
 import pages.UserProfilePage.UserProfilePage;
 import pages.YourOrderPage.YourOrderPage;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
+import sun.util.resources.LocaleData;
+import util.MobileApi;
 import utils.Logz;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by test-user on 2/2/17.
@@ -391,6 +397,26 @@ public List<WebElement> getElements(By locator) {
         }
         return OrdersPage.get((AppiumDriver) driver);
     }
+    public OrdersPage selectStore(String store)throws Exception
+    {
+        Store storeDetails = new Store();
+        try {
+            List<StoreDetail> storeList =  LocationData.getStoreDetail(store);
+                    for(int i = 0; i<storeList.size(); i++){
+                if(String.valueOf(storeList.get(i).getStoreId()).contains(store));
+                        storeDetails.setZipCode(storeList.get(i).getLocation().getZipCode());
+                        storeDetails.setAddress1(storeList.get(i).getLocation().getAddress1());
+                        storeDetails.setStoreNumber( String.valueOf(storeList.get(i).getStoreId()));
+                    }
+            Logz.step(" ##### Selecting a Store #####");
+            SearchStore searchStore = findYourSubWay();
+            searchStore.findYourSubway(storeDetails);
+            Logz.step(" ##### Selected a Store #####");
+        }catch (Exception ex){
+            throw new Exception("Unable to Selected a Store\n" +ex.getMessage());
+        }
+        return OrdersPage.get((AppiumDriver) driver);
+    }
 
     public OrdersPage findYourStore(Store store)throws Exception
     {
@@ -488,6 +514,7 @@ public YourOrderPage goToYourOrderPage() throws Exception{
 }
     public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user) throws Exception{
         Logz.step("##### Asserting tokens and certificates in home Page#####");
+        user = MobileApi.getLoyaltyLookUp(user);
         //assert n# token and n# certificate in home page
         //user MyLoyalty object for assertion
         //Get expected data from API, Get actual data from mobile ui
@@ -502,6 +529,36 @@ public YourOrderPage goToYourOrderPage() throws Exception{
         return MyWayRewards.get((AndroidDriver)driver);
     }
 
+    public HomePage assertOfferIsNotPresent() throws Exception{
+
+        Logz.step("##### #####");
+      //assert offers are not present in the promo card stake
+        Logz.step("##### #####");
+        return HomePage.get((AndroidDriver)driver);
+    }
+    public PurchaseHistoryPage goToPurchaseHistoryPage() throws Exception{
+        try {
+            Logz.step("##### Navigating to User Profile Page #####");
+            UserProfilePage userProfilePagePage = goToUserProfilePage();
+            userProfilePagePage.goToPurchaseHistoryPage();
+            Logz.step("##### Navigated to User Profile Page #####");
+            return PurchaseHistoryPage.get((AppiumDriver) driver);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+    //assertOffersDisplay
+    public HomePage assertOffersDisplay() throws Exception{
+        try {
+            Logz.step("#####  #####");
+           //assert offer is present in home page
+            //assert Text display in home page
+            Logz.step("#####  #####");
+            return HomePage.get((AppiumDriver) driver);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
 }
 
 

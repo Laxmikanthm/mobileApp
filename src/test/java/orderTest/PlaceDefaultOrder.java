@@ -23,7 +23,6 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     OrdersPage ordersPage;
     HomePage homePage;
     PurchaseHistoryPage purchaseHistoryPage;
-    UserProfilePage userProfilePagePage;
 
 
     @Test
@@ -33,8 +32,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
       // mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.AllSandwiches, BreadSize.FOOTLONG);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -44,8 +42,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.AllSandwiches, BreadSize.SIXINCH);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -56,8 +53,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         // mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.SUBWAYFreshFit, BreadSize.FOOTLONG);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -67,8 +63,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.SUBWAYFreshFit, BreadSize.SIXINCH);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -78,8 +73,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.Breakfast, BreadSize.FOOTLONG);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -89,8 +83,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.Breakfast, BreadSize.SIXINCH);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -101,8 +94,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
        // mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.ChoppedSalads, BreadSize.NONE);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -112,8 +104,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.KidsMeal, BreadSize.NONE);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -123,8 +114,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.Sides, BreadSize.NONE);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -134,8 +124,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.Drinks, BreadSize.NONE);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 

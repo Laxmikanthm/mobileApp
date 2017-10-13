@@ -8,22 +8,17 @@ import pages.Enums.BreadSize;
 import pages.Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
-import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
-import pages.UserProfilePage.UserProfilePage;
 import pojos.user.RemoteOrderCustomer;
 
 public class PlaceCustomizedOrder extends SubwayAppBaseTest {
 
     RemoteOrderCustomer mobileUser;
     Store store = JdbcUtil.getLoyaltyStoreDetails();
-    // RemoteOrderCustomer user;
     LandingPage landingPage;
     OrdersPage ordersPage;
-    LoginPage loginPage;
     HomePage homePage;
-    UserProfilePage userProfilePagePage;
     PurchaseHistoryPage purchaseHistoryPage ;
 
 
@@ -31,10 +26,9 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
     public void testPlaceCustomizedOrderAllSandwichesFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        homePage = landingPage.logInSelectStore(mobileUser, store);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage = ordersPage.placeCustomizedOrder(Menu.AllSandwiches, homePage, BreadSize.FOOTLONG);
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        homePage = ordersPage.placeCustomizedOrder(Menu.AllSandwiches, homePage, BreadSize.FOOTLONG);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -42,52 +36,45 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
     public void testPlaceCustomizedOrderAllSandwichesSixInch() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        homePage = landingPage.logInSelectStore(mobileUser, store);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage = ordersPage.placeCustomizedOrder(Menu.AllSandwiches, homePage, BreadSize.SIXINCH);
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        homePage = ordersPage.placeCustomizedOrder(Menu.AllSandwiches, homePage, BreadSize.SIXINCH);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
     @Test
     public void testPlaceCustomizedOrderSubwayFreshFitFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        homePage = landingPage.logInSelectStore(mobileUser, store);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage = ordersPage.placeCustomizedOrder(Menu.SUBWAYFreshFit, homePage, BreadSize.FOOTLONG);
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        homePage = ordersPage.placeCustomizedOrder(Menu.SUBWAYFreshFit, homePage, BreadSize.FOOTLONG);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
     @Test
     public void testPlaceCustomizedOrderSubwayFreshFitSixInch() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        mobileUser = landingPage.registerUser("LarisaWoolliams@qasubway.com");
-        homePage = landingPage.logInSelectStore(mobileUser, store);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage = ordersPage.placeCustomizedOrder(Menu.SUBWAYFreshFit, homePage, BreadSize.SIXINCH);
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        homePage = ordersPage.placeCustomizedOrder(Menu.SUBWAYFreshFit, homePage, BreadSize.SIXINCH);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
     @Test
     public void testPlaceCustomizedOrderBreakfastFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-
-        homePage = landingPage.logInSelectStore(mobileUser, store);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage = ordersPage.placeCustomizedOrder(Menu.Breakfast, homePage, BreadSize.FOOTLONG);
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        homePage = ordersPage.placeCustomizedOrder(Menu.Breakfast, homePage, BreadSize.FOOTLONG);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
     @Test
     public void testPlaceCustomizedOrderBreakfastSixInch() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        homePage = landingPage.logInSelectStore(mobileUser, store);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage = ordersPage.placeCustomizedOrder(Menu.Breakfast, homePage, BreadSize.SIXINCH);
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        homePage = ordersPage.placeCustomizedOrder(Menu.Breakfast, homePage, BreadSize.SIXINCH);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
@@ -95,40 +82,36 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
     public void testPlaceCustomizedOrderChoppedSalads() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        homePage = landingPage.logInSelectStore(mobileUser, store);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage = ordersPage.placeCustomizedOrder(Menu.ChoppedSalads, homePage, BreadSize.NONE);
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        homePage = ordersPage.placeCustomizedOrder(Menu.AllSandwiches, homePage, BreadSize.FOOTLONG);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
     @Test
     public void testPlaceCustomizedOrderKidsMeal() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        homePage = landingPage.logInSelectStore(mobileUser, store);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage = ordersPage.placeCustomizedOrder(Menu.KidsMeal, homePage, BreadSize.NONE);
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        homePage = ordersPage.placeCustomizedOrder(Menu.KidsMeal, homePage, BreadSize.NONE);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
     @Test
     public void testPlaceCustomizedOrderSides() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        homePage = landingPage.logInSelectStore(mobileUser, store);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage = ordersPage.placeCustomizedOrder(Menu.Sides, homePage, BreadSize.NONE);
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        homePage = ordersPage.placeCustomizedOrder(Menu.Sides, homePage, BreadSize.NONE);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
     @Test
     public void testPlaceCustomizedOrderDrinks() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        homePage = landingPage.logInSelectStore(mobileUser, store);
-        userProfilePagePage = homePage.goToUserProfilePage();
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage = ordersPage.placeCustomizedOrder(Menu.Drinks, homePage, BreadSize.NONE);
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        homePage = ordersPage.placeCustomizedOrder(Menu.Drinks, homePage, BreadSize.NONE);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
    @Test
