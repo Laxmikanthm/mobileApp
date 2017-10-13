@@ -34,7 +34,6 @@ import util.MobileApi;
 import utils.Logz;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by test-user on 2/2/17.
@@ -61,11 +60,7 @@ String platform = SubwayAppBaseTest.platformName;
 
     abstract MobileButton getMenu() throws Exception;
     abstract MobileButton getOrderButton() throws Exception;
-    abstract MobileButton getFindButton() throws Exception;
     abstract MobileButton getFindYourSubWay()throws Exception;
-    abstract MobileButton getFindSubWayNearYou()throws Exception;
-    abstract MobileButton getAllowLocation()throws Exception;
-    abstract MobileButton getStoreView()throws Exception;
     abstract MobileButton getBackButton() throws Exception;
     abstract MobileButton getFindAnotherSubway()throws Exception;
     abstract MobileLabel getYourFavoriteOrderName() throws Exception;
@@ -204,15 +199,6 @@ public List<WebElement> getElements(By locator) {
         }
     }
 
-    public SearchStore findNearbySubway() throws Exception
-    {
-        try{
-            getFindSubWayNearYou().click();
-            return SearchStore.get((AppiumDriver)driver);
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-    }
     public SearchStore findAnotherSubway() throws Exception
     {
         try{
