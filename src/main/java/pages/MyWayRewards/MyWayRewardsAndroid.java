@@ -1,6 +1,8 @@
 package pages.MyWayRewards;
 import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.android.AndroidLabel;
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileLabel;
 import base.test.BaseTest;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -24,4 +26,12 @@ public class MyWayRewardsAndroid extends MyWayRewards {
         AndroidButton toolbarCloseButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toolbar_close"), "ToolBar Close Button");
         return toolbarCloseButton;
     }
+
+    public MobileLabel gettokensmyreward() throws Exception {
+        AndroidLabel tokenscount = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_token_count_text"), "GiftCard label");
+        return null;
+    }
+
+
+
 }

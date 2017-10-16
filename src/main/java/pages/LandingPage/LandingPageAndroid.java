@@ -28,11 +28,6 @@ public class LandingPageAndroid extends LandingPage{
         return button;
     }
 
-   /* public AndroidButton getSkipButton() throws Exception {
-        AndroidButton skipButton = new AndroidButton ((AndroidDriver)driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("SkipButton") + "']"), "Skip Button");
-
-        return skipButton;
-    }*/
     public AndroidButton getSkipButton() throws Exception {
         AndroidButton skipButton = new AndroidButton ((AndroidDriver)driver, By.id(BaseTest.bundle.getString("SkipButton")), "Skip Button");
 
