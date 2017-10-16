@@ -38,6 +38,8 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         super(driver);
     }
 
+    HomePage homePage;
+
 
     public static MyWayRewards get(AppiumDriver driver) throws Exception {
 
@@ -141,6 +143,22 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     }
 
     public RemoteOrderCustomer validateTokensandCerts(HomePage homePage, RemoteOrderCustomer remoteOrderCustomer) throws Exception {
+        getSwipe();
+        Thread.sleep(3000);
+        if (homePage.getTokens(remoteOrderCustomer) >= 200) {
+           /*String MdmId = remoteOrderCustomer.getGuestID();
+           Kobie.generateCertificates(MdmId);
+           homePage.getTokensSparkle();
+            toolBarClose();*/
+            remoteOrderCustomer = homePage.validateCertificate(remoteOrderCustomer);
+
+        }
+        homePage.validateTokens(remoteOrderCustomer);
+        return remoteOrderCustomer;
+    }
+
+    public RemoteOrderCustomer validateTokensandCerts( RemoteOrderCustomer remoteOrderCustomer) throws Exception {
+
         getSwipe();
         Thread.sleep(3000);
         if (homePage.getTokens(remoteOrderCustomer) >= 200) {
