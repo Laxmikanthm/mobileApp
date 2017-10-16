@@ -516,21 +516,7 @@ public YourOrderPage goToYourOrderPage() throws Exception{
     Logz.step("##### Navigated to your Order Page ...... #####");
     return YourOrderPage.get((AndroidDriver)driver);
 }
-    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user) throws Exception{
-        Logz.step("##### Asserting tokens and certificates in home Page#####");
-        user = MobileApi.getLoyaltyLookUp(user);
-        if(user.getConfirmToken()!= null) {
-            Assert.assertEquals(user.getConfirmToken(), Integer.parseInt(tokenValue()));
-        }
-        else{Logz.step("Tokens are not available");}
-        Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(),certificatescount());
-        //assert n# token and n# certificate in home page
-        //user MyLoyalty object for assertion
-        //Get expected data from API, Get actual data from mobile ui
-        Logz.step("##### Asserted tokens and certificates in home Page#####");
 
-        return UserProfilePage.get((AndroidDriver)driver);
-    }
     public MyWayRewards goToMyWayRewardsPage() throws Exception{
 
         Logz.step("##### Navigating to My Way Rewards Page ...... #####");
@@ -569,6 +555,24 @@ public YourOrderPage goToYourOrderPage() throws Exception{
             throw new Exception(ex);
         }
     }
+    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user, boolean tokenCertificatesAdded) throws Exception{
+        Logz.step("##### Asserting tokens and certificates in home Page#####");
+      /*  user = MobileApi.getLoyaltyLookUp(user);
+        if(user.getConfirmToken()!= null) {
+            Assert.assertEquals(user.getConfirmToken(), Integer.parseInt(tokenValue()));
+        }
+        else{Logz.step("Tokens are not available");}
+        Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(),certificatescount());*/
+        //assert n# token and n# certificate in home page
+        //user MyLoyalty object for assertion
+        //Get expected data from API, Get actual data from mobile ui
+        MyWayRewards myWayRewards = goToMyWayRewardsPage();
+        myWayRewards.assertTokensAndCertificates(user, tokenCertificatesAdded);
+        Logz.step("##### Asserted tokens and certificates in home Page#####");
+
+        return UserProfilePage.get((AndroidDriver)driver);
+    }
+
 }
 
 
