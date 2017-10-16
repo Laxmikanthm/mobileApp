@@ -380,7 +380,10 @@ public class OrdersPageAndroid extends OrdersPage {
         AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
         return label;
     }
-
+    public MobileButton getFullMenu() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("view_full_menu_text"), "See Full menu");
+        return button;
+    }
 
 
 }

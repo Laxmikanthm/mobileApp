@@ -140,8 +140,8 @@ public List<WebElement> getElements(By locator) {
              else {
                  By offerElement=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout[@index="+i+"]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView");
                  List<WebElement> elements1=getElements(offerElement);
-                 WebElement ele = elements1.get(0);
-                 MobileElement element = (MobileElement) ele;
+                 WebElement element = elements1.get(0);
+                 MobileElement ele = (MobileElement) element;
                 // element.swipe(SwipeElementDirection.LEFT, 500);
                  swipeLeft(ele);
              }
@@ -151,9 +151,12 @@ public List<WebElement> getElements(By locator) {
     }
     public void swipeLeft(WebElement element)
     {
-        size=driver.manage().window().getSize();
-        int x1 = (int) (size.width * 0.20);
-        action.longPress(element).moveTo(x1,580).release().perform();
+        size = driver.manage().window().getSize();
+        int width = element.getSize().getWidth();
+        int height = element.getSize().getHeight();
+        TouchAction action = new TouchAction((MobileDriver) driver);
+        action.longPress(element.getLocation().getX() + (int) (width + 500), element.getLocation().getY()).moveTo(100, 1500).release().perform();
+
 
     }
 

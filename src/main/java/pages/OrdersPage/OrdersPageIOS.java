@@ -467,4 +467,8 @@ public class OrdersPageIOS extends OrdersPage {
         IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/check_details"), "See details link");
         return button;
     }
+    public MobileButton getFullMenu() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/view_full_menu_text"), "See FullMenu Details");
+        return button;
+    }
 }

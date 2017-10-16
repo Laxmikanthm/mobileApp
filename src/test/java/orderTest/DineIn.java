@@ -4,15 +4,25 @@ import Base.SubwayAppBaseTest;
 
 import cardantApiFramework.pojos.Menu;
 import cardantApiFramework.pojos.Store;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
+import com.amazonaws.services.dynamodbv2.xspec.S;
 import enums.Country;
 import enums.PaymentMethod;
+import orderManagementTest.PurchaseHistory;
 import org.testng.annotations.Test;
+import pages.Enums.BreadSize;
+import pages.Enums.Tax;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
+import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
+import pages.PurchaseHistoryPage.PurchaseHistoryPage;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
+import util.MobileApi;
 import utils.Logz;
 
 
@@ -30,6 +40,12 @@ public class DineIn extends SubwayAppBaseTest{
     String strTaxCategoryName="HOT";
     String strOrderType="INDIVIDUAL";
     Menu menu;
+    RemoteOrderCustomer user;
+    HomePage homePage;
+    MyWayRewards myWayRewards;
+    OrdersPage ordersPage;
+    LandingPage landingPage;
+    PurchaseHistoryPage purchaseHistoryPage;
 
 /*
 
@@ -54,7 +70,7 @@ public class DineIn extends SubwayAppBaseTest{
         mobileUser=setCountryName();
         mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         Logz.step("Getting " + strMenuCategoryName + " Menu Details");
         menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
@@ -67,7 +83,7 @@ public class DineIn extends SubwayAppBaseTest{
     @Test
     public void dineInHotItemsOH() throws Exception {
         Store store = JdbcUtil.getStoreDetails("OH",true,true);
-        mobileUser=setCountryName();
+        user=setCountryName();
         mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
@@ -82,27 +98,42 @@ public class DineIn extends SubwayAppBaseTest{
     //DFA-10487
     @Test
     public void certDiscountwithAllItemsInDineInCA() throws Exception {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        mobileUser= RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        Store store = JdbcUtil.getStoreDetails("CA",true,true);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("95932");
-        ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1031 Bridge St");
-        homePage.validateTokens(mobileUser);
-        //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        user = remoteOrder.getCustomer();
+        remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
+        MyWayRewards myWayRewards = homePage.getTokensSparkle();
+        user = myWayRewards.validateTokensandCerts(homePage, user);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        CartData.createNewCart(user, store.getLocationCode());
+        homePage=ordersPage.addingHotandColdToCart(store);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+
+
     }
+
     //DFA-10538
     @Test
     public void certDiscountwithAllItemsInDineInOH() throws Exception {
         store= JdbcUtil.getStateSpecificStoreDetails("OH",true);
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 10846);
-        mobileUser= RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("43056");
-        ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1031 Bridge St");
-        homePage.validateTokens(mobileUser);
-        //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        user = remoteOrder.getCustomer();
+        remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
+        MyWayRewards myWayRewards = homePage.getTokensSparkle();
+        user = myWayRewards.validateTokensandCerts(homePage, user);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        CartData.createNewCart(user, store.getLocationCode());
+        homePage=ordersPage.addingHotandColdToCart(store);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+
     }
     //DFA-10484
     @Test
