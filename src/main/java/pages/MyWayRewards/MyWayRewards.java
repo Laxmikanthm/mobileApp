@@ -176,14 +176,40 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         return remoteOrderCustomer;
     }
 
-    public HomePage assertTokensAndCertificates(RemoteOrderCustomer user) throws Exception {
+    public HomePage assertTokensAndCertificates(RemoteOrderCustomer user,boolean tokenCertificatesAdded ) throws Exception {
         user = MobileApi.getLoyaltyLookUp(user);
-        String tokencount=gettokensmyreward().getText();
-        Assert.assertEquals(user.getConfirmToken(),tokencount);
+       /* String tokencount=gettokensmyreward().getText();
+        Assert.assertEquals(user.getConfirmToken(),tokencount);*/
 
        // Assert.assertEquals();
         //user MyLoyalty object for assertion
         //Get expected data from API, Get actual data from mobile ui
+        pojos.MyLoyalty actualMyLoyalty = getActualMyLoyaltyDetails();
+        pojos.MyLoyalty expectedMyLoyalty = getExpectedMyLoyaltyDetails(user);
+        if(tokenCertificatesAdded) {
+            actualMyLoyalty = getActualMyLoyaltyDetails();
+            expectedMyLoyalty = getExpectedMyLoyaltyDetails(user);
+        }else{
+            // token control is not present();
+        }
+        Assert.assertEquals(actualMyLoyalty, expectedMyLoyalty);
+
         return HomePage.get((AppiumDriver) driver);
     }
+    private pojos.MyLoyalty getActualMyLoyaltyDetails() throws Exception{
+        pojos.MyLoyalty actualMyLoyalty = new pojos.MyLoyalty();
+        //get and set data from ui to actualMyLoyalty object
+        actualMyLoyalty.setTokens("get the token value");
+       // actualMyLoyalty.setCertificates("get list of certificates");
+        return actualMyLoyalty;
+    }
+    private pojos.MyLoyalty getExpectedMyLoyaltyDetails(RemoteOrderCustomer user) throws Exception{
+        pojos.MyLoyalty expectedMyLoyalty = new pojos.MyLoyalty();
+        user = MobileApi.getLoyaltyLookUp(user);
+        //get and set data from api to expectedMyLoyalty
+        expectedMyLoyalty.setTokens("get the token value");
+       // expectedMyLoyalty.setCertificates("get list of certificates");
+        return expectedMyLoyalty;
+    }
+
 }
