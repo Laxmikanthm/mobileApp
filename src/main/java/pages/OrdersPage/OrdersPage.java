@@ -1819,7 +1819,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         scrollToElement(fullMenu, 0.9, 0.5);
         getFullMenu().click();
     }
-    public void placeRandomOrderCertDiscountwithHotItems(Menu menuItem,BreadSize breadSize) throws Exception {
+    public void placeRandomOrderCertDiscountwithHotItems(String menuItem,BreadSize breadSize) throws Exception {
         try {
 
             itemName = menuItem.toString();
@@ -2051,12 +2051,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
     //##########################################################################################################################
-    public HomePage placeDefaultOrder(Menu menuCategories, BreadSize breadSize) throws Exception {
+    public HomePage placeDefaultOrder(String menuCategories, BreadSize breadSize) throws Exception {
         try {
 
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             //Get Menu Categories - click menuCategories
             itemName = menuCategories.toString();
+
             selectSpecificMenu(itemName);
             selectRandomProduct(breadSize);
             placeOrderAndAssert();
@@ -2067,7 +2068,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         return HomePage.get((AndroidDriver) driver);
 
     }
-    public HomePage placeCustomizedOrder(Menu menuCategories, HomePage homePage, BreadSize breadSize) throws Exception {
+    public HomePage placeCustomizedOrder(String menuCategories, BreadSize breadSize) throws Exception {
         try {
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             //Get Menu Categories - click menuCategories
