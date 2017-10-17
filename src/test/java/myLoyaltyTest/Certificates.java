@@ -7,8 +7,6 @@ import cardantApiFramework.utils.JdbcUtil;
 import enums.PaymentMethod;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.Enums.BreadSize;
-import pages.Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.ManageRewardsPage.ManageRewardsPage;
@@ -22,7 +20,6 @@ import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
-import userProfileTest.UserProfile;
 import util.MobileApi;
 
 /**

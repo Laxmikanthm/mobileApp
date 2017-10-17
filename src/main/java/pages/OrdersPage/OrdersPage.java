@@ -7,7 +7,6 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
-import cardantApiFramework.serviceUtilities.cardantClientV1.dto.accountDTO.OrderSummary;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
 import io.appium.java_client.MobileDriver;
@@ -23,16 +22,13 @@ import org.testng.Assert;
 import pages.AddCardPage.AddCardPage;
 import pages.CommonElements.CommonElements;
 import pages.CustomizePage.CustomizePage;
-import pages.DrinksPage.DrinksPage;
-import pages.Enums.BreadSize;
-import pages.Enums.Menu;
-import pages.Enums.Tax;
+import Enums.BreadSize;
+import Enums.Menu;
+import Enums.Tax;
 import pages.HomePage.HomePage;
 import pages.MenuPage.MenuPage;
 import pages.OffersPage.OffersPage;
 import pages.OrderConfirmationPage.OrderConfirmationPage;
-import pages.PurchaseHistoryPage.PurchaseHistoryPage;
-import pages.UserProfilePage.UserProfilePage;
 import pages.YourOrderPage.YourOrderPage;
 import pojos.OfferDetails;
 import pojos.Orders.Order;
@@ -1761,7 +1757,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
     public cardantApiFramework.pojos.Menu getMenuDetails(Store store,Tax tax)throws Exception
     {
-        menu= JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()), pages.Enums.Menu.AllSandwiches.toString(), tax.toString(),Tax.strOrderTypeIndividual.toString());
+        menu= JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()), Enums.Menu.AllSandwiches.toString(), tax.toString(),Tax.strOrderTypeIndividual.toString());
         return menu;
     }
 
@@ -1785,11 +1781,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     {
         getStoreClick(store.getAddress1());
         cardantApiFramework.pojos.Menu menu=getMenuDetails(store,Tax.strTaxHotCategoryName);
-        addingOrdertoBag(pages.Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
+        addingOrdertoBag(Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
         getDineIn().click();
         goToFullMenu();
         menu=getMenuDetails(store,Tax.strTaxColdCategoryName);
-        addingOrdertoBag(pages.Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
+        addingOrdertoBag(Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
         validateManageLocator();
         verifyTaxValueForHotColdItem();
         getPlaceOrder().click();

@@ -6,13 +6,9 @@ import cardantApiFramework.pojos.Menu;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import enums.Country;
 import enums.PaymentMethod;
-import orderManagementTest.PurchaseHistory;
 import org.testng.annotations.Test;
-import pages.Enums.BreadSize;
-import pages.Enums.Tax;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.MyWayRewards.MyWayRewards;
@@ -22,7 +18,6 @@ import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
-import util.MobileApi;
 import utils.Logz;
 
 

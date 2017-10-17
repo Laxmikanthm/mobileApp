@@ -1,4 +1,4 @@
-package pages.Enums;
+package Enums;
 
 /**
  * Created by E001599 on 13-10-2017.

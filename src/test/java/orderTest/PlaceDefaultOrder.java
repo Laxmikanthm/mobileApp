@@ -1,18 +1,15 @@
 package orderTest;
 
 import Base.SubwayAppBaseTest;
-import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import org.testng.annotations.Test;
-import pages.Enums.BreadSize;
-import pages.Enums.Menu;
+import Enums.BreadSize;
+import Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
-import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
-import pages.UserProfilePage.UserProfilePage;
 import pojos.user.RemoteOrderCustomer;
 
 public class PlaceDefaultOrder extends SubwayAppBaseTest {
