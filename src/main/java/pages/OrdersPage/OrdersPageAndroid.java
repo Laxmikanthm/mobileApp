@@ -407,6 +407,10 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
 
+    public MobileButton getFullMenu() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("view_full_menu_text"), "See Full menu");
+        return button;
+    }
 
 
 }

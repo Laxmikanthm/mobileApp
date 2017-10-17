@@ -4,15 +4,25 @@ import Base.SubwayAppBaseTest;
 
 import cardantApiFramework.pojos.Menu;
 import cardantApiFramework.pojos.Store;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
+import com.amazonaws.services.dynamodbv2.xspec.S;
 import enums.Country;
 import enums.PaymentMethod;
+import orderManagementTest.PurchaseHistory;
 import org.testng.annotations.Test;
+import pages.Enums.BreadSize;
+import pages.Enums.Tax;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
+import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
+import pages.PurchaseHistoryPage.PurchaseHistoryPage;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
+import util.MobileApi;
 import utils.Logz;
 
 
@@ -27,17 +37,36 @@ public class DineIn extends SubwayAppBaseTest{
     String strStateProvCode2;
     String strMenuCategoryName="All Sandwiches";
 
-    String strTaxCategoryName="COLD";
+    String strTaxCategoryName="HOT";
     String strOrderType="INDIVIDUAL";
     Menu menu;
-    LandingPage landingPage;
-    HomePage homePage;
-    OrdersPage ordersPage;
 
+    RemoteOrderCustomer user;
+    HomePage homePage;
+    MyWayRewards myWayRewards;
+    OrdersPage ordersPage;
+    LandingPage landingPage;
+    PurchaseHistoryPage purchaseHistoryPage;
+
+/*
+
+    public RO_CartActions AddTAXItemToTheCart(String strStateProveCode, String strOrderType, String strTaxCategoryName, String strMenuCategoryName, int nQuantity, boolean IsDineIn, boolean IsR2Pilot) throws Exception{
+        homeActions = new RO_HomeActions(driver);
+        findAStoreActions = homeActions.GotoFindAStorePage();
+        Logz.step("Getting store details");
+        findAStoreActions.storeInfo = JdbcUtil.getStoreDetails(strStateProveCode, IsDineIn, IsR2Pilot);
+        roMenuCategoryActions = findAStoreActions.SearchStoresForOrder(strOrderType, false);
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        Menu menu = JdbcUtil.getHotColdMenuItem(findAStoreActions.storeInfo.getStoreNumber(), strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item");
+        roCartActions =  roMenuCategoryActions.AddMenuItemToCart(strMenuCategoryName, menu, nQuantity);
+        return  roCartActions;
+        roCartActions =  roOrderActions.AddTAXItemToTheCart( hmBundleFile.get("ohProveCode"), hmBundleFile.get("Individual"),  hmBundleFile.get("cold"), hmBundleFile.get("allsandwiches"), 1, true, true );
+    }*/
     //DFA-9361
     @Test
     public void dineInHotItemsCA() throws Exception {
-        store = JdbcUtil.getStoreDetails("CA",true,true);
+        Store store = JdbcUtil.getStoreDetails("CA",true,true);
         mobileUser=setCountryName();
         mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -69,6 +98,8 @@ public class DineIn extends SubwayAppBaseTest{
     //DFA-9485
     @Test
     public void dineInHotItemsOH() throws Exception {
+        Store store = JdbcUtil.getStoreDetails("OH",true,true);
+        user=setCountryName();
         store = JdbcUtil.getStoreDetails("OH",true,true);
         mobileUser=setCountryName();
         mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
@@ -101,27 +132,42 @@ public class DineIn extends SubwayAppBaseTest{
     //DFA-10487
     @Test
     public void certDiscountwithAllItemsInDineInCA() throws Exception {
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        mobileUser= RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        Store store = JdbcUtil.getStoreDetails("CA",true,true);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("95932");
-        ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1031 Bridge St");
-        homePage.validateTokens(mobileUser);
-        //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        user = remoteOrder.getCustomer();
+        remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
+        MyWayRewards myWayRewards = homePage.getTokensSparkle();
+        user = myWayRewards.validateTokensandCerts(homePage, user);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        CartData.createNewCart(user, store.getLocationCode());
+        homePage=ordersPage.addingHotandColdToCart(store);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+
+
     }
+
     //DFA-10538
     @Test
     public void certDiscountwithAllItemsInDineInOH() throws Exception {
         store= JdbcUtil.getStateSpecificStoreDetails("OH",true);
-        MobileUser mobileUser = new MobileUser(false, Country.UnitedStates, 10846);
-        mobileUser= RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore("43056");
-        ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1031 Bridge St");
-        homePage.validateTokens(mobileUser);
-        //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        user = remoteOrder.getCustomer();
+        remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
+        MyWayRewards myWayRewards = homePage.getTokensSparkle();
+        user = myWayRewards.validateTokensandCerts(homePage, user);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        CartData.createNewCart(user, store.getLocationCode());
+        homePage=ordersPage.addingHotandColdToCart(store);
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+
     }
     //DFA-10484
     @Test

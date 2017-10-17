@@ -21,6 +21,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import pages.Enums.MyLoyalty;
 import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
@@ -34,7 +35,6 @@ import util.MobileApi;
 import utils.Logz;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by test-user on 2/2/17.
@@ -61,11 +61,7 @@ String platform = SubwayAppBaseTest.platformName;
 
     abstract MobileButton getMenu() throws Exception;
     abstract MobileButton getOrderButton() throws Exception;
-    abstract MobileButton getFindButton() throws Exception;
     abstract MobileButton getFindYourSubWay()throws Exception;
-    abstract MobileButton getFindSubWayNearYou()throws Exception;
-    abstract MobileButton getAllowLocation()throws Exception;
-    abstract MobileButton getStoreView()throws Exception;
     abstract MobileButton getBackButton() throws Exception;
     abstract MobileButton getFindAnotherSubway()throws Exception;
     abstract MobileLabel getYourFavoriteOrderName() throws Exception;
@@ -144,8 +140,8 @@ public List<WebElement> getElements(By locator) {
              else {
                  By offerElement=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout[@index="+i+"]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView");
                  List<WebElement> elements1=getElements(offerElement);
-                 WebElement ele = elements1.get(0);
-                 MobileElement element = (MobileElement) ele;
+                 WebElement element = elements1.get(0);
+                 MobileElement ele = (MobileElement) element;
                 // element.swipe(SwipeElementDirection.LEFT, 500);
                  swipeLeft(ele);
              }
@@ -155,9 +151,12 @@ public List<WebElement> getElements(By locator) {
     }
     public void swipeLeft(WebElement element)
     {
-        size=driver.manage().window().getSize();
-        int x1 = (int) (size.width * 0.20);
-        action.longPress(element).moveTo(x1,580).release().perform();
+        size = driver.manage().window().getSize();
+        int width = element.getSize().getWidth();
+        int height = element.getSize().getHeight();
+        TouchAction action = new TouchAction((MobileDriver) driver);
+        action.longPress(element.getLocation().getX() + (int) (width + 500), element.getLocation().getY()).moveTo(100, 1500).release().perform();
+
 
     }
 
@@ -204,15 +203,6 @@ public List<WebElement> getElements(By locator) {
         }
     }
 
-    public SearchStore findNearbySubway() throws Exception
-    {
-        try{
-            getFindSubWayNearYou().click();
-            return SearchStore.get((AppiumDriver)driver);
-        }catch(Exception ex){
-            throw new Exception(ex);
-        }
-    }
     public SearchStore findAnotherSubway() throws Exception
     {
         try{
@@ -336,10 +326,28 @@ public List<WebElement> getElements(By locator) {
     }
     public int certsCount() throws Exception
     {
-        String cert[]=getCertificatesMessage().getText().split(" ");
+            String cert[]=getCertificatesMessage().getText().split(" ");
         certValue=Integer.parseInt(cert[0].substring(1));
         certCount=certValue/2;
+
         return certCount;
+
+    }
+    public int certificatescount() throws Exception
+    {
+        if(getCertificatesMessage().getControl().isDisplayed())
+        {
+            Logz.step("Verifying certificate count has started");
+            String cert[]=getCertificatesMessage().getText().split(" ");
+            certValue=Integer.parseInt(cert[0].substring(1));
+            certCount=certValue/2;}
+            else{
+            Logz.step("Certificates are not available");
+
+        }
+
+        return certCount;
+
     }
     public SearchStore apply()throws Exception
     {
@@ -511,15 +519,7 @@ public YourOrderPage goToYourOrderPage() throws Exception{
     Logz.step("##### Navigated to your Order Page ...... #####");
     return YourOrderPage.get((AndroidDriver)driver);
 }
-    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user) throws Exception{
-        Logz.step("##### Asserting tokens and certificates in home Page#####");
-        user = MobileApi.getLoyaltyLookUp(user);
-        //assert n# token and n# certificate in home page
-        //user MyLoyalty object for assertion
-        //Get expected data from API, Get actual data from mobile ui
-        Logz.step("##### Asserted tokens and certificates in home Page#####");
-        return UserProfilePage.get((AndroidDriver)driver);
-    }
+
     public MyWayRewards goToMyWayRewardsPage() throws Exception{
 
         Logz.step("##### Navigating to My Way Rewards Page ...... #####");
@@ -558,6 +558,24 @@ public YourOrderPage goToYourOrderPage() throws Exception{
             throw new Exception(ex);
         }
     }
+    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user, boolean tokenCertificatesAdded) throws Exception{
+        Logz.step("##### Asserting tokens and certificates in home Page#####");
+      /*  user = MobileApi.getLoyaltyLookUp(user);
+        if(user.getConfirmToken()!= null) {
+            Assert.assertEquals(user.getConfirmToken(), Integer.parseInt(tokenValue()));
+        }
+        else{Logz.step("Tokens are not available");}
+        Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(),certificatescount());*/
+        //assert n# token and n# certificate in home page
+        //user MyLoyalty object for assertion
+        //Get expected data from API, Get actual data from mobile ui
+        MyWayRewards myWayRewards = goToMyWayRewardsPage();
+        myWayRewards.assertTokensAndCertificates(user, tokenCertificatesAdded);
+        Logz.step("##### Asserted tokens and certificates in home Page#####");
+
+        return UserProfilePage.get((AndroidDriver)driver);
+    }
+
 }
 
 
