@@ -29,7 +29,6 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     public void testPlaceDefaultOrderAllSandwichesFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-      // mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.AllSandwiches, BreadSize.FOOTLONG);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
@@ -50,7 +49,6 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     public void testPlaceDefaultOrderSubwayFreshFitFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        // mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.SUBWAYFreshFit, BreadSize.FOOTLONG);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
@@ -66,6 +64,8 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
+
+
 
     @Test(enabled = false) //bug: DFA-8911
     public void testPlaceDefaultOrderBreakfastFootLong() throws Exception {
@@ -91,7 +91,6 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     public void testPlaceDefaultOrderChoppedSalads() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-       // mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(Menu.ChoppedSalads, BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();

@@ -17,6 +17,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import pages.Enums.Menu;
 import pojos.user.MobileUser;
 import util.ZephyrClient;
 import utils.CommonUtils;
@@ -135,6 +136,7 @@ public class SubwayAppBaseTest extends BaseTest {
         }
         return mobileUser;
     }
+
 
 
 }

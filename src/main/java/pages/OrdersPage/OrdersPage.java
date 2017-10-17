@@ -9,6 +9,7 @@ import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV1.dto.accountDTO.OrderSummary;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
+import cardantApiFramework.utils.JdbcUtil;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -24,6 +25,7 @@ import pages.CommonElements.CommonElements;
 import pages.CustomizePage.CustomizePage;
 import pages.Enums.BreadSize;
 import pages.Enums.Menu;
+import pages.Enums.Tax;
 import pages.HomePage.HomePage;
 import pages.MenuPage.MenuPage;
 import pages.OffersPage.OffersPage;
@@ -102,6 +104,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileButton getRegularInSauce() throws Exception;
 
     abstract MobileButton getToastIt() throws Exception;
+
+    abstract MobileButton getFullMenu() throws Exception;
 
     abstract MobileButton getEdit() throws Exception;
 
@@ -208,8 +212,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public int Rewards = 0;
     AddCardPage addCardPage;
     MenuPage menuPage;
+    HomePage homePage;
     TouchAction action = new TouchAction((MobileDriver) driver);
     CommonElements elements = new CommonElements((AppiumDriver)driver) ;
+    cardantApiFramework.pojos.Menu menu;
 
 
     /*This elements are for finding list of elements*/
@@ -231,6 +237,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By coldCutCombo = By.partialLinkText("Cold Cut Combo");
     By coffee12oz = By.partialLinkText("12 oz Coffee");
     By moreDrinks = By.id("drinks");
+    By fullMenu=By.id("view_full_menu_text");
 
 
     Random rn = new Random();
@@ -307,7 +314,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             Assert.assertEquals(homePage.tokenValue().toString(), String.valueOf(tokens));
 
 
-            //return specific page
+            //return specific page-````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
         } catch (Exception ex) {
           Logz.error(ex.toString());
         }
@@ -1716,23 +1723,76 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         getSeeDetails().click();
         getTaxValue();
     }
+    public cardantApiFramework.pojos.Menu getMenuDetails(Store store,Tax tax)throws Exception
+    {
+        menu= JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()), pages.Enums.Menu.AllSandwiches.toString(), tax.toString(),Tax.strOrderTypeIndividual.toString());
+        return menu;
+    }
 
     public void validateTax() throws Exception {
         System.out.println("############################" + CartData.getCartPrice(customer).toString());
     }
+    public String getProductName(cardantApiFramework.pojos.Menu menu)
+    {
+        String[] strMenuItemName =menu.getProductName().split(" ",2);
+        return  strMenuItemName[1];
 
-    public void placeRandomOrderCertDiscountwithHotItems(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+    }
+    public void getStoreClick(String storeName)throws Exception
+    {
+        HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
+        homePage.apply();
+        getStartOrderButton().click();
+
+    }
+     public HomePage addingHotandColdToCart(Store store)throws Exception
+    {
+        getStoreClick(store.getAddress1());
+        cardantApiFramework.pojos.Menu menu=getMenuDetails(store,Tax.strTaxHotCategoryName);
+        addingOrdertoBag(pages.Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
+        getDineIn().click();
+        goToFullMenu();
+        menu=getMenuDetails(store,Tax.strTaxColdCategoryName);
+        addingOrdertoBag(pages.Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
+        validateManageLocator();
+        verifyTaxValueForDineIn();
+        getPlaceOrder().click();
+        Thread.sleep(20000);
+        getTokens(remoteOrder);
+        getGotIt().click();
+        Assert.assertEquals(homePage.tokenValue().toString(), String.valueOf(tokens));
+        return homePage.get((AppiumDriver) driver);
+
+
+    }
+
+    public void addingOrdertoBag(Menu menuItem, BreadSize breadSize, cardantApiFramework.pojos.Menu menu,String storeName)throws Exception
+    {
+        try
+        {
+
+            itemName = menuItem.toString();
+            selectSpecificMenu(itemName);
+            selectSpecificProduct(getProductName(menu),breadSize);
+            getAddToBag().isReady();
+            getAddToBag().click();
+
+
+        }catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+    public void goToFullMenu()throws Exception
+    {
+        scrollToElement(fullMenu, 0.9, 0.5);
+        getFullMenu().click();
+    }
+    public void placeRandomOrderCertDiscountwithHotItems(Menu menuItem,BreadSize breadSize) throws Exception {
         try {
-            remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
-            getDirections().isReady();
-            HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
-            tokens = Integer.parseInt(homePage.tokenValue());
-            homePage.apply();
-            getStartOrderButton().click();
-            getItems().isReady();
-            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
-            scrollAndClick(coldCutCombo, order.getCart().getProductDetail().getProductClass().getName(), "Up");
+
+            itemName = menuItem.toString();
+            selectSpecificMenu(itemName);
+            selectRandomProduct(breadSize);
             getAddToBag().isReady();
             getAddToBag().click();
             scrollAndClick(moreDrinks, "Drinks", "Up");
