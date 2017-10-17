@@ -58,7 +58,7 @@ public class Certificates extends SubwayAppBaseTest {
         OrdersPage ordersPage = homePage.findStore(store.getZipCode());
         CartData.createNewCart(user, store.getLocationCode());
         ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches", mobileUser, store.getAddress1());
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, true);
         Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(), homePage.certCount);
         Assert.assertEquals(String.valueOf(ordersPage.tokens), homePage.tokenValue().toString());//validating tokens
         menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
@@ -137,12 +137,12 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, false);
         user = MobileApi.placeOrderWithNoOfToken(user, 300);
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, true);
         ordersPage = homePage.selectStore(store);
         homePage = ordersPage.placeRandomOrderMyLoyalty();
-        userProfilePagePage = homePage.assertTokensCertificates(user);
+        userProfilePagePage = homePage.assertTokensCertificates(user, true);
         purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 
@@ -153,10 +153,10 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, false);
         user = MobileApi.placeOrderWithNoOfToken(user, 300);
         myWayRewards = homePage.getTokensSparkle();
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, true);
         myWayRewards = homePage.goToMyWayRewardsPage();
         homePage = myWayRewards.assertTokensAndCertificates(user,true);
         ordersPage = homePage.selectStore(store);
@@ -170,12 +170,12 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, false);
         user = MobileApi.placeOrderWithNoOfToken(user, 500);
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, true);
         ordersPage = homePage.selectStore(store);
         homePage = ordersPage.placeRandomOrderMyLoyalty();
-        userProfilePagePage = homePage.assertTokensCertificates(user);
+        userProfilePagePage = homePage.assertTokensCertificates(user, true);
         purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 
