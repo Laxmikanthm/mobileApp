@@ -177,9 +177,33 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
 
                             }*/
 
+        pojos.MyLoyalty actualMyLoyalty = getActualMyLoyaltyDetails();
+        pojos.MyLoyalty expectedMyLoyalty = getExpectedMyLoyaltyDetails(user);
+        if(tokenCertificatesAdded) {
+            actualMyLoyalty = getActualMyLoyaltyDetails();
+            expectedMyLoyalty = getExpectedMyLoyaltyDetails(user);
+        }else{
+            // certificare control is not present();
+        }
+        Assert.assertEquals(actualMyLoyalty, expectedMyLoyalty);
+
         return HomePage.get((AppiumDriver) driver);
 
     }
-
+    private pojos.MyLoyalty getActualMyLoyaltyDetails() throws Exception{
+        pojos.MyLoyalty actualMyLoyalty = new pojos.MyLoyalty();
+        //get and set data from ui to actualMyLoyalty object
+        actualMyLoyalty.setTokens("get the token value");
+        //actualMyLoyalty.setCertificates("get list of certificates");
+        return actualMyLoyalty;
+    }
+    private pojos.MyLoyalty getExpectedMyLoyaltyDetails(RemoteOrderCustomer user) throws Exception{
+        pojos.MyLoyalty expectedMyLoyalty = new pojos.MyLoyalty();
+        user = MobileApi.getLoyaltyLookUp(user);
+        //get and set data from api to expectedMyLoyalty
+        expectedMyLoyalty.setTokens("get the token value");
+      //  expectedMyLoyalty.setCertificates("get list of certificates");
+        return expectedMyLoyalty;
+    }
 
 }

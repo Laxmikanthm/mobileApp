@@ -1,11 +1,12 @@
 package orderTest;
 
 import Base.SubwayAppBaseTest;
+import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import org.testng.annotations.Test;
-import pages.Enums.BreadSize;
-import pages.Enums.Menu;
+import Enums.BreadSize;
+import Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.OrdersPage.OrdersPage;
@@ -27,7 +28,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(Menu.AllSandwiches, homePage, BreadSize.FOOTLONG);
+        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -37,7 +38,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(Menu.AllSandwiches, homePage, BreadSize.SIXINCH);
+        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.SIXINCH);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -46,7 +47,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(Menu.SUBWAYFreshFit, homePage, BreadSize.FOOTLONG);
+        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.FOOTLONG);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -55,7 +56,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(Menu.SUBWAYFreshFit, homePage, BreadSize.SIXINCH);
+        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.SIXINCH);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -64,7 +65,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(Menu.Breakfast, homePage, BreadSize.FOOTLONG);
+        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.FOOTLONG);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -73,7 +74,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(Menu.Breakfast, homePage, BreadSize.SIXINCH);
+        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.SIXINCH);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -83,7 +84,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(Menu.AllSandwiches, homePage, BreadSize.FOOTLONG);
+        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("ChoppedSalads"), BreadSize.FOOTLONG);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -92,7 +93,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(Menu.KidsMeal, homePage, BreadSize.NONE);
+        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("KidsMeal"), BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -101,7 +102,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(Menu.Sides, homePage, BreadSize.NONE);
+        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("SidesMenu"), BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -110,7 +111,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(Menu.Drinks, homePage, BreadSize.NONE);
+        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("DrinksMenu"), BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }

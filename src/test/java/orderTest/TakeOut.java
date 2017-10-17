@@ -1,6 +1,8 @@
 package orderTest;
 
 import Base.SubwayAppBaseTest;
+import Enums.BreadSize;
+import base.test.BaseTest;
 import cardantApiFramework.pojos.Menu;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
@@ -203,7 +205,7 @@ public class TakeOut extends SubwayAppBaseTest {
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
         ordersPage=homePage.findStore("95932");
-        ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1031 Bridge St");
+        ordersPage.placeRandomOrderCertDiscountwithHotItems(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG);
 
     }
     //DFA-10537
@@ -220,7 +222,7 @@ public class TakeOut extends SubwayAppBaseTest {
         MyWayRewards myWayRewards=homePage.getTokensSparkle();
         myWayRewards.getSwipe();
         ordersPage=homePage.findStore("43056");
-        ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1134 Hebron Rd., Heath");
+        ordersPage.placeRandomOrderCertDiscountwithHotItems(BaseTest.getStringfromBundleFile("AllSandwiches"),BreadSize.FOOTLONG);
 
     }
 

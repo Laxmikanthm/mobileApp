@@ -21,7 +21,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import pages.Enums.MyLoyalty;
 import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
@@ -31,7 +30,6 @@ import pages.UserProfilePage.UserProfilePage;
 import pages.YourOrderPage.YourOrderPage;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
-import util.MobileApi;
 import utils.Logz;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package pages.Enums;
+package Enums;
 
 
     public enum BreadSize {

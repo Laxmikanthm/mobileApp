@@ -1,21 +1,12 @@
 package pages.ManageRewardsPage;
 
 import Base.SubwayAppBaseTest;
-import base.gui.controls.mobile.generic.MobileButton;
-import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.testng.Assert;
-import pages.Enums.MyLoyalty;
-import pages.LoginPage.LoginPage;
-import pages.LoginPage.LoginPageAndroid;
-import pages.LoginPage.LoginPageIOS;
 import pages.OrdersPage.OrdersPage;
 import pages.YourOrderPage.YourOrderPage;
-import pages.YourOrderPage.YourOrderPageAndroid;
-import utils.Logz;
 
 
 public abstract class ManageRewardsPage<T extends AppiumDriver> extends MobileBasePage {
