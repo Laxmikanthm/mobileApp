@@ -27,38 +27,41 @@ public class DineIn extends SubwayAppBaseTest{
     String strStateProvCode2;
     String strMenuCategoryName="All Sandwiches";
 
-    String strTaxCategoryName="HOT";
+    String strTaxCategoryName="COLD";
     String strOrderType="INDIVIDUAL";
     Menu menu;
-
-/*
-
-    public RO_CartActions AddTAXItemToTheCart(String strStateProveCode, String strOrderType, String strTaxCategoryName, String strMenuCategoryName, int nQuantity, boolean IsDineIn, boolean IsR2Pilot) throws Exception{
-        homeActions = new RO_HomeActions(driver);
-        findAStoreActions = homeActions.GotoFindAStorePage();
-        Logz.step("Getting store details");
-        findAStoreActions.storeInfo = JdbcUtil.getStoreDetails(strStateProveCode, IsDineIn, IsR2Pilot);
-        roMenuCategoryActions = findAStoreActions.SearchStoresForOrder(strOrderType, false);
-        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
-        Menu menu = JdbcUtil.getHotColdMenuItem(findAStoreActions.storeInfo.getStoreNumber(), strMenuCategoryName,strTaxCategoryName,strOrderType);
-        Logz.step("Received " + menu.getProductName() + " menu item");
-        roCartActions =  roMenuCategoryActions.AddMenuItemToCart(strMenuCategoryName, menu, nQuantity);
-        return  roCartActions;
-        roCartActions =  roOrderActions.AddTAXItemToTheCart( hmBundleFile.get("ohProveCode"), hmBundleFile.get("Individual"),  hmBundleFile.get("cold"), hmBundleFile.get("allsandwiches"), 1, true, true );
-    }*/
+    LandingPage landingPage;
+    HomePage homePage;
+    OrdersPage ordersPage;
 
     //DFA-9361
     @Test
     public void dineInHotItemsCA() throws Exception {
-        Store store = JdbcUtil.getStoreDetails("CA",true,true);
+        store = JdbcUtil.getStoreDetails("CA",true,true);
         mobileUser=setCountryName();
         mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore(store.getZipCode());
         Logz.step("Getting " + strMenuCategoryName + " Menu Details");
         menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
-        Logz.step("Received " + menu.getProductName() + " menu item");
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
+        ordersPage.placeOrderForHotColdItemsInDineIn(strMenuCategoryName, mobileUser, store.getAddress1(),menu);
+        homePage.validateTokens(mobileUser);
+        //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
+    }
+
+    @Test
+    public void dineInColdItemsCA() throws Exception {
+        store = JdbcUtil.getStoreDetails("CA",true,true);
+        mobileUser=setCountryName();
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore(store.getZipCode());
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
         ordersPage.placeOrderForHotColdItemsInDineIn(strMenuCategoryName, mobileUser, store.getAddress1(),menu);
         homePage.validateTokens(mobileUser);
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
@@ -66,17 +69,33 @@ public class DineIn extends SubwayAppBaseTest{
     //DFA-9485
     @Test
     public void dineInHotItemsOH() throws Exception {
-        Store store = JdbcUtil.getStoreDetails("OH",true,true);
+        store = JdbcUtil.getStoreDetails("OH",true,true);
         mobileUser=setCountryName();
         mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore(store.getZipCode());
         Logz.step("Getting " + strMenuCategoryName + " Menu Details");
         menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
-        Logz.step("Received " + menu.getProductName() + " menu item");
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
         ordersPage.placeOrderForHotColdItemsInDineIn(strMenuCategoryName, mobileUser, store.getAddress1(),menu);
         homePage.validateTokens(mobileUser);
+    }
+
+    @Test
+    public void dineInColdItemsOH() throws Exception {
+        store = JdbcUtil.getStoreDetails("CA",true,true);
+        mobileUser=setCountryName();
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore(store.getZipCode());
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
+        ordersPage.placeOrderForHotColdItemsInDineIn(strMenuCategoryName, mobileUser, store.getAddress1(),menu);
+        homePage.validateTokens(mobileUser);
+        //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
 
     //DFA-10487

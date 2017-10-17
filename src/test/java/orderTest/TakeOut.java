@@ -25,47 +25,75 @@ public class TakeOut extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     RemoteOrderCustomer remoteOrderCustomer;
-    Store store = JdbcUtil.getStoreDetails();
+    Store store;
     HomePage homePage;
     OrdersPage ordersPage;
     LandingPage landingPage;
-    PlaceRandomOrder placeRandomOrder;
     Menu menu;
     String strMenuCategoryName="All Sandwiches";
-    String strTaxCategoryName="HOT";
+    String strTaxCategoryName="COLD";
     String strOrderType="INDIVIDUAL";
 
 @Test
     //DFA-9359
-    public void takeOutNoTaxforCA() throws Exception {
-        Store store = JdbcUtil.getStoreDetails("CA",false,true);
+    public void takeOutHotItemsCA() throws Exception {
+        store = JdbcUtil.getStoreDetails("CA",true,true);
         mobileUser=setCountryName();
         mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore(store.getZipCode());
         Logz.step("Getting " + strMenuCategoryName + " Menu Details");
         menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
-        Logz.step("Received " + menu.getProductName() + " menu item");
-        ordersPage.placeOrderForHotColdItemsInDineIn("All Sandwiches", mobileUser, store.getAddress1(),menu);
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
+        ordersPage.placeOrderForHotColdItemsInToGo(strMenuCategoryName, mobileUser, store.getAddress1(),menu);
         homePage.validateTokens(remoteOrderCustomer);
-
     }
+
+    @Test
+    public void takeOutColdItemsCA() throws Exception {
+        store = JdbcUtil.getStoreDetails("CA",true,true);
+        mobileUser=setCountryName();
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore(store.getZipCode());
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
+        ordersPage.placeOrderForHotColdItemsInToGo(strMenuCategoryName, mobileUser, store.getAddress1(),menu);
+        homePage.validateTokens(remoteOrderCustomer);
+    }
+
     //DFA-9483
     @Test
-    public void takeOutNoTaxforOH() throws Exception {
-        Store store = JdbcUtil.getStoreDetails("OH",false,true);
+    public void takeOutHotItemsOH() throws Exception {
+        store = JdbcUtil.getStoreDetails("OH",true,true);
         mobileUser=setCountryName();
         mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore(store.getZipCode());
         Logz.step("Getting " + strMenuCategoryName + " Menu Details");
         menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
-        Logz.step("Received " + menu.getProductName() + " menu item");
-        ordersPage.placeOrderForHotColdItemsInDineIn("All Sandwiches", mobileUser, store.getAddress1(),menu);
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
+        ordersPage.placeOrderForHotColdItemsInToGo(strMenuCategoryName, mobileUser, store.getAddress1(),menu);
         homePage.validateTokens(remoteOrderCustomer);
+    }
 
+    @Test
+    public void takeOutColdItemsOH() throws Exception {
+        store = JdbcUtil.getStoreDetails("OH",true,true);
+        mobileUser=setCountryName();
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore(store.getZipCode());
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
+        ordersPage.placeOrderForHotColdItemsInToGo(strMenuCategoryName, mobileUser, store.getAddress1(),menu);
+        homePage.validateTokens(remoteOrderCustomer);
     }
 
     @Test
@@ -101,29 +129,63 @@ public class TakeOut extends SubwayAppBaseTest {
 
     //DFA-10485
     @Test
-    public void FreshValueMealWithCoffeeCA() throws Exception {
-        //ordersPage.validateTax();
-        mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        //mobileUser.setEmailAddress("johnfrancis@qasubway.com");
-        //mobileUser.setPassword("Subway1234");
+    public void takeOutFreshMealWithHotDrinksCA() throws Exception {
+        store = JdbcUtil.getStoreDetails("CA",true,true);
+        mobileUser=setCountryName();
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        ordersPage=homePage.findStore("95932");
-        ordersPage.placeRandomOrderFreshValueMeal("All Sandwiches", mobileUser, "1031 Bridge St");
+        ordersPage=homePage.findStore(store.getZipCode());
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
+        ordersPage.placeRandomOrderFreshValueMeal("All Sandwiches", mobileUser, store.getAddress1(),menu);
+        ordersPage.verifyOrderConformationReceipt();
+    }
+
+
+    @Test
+    public void takeOutFreshMealWithHotDrinksOH() throws Exception {
+        store = JdbcUtil.getStoreDetails("OH",true,true);
+        mobileUser=setCountryName();
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore(store.getZipCode());
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
+        ordersPage.placeRandomOrderFreshValueMeal("All Sandwiches", mobileUser, store.getAddress1(),menu);
         ordersPage.verifyOrderConformationReceipt();
     }
     //DFA-10536
     @Test
-    public void FreshValueMealWithCoffeeOH() throws Exception {
-        store= JdbcUtil.getStateSpecificStoreDetails("OH",true);
-        //ordersPage.validateTax();
-        mobileUser = new MobileUser(false, Country.UnitedStates, 10846);
-        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
+    public void takeOutFreshMealWithColdDrinksCA() throws Exception {
+        store = JdbcUtil.getStoreDetails("CA",true,true);
+        mobileUser=setCountryName();
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        ordersPage=homePage.findStore("43056");
-        ordersPage.placeRandomOrderFreshValueMeal("All Sandwiches", mobileUser, "1134 Hebron Rd., Heath");
+        ordersPage=homePage.findStore(store.getZipCode());
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
+        ordersPage.placeRandomOrderFreshValueMeal("All Sandwiches", mobileUser, store.getAddress1(),menu);
+        ordersPage.verifyOrderConformationReceipt();
+    }
+
+    @Test
+    public void takeOutFreshMealWithColdDrinksOH() throws Exception {
+        store = JdbcUtil.getStoreDetails("OH",true,true);
+        mobileUser=setCountryName();
+        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        ordersPage=homePage.findStore(store.getZipCode());
+        Logz.step("Getting " + strMenuCategoryName + " Menu Details");
+        menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
+        Logz.step("Received " + menu.getProductName() + " menu item from "+strTaxCategoryName+" category");
+        ordersPage.placeRandomOrderFreshValueMeal("All Sandwiches", mobileUser, store.getAddress1(),menu);
         ordersPage.verifyOrderConformationReceipt();
     }
 
