@@ -19,6 +19,7 @@ import kobieApi.pojos.Summaries;
 import kobieApi.serviceUtils.KobieClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.Enums.MyLoyalty;
@@ -69,6 +70,8 @@ String platform = SubwayAppBaseTest.platformName;
     abstract MobileLabel getTokenValue() throws Exception;
     abstract MobileLabel getZeroTokenMessage() throws Exception;
     abstract MobileLabel getCertificatesMessage() throws Exception;
+    abstract MobileLabel gethomepagecertificatemessage() throws Exception;
+
     abstract MobileLabel getTokenMessage() throws Exception;
     abstract MobileLabel getRedeemText() throws Exception;
     abstract MobileButton getTellMeHow() throws Exception;
@@ -332,7 +335,11 @@ public List<WebElement> getElements(By locator) {
     }
     public int certificatescount() throws Exception
     {
-        if(getCertificatesMessage().getControl().isDisplayed())
+
+
+
+        int rewardcertcount = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/cart_item_name")).size();
+        if(rewardcertcount>0)
         {
             Logz.step("Verifying certificate count has started");
             String cert[]=getCertificatesMessage().getText().split(" ");
@@ -518,6 +525,7 @@ public YourOrderPage goToYourOrderPage() throws Exception{
 }
     public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user) throws Exception{
         Logz.step("##### Asserting tokens and certificates in home Page#####");
+        //pojos.MyLoyalty actualMyLoyalty = getActualMyLoyaltyDetails();
         user = MobileApi.getLoyaltyLookUp(user);
         if(user.getConfirmToken()!= null) {
             Assert.assertEquals(user.getConfirmToken(), Integer.parseInt(tokenValue()));
@@ -531,6 +539,9 @@ public YourOrderPage goToYourOrderPage() throws Exception{
 
         return UserProfilePage.get((AndroidDriver)driver);
     }
+
+
+
     public MyWayRewards goToMyWayRewardsPage() throws Exception{
 
         Logz.step("##### Navigating to My Way Rewards Page ...... #####");
