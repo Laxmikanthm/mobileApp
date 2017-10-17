@@ -19,7 +19,6 @@ import kobieApi.pojos.Summaries;
 import kobieApi.serviceUtils.KobieClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.Enums.MyLoyalty;
@@ -70,8 +69,6 @@ String platform = SubwayAppBaseTest.platformName;
     abstract MobileLabel getTokenValue() throws Exception;
     abstract MobileLabel getZeroTokenMessage() throws Exception;
     abstract MobileLabel getCertificatesMessage() throws Exception;
-    abstract MobileLabel gethomepagecertificatemessage() throws Exception;
-
     abstract MobileLabel getTokenMessage() throws Exception;
     abstract MobileLabel getRedeemText() throws Exception;
     abstract MobileButton getTellMeHow() throws Exception;
@@ -143,8 +140,8 @@ public List<WebElement> getElements(By locator) {
              else {
                  By offerElement=By.xpath("//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout[@index="+i+"]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView");
                  List<WebElement> elements1=getElements(offerElement);
-                 WebElement ele = elements1.get(0);
-                 MobileElement element = (MobileElement) ele;
+                 WebElement element = elements1.get(0);
+                 MobileElement ele = (MobileElement) element;
                 // element.swipe(SwipeElementDirection.LEFT, 500);
                  swipeLeft(ele);
              }
@@ -154,9 +151,12 @@ public List<WebElement> getElements(By locator) {
     }
     public void swipeLeft(WebElement element)
     {
-        size=driver.manage().window().getSize();
-        int x1 = (int) (size.width * 0.20);
-        action.longPress(element).moveTo(x1,580).release().perform();
+        size = driver.manage().window().getSize();
+        int width = element.getSize().getWidth();
+        int height = element.getSize().getHeight();
+        TouchAction action = new TouchAction((MobileDriver) driver);
+        action.longPress(element.getLocation().getX() + (int) (width + 500), element.getLocation().getY()).moveTo(100, 1500).release().perform();
+
 
     }
 
@@ -335,11 +335,7 @@ public List<WebElement> getElements(By locator) {
     }
     public int certificatescount() throws Exception
     {
-
-
-
-        int rewardcertcount = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/cart_item_name")).size();
-        if(rewardcertcount>0)
+        if(getCertificatesMessage().getControl().isDisplayed())
         {
             Logz.step("Verifying certificate count has started");
             String cert[]=getCertificatesMessage().getText().split(" ");
@@ -523,24 +519,6 @@ public YourOrderPage goToYourOrderPage() throws Exception{
     Logz.step("##### Navigated to your Order Page ...... #####");
     return YourOrderPage.get((AndroidDriver)driver);
 }
-    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user) throws Exception{
-        Logz.step("##### Asserting tokens and certificates in home Page#####");
-        //pojos.MyLoyalty actualMyLoyalty = getActualMyLoyaltyDetails();
-        user = MobileApi.getLoyaltyLookUp(user);
-        if(user.getConfirmToken()!= null) {
-            Assert.assertEquals(user.getConfirmToken(), Integer.parseInt(tokenValue()));
-        }
-        else{Logz.step("Tokens are not available");}
-        Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(),certificatescount());
-        //assert n# token and n# certificate in home page
-        //user MyLoyalty object for assertion
-        //Get expected data from API, Get actual data from mobile ui
-        Logz.step("##### Asserted tokens and certificates in home Page#####");
-
-        return UserProfilePage.get((AndroidDriver)driver);
-    }
-
-
 
     public MyWayRewards goToMyWayRewardsPage() throws Exception{
 
@@ -580,6 +558,26 @@ public YourOrderPage goToYourOrderPage() throws Exception{
             throw new Exception(ex);
         }
     }
+    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user, boolean tokenCertificatesAdded) throws Exception{
+        Logz.step("##### Asserting tokens and certificates in home Page#####");
+      /*  user = MobileApi.getLoyaltyLookUp(user);
+        if(user.getConfirmToken()!= null) {
+            Assert.assertEquals(user.getConfirmToken(), Integer.parseInt(tokenValue()));
+        }
+        else{Logz.step("Tokens are not available");}
+        Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(),certificatescount());*/
+        //assert n# token and n# certificate in home page
+        //user MyLoyalty object for assertion
+        //Get expected data from API, Get actual data from mobile ui
+
+
+        MyWayRewards myWayRewards = goToMyWayRewardsPage();
+        myWayRewards.assertTokensAndCertificates(user, tokenCertificatesAdded);
+        Logz.step("##### Asserted tokens and certificates in home Page#####");
+
+        return UserProfilePage.get((AndroidDriver)driver);
+    }
+
 }
 
 

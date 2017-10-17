@@ -61,7 +61,6 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
                 Assert.assertEquals(rewadrsAmtapi, rewardsAmtui);
                 Logz.step("Loyalty display asserted");
             }
-
             else{Logz.step("rewards not available");}
             //user MyLoyalty object for assertion
             //Get expected data from API, Get actual data from mobile ui

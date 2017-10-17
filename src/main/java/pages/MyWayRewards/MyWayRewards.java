@@ -25,15 +25,11 @@ import org.testng.Assert;
 import pages.HomePage.HomePage;
 import pages.LoginPage.LoginPageAndroid;
 import pages.LoginPage.LoginPageIOS;
-import pages.UserProfilePage.UserProfilePage;
-import pojos.PurchaseHistoryDetails;
 import pojos.user.RemoteOrderCustomer;
 import org.openqa.selenium.interactions.touch.FlickAction;
 import util.MobileApi;
-import utils.Logz;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,8 +60,6 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     abstract MobileLabel gettokensmyreward() throws Exception;
 
     abstract MobileButton getToolbarClose() throws Exception;
-
-    abstract MobileLabel getCertsmyreward() throws Exception;
 
     Dimension size;
 
@@ -166,9 +160,7 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     }
 
     public HomePage assertTokensAndCertificates(RemoteOrderCustomer user,boolean tokenCertificatesAdded) throws Exception {
-
-       /* try {
-            user = MobileApi.getLoyaltyLookUp(user);
+    /*    user = MobileApi.getLoyaltyLookUp(user);
             String tokencount = gettokensmyreward().getText();
               if (user.getConfirmToken() != null) {
                    Assert.assertEquals(user.getConfirmToken(), tokencount);
@@ -183,14 +175,11 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
                      } else {
                              Logz.step("Certificates not avalable");
 
-                            }
+                            }*/
 
+        return HomePage.get((AppiumDriver) driver);
 
-        }
-        catch(Exception ex){
-            throw new Exception(ex);
-        }*/
-        return HomePage.get((AndroidDriver)driver);
     }
+
 
 }

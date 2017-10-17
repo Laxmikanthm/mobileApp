@@ -47,7 +47,6 @@ public abstract class ManageRewardsPage<T extends AppiumDriver> extends MobileBa
         int certficateamount = Integer.parseInt(getcertificatemessage().getText());
         Assert.assertEquals(rewadrsAmtapi,certficateamount);*/
 
-
          //user MyLoyalty object for assertion
         //Get expected data from API, Get actual data from mobile ui
         return YourOrderPage.get((AppiumDriver)driver);
