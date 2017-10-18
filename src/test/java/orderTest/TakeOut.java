@@ -3,6 +3,7 @@ package orderTest;
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.pojos.Menu;
 import cardantApiFramework.pojos.Store;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
@@ -12,6 +13,7 @@ import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
+import pages.PurchaseHistoryPage.PurchaseHistoryPage;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
@@ -24,7 +26,7 @@ import utils.Logz;
 public class TakeOut extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
-    RemoteOrderCustomer remoteOrderCustomer;
+    RemoteOrderCustomer user;
     Store store = JdbcUtil.getStoreDetails();
     HomePage homePage;
     OrdersPage ordersPage;
@@ -34,6 +36,7 @@ public class TakeOut extends SubwayAppBaseTest {
     String strMenuCategoryName="All Sandwiches";
     String strTaxCategoryName="HOT";
     String strOrderType="INDIVIDUAL";
+    PurchaseHistoryPage purchaseHistoryPage;
 
 @Test
     //DFA-9359
@@ -48,7 +51,7 @@ public class TakeOut extends SubwayAppBaseTest {
         menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
         Logz.step("Received " + menu.getProductName() + " menu item");
         ordersPage.placeOrderForHotColdItemsInDineIn("All Sandwiches", mobileUser, store.getAddress1(),menu);
-        homePage.validateTokens(remoteOrderCustomer);
+        homePage.validateTokens(user);
 
     }
     //DFA-9483
@@ -64,7 +67,7 @@ public class TakeOut extends SubwayAppBaseTest {
         menu=JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()),strMenuCategoryName,strTaxCategoryName,strOrderType);
         Logz.step("Received " + menu.getProductName() + " menu item");
         ordersPage.placeOrderForHotColdItemsInDineIn("All Sandwiches", mobileUser, store.getAddress1(),menu);
-        homePage.validateTokens(remoteOrderCustomer);
+        homePage.validateTokens(user);
 
     }
 
@@ -73,7 +76,7 @@ public class TakeOut extends SubwayAppBaseTest {
     public void kidsValueMealTaxCA() throws Exception {
         //ordersPage.validateTax();
         mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        user= RegisterUser.registerAUserWithoutCardLink(mobileUser);
         // mobileUser.setEmailAddress("johnfrancis@qasubway.com");
         //mobileUser.setPassword("Subway1234");
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -89,7 +92,7 @@ public class TakeOut extends SubwayAppBaseTest {
         //ordersPage.validateTax();
         store= JdbcUtil.getStateSpecificStoreDetails("OH",true);
         mobileUser = new MobileUser(false, Country.UnitedStates, 10846);
-        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        user= RegisterUser.registerAUserWithoutCardLink(mobileUser);
         // mobileUser.setEmailAddress("johnfrancis@qasubway.com");
         //mobileUser.setPassword("Subway1234");
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -104,7 +107,7 @@ public class TakeOut extends SubwayAppBaseTest {
     public void FreshValueMealWithCoffeeCA() throws Exception {
         //ordersPage.validateTax();
         mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        user= RegisterUser.registerAUserWithoutCardLink(mobileUser);
         //mobileUser.setEmailAddress("johnfrancis@qasubway.com");
         //mobileUser.setPassword("Subway1234");
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
@@ -119,7 +122,7 @@ public class TakeOut extends SubwayAppBaseTest {
         store= JdbcUtil.getStateSpecificStoreDetails("OH",true);
         //ordersPage.validateTax();
         mobileUser = new MobileUser(false, Country.UnitedStates, 10846);
-        remoteOrderCustomer= RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        user= RegisterUser.registerAUserWithoutCardLink(mobileUser);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
         ordersPage=homePage.findStore("43056");
@@ -131,34 +134,40 @@ public class TakeOut extends SubwayAppBaseTest {
     @Test
 //DFA-10486
     public void certificateDiscountwithHotItemsCA() throws Exception{
-        mobileUser = new MobileUser(false, Country.UnitedStates, 10808);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        store= JdbcUtil.getStateSpecificStoreDetails("CA",true);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        RemoteOrder remoteOrder = remoteOrderCustomer.getCart().getRemoteOrder();
-        remoteOrderCustomer=remoteOrder.getCustomer();
+        mobileUser = landingPage.registerUser();
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        user = remoteOrder.getCustomer();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
-        MyWayRewards myWayRewards=homePage.getTokensSparkle();
-        myWayRewards.getSwipe();
-        ordersPage=homePage.findStore("95932");
-        ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1031 Bridge St");
+        MyWayRewards myWayRewards = homePage.getTokensSparkle();
+        user = myWayRewards.validateTokensandCerts(homePage, user);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        CartData.createNewCart(user, store.getLocationCode());
+        homePage=ordersPage.addingHotandColdToCart(store,"TakeOut");
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 
     }
     //DFA-10537
     @Test
     public void certificateDiscountwithHotItemsOH() throws Exception{
         store= JdbcUtil.getStateSpecificStoreDetails("OH",true);
-        mobileUser = new MobileUser(false, Country.UnitedStates, 10846);
-        RegisterUser.registerAUserWithoutCardLink(mobileUser);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
-        RemoteOrder remoteOrder = remoteOrderCustomer.getCart().getRemoteOrder();
-        remoteOrderCustomer=remoteOrder.getCustomer();
+        mobileUser = landingPage.registerUser();
+        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        user = remoteOrder.getCustomer();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
-        MyWayRewards myWayRewards=homePage.getTokensSparkle();
-        myWayRewards.getSwipe();
-        ordersPage=homePage.findStore("43056");
-        ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1134 Hebron Rd., Heath");
+        MyWayRewards myWayRewards = homePage.getTokensSparkle();
+        user = myWayRewards.validateTokensandCerts(homePage, user);
+        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
+        CartData.createNewCart(user, store.getLocationCode());
+        homePage=ordersPage.addingHotandColdToCart(store,"TakeOut");
+        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        //ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1134 Hebron Rd., Heath");
 
     }
 

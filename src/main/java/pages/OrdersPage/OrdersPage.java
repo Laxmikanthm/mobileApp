@@ -1745,12 +1745,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         getStartOrderButton().click();
 
     }
-     public HomePage addingHotandColdToCart(Store store)throws Exception
+     public HomePage addingHotandColdToCart(Store store,String type)throws Exception
     {
         getStoreClick(store.getAddress1());
         cardantApiFramework.pojos.Menu menu=getMenuDetails(store,Tax.strTaxHotCategoryName);
         addingOrdertoBag(pages.Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
-        getDineIn().click();
+        if(type.equals("DineIn")) {
+            getDineIn().click();
+        }
         goToFullMenu();
         menu=getMenuDetails(store,Tax.strTaxColdCategoryName);
         addingOrdertoBag(pages.Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());

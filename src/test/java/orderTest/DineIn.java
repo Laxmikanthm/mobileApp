@@ -104,12 +104,12 @@ public class DineIn extends SubwayAppBaseTest{
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         user = remoteOrder.getCustomer();
-        remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
+        user = MobileApi.placeOrderWithNoOfToken(user, 300);
         MyWayRewards myWayRewards = homePage.getTokensSparkle();
         user = myWayRewards.validateTokensandCerts(homePage, user);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         CartData.createNewCart(user, store.getLocationCode());
-        homePage=ordersPage.addingHotandColdToCart(store);
+        homePage=ordersPage.addingHotandColdToCart(store,"DineIn");
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 
@@ -119,7 +119,7 @@ public class DineIn extends SubwayAppBaseTest{
     //DFA-10538
     @Test
     public void certDiscountwithAllItemsInDineInOH() throws Exception {
-        store= JdbcUtil.getStateSpecificStoreDetails("OH",true);
+        store= JdbcUtil.getStoreDetails("OH",true,true);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser, PaymentMethod.CREDITCARD);
@@ -130,7 +130,7 @@ public class DineIn extends SubwayAppBaseTest{
         user = myWayRewards.validateTokensandCerts(homePage, user);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         CartData.createNewCart(user, store.getLocationCode());
-        homePage=ordersPage.addingHotandColdToCart(store);
+        homePage=ordersPage.addingHotandColdToCart(store,"DineIn");
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 
