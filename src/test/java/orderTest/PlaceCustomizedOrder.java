@@ -11,11 +11,12 @@ import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.OrdersPage.OrdersPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
+import pojos.user.MobileUser;
 import pojos.user.RemoteOrderCustomer;
 
 public class PlaceCustomizedOrder extends SubwayAppBaseTest {
 
-    RemoteOrderCustomer mobileUser;
+    MobileUser mobileUser;
     Store store = JdbcUtil.getLoyaltyStoreDetails();
     LandingPage landingPage;
     OrdersPage ordersPage;
