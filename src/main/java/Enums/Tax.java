@@ -6,7 +6,11 @@ package Enums;
 public enum  Tax {
     strTaxHotCategoryName("HOT"),
     strTaxColdCategoryName("COLD"),
-    strOrderTypeIndividual("INDIVIDUAL");
+    strOrderTypeIndividual("INDIVIDUAL"),
+    DINEIN("DineIn"),
+    TAKEOUTE("TakeOut");
+
+
 
     private final String stringValue;
     private Tax(String stringValue) {
