@@ -5,14 +5,12 @@ import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import org.testng.annotations.Test;
-import pages.Enums.BreadSize;
-import pages.Enums.Menu;
+import Enums.BreadSize;
+import Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
-import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
-import pages.UserProfilePage.UserProfilePage;
 import pojos.user.RemoteOrderCustomer;
 
 public class PlaceDefaultOrder extends SubwayAppBaseTest {
@@ -29,9 +27,8 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     public void testPlaceDefaultOrderAllSandwichesFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-      // mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(Menu.AllSandwiches, BreadSize.FOOTLONG);
+        homePage = ordersPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -41,7 +38,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(Menu.AllSandwiches, BreadSize.SIXINCH);
+        homePage = ordersPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.SIXINCH);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -50,9 +47,8 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     public void testPlaceDefaultOrderSubwayFreshFitFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-        // mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(Menu.SUBWAYFreshFit, BreadSize.FOOTLONG);
+        homePage = ordersPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.FOOTLONG);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -62,17 +58,19 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(Menu.SUBWAYFreshFit, BreadSize.SIXINCH);
+        homePage = ordersPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.SIXINCH);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
+
+
 
     @Test(enabled = false) //bug: DFA-8911
     public void testPlaceDefaultOrderBreakfastFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(Menu.Breakfast, BreadSize.FOOTLONG);
+        homePage = ordersPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.FOOTLONG);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -82,7 +80,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(Menu.Breakfast, BreadSize.SIXINCH);
+        homePage = ordersPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.SIXINCH);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -91,9 +89,8 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     public void testPlaceDefaultOrderChoppedSalads() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
-       // mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(Menu.ChoppedSalads, BreadSize.NONE);
+        homePage = ordersPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("ChoppedSalads"), BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -103,7 +100,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(Menu.KidsMeal, BreadSize.NONE);
+        homePage = ordersPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("KidsMeal"), BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -113,7 +110,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(Menu.Sides, BreadSize.NONE);
+        homePage = ordersPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("SidesMenu"), BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -123,7 +120,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(Menu.Drinks, BreadSize.NONE);
+        homePage = ordersPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("DrinksMenu"), BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
@@ -139,10 +136,16 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     }
     @Test(enabled = false)
     public void testPlaceDefaultOrderSubOfTheDayFootLong() throws Exception {
+        //first check point if the store has sub of the day menu
+        //if yes, proceed further for place order
+        //if no, print a log saying the menu is not available and come out of the test
 
     }
     @Test(enabled = false)
     public void testPlaceDefaultOrderSubOfTheDaySixInch() throws Exception {
+        //first check point if the store has sub of the day menu
+        //if yes, proceed further for place order
+        //if no, print a log saying the menu is not available and come out of the test
 
     }
     ////homePage = ordersPage.goToHomePage();

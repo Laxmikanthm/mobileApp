@@ -7,8 +7,6 @@ import cardantApiFramework.utils.JdbcUtil;
 import enums.PaymentMethod;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.Enums.BreadSize;
-import pages.Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.ManageRewardsPage.ManageRewardsPage;
@@ -22,7 +20,6 @@ import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
-import userProfileTest.UserProfile;
 import util.MobileApi;
 
 /**
@@ -55,13 +52,13 @@ public class Certificates extends SubwayAppBaseTest {
         RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
         user = remoteOrder.getCustomer();
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
-
         MyWayRewards myWayRewards = homePage.getTokensSparkle();
         user = myWayRewards.validateTokensandCerts(homePage, user);
         homePage.certsCount();
         OrdersPage ordersPage = homePage.findStore(store.getZipCode());
         CartData.createNewCart(user, store.getLocationCode());
         ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches", mobileUser, store.getAddress1());
+        homePage.assertTokensCertificates(user, true);
         Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(), homePage.certCount);
         Assert.assertEquals(String.valueOf(ordersPage.tokens), homePage.tokenValue().toString());//validating tokens
         menuPage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
@@ -82,8 +79,6 @@ public class Certificates extends SubwayAppBaseTest {
         remoteOrder.placeRandomOrderForGivenNumberOfTokens(200, PaymentMethod.CREDITCARD);
         MyWayRewards myWayRewards = homePage.getTokensSparkle();
         myWayRewards.validateTokensandCerts(homePage, user);
-
-       /* user = MobileApi.getLoyaltyLookUp(user);
         //assert zero token and no certificate in home page
         user = MobileApi.placeOrderWithNoOfToken(user, 300);
         //assert n# token and n# certificate in home page
@@ -142,12 +137,12 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, false);
         user = MobileApi.placeOrderWithNoOfToken(user, 300);
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, true);
         ordersPage = homePage.selectStore(store);
         homePage = ordersPage.placeRandomOrderMyLoyalty();
-        userProfilePagePage = homePage.assertTokensCertificates(user);
+        userProfilePagePage = homePage.assertTokensCertificates(user, true);
         purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 
@@ -158,11 +153,12 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, false);
         user = MobileApi.placeOrderWithNoOfToken(user, 300);
-        homePage.assertTokensCertificates(user);
+        myWayRewards = homePage.getTokensSparkle();
+        homePage.assertTokensCertificates(user, true);
         myWayRewards = homePage.goToMyWayRewardsPage();
-        homePage = myWayRewards.assertTokensAndCertificates(user);
+        homePage = myWayRewards.assertTokensAndCertificates(user,true);
         ordersPage = homePage.selectStore(store);
         yourOrderPage = ordersPage.selectItem();
         yourOrderPage.assertLoyaltyDisplay();
@@ -174,12 +170,12 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, false);
         user = MobileApi.placeOrderWithNoOfToken(user, 500);
-        homePage.assertTokensCertificates(user);
+        homePage.assertTokensCertificates(user, true);
         ordersPage = homePage.selectStore(store);
         homePage = ordersPage.placeRandomOrderMyLoyalty();
-        userProfilePagePage = homePage.assertTokensCertificates(user);
+        userProfilePagePage = homePage.assertTokensCertificates(user, true);
         purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 

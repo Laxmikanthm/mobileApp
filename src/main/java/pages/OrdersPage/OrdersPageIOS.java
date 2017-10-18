@@ -467,6 +467,32 @@ public class OrdersPageIOS extends OrdersPage {
         IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/check_details"), "See details link");
         return button;
     }
+
+    public MobileLabel getSides() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
+    }
+
+    public MobileLabel getFlavourDropDown() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
+    }
+
+    public MobileLabel getLiquids() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
+    }
+
+    public MobileButton getDrinksChange() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/check_details"), "See details link");
+        return button;
+    }
+    public MobileButton getSidesChange() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/check_details"), "See details link");
+        return button;
+    }
+
+
     public MobileButton getFullMenu() throws Exception {
         IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/view_full_menu_text"), "See FullMenu Details");
         return button;

@@ -21,7 +21,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import pages.Enums.MyLoyalty;
 import pages.MenuPage.MenuPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
@@ -335,8 +334,8 @@ public List<WebElement> getElements(By locator) {
     }
     public int certificatescount() throws Exception
     {
-        if(getCertificatesMessage().getControl().isDisplayed())
-        {
+        int certcount=driver.findElementsById("com.subway.mobile.subwayapp03:id/txt_loyalty_reward_count").size();
+        if(certcount>0){
             Logz.step("Verifying certificate count has started");
             String cert[]=getCertificatesMessage().getText().split(" ");
             certValue=Integer.parseInt(cert[0].substring(1));
@@ -519,21 +518,7 @@ public YourOrderPage goToYourOrderPage() throws Exception{
     Logz.step("##### Navigated to your Order Page ...... #####");
     return YourOrderPage.get((AndroidDriver)driver);
 }
-    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user) throws Exception{
-        Logz.step("##### Asserting tokens and certificates in home Page#####");
-        user = MobileApi.getLoyaltyLookUp(user);
-        if(user.getConfirmToken()!= null) {
-            Assert.assertEquals(user.getConfirmToken(), Integer.parseInt(tokenValue()));
-        }
-        else{Logz.step("Tokens are not available");}
-        Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(),certificatescount());
-        //assert n# token and n# certificate in home page
-        //user MyLoyalty object for assertion
-        //Get expected data from API, Get actual data from mobile ui
-        Logz.step("##### Asserted tokens and certificates in home Page#####");
 
-        return UserProfilePage.get((AndroidDriver)driver);
-    }
     public MyWayRewards goToMyWayRewardsPage() throws Exception{
 
         Logz.step("##### Navigating to My Way Rewards Page ...... #####");
@@ -572,6 +557,23 @@ public YourOrderPage goToYourOrderPage() throws Exception{
             throw new Exception(ex);
         }
     }
+    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user, boolean tokenCertificatesAdded) throws Exception{
+          Logz.step("##### Asserting tokens and certificates in home Page#####");
+           user = MobileApi.getLoyaltyLookUp(user);
+        Assert.assertEquals(user.getConfirmToken(), Integer.parseInt(tokenValue()));
+           Logz.step("Tokens asserted");
+        Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(),certsCount());
+            Logz.step("Certificates asserted");
+        //assert n# token and n# certificate in home page
+        //user MyLoyalty object for assertion
+        //Get expected data from API, Get actual data from mobile ui
+
+        MyWayRewards myWayRewards = goToMyWayRewardsPage();
+        myWayRewards.assertTokensAndCertificates(user, tokenCertificatesAdded);
+        Logz.step("##### Asserted tokens and certificates in home Page#####");
+        return UserProfilePage.get((AndroidDriver)driver);
+    }
+
 }
 
 

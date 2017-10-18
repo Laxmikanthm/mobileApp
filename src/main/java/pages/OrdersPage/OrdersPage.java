@@ -7,7 +7,6 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
-import cardantApiFramework.serviceUtilities.cardantClientV1.dto.accountDTO.OrderSummary;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
 import io.appium.java_client.MobileDriver;
@@ -23,15 +22,13 @@ import org.testng.Assert;
 import pages.AddCardPage.AddCardPage;
 import pages.CommonElements.CommonElements;
 import pages.CustomizePage.CustomizePage;
-import pages.Enums.BreadSize;
-import pages.Enums.Menu;
-import pages.Enums.Tax;
+import Enums.BreadSize;
+import Enums.Menu;
+import Enums.Tax;
 import pages.HomePage.HomePage;
 import pages.MenuPage.MenuPage;
 import pages.OffersPage.OffersPage;
 import pages.OrderConfirmationPage.OrderConfirmationPage;
-import pages.PurchaseHistoryPage.PurchaseHistoryPage;
-import pages.UserProfilePage.UserProfilePage;
 import pages.YourOrderPage.YourOrderPage;
 import pojos.OfferDetails;
 import pojos.Orders.Order;
@@ -201,6 +198,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileLabel getOrderTotalAmount() throws Exception;
 
     abstract MobileButton getDineIn() throws Exception;
+    abstract MobileButton getDrinksChange() throws Exception;
+    abstract MobileButton getSidesChange() throws Exception;
+    abstract MobileLabel getSides() throws Exception;
+    abstract MobileLabel getLiquids() throws Exception;
+    abstract MobileLabel getFlavourDropDown() throws Exception;
 
     Dimension size;
 
@@ -238,6 +240,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By coffee12oz = By.partialLinkText("12 oz Coffee");
     By moreDrinks = By.id("drinks");
     By fullMenu=By.id("view_full_menu_text");
+    By makeItAMeal = By.id("make_it_a_meal_header");
 
 
     Random rn = new Random();
@@ -388,20 +391,34 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
 
 
-    public void placeRandomOrderFreshValueMeal(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
+    public void placeRandomOrderFreshValueMeal(String menuItem, MobileUser mobileUser, String storeName, cardantApiFramework.pojos.Menu menu) throws Exception {
         try {
             remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(String.valueOf(menuItem));
             getDirections().isReady();
             HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
             tokens = Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
-            scrollAndClick(coldCutCombo, order.getCart().getProductDetail().getProductClass().getName(), "Up");
-            getAddToBag().isReady();
+            String[] strMenuItemName =menu.getProductName().split(" ",2);
+            scrollAndClick(categoryLocator, menu.getProductClassGroupName(), "Up");
+            scrollAndClick(categoryLocator, strMenuItemName[1], "Up");
+            if ((!strMenuItemName[0].contains("12")) || (!strMenuItemName[0].contains("FOOTLONG"))){
+                getSixInchOption().click();
+            }
             getAddToBag().click();
-            scrollAndClick(moreDrinks, "Drinks", "Up");
+            scrollToElement(makeItAMeal,0.9,0.2);
+            getMakeItAMeal().click();
+            String aValue = getDrinks().getText();
+            getDrinksChange().click();
+            //swipe Left side
+            getFlavourDropDown();
+            //select item from dropdown
+            getAddToBag();
+            verifyTaxValueForHotColdItem();
+            getPlaceOrder().click();
+            getGotIt().click();
+            /*scrollAndClick(moreDrinks, "Drinks", "Up");
             getDrinks().isReady();
             swipe(coffee12oz, "12 oz Coffee", "Right");
             getAddToBag().click();
@@ -416,7 +433,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
-            getProfile().isReady();
+            getProfile().isReady();*/
             //return specific page
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -1688,22 +1705,37 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         Assert.assertEquals(0.00, taxPrice);
     }
 
-    public void verifyTaxValueForDineIn() throws Exception {
-        scrollToElement(taxPriceLocator, 0.9, 0.5);
+    public void verifyTaxValueForHotColdItem() throws Exception {
+        scrollToElement(totalAmount, 0.9, 0.5);
         String aTaxVal = "0.00";
-        String eTaxVal = getTaxPrice().getText();
-        if (!eTaxVal.contains("0.00")){
-            Logz.step("Validated Tax for Hot/Cold item in DineIn successfully");
+        if (getTaxPrice().getControl().isDisplayed()){
+            String eTaxVal = getTaxPrice().getText();
+            if (!eTaxVal.contains(aTaxVal)){
+                Logz.step("Validated Tax for Hot/Cold item in DineIn/TakeOut successfully");
+                Assert.assertNotEquals(aTaxVal, eTaxVal);
+            }else {
+                Logz.step("Validated Tax for Cold item in TakeOut successfully");
+                Assert.assertEquals(aTaxVal, eTaxVal);
+            }
+        }else{
+            Logz.step("Validated Tax for Cold item in TakeOut successfully");
         }
+
+        /*if (!eTaxVal.contains("0.00")){
+            Logz.step("Validated Tax for Hot/Cold item in DineIn successfully");
+            Assert.assertNotEquals(aTaxVal, eTaxVal);
+        }else {
+            Logz.step("Validated Tax for Cold item in DineIn successfully");
+            Assert.assertEquals(aTaxVal, eTaxVal);
+        }*/
         //double taxPrice = Double.parseDouble(taxVal.substring(1));
-        Assert.assertNotEquals(aTaxVal, eTaxVal);
     }
 
-    public void verifyTaxValueForToGo() throws Exception {
+    public void verifyTaxValueForColdItem() throws Exception {
         scrollToElement(taxPriceLocator, 0.9, 0.5);
         String aTaxVal = "0.00";
         String eTaxVal = getTaxPrice().getText();
-        if (eTaxVal.contains(aTaxVal)){
+        if (!eTaxVal.contains(aTaxVal)){
             Logz.step("Validated Tax for Cold item in ToGo successfully");
         }
         //double taxPrice = Double.parseDouble(taxVal.substring(1));
@@ -1725,7 +1757,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
     public cardantApiFramework.pojos.Menu getMenuDetails(Store store,Tax tax)throws Exception
     {
-        menu= JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()), pages.Enums.Menu.AllSandwiches.toString(), tax.toString(),Tax.strOrderTypeIndividual.toString());
+        menu= JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()), Enums.Menu.AllSandwiches.toString(), tax.toString(),Tax.strOrderTypeIndividual.toString());
         return menu;
     }
 
@@ -1753,11 +1785,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         if(type.equals("DineIn")) {
             getDineIn().click();
         }
+        getDineIn().click();
         goToFullMenu();
         menu=getMenuDetails(store,Tax.strTaxColdCategoryName);
-        addingOrdertoBag(pages.Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
+        addingOrdertoBag(Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
         validateManageLocator();
-        verifyTaxValueForDineIn();
+        verifyTaxValueForHotColdItem();
         getPlaceOrder().click();
         Thread.sleep(20000);
         getTokens(remoteOrder);
@@ -1789,7 +1822,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         scrollToElement(fullMenu, 0.9, 0.5);
         getFullMenu().click();
     }
-    public void placeRandomOrderCertDiscountwithHotItems(Menu menuItem,BreadSize breadSize) throws Exception {
+    public void placeRandomOrderCertDiscountwithHotItems(String menuItem,BreadSize breadSize) throws Exception {
         try {
 
             itemName = menuItem.toString();
@@ -1883,7 +1916,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 Logz.error("DineIn button is not visible");
             }
             getDineIn().click();
-            verifyTaxValueForDineIn();
+            verifyTaxValueForHotColdItem();
             getPlaceOrder().isReady();
             getPlaceOrder().click();
             Thread.sleep(20000);
@@ -1913,13 +1946,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 getSixInchOption().click();
             }
             getAddToBag().click();
-            if(getDineIn().getControl().isDisplayed()){
-                Logz.step("DineIn button got displayed in Your Order page");
+            if(getToGo().getControl().isDisplayed()){
+                Logz.step("ToGo button got displayed in Your Order page");
             }else{
-                Logz.error("DineIn button is not visible");
+                Logz.error("ToGo button is not visible");
             }
             getToGo().click();
-            verifyTaxValueForToGo();
+            verifyTaxValueForHotColdItem();
             getPlaceOrder().isReady();
             getPlaceOrder().click();
             Thread.sleep(20000);
@@ -2021,12 +2054,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
     //##########################################################################################################################
-    public HomePage placeDefaultOrder(Menu menuCategories, BreadSize breadSize) throws Exception {
+    public HomePage placeDefaultOrder(String menuCategories, BreadSize breadSize) throws Exception {
         try {
 
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             //Get Menu Categories - click menuCategories
             itemName = menuCategories.toString();
+
             selectSpecificMenu(itemName);
             selectRandomProduct(breadSize);
             placeOrderAndAssert();
@@ -2037,7 +2071,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         return HomePage.get((AndroidDriver) driver);
 
     }
-    public HomePage placeCustomizedOrder(Menu menuCategories, HomePage homePage, BreadSize breadSize) throws Exception {
+    public HomePage placeCustomizedOrder(String menuCategories, BreadSize breadSize) throws Exception {
         try {
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             //Get Menu Categories - click menuCategories

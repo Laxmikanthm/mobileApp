@@ -85,6 +85,13 @@ public class HomePageAndroid extends HomePage {
         AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("CertificatesCount")+"']"), "Get Certificates Count");
         return token;
     }
+
+    public MobileLabel gethomepagecertificatemessage() throws Exception{
+        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/txt_loyalty_reward_count"), "Rewards certificate count");
+        return token;
+    }
+
+
     public MobileLabel getRedeemText() throws Exception{
         AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("RedeemText")+"']"), "Get zero Token Message from Dashboard");
         return token;

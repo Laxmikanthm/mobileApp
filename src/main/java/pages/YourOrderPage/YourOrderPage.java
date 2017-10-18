@@ -4,14 +4,21 @@ import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
+import cardantApiFramework.pojos.Store;
+import cardantApiFramework.utils.JdbcUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.HomePage.HomePage;
 import pages.HomePage.HomePageAndroid;
 import pages.HomePage.HomePageIOS;
 import pages.ManageRewardsPage.ManageRewardsPage;
 import pages.OrderConfirmationPage.OrderConfirmationPage;
+import pages.OrdersPage.OrdersPage;
+import util.MobileApi;
+import utils.Logz;
 
 public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePage {
     public YourOrderPage(AppiumDriver driver) {
@@ -28,6 +35,7 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
+  OrdersPage ordersPage;
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -38,14 +46,31 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
 
     }
     abstract MobileButton getPlaceOrder() throws Exception;
-
+    abstract MobileLabel getcertificatemessage() throws Exception;
 
 
     public OrderConfirmationPage assertLoyaltyDisplay() throws Exception{
-        //user MyLoyalty object for assertion
-        //Get expected data from API, Get actual data from mobile ui
-        getPlaceOrder().click();
-        return OrderConfirmationPage.get((AppiumDriver)driver);
+
+        try {
+
+           /* int rewardsamtpresence= driver.findElements(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout[3]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView[1]")).size();
+            if(rewardsamtpresence>0) {
+                int rewadrsAmtapi = ordersPage.rewardsValue();
+                int rewardsAmtui = Integer.parseInt(getcertificatemessage().getText());
+                Logz.step(getcertificatemessage().getText());
+                Assert.assertEquals(rewadrsAmtapi, rewardsAmtui);
+                Logz.step("Loyalty display asserted");
+            }
+            else{Logz.step("rewards not available");}
+            //user MyLoyalty object for assertion
+            //Get expected data from API, Get actual data from mobile ui
+            getPlaceOrder().click();*/
+            return OrderConfirmationPage.get((AppiumDriver) driver);
+        }
+        catch (Exception ex){
+            throw new Exception(ex);
+        }
+
     }
     public OrderConfirmationPage assertOrderSummaryInYourOrderPage() throws Exception{
         return OrderConfirmationPage.get((AppiumDriver)driver);

@@ -1,10 +1,8 @@
 package util;
 
-import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
-import cardantApiFramework.utils.JdbcUtil;
-import pages.Enums.BreadSize;
-import pages.Enums.Menu;
+import Enums.BreadSize;
+import Enums.Menu;
 import utils.Logz;
 
 import java.text.DecimalFormat;

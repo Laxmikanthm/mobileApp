@@ -33,4 +33,11 @@ public class MyWayRewardsIOS extends MyWayRewards {
         IOSButton tokenscount = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toolbar_close"), "ToolBar Close Button");
         return null;
     }
+
+
+
+    public MobileLabel getCertsmyreward() throws Exception {
+        IOSButton tokenscount = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toolbar_close"), "ToolBar Close Button");
+        return null;
+    }
 }

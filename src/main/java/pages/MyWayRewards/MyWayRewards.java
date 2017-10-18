@@ -13,6 +13,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import kobieApi.pojos.Certificates;
 import kobieApi.pojos.Loyalty;
 import kobieApi.pojos.Summaries;
 import kobieApi.serviceUtils.Kobie;
@@ -38,8 +39,6 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     public MyWayRewards(AppiumDriver driver) {
         super(driver);
     }
-
-    HomePage homePage;
 
 
     public static MyWayRewards get(AppiumDriver driver) throws Exception {
@@ -160,30 +159,51 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         return remoteOrderCustomer;
     }
 
-    public RemoteOrderCustomer validateTokensandCerts( RemoteOrderCustomer remoteOrderCustomer) throws Exception {
+    public HomePage assertTokensAndCertificates(RemoteOrderCustomer user,boolean tokenCertificatesAdded) throws Exception {
+    /*    user = MobileApi.getLoyaltyLookUp(user);
+            String tokencount = gettokensmyreward().getText();
+              if (user.getConfirmToken() != null) {
+                   Assert.assertEquals(user.getConfirmToken(), tokencount);
+                   Logz.step("tokens asserted");
+                   } else {
+                          Logz.step("Tokens are not available");
+                          }
+            int myrewardcertcount = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/rewards_count")).size();
+               if (myrewardcertcount > 0) {
+                     int myreardspagecertcount = Integer.parseInt(getCertsmyreward().getText());
+                     Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(), myreardspagecertcount);
+                     } else {
+                             Logz.step("Certificates not avalable");
 
-        getSwipe();
-        Thread.sleep(3000);
-        if (homePage.getTokens(remoteOrderCustomer) >= 200) {
-           /*String MdmId = remoteOrderCustomer.getGuestID();
-           Kobie.generateCertificates(MdmId);
-           homePage.getTokensSparkle();
-            toolBarClose();*/
-            remoteOrderCustomer = homePage.validateCertificate(remoteOrderCustomer);
+                            }*/
 
+        pojos.MyLoyalty actualMyLoyalty = getActualMyLoyaltyDetails();
+        pojos.MyLoyalty expectedMyLoyalty = getExpectedMyLoyaltyDetails(user);
+        if(tokenCertificatesAdded) {
+            actualMyLoyalty = getActualMyLoyaltyDetails();
+            expectedMyLoyalty = getExpectedMyLoyaltyDetails(user);
+        }else{
+            // certificare control is not present();
         }
-        homePage.validateTokens(remoteOrderCustomer);
-        return remoteOrderCustomer;
-    }
+        Assert.assertEquals(actualMyLoyalty, expectedMyLoyalty);
 
-    public HomePage assertTokensAndCertificates(RemoteOrderCustomer user) throws Exception {
-        user = MobileApi.getLoyaltyLookUp(user);
-        String tokencount=gettokensmyreward().getText();
-        Assert.assertEquals(user.getConfirmToken(),tokencount);
-
-       // Assert.assertEquals();
-        //user MyLoyalty object for assertion
-        //Get expected data from API, Get actual data from mobile ui
         return HomePage.get((AppiumDriver) driver);
+
     }
+    private pojos.MyLoyalty getActualMyLoyaltyDetails() throws Exception{
+        pojos.MyLoyalty actualMyLoyalty = new pojos.MyLoyalty();
+        //get and set data from ui to actualMyLoyalty object
+        actualMyLoyalty.setTokens("get the token value");
+        //actualMyLoyalty.setCertificates("get list of certificates");
+        return actualMyLoyalty;
+    }
+    private pojos.MyLoyalty getExpectedMyLoyaltyDetails(RemoteOrderCustomer user) throws Exception{
+        pojos.MyLoyalty expectedMyLoyalty = new pojos.MyLoyalty();
+        user = MobileApi.getLoyaltyLookUp(user);
+        //get and set data from api to expectedMyLoyalty
+        expectedMyLoyalty.setTokens("get the token value");
+      //  expectedMyLoyalty.setCertificates("get list of certificates");
+        return expectedMyLoyalty;
+    }
+
 }

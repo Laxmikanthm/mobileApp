@@ -1,8 +1,11 @@
 package pojos;
 
+import io.appium.java_client.android.AndroidDriver;
 import kobieApi.pojos.Certificates;
 import kobieApi.pojos.Offers;
 import kobieApi.pojos.OffersList;
+import pages.OrdersPage.OrdersPage;
+import utils.Logz;
 
 import java.util.List;
 
@@ -58,4 +61,7 @@ public class MyLoyalty {
         result = 31 * result + (offers != null ? offers.hashCode() : 0);
         return result;
     }
+
+
+
 }

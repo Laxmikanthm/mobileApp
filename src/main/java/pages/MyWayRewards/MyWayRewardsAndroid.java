@@ -28,10 +28,14 @@ public class MyWayRewardsAndroid extends MyWayRewards {
     }
 
     public MobileLabel gettokensmyreward() throws Exception {
-        AndroidLabel tokenscount = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_token_count_text"), "GiftCard label");
-        return null;
+        AndroidLabel tokenscount = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_token_count_text"), "Token count");
+        return tokenscount;
     }
 
+    public MobileLabel getCertsmyreward() throws Exception {
+        AndroidLabel Certscount = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_count"), "Certs Count");
+        return Certscount;
+    }
 
 
 }
