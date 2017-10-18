@@ -1757,7 +1757,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
     public cardantApiFramework.pojos.Menu getMenuDetails(Store store,Tax tax)throws Exception
     {
-        menu= JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()), Enums.Menu.AllSandwiches.toString(), tax.toString(),Tax.strOrderTypeIndividual.toString());
+        menu= JdbcUtil.getHotColdMenuItem(String.valueOf(store.getLocationCode()), Menu.AllSandwiches.toString(), tax.toString(),Tax.strOrderTypeIndividual.toString());
         return menu;
     }
 
@@ -1781,14 +1781,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     {
         getStoreClick(store.getAddress1());
         cardantApiFramework.pojos.Menu menu=getMenuDetails(store,Tax.strTaxHotCategoryName);
-        addingOrdertoBag(pages.Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
+        addingOrdertoBag(Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
         if(type.equals("DineIn")) {
             getDineIn().click();
         }
         getDineIn().click();
         goToFullMenu();
         menu=getMenuDetails(store,Tax.strTaxColdCategoryName);
-        addingOrdertoBag(Enums.Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
+        addingOrdertoBag(Menu.AllSandwiches, BreadSize.NONE,menu,store.getAddress1());
         validateManageLocator();
         verifyTaxValueForHotColdItem();
         getPlaceOrder().click();
