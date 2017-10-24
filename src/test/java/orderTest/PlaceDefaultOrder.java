@@ -57,7 +57,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     @Test
     public void testPlaceDefaultOrderSubwayFreshFitSixInch() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser("AlaricPlatts@qasubway.com");
+        mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.SIXINCH);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
@@ -86,7 +86,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     @Test
     public void testPlaceDefaultOrderChoppedSalads() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser("AlaricPlatts@qasubway.com");
+        mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("ChoppedSalads"), BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
