@@ -3,7 +3,7 @@ package Enums;
 
     public enum BreadSize {
         FOOTLONG("Footlong"),
-        SIXINCH("Sixinch"),
+        SIXINCH("SixInch"),
         NONE("none");
 
         private final String stringValue;

@@ -11,6 +11,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import pages.CommonElements.CommonElements;
 import pages.HomePage.HomePage;
 import pages.HomePage.HomePageAndroid;
 import pages.HomePage.HomePageIOS;
@@ -36,6 +37,9 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         }
     }
   OrdersPage ordersPage;
+
+    By totalAmount = By.id("ordertotal_amount");
+    CommonElements commonElements = new CommonElements((AppiumDriver) driver);
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -76,6 +80,16 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
     public OrderConfirmationPage assertTotalAmountInYourOrderPage() throws Exception{
+        Logz.step("Started asserting total amount In Your Order Page");
+        /*String aTotalAmount =  commonElements.getElement(totalAmount, totalAmount, (AppiumDriver)driver).getText();
+        String eTotalAmount = "";
+        Assert.assertEquals(aTotalAmount, eTotalAmount);*/
+        Logz.step("Started asserting total amount In Your Order Page");
+        return OrderConfirmationPage.get((AppiumDriver)driver);
+    }
+    public OrderConfirmationPage goToOrderConfirmationPage() throws Exception{
+       // assertTotalAmountInYourOrderPage();
+        Logz.step("Navigating to Order Confirmation Page......");
         getPlaceOrder().click();
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }

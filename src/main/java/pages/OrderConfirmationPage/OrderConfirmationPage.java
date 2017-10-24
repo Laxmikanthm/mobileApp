@@ -7,10 +7,14 @@ import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
+import org.testng.Assert;
+import pages.CommonElements.CommonElements;
 import pages.HomePage.HomePage;
 import pages.NamePage.NamePage;
 import pages.NamePage.NamePageAndroid;
 import pages.NamePage.NamePageIOS;
+import utils.Logz;
 
 public abstract class OrderConfirmationPage<T extends AppiumDriver> extends MobileBasePage {
     public OrderConfirmationPage(AppiumDriver driver) {
@@ -30,8 +34,17 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
+    By totalAmount = By.id("ordertotal_amount");
+    CommonElements commonElements = new CommonElements((AppiumDriver)driver);
     abstract MobileButton getGotIt() throws Exception;
-    public HomePage assertTotalAmountInYourOrderPage() throws Exception{
+
+
+    public HomePage assertTotalAmountInOrderConfirmationPage() throws Exception{
+        Logz.step("Started asserting total amount In Your Order Page");
+        /*String aTotalAmount =  commonElements.getElement(totalAmount, totalAmount, (AppiumDriver)driver).getText();
+        String eTotalAmount = "";
+        Assert.assertEquals(aTotalAmount, eTotalAmount);*/
+        Logz.step("Started asserting total amount In Your Order Page");
         getGotIt().click();
         return HomePage.get((AppiumDriver)driver);
     }
@@ -39,7 +52,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         getGotIt().click();
         return HomePage.get((AppiumDriver)driver);
     }
-    public HomePage assertOrderSummaryInYourOrderPage() throws Exception{
+    public HomePage assertOrderSummaryInOrderConfirmationPage() throws Exception{
         return HomePage.get((AppiumDriver)driver);
     }
 

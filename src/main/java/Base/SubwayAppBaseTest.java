@@ -47,7 +47,7 @@ public class SubwayAppBaseTest extends BaseTest {
     public static String cycleID,cloneCycleId;
     Boolean flag = Boolean.parseBoolean(System.getProperty("zephyrUpdate"));
     MobileUser mobileUser;
-    Store store= JdbcUtil.getLoyaltyStoreDetails();
+    Store store = JdbcUtil.getLoyaltyStoreDetails();
     public static String countryName;
 
     @BeforeSuite(alwaysRun = true)

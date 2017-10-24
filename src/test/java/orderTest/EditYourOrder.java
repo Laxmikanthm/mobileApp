@@ -30,4 +30,9 @@ public class EditYourOrder extends SubwayAppBaseTest {
     public void testAddAnotherChipsDrinkCookieFromEditYourOrderPage() throws Exception{
 
     }
+
+    @Test
+    public void testEditCreditCardFromEditYourOrderPage() throws Exception{
+
+    }
 }

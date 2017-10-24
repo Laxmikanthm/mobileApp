@@ -20,6 +20,7 @@ import pages.AddCardPage.AddCardPage;
 import pages.AddCardPage.AddCardPageAndroid;
 import pages.AddCardPage.AddCardPageIOS;
 import pages.HomePage.HomePage;
+import sun.rmi.runtime.Log;
 import utils.Logz;
 
 import java.util.List;
@@ -69,6 +70,7 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
                     break;
                 }
             }
+            int count = 0;
             while (flag == false) {
                 WebElement element = allElements.get(allElements.size() - 1);
                 MobileElement ele = (MobileElement) element;
@@ -76,14 +78,29 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
                 int endY = (int) (startY * 0.3);
                 action.longPress(0, startY).moveTo(0, endY).release().perform();
                 allElements = getElements(locatorIOS, locatorAndroid);
-                for (int j = 0; j < allElements.size(); j++) {
-                    if (allElements.get(j).getText().contains(itemName)) {
-                        allElements.get(j).click();
-                        flag = true;
-                        break;
+                    for (int j = 0; j < allElements.size(); j++) {
+                        if (allElements.get(j).getText().contains(itemName)) {
+                            allElements.get(j).click();
+                            flag = true;
+                            break;
+                        }
                     }
+                count++;
+                Logz.step("count:" +count);
+                if(count>3) {
+                    flag = false;
+                    //break;
+                    throw new Exception("Unable to scroll and click element \n" );
                 }
-            }
+                }
+
+
+            /*if(flag == false) {
+
+                allElements.get(3).click();
+                    Logz.step("selected random " +allElements.get(3).getText());
+            }*/
+
 
         } catch (Exception ex) {
             throw new Exception("Unable to scroll and click element \n" + ex.getMessage());
@@ -278,7 +295,7 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
             int scrollStart = screenHeightStart.intValue();
             Double screenHeightEnd = dimensions.getHeight() * 0.5;
             int scrollEnd = screenHeightEnd.intValue();
-            //driver.swipe(0,scrollStart,0,scrollEnd,2000);
+            //driver.swipeAndClick(0,scrollStart,0,scrollEnd,2000);
 
             while (!element.isDisplayed()) {
                 action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
@@ -294,7 +311,7 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         int scrollStart = screenHeightStart.intValue();
         Double screenHeightEnd = dimensions.getHeight() * 0.5;
         int scrollEnd = screenHeightEnd.intValue();
-        //driver.swipe(0,scrollStart,0,scrollEnd,2000);
+        //driver.swipeAndClick(0,scrollStart,0,scrollEnd,2000);
 
         while (!element.isDisplayed()) {
             action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
@@ -313,7 +330,92 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
             swipeRight(ele);
         }
     }
+    public void swipeAndClick(By locatorIOS, By locatorAndroid, String itemName, String direction) throws Exception {
+        Logz.step("Scrolling to element and get element list");
+        List<WebElement> allElements = getElements(locatorIOS, locatorAndroid);
+        try {
+            flag = false;
+            if (allElements.size() == 0) {
+                throw new Exception("No element is available\n" + allElements.size());
+            }
 
+            allElements = getElements(locatorIOS, locatorAndroid);
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get(i).getText().contains(itemName)) {
+                    allElements.get(i).click();
+                    flag = true;
+                    break;
+                }
+            }
+            int count = 0;
+            while (flag == false) {
+                WebElement element = allElements.get(allElements.size() - 1);
+                MobileElement ele = (MobileElement) element;
+                int startY = ele.getLocation().getY();
+                int endY = (int) (startY * 0.3);
+                if(direction.contains("Left")) {
+                    action.longPress(0, startY).moveTo(0, endY).release().perform();
+                }else{
+                    action.longPress(0, startY).moveTo(0, endY).release().perform();
+                }
+                allElements = getElements(locatorIOS, locatorAndroid);
+                for (int j = 0; j < allElements.size(); j++) {
+                    if (allElements.get(j).getText().contains(itemName)) {
+                        allElements.get(j).click();
+                        flag = true;
+                        break;
+                    }
+                }
+                count++;
+                Logz.step("count:" +count);
+                if(count>3) {
+                    flag = false;
+                    //break;
+                    throw new Exception("Unable to scroll and click element \n" );
+                }
+            }
+        } catch (Exception ex) {
+            throw new Exception("Unable to scroll and click element \n" + ex.getMessage());
+        }
+        Logz.step("Scrolled to element and get element list");
+
+
+       /* boolean flag = false;
+        int match = 0;
+
+        while (getNames(locator).size() > 0) {
+            List<WebElement> allElements = getNames(locator);
+
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get(i).getText().equals(name)) {
+                    match++;
+                }
+                if (match > 0 && i == 0) {
+                    flag = true;
+                    break;
+                } else {
+                    WebElement element = allElements.get(0);
+                    MobileElement ele = (MobileElement) element;
+                    Thread.sleep(5000L);
+                    if (direction.equals("Left")) {
+                        size = driver.manage().window().getSize();
+                        int width = element.getSize().getWidth();
+                        int height = element.getSize().getHeight();
+                        TouchAction action = new TouchAction((MobileDriver) driver);
+                        action.longPress(element.getLocation().getX() + (int) (width + 500), element.getLocation().getY()).moveTo(100, 1500).release().perform();
+
+                        //element.swipeAndClick(SwipeElementDirection.LEFT, 500);
+                    } else {
+                        //element.swipeAndClick(SwipeElementDirection.RIGHT, 500);
+                    }
+                }
+            }
+
+            if (flag == true) {
+                break;
+            }
+        }*/
+    }
     public void swipeRight(WebElement element) {
         dimensions = driver.manage().window().getSize();
         int x2 = (int) (dimensions.width * 0.80);

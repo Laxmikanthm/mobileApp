@@ -15,9 +15,9 @@
                     <include name="testPlaceDefaultOrderSubwayFreshFitSixInch"/>
                 </methods>
             </class>
-           <!-- <class name="myLoyaltyTest.Certificates">
+           <!-- <class name="myLoyaltyTest.Offers">
                 <methods>
-                    <include name="redeemCertificate_9188"/>
+                    <include name="testRedeemOffer"/>
                 </methods>
             </class>-->
 

@@ -14,6 +14,6 @@ public class OrderConfirmationPageAndroid extends OrderConfirmationPage {
 
     @Override
     MobileButton getGotIt() throws Exception {
-        return new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+ BaseTest.bundle.getString("GotIt")+"']"), "GotIt button");
+        return new AndroidButton((AndroidDriver) driver, By.id("got_it"), "GotIt button");
     }
 }

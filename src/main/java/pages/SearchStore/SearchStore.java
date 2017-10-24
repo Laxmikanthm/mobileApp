@@ -99,6 +99,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         getSearchByZipCode().isReady();
         getSearchByZipCode().setText(store.getZipCode());
         getSearchKeyButton().click();
+        Logz.step("Store Address is: " + store.getAddress1());
         commonElements.scrollAndClick(By.id("address"), By.id("address"), store.getAddress1());
     }
     public void searchStoreByZipCode(String  store) throws Exception {
@@ -301,6 +302,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
             Utils.setZipCode(store);
             toggleView();
             searchStoreByZipCode(store);
+            Logz.step("store number: " +store.getStoreNumber());
             return OrdersPage.get((AppiumDriver) driver);
         } catch (Exception ex) {
             throw new Exception(ex);

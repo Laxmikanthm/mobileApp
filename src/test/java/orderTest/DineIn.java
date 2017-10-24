@@ -2,7 +2,7 @@ package orderTest;
 
 import Base.SubwayAppBaseTest;
 
-import cardantApiFramework.pojos.Menu;
+//import cardantApiFramework.pojos.Menu;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
@@ -35,7 +35,7 @@ public class DineIn extends SubwayAppBaseTest{
 
     String strTaxCategoryName="HOT";
     String strOrderType="INDIVIDUAL";
-    Menu menu;
+   // Menu menu;
 
     RemoteOrderCustomer user;
     HomePage homePage;
@@ -60,7 +60,7 @@ public class DineIn extends SubwayAppBaseTest{
         roCartActions =  roOrderActions.AddTAXItemToTheCart( hmBundleFile.get("ohProveCode"), hmBundleFile.get("Individual"),  hmBundleFile.get("cold"), hmBundleFile.get("allsandwiches"), 1, true, true );
     }*/
     //DFA-9361
-    @Test
+   /* @Test
     public void dineInHotItemsCA() throws Exception {
         Store store = JdbcUtil.getStoreDetails("CA",true,true);
         mobileUser=setCountryName();
@@ -188,7 +188,7 @@ public class DineIn extends SubwayAppBaseTest{
         ordersPage.placeRandomToastedKidsMeal("Kids' Meal",mobileUser,"1134 Hebron Rd., Heath");
         homePage.validateTokens(mobileUser);
     }
-
+*/
 
 
 }

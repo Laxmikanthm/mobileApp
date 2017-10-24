@@ -1,6 +1,7 @@
 package pages.LandingPage;
 
 import Base.SubwayAppBaseTest;
+import Enums.BreadSize;
 import azureApi.serviceUtils.AzureClient;
 import azureApi.serviceUtils.AzureIdentityApi;
 import base.gui.controls.mobile.generic.MobileButton;
@@ -8,6 +9,8 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.LocationData;
+import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.ProductGroup;
 import enums.Country;
 import enums.CountryOffer;
 import enums.PaymentMethod;
@@ -28,6 +31,8 @@ import pojos.user.RemoteOrderCustomer;
 import pojos.user.WebUser;
 import util.MobileApi;
 import utils.Logz;
+
+import java.util.List;
 
 /**
  * Created by test-user on 3/1/17.
@@ -73,7 +78,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         try {
             getLoginButton();
         } catch (Exception ex) {
-            if(driver instanceof IOSDriver){
+            if (driver instanceof IOSDriver) {
                 driver.switchTo().alert().accept(); // Accept Notification permission
             }
             getSkipButton().click();
@@ -141,23 +146,21 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
         }
     }
-    public MobileUser registerOfferUser( MobileUser mobileUser)throws Exception
-    {
+
+    public MobileUser registerOfferUser(MobileUser mobileUser) throws Exception {
         RemoteOrderCustomer remoteOrderCustomer;
         if (System.getProperty("country").contains("US")) {
             //remoteOrderCustomer= RegisterUser.getUserWithOffers(1, CountryOffer.US, OfferPLU.US_FREE_BAG_OF_CHIPS.getValue());
             mobileUser.setEmailAddress("GradyWilliscroft@qasubway.com");
             mobileUser.setPassword("Subway1234");
+        } else {
+            remoteOrderCustomer = RegisterUser.getUserWithOffers(1, CountryOffer.US, OfferPLU.US_FREE_BAG_OF_CHIPS.getValue());
         }
-        else
-        {
-            remoteOrderCustomer= RegisterUser.getUserWithOffers(1, CountryOffer.US, OfferPLU.US_FREE_BAG_OF_CHIPS.getValue());
-        }
-        return  mobileUser;
+        return mobileUser;
     }
 
-    public RemoteOrderCustomer registerUser(String email) throws Exception {
-        RemoteOrderCustomer user = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));
+    public MobileUser registerUser(String email) throws Exception {
+        MobileUser user = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));
         user.setEmailAddress(email);
         String[] nameSplit = email.split("(?=\\p{Upper})");
         user.setFirstName(nameSplit[0]);
@@ -199,9 +202,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public HomePage logInSelectStore(RemoteOrderCustomer mobileUser, Store store) throws Exception {
         try {
-           // LoginPage loginPage = gotoLogInPage();
-          //  HomePage homePage = loginPage.login(mobileUser);
-
+            mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
             HomePage homePage = logInAddCreditCard(mobileUser);
             homePage.selectStore(store);
         } catch (Exception ex) {
@@ -209,28 +210,44 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
         return HomePage.get((AndroidDriver) driver);
     }
+
     public HomePage logInSelectStore(RemoteOrderCustomer mobileUser, String store) throws Exception {
         try {
-             LoginPage loginPage = gotoLogInPage();
-             HomePage homePage = loginPage.login(mobileUser);
+            LoginPage loginPage = gotoLogInPage();
+            HomePage homePage = loginPage.login(mobileUser);
 
-           // HomePage homePage = logInAddCreditCard(mobileUser);
+            // HomePage homePage = logInAddCreditCard(mobileUser);
             homePage.selectStore(store);
         } catch (Exception ex) {
             throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
         }
         return HomePage.get((AndroidDriver) driver);
     }
+
     public HomePage logIn(RemoteOrderCustomer mobileUser) throws Exception {
         try {
-           LoginPage loginPage = gotoLogInPage();
-          loginPage.login(mobileUser);
+            LoginPage loginPage = gotoLogInPage();
+            loginPage.login(mobileUser);
         } catch (Exception ex) {
             throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
         }
         return HomePage.get((AndroidDriver) driver);
     }
 
+    public void placeDefaultOrder(String menuCategories, BreadSize breadSize, Store store) throws Exception {
+        MobileUser mobileUser = registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
+        mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+        List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
+        for (ProductGroup productGroup : productGroups) {
+            if (productGroup.getName().contains(menuCategories)) {
+                OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+                ordersPage.placeDefaultOrder(mobileUser,menuCategories,breadSize, store);
+            }else {
+            Logz.step("##### Product menu: " + menuCategories + " is not present at this store: " + store.getStoreNumber() + " #####");
+        }
+        }
 
+
+    }
 }
 

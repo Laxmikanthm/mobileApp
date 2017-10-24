@@ -73,7 +73,7 @@ By agreeandContinue=By.id("confirmButtonTop");
             getLogIn().click();
            // getPayWith().isReady();
             Thread.sleep(20000);
-           //((AppiumDriver) driver).swipe(200, 700, 200, 100, 4000);
+           //((AppiumDriver) driver).swipeAndClick(200, 700, 200, 100, 4000);
             scrollToElement(agreeandContinue,0.9,0.5);
             getAgreeAndContinue().click();
             getBackBtn().click();
@@ -90,7 +90,7 @@ By agreeandContinue=By.id("confirmButtonTop");
             Dimension dimensions = driver.manage().window().getSize();
             int Startpoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
-          //  ((AppiumDriver) driver).swipe(200, Startpoint, 200, EndPoint, 4000);
+          //  ((AppiumDriver) driver).swipeAndClick(200, Startpoint, 200, EndPoint, 4000);
             TouchAction action = new TouchAction((MobileDriver)driver);
             action.longPress(200,Startpoint).moveTo(200,EndPoint).release().perform();
         }

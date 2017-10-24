@@ -7,6 +7,7 @@ import utils.Logz;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
@@ -83,6 +84,27 @@ public class Utils {
             Logz.step("Unable to format date.\\n" + ex.getMessage());
             throw new Exception(("Unable to format date.\n" + ex.getMessage()));
         }
+    }
+
+    public static boolean getTime(Store store) throws Exception{
+        Boolean timePresent;
+        String breakStartTime = store.getBreakStartTime();
+        String breakEndTime = store.getBreakEndTime();
+        Calendar currentDate = Calendar.getInstance();
+        String split[] = currentDate.getTime().toString().split(" ");
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+        Date startTime = parser.parse(breakStartTime);
+        Date endTime = parser.parse(breakEndTime);
+        Date currentTime = parser.parse(split[3].toString());
+       if(breakStartTime.contains("00:00:00") || breakEndTime.contains("00:00:00")) {
+           timePresent = true;
+       }else if(currentTime.after(startTime) && currentTime.before(endTime)) {
+            timePresent = true;
+        }else {
+            timePresent = false;
+        }
+
+        return timePresent;
     }
     public static void setZipCode(Store store) throws Exception{
         String zipCode = store.getZipCode();

@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.3.30-SNAPSHOT</version>
+            <version>3.3.33-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -75,7 +75,7 @@
                         <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>C:/Users/E001599/Downloads/subwayE2eDebug5000733.apk</app>
+                        <app>Users/sultana_m/Documents/AndroidApp/Subway_R2_QE_8.0.0.0_5000728.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>120</newCommandTimeout>
@@ -104,9 +104,9 @@
 
                         <executionPlatform></executionPlatform>
                         <appName>R2-Mobile</appName>
-                        <spring.profiles.active>local</spring.profiles.active>
+                        <!--<spring.profiles.active>local</spring.profiles.active>-->
                         <!--Test Object-->
-                       <!-- <spring.profiles.active>testObject</spring.profiles.active>
+                        <spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
@@ -114,7 +114,7 @@
                         <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
                         <appName>R218thsep</appName>
                         <appiumVersion>1.6.5</appiumVersion>
-                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>-->
+                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->

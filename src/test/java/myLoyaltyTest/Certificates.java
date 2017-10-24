@@ -160,7 +160,7 @@ public class Certificates extends SubwayAppBaseTest {
         myWayRewards = homePage.goToMyWayRewardsPage();
         homePage = myWayRewards.assertTokensAndCertificates(user,true);
         ordersPage = homePage.selectStore(store);
-        yourOrderPage = ordersPage.selectItem();
+        yourOrderPage = ordersPage.selectRandomItem();
         yourOrderPage.assertLoyaltyDisplay();
         manageRewardsPage = yourOrderPage.goToManageRewardPage();
         manageRewardsPage.assertRewardsList();

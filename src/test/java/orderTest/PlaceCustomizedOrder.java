@@ -27,14 +27,14 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
     @Test
     public void testPlaceCustomizedOrderAllSandwichesFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+        mobileUser = landingPage.registerUser("AlaricPlatts@qasubway.com");
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG);
+        homePage = ordersPage.placeCustomizedOrder(mobileUser, BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }
 
-    @Test
+    /*@Test
     public void testPlaceCustomizedOrderAllSandwichesSixInch() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
@@ -115,7 +115,7 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         homePage = ordersPage.placeCustomizedOrder(BaseTest.getStringfromBundleFile("DrinksMenu"), BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
-    }
+    }*/
    @Test
    public void testPlaceCustomizedOrder2ItemsAllSandwich()throws Exception{
 

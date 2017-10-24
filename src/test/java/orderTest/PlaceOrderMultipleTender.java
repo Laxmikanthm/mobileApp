@@ -33,5 +33,25 @@ public class PlaceOrderMultipleTender extends SubwayAppBaseTest {
     public void testPlaceRandomOrderPayPalCard() throws Exception{
 
     }
+    @Test
+    public void testInsufficientFundsSubwayCard() throws Exception{
+
+    }
+    @Test
+    public void testExpiredDateVisaCard() throws Exception{
+
+    }
+    @Test
+    public void testAddMultipleTypesPaymentCard() throws Exception{
+
+    }
+    @Test
+    public void testRemoveMultipleTypesPaymentCard() throws Exception{
+
+    }
+    @Test
+    public void testEditMultipleTypesPaymentCard() throws Exception{
+
+    }
 
 }

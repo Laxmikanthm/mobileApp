@@ -1,10 +1,10 @@
-package pages.DrinksPage;
+package pages.ProductDetailsPage;
 
 import base.gui.controls.mobile.generic.MobileLabel;
 import io.appium.java_client.AppiumDriver;
 
-public class DrinksPageIOS extends DrinksPage {
-    public DrinksPageIOS(AppiumDriver driver) {
+public class ProductDetailsPageIOS extends ProductDetailsPage {
+    public ProductDetailsPageIOS(AppiumDriver driver) {
         super(driver);
     }
 
