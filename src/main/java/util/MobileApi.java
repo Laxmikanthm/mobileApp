@@ -2,7 +2,8 @@ package util;
 
 import base.gui.controls.mobile.generic.MobileButton;
 import cardantApiFramework.pojos.StringUtils;
-import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.FavoriteItems;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.ProductData;
+import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.*;
 import enums.PaymentMethod;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
@@ -15,14 +16,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.Assert;
 import pages.HomePage.HomePage;
+import pojos.CustomizedItem.CustomizedItem;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RemoteOrderCustomer;
 import snaplogicApi.serviceUtils.SnaplogicClient;
 import utils.Logz;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MobileApi {
 
@@ -95,5 +101,42 @@ public class MobileApi {
         user = client.getProfileByGuestId(user);
         return KobieClient.getLoyalty(user);
     }
+    public static int getBreadOptionCount(CustomizedItem customizedItem, MobileUser mobileUser) throws Exception{
+       String groupId =  customizedItem.getProductDetail().getPromoEndDate();
+        String classId = customizedItem.getProductDetail().getAvailableDate();
+        List<Product>  products = ProductData.getClassProducts(mobileUser, mobileUser.getStoreID(), groupId, classId);
+       return products.size();
+
+    }
+    public static String getExpectedDefaultIngredients(ProductDetail productDetail) throws Exception {
+        String ingredients;
+        List<String> ingredientList = new ArrayList<>();
+        Defaults[] defaults = productDetail.getDefaults();
+        List<Option> options = defaults[0].getOptions();
+        Attribute[] a;
+        //ingredientList.add(a[0].getName());
+        // int counter = 0;
+        for (Defaults d : defaults) {
+            // if (counter > 0) {
+            if (d.getName().contains("Cheese") || d.getName().contains("Egg") || d.getName().contains("Bread")) {
+                a = d.getOptions().get(0).getAttributes();
+                ingredientList.add(a[0].getName());
+            } else {
+                options = d.getOptions();
+                ingredientList.addAll(options.stream().map(Option::getName).collect(Collectors.toList()));
+                //ingredientList.addAll(options.stream().map(Option::getOptionGroupCode).collect(Collectors.toList()));
+            }
+
+            // }
+            // counter++;
+        }
+        Proteins[] proteins = productDetail.getProteinss();
+        for (Proteins protein : proteins) {
+            ingredientList.add(protein.getName());
+        }
+        ingredients = ingredientList.toString();
+        return ingredients.substring(1, ingredients.length() - 1);
+    }
+
 
 }

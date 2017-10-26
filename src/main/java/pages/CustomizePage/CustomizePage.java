@@ -60,7 +60,7 @@ public abstract class CustomizePage<T extends AppiumDriver> extends MobileBasePa
         //Click on sesoning
         //click on sauches
         //click on cheeses
-        List<Customizer> customizers = customizedItem.getProductDetails().getCustomizer();
+        List<Customizer> customizers = customizedItem.getCustomizedProductDetail().getCustomizer();
         for(Customizer customizer: customizers){
             customizer.getCustomizerName();
             commonElements.swipeAndClick(customizerName, customizerName, customizer.getCustomizerName(), "Left");
@@ -79,28 +79,25 @@ public abstract class CustomizePage<T extends AppiumDriver> extends MobileBasePa
 
     }
     private void selectBreads(CustomizedItem customizedItem) throws Exception{
-        //Click on Meat
-        //Click on vaggigs
-        //Click on sesoning
-        //click on sauches
-        //click on cheeses
-        List<Customizer> customizers = customizedItem.getProductDetails().getCustomizer();
-        for(Customizer customizer: customizers){
-            customizer.getCustomizerName();
-            commonElements.swipeAndClick(customizerName, customizerName, customizer.getCustomizerName(), "Left");
-            List<CustomizerDetails> customizerDetails =   customizer.getCustomizerDetails();
-            for(CustomizerDetails customizerDetail: customizerDetails){
-                commonElements.scrollAndClick(customizerPciker, customizerPciker, customizerDetail.getPickerName());
-                assertCustomizerDetails(customizerDetail);
-                if(customizerDetail.getModifierName().contains("Less")){
-                    getLess().click();
-                }else if(customizerDetail.getModifierName().contains("More")) {
-                    getMore();
-                }
+        //Click on Bread
+//select a bread click
+        List<Customizer> customizers = customizedItem.getCustomizedProductDetail().getCustomizer();
+        for(Customizer customizer: customizers) {
+            //customizer.getCustomizerName();
+            if (customizer.getCustomizerName().contains("bread")) {
+                List<CustomizerDetails> customizerDetails = customizer.getCustomizerDetails();
+                for (CustomizerDetails customizerDetail : customizerDetails) {
+                    commonElements.scrollAndClick(customizerPciker, customizerPciker, customizerDetail.getPickerName());
+                    assertCustomizerDetails(customizerDetail);
+                    if (customizerDetail.getModifierName().contains("Less")) {
+                        getLess().click();
+                    } else if (customizerDetail.getModifierName().contains("More")) {
+                        getMore();
+                    }
 
+                }
             }
         }
-
     }
 
     private void assertCustomizerDetails(CustomizerDetails customizerDetail) throws Exception{

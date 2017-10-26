@@ -154,6 +154,6 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     public void testPlaceDefaultOrderMaxItemsFreshFits() throws Exception {
 
     }
-    ////homePage = ordersPage.goToHomePage();
-    // mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
+    ////homePage = ordersPage.goToHomePage();OsmondOrred@qasubway.com NancyBottoms@qasubway.com
+
 }

@@ -9,6 +9,8 @@ import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.LocationData;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.ProductData;
+import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.Product;
 import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.ProductGroup;
 import cardantApiFramework.utils.JdbcUtil;
 import io.appium.java_client.MobileDriver;
@@ -47,6 +49,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import pojos.user.RemoteOrderCustomer;
+import util.MobileApi;
 import util.Utils;
 import utils.*;
 import org.openqa.selenium.WebElement;
@@ -1788,17 +1791,17 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    public HomePage addingHotandColdToCart(Store store, String type) throws Exception {
+    public HomePage addingHotandColdToCart(MobileUser mobileUser, Store store, String type) throws Exception {
         getStoreClick(store.getAddress1());
         cardantApiFramework.pojos.Menu menu = getMenuDetails(store, Tax.strTaxHotCategoryName);
-        addingOrdertoBag(Menu.AllSandwiches, BreadSize.NONE, menu, store.getAddress1());
+        addingOrdertoBag(mobileUser, Menu.AllSandwiches, BreadSize.NONE, menu, store.getAddress1());
         if (type.equals("DineIn")) {
             getDineIn().click();
         }
         getDineIn().click();
         goToFullMenu();
         menu = getMenuDetails(store, Tax.strTaxColdCategoryName);
-        addingOrdertoBag(Menu.AllSandwiches, BreadSize.NONE, menu, store.getAddress1());
+        addingOrdertoBag(mobileUser, Menu.AllSandwiches, BreadSize.NONE, menu, store.getAddress1());
         validateManageLocator();
         verifyTaxValueForHotColdItem();
         getPlaceOrder().click();
@@ -1811,12 +1814,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    public void addingOrdertoBag(Menu menuItem, BreadSize breadSize, cardantApiFramework.pojos.Menu menu, String storeName) throws Exception {
+    public void addingOrdertoBag(MobileUser mobileUser, Menu menuItem, BreadSize breadSize, cardantApiFramework.pojos.Menu menu, String storeName) throws Exception {
         try {
 
             itemName = menuItem.toString();
             selectSpecificMenu(itemName);
-            selectSpecificProduct(getProductName(menu), breadSize, false);
+            selectSpecificProduct( mobileUser, getProductName(menu), breadSize, false);
             getAddToBag().isReady();
             getAddToBag().click();
 
@@ -2066,6 +2069,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     By productGroupLayout = By.id("product_group_layout");
     By productGroupHeader = By.id("product_group_header");
 
+
     public HomePage placeDefaultOrder(MobileUser mobileUser, String menuCategories, BreadSize breadSize) throws Exception {
         try {
             Logz.step("##### Started placing Default Order #####" + menuCategories);
@@ -2137,7 +2141,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             OfferDetails offerDetails = offersPage.getOfferItemDetails(user);
             Logz.step("##### Started placing Random Order #####");
             for (int i = 0; i < Integer.parseInt(offerDetails.getItemCount()); i++) {
-                selectSpecificItem(offerDetails.getMenuName(), offerDetails.getProductName(), offersPage.getOfferedBreadSize(offerDetails));
+                selectSpecificItem((MobileUser) user, offerDetails.getMenuName(), offerDetails.getProductName(), offersPage.getOfferedBreadSize(offerDetails));
                 //click on view item in your orderpage
             }
             //click on add to bag icon
@@ -2205,12 +2209,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void addDefaultItemInCart(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception {
-        RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
-        customizedItem = remoteOrder.getCustomizedItemDetail(menuName, breadSize.toString());
-        selectSpecificMenu(menuName);
-        Logz.step("Product Name is: " + customizedItem.getProductDetails().getProductClassName());
-        String productName = getProductName(menuName, customizedItem.getProductDetails().getProductClassName());
-        selectSpecificProduct(productName, breadSize, false);
+        String productName = selectMenuGetProductName(mobileUser, menuName, breadSize);
+        selectSpecificProduct(mobileUser, productName, breadSize, false);
     }
 
     public void addDefaultItemInCart(MobileUser mobileUser, String menuName) throws Exception {
@@ -2226,29 +2226,39 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     private String getProductName(String menuName, String productName) throws Exception {
+        Logz.step("Product Name is: " + customizedItem.getCustomizedProductDetail().getProductClassName());
 
         if (menuName.contains("Chopped Salads")) {
             return Utils.getConnectionString(productName, 0, "Chopped Salad").trim();
         } else if (menuName.contains("Kids")) {
             return Utils.getConnectionString(productName, 0, "Kids").trim();
         } else {
-            return customizedItem.getProductDetails().getProductName().trim();
+            productName = customizedItem.getCustomizedProductDetail().getProductName();
+            if(productName.contains( "Sandwich" )){
+                productName =   productName.replaceAll( "Sandwich", "" );
+            }
+            return productName.trim();
         }
 
 
     }
 
     public void addCustomizedItemInCart(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception {
+        String productName = selectMenuGetProductName(mobileUser, menuName, breadSize);
+        selectSpecificProduct(mobileUser, productName, breadSize, true);
+    }
+
+    private String selectMenuGetProductName(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception {
         RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
         customizedItem = remoteOrder.getCustomizedItemDetail(menuName, breadSize.toString());
         selectSpecificMenu(customizedItem.getMenuName());
-        selectSpecificProduct(customizedItem.getProductDetails().getProductClassName(), breadSize, true);
+        return getProductName(menuName, customizedItem.getCustomizedProductDetail().getProductClassName());
     }
 
     private void assertBreakfastUnavailablePopUp(CustomizedItem customizedItem) throws Exception {
         getErrorTitle().getText();
         Assert.assertTrue(getErrorTitle().getText().equals("Error"));
-        Assert.assertEquals(getErrorMessage().getText(), "Could not add " + customizedItem.getProductDetails().getProductClassName() + " at this time.");
+        Assert.assertEquals(getErrorMessage().getText(), "Could not add " + customizedItem.getCustomizedProductDetail().getProductClassName() + " at this time.");
         getErrorOk().click();
     }
 
@@ -2303,12 +2313,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    private void selectSpecificItem(String menuName, String productName, BreadSize breadSize) throws Exception {
+    private void selectSpecificItem(MobileUser mobileUser, String menuName, String productName, BreadSize breadSize) throws Exception {
         Logz.step("##### Started placing Default Order #####");
         //Get Menu Categories - click random menuCategories
         selectSpecificMenu(menuName);
         //Get Product Details - click random Product
-        selectSpecificProduct(productName, breadSize, false);
+        selectSpecificProduct(mobileUser, productName, breadSize, false);
         getAddToBag().click();
 
     }
@@ -2325,31 +2335,30 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    private void selectSpecificProduct(String productName, BreadSize breadSize, boolean customized) throws Exception {
+    private void selectSpecificProduct(MobileUser mobileUser, String productName, BreadSize breadSize, boolean customized) throws Exception {
         try {
-            Logz.step("##### Selecting a random product #####");
-            ProductDetailsPage productDetailsPage = goToProductDetailsPage(productName);
-            productDetailsPage.assertProductDetails(customizedItem);
-            if (!(customizedItem.getProductDetails().getBreadSize().contains("Footlong") || breadSize.toString().contains("none"))) {
-                getSixInchOption().click();
+            Logz.step("##### Selecting: "+productName+" #####");
+            Logz.step("product name: " + productName);
+            elements.scrollAndClick(productGroupHeader, productGroupHeader, productName);
+            if (!(customizedItem.getCustomizedProductDetail().getBreadSize().contains("FOOTLONG™") || breadSize.toString().contains("none"))) {
+                if (MobileApi.getBreadOptionCount(customizedItem, mobileUser) > 1) {
+                    getSixInchOption().click();
+                }
             }
+
             if (customized) {
                 CustomizePage customizePage = goToCustomizePage();
                 customizePage.randomCustomization(customizedItem);
             }
-            Logz.step("##### Selected a random product #####");
+            Logz.step("##### Selected: "+productName+" #####");
         } catch (Exception ex) {
-            throw new Exception("Unable to select Random Product\n" + ex.getMessage());
+            throw new Exception("Unable to select: "+productName+"\n" + ex.getMessage());
         }
 
 
     }
 
-    private ProductDetailsPage goToProductDetailsPage(String productName) throws Exception {
-        Logz.step("product name: " + productName);
-        elements.scrollAndClick(productGroupHeader, productGroupHeader, productName);//product_list
-        return ProductDetailsPage.get((AppiumDriver) driver);
-    }
+
 
     private void placeLoyaltyOrderAndAssert() throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage();
@@ -2357,20 +2366,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         orderConfirmationPage.assertLoyaltyDisplay();
 
     }
-
- /*public HomePage placeRandomOrder() throws Exception {
-        try {
-
-            Logz.step("##### Started placing Random Order #####");
-            selectRandomItem();
-            // placeOrderAndAssert();
-            Logz.step("##### Ended placing Random Order #####");
-        } catch (Exception ex) {
-            throw new Exception("Unable to place Random Order:\n" + ex.getMessage());
-        }
-        return HomePage.get((AndroidDriver) driver);
-
-    }*/
 
    /* RemoteOrder remoteOrder = new RemoteOrder(user);
     CustomizedItem customizedItem  = remoteOrder.getCustomizedItemDetail(menuName, breadSize); //All Sandwiches

@@ -311,7 +311,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
 
     }
 
-    class ComparatorByIteName implements Comparator<CartItemList> {
+  public static class ComparatorByIteName implements Comparator<CartItemList> {
         List<CartItemList> sortItemName = new ArrayList<CartItemList>();
 
         //@Override

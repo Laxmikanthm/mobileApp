@@ -209,7 +209,7 @@ public class TakeOut extends SubwayAppBaseTest {
         user = myWayRewards.validateTokensandCerts(homePage, user);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         CartData.createNewCart(user, store.getLocationCode());
-        homePage=ordersPage.addingHotandColdToCart(store,"TakeOut");
+        homePage=ordersPage.addingHotandColdToCart(mobileUser, store,"TakeOut");
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 
@@ -228,7 +228,7 @@ public class TakeOut extends SubwayAppBaseTest {
         user = myWayRewards.validateTokensandCerts(homePage, user);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         CartData.createNewCart(user, store.getLocationCode());
-        homePage=ordersPage.addingHotandColdToCart(store,"TakeOut");
+        homePage=ordersPage.addingHotandColdToCart(mobileUser, store,"TakeOut");
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
         //ordersPage.placeRandomOrderCertDiscountwithHotItems("All Sandwiches", mobileUser, "1134 Hebron Rd., Heath");
