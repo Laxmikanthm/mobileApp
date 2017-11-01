@@ -12,7 +12,7 @@ import pages.OrdersPage.OrdersPage;
 import pages.ProductDetailsPage.ProductDetailsPage;
 import pojos.user.MobileUser;
 
-public class productData extends SubwayAppBaseTest {
+public class ProductData extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     Store store = JdbcUtil.getLoyaltyStoreDetails();
@@ -89,13 +89,13 @@ public class productData extends SubwayAppBaseTest {
         productDetailsPage =  homePage.goToProductDetailsPage(mobileUser, BaseTest.getStringfromBundleFile("ChoppedSalads"), BreadSize.SIXINCH);
         productDetailsPage.assertProductDetails( mobileUser);
     }
-    @Test
+   /* @Test
     public void testProductDetailsSides() throws Exception{
 
     }
     @Test
     public void testProductDetailsDrinks() throws Exception{
 
-    }
+    }*/
 
 }

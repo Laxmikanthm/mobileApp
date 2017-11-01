@@ -234,10 +234,11 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         return HomePage.get((AndroidDriver) driver);
     }
 
-    public void placeDefaultOrder(String menuCategories, BreadSize breadSize, Store store) throws Exception {
-        MobileUser mobileUser = registerUser(BaseTest.getStringfromBundleFile("DefaultOrderUser"));
+    public void placeDefaultOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
+        MobileUser mobileUser = registerUser();
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
+        logAllMenuCategoriesName(productGroups, store);
         for (ProductGroup productGroup : productGroups) {
             if (productGroup.getName().contains(menuCategories)) {
                 OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
@@ -247,6 +248,26 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
         }
 
+
+    }
+    public void placeCustomizedOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
+        MobileUser mobileUser = registerUser();
+        mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+        List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
+        logAllMenuCategoriesName(productGroups, store);
+        for (ProductGroup productGroup : productGroups) {
+            if (productGroup.getName().contains(menuCategories)) {
+                OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+                ordersPage.placeCustomizedOrder(mobileUser,menuCategories,breadSize, store);
+            }
+        }
+
+
+    }
+    private void logAllMenuCategoriesName(List<ProductGroup> productGroups, Store store) throws Exception{
+        for (ProductGroup productGroup : productGroups) {
+            Logz.step("##### Product menu category name: " + productGroup.getName() + "  Store: " + store.getStoreNumber() + " #####");
+        }
 
     }
 }

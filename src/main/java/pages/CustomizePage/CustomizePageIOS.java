@@ -2,6 +2,7 @@ package pages.CustomizePage;
 
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import io.appium.java_client.AppiumDriver;
 
 public class CustomizePageIOS extends CustomizePage{
@@ -14,35 +15,148 @@ public class CustomizePageIOS extends CustomizePage{
         return null;
     }
 
+
     @Override
-    MobileButton getLess() throws Exception {
+    MobileTextBox getPickerName() throws Exception {
         return null;
     }
 
     @Override
-    MobileButton getMore() throws Exception {
+    MobileTextBox getModifierName() throws Exception {
         return null;
     }
 
     @Override
-    MobileButton getPickerName() throws Exception {
+    MobileTextBox getCalories() throws Exception {
         return null;
     }
 
     @Override
-    MobileButton getModifierName() throws Exception {
+    MobileTextBox getBreadCalories() throws Exception {
         return null;
     }
 
     @Override
-    MobileButton getCalories() throws Exception {
+    MobileTextBox getPrice() throws Exception {
         return null;
     }
 
     @Override
-    MobileButton getPrice() throws Exception {
+    MobileButton getBread() throws Exception {
         return null;
     }
+
+    @Override
+    MobileTextBox getToastIt() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileButton getToastItIcon() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileButton getLooksGood() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getBreadTitle() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileButton getBackIcon() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getTitleText() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getBreadSizeText() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getBreadCalorieText() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileButton getHelpIcon() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getBreadFtue() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getaddFtue() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getIngredientFtueText() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getDisclaimerText() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getIngredientNameText() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getIngredientCaloriesText() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileButton getAddToBagButton() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getCalorieInfoIcon() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getDisclaimer() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileButton getDoneButton() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getIngredientText() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getCalorieCountText() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getModifyText() throws Exception {
+        return null;
+    }
+
+
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
