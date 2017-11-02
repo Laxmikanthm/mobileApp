@@ -96,6 +96,7 @@ public class Utils {
         Date startTime = parser.parse(breakStartTime);
         Date endTime = parser.parse(breakEndTime);
         Date currentTime = parser.parse(split[3].toString());
+        Logz.step( "breakStartTime: "+startTime+ " breakEndTime: "+endTime + " currentTime: "+currentTime );
        if(breakStartTime.contains("00:00:00") || breakEndTime.contains("00:00:00")) {
            timePresent = true;
        }else if(currentTime.after(startTime) && currentTime.before(endTime)) {

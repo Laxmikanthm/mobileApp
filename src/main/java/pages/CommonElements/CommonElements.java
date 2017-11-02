@@ -109,6 +109,7 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         return HomePage.get((AppiumDriver) driver);
     }
 
+
     public List<WebElement> getElements(By locatorIOS, By locatorAndroid) throws Exception {
         try {
             switch (platform) {
@@ -235,6 +236,23 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         AndroidElement element = (AndroidElement) elementList.get(index);
         return element.getText();
     }
+    public List<WebElement> getElementListByClass(String locatorIOS, String locatorAndroid, AppiumDriver driver) throws Exception {
+        try {
+            switch (platform) {
+                case "iOS":
+                    return driver.findElementsByClassName(locatorIOS);
+                case "Android":
+                    return driver.findElementsByClassName(locatorAndroid);
+                default:
+                    throw new Exception("Unable to get element for platform " + platform);
+            }
+
+        } catch (Exception ex) {
+            throw new Exception("Unable to get element \n" + ex.getMessage());
+        }
+
+
+    }
 
     public void scrollToElement(By locatorIOS, By locatorAndroid, double startPoint, double endPoint) throws Exception {
         Logz.step("Scrolling to the element");
@@ -322,106 +340,26 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-    public void swipeToLocation() throws Exception {
-        List<WebElement> elements = getElements(MobileBy.AccessibilityId("Google Map"), MobileBy.AccessibilityId("Google Map"));
-        for (int i = 0; i < 3; i++) {
-            WebElement ele = elements.get(0);
-            Thread.sleep(3000L);
-            swipeRight(ele);
-        }
-    }
-    public void swipeAndClick(By locatorIOS, By locatorAndroid, String itemName, String direction) throws Exception {
-        Logz.step("Scrolling to element and get element list");
-        List<WebElement> allElements = getElements(locatorIOS, locatorAndroid);
-        try {
-            flag = false;
-            if (allElements.size() == 0) {
-                throw new Exception("No element is available\n" + allElements.size());
-            }
 
-            allElements = getElements(locatorIOS, locatorAndroid);
-            for (int i = 0; i < allElements.size(); i++) {
-                if (allElements.get(i).getText().contains(itemName)) {
-                    allElements.get(i).click();
-                    flag = true;
-                    break;
-                }
-            }
-            int count = 0;
-            while (flag == false) {
-                WebElement element = allElements.get(allElements.size() - 1);
-                MobileElement ele = (MobileElement) element;
-                int startY = ele.getLocation().getY();
-                int endY = (int) (startY * 0.3);
-                if(direction.contains("Left")) {
-                    action.longPress(0, startY).moveTo(0, endY).release().perform();
-                }else{
-                    action.longPress(0, startY).moveTo(0, endY).release().perform();
-                }
-                allElements = getElements(locatorIOS, locatorAndroid);
-                for (int j = 0; j < allElements.size(); j++) {
-                    if (allElements.get(j).getText().contains(itemName)) {
-                        allElements.get(j).click();
-                        flag = true;
-                        break;
-                    }
-                }
-                count++;
-                Logz.step("count:" +count);
-                if(count>3) {
-                    flag = false;
-                    //break;
-                    throw new Exception("Unable to scroll and click element \n" );
-                }
+    public void swipe(AppiumDriver driver, String direction) throws Exception {
+        Logz.step("Swiping to element");
+
+        try {
+            dimensions = driver.manage().window().getSize();
+            int startX = (int) (dimensions.width * 0.90);
+            int startY = dimensions.height / 2;
+            int endX = (int) (dimensions.width * 0.10);
+            if(direction.equalsIgnoreCase( "Left" )) {
+                action.longPress( startX, startY ).moveTo( endX, 0 ).release().perform();
+            }else {
+                action.longPress( endX, startY ).moveTo( startX, 0 ).release().perform();
             }
         } catch (Exception ex) {
             throw new Exception("Unable to scroll and click element \n" + ex.getMessage());
         }
         Logz.step("Scrolled to element and get element list");
-
-
-       /* boolean flag = false;
-        int match = 0;
-
-        while (getNames(locator).size() > 0) {
-            List<WebElement> allElements = getNames(locator);
-
-            for (int i = 0; i < allElements.size(); i++) {
-                if (allElements.get(i).getText().equals(name)) {
-                    match++;
-                }
-                if (match > 0 && i == 0) {
-                    flag = true;
-                    break;
-                } else {
-                    WebElement element = allElements.get(0);
-                    MobileElement ele = (MobileElement) element;
-                    Thread.sleep(5000L);
-                    if (direction.equals("Left")) {
-                        size = driver.manage().window().getSize();
-                        int width = element.getSize().getWidth();
-                        int height = element.getSize().getHeight();
-                        TouchAction action = new TouchAction((MobileDriver) driver);
-                        action.longPress(element.getLocation().getX() + (int) (width + 500), element.getLocation().getY()).moveTo(100, 1500).release().perform();
-
-                        //element.swipeAndClick(SwipeElementDirection.LEFT, 500);
-                    } else {
-                        //element.swipeAndClick(SwipeElementDirection.RIGHT, 500);
-                    }
-                }
-            }
-
-            if (flag == true) {
-                break;
-            }
-        }*/
     }
-    public void swipeRight(WebElement element) {
-        dimensions = driver.manage().window().getSize();
-        int x2 = (int) (dimensions.width * 0.80);
-        action.longPress(element).moveTo(x2, 580).release().perform();
 
-    }
 
     @Override
     public MobileLabel getPageLabel() throws Exception {

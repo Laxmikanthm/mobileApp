@@ -16,69 +16,46 @@ import pojos.user.RemoteOrderCustomer;
 
 public class PlaceDefaultOrder extends SubwayAppBaseTest {
 
-    MobileUser mobileUser;
     Store store = JdbcUtil.getLoyaltyStoreDetails();
     LandingPage landingPage;
-    OrdersPage ordersPage;
-    HomePage homePage;
-    PurchaseHistoryPage purchaseHistoryPage;
 
+    //we have to check first if the menu is returning from API then proceed  further else come out from the test
 
     @Test
     public void testPlaceDefaultOrderAllSandwichesFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
-        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG);
-        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG, store);
     }
 
     @Test
     public void testPlaceDefaultOrderAllSandwichesSixInch() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
-        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.SIXINCH);
-        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.SIXINCH, store);
     }
 
     @Test
     public void testPlaceDefaultOrderSubwayFreshFitFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
-        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.FOOTLONG);
-        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.FOOTLONG, store);
     }
 
     @Test
     public void testPlaceDefaultOrderSubwayFreshFitSixInch() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
-        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.SIXINCH);
-        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.SIXINCH, store);
     }
 
     @Test //bug: DFA-8911
     public void testPlaceDefaultOrderBreakfastFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
-        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.FOOTLONG, store);
+        landingPage.placeDefaultOrderThenAssert( BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.FOOTLONG, store);
 
     }
 
     @Test //bug: DFA-8911
     public void testPlaceDefaultOrderBreakfastSixInch() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
-        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.SIXINCH, store);
+        landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.SIXINCH, store);
 
     }
 
@@ -86,63 +63,55 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     @Test
     public void testPlaceDefaultOrderChoppedSalads() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
-        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("ChoppedSalads"), BreadSize.NONE);
-        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        landingPage.placeDefaultOrderThenAssert( BaseTest.getStringfromBundleFile("ChoppedSalads"), BreadSize.NONE, store);
     }
 
     @Test
     public void testPlaceDefaultOrderKidsMeal() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
-        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("KidsMeal"), BreadSize.NONE);
-        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("KidsMeal"), BreadSize.NONE, store);
     }
 
 
     @Test
     public void testPlaceDefaultOrderSubOfTheDayFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        landingPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("SubOfTheDay"), BreadSize.FOOTLONG, store);
+        landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("SubOfTheDay"), BreadSize.FOOTLONG, store);
 
     }
 
     @Test
     public void testPlaceDefaultOrderSubOfTheDaySixInch() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        landingPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("SubOfTheDay"), BreadSize.SIXINCH, store);
+        landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("SubOfTheDay"), BreadSize.SIXINCH, store);
 
     }
 
     @Test
     public void testPlaceDefaultOrderPersonalPizzaFootLong() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        landingPage.placeDefaultOrder(BaseTest.getStringfromBundleFile("PersonalPizza"), BreadSize.NONE, store);
+        landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("PersonalPizza"), BreadSize.NONE, store);
     }
 
 
     @Test(enabled = false)
     public void testPlaceDefaultOrderSides() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+       /* mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"), store);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);*/
     }
 
     @Test(enabled = false)
     public void testPlaceDefaultOrderDrinks() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+       /* mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"), BreadSize.NONE);
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);*/
     }
 
     @Test(enabled = false)
@@ -154,6 +123,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     public void testPlaceDefaultOrderMaxItemsFreshFits() throws Exception {
 
     }
+    //Signature Wraps Flatizzas™
     ////homePage = ordersPage.goToHomePage();OsmondOrred@qasubway.com NancyBottoms@qasubway.com
 
 }
