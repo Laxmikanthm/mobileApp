@@ -334,7 +334,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             //return specific page-````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
         } catch (Exception ex) {
-            Logz.error(ex.toString());
+            throw new Exception(ex);
         }
     }
 
@@ -745,7 +745,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                         int width = element.getSize().getWidth();
                         int height = element.getSize().getHeight();
                         TouchAction action = new TouchAction((MobileDriver) driver);
-                        action.longPress(element.getLocation().getX() + (int) (width + 500), element.getLocation().getY()).moveTo(100, 1500).release().perform();
+                        action.longPress(element.getLocation().getX() + (int) (width + 800), element.getLocation().getY()).moveTo(100, 1500).release().perform();
 
                         //element.swipeAndClick(SwipeElementDirection.LEFT, 500);
                     } else {
