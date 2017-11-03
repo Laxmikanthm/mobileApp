@@ -1,33 +1,24 @@
 package orderTest;
 
-import Base.Order;
 import Base.SubwayAppBaseTest;
 
 import azureApi.serviceUtils.AzureIdentityApi;
-import cardantApiFramework.utils.JdbcUtil;
-import enums.Country;
 import enums.PaymentMethod;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
-import pages.MenuPage.MenuPage;
+import pages.UserProfilePage.UserProfilePage;
 import pojos.tenders.SubwayCard;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
-
-import java.util.List;
 
 import java.util.List;
 
@@ -52,12 +43,12 @@ public class PaymentMethods extends SubwayAppBaseTest {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        UserProfilePage userProfilePage = homePage.getUserDetails();
+        AddCardPage addCardPage = userProfilePage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         Assert.assertTrue(addCardPage.checkCreditCardElementPresence(),"Credit Card got added successfully");
         addCardPage.selectBackButton();
-        menuPage.logout();
+        userProfilePage.logout();
 
     }
 
@@ -70,12 +61,12 @@ public class PaymentMethods extends SubwayAppBaseTest {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        UserProfilePage userProfilePage = homePage.getUserDetails();
+        AddCardPage addCardPage = userProfilePage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser,PaymentMethod.DEBITCARD);
         Assert.assertTrue(addCardPage.checkDebitCardElementPresence(),"Debit Card got added successfully");
         addCardPage.selectBackButton();
-        menuPage.logout();
+        userProfilePage.logout();
 
     }
 //DFA-9177
@@ -89,8 +80,8 @@ public class PaymentMethods extends SubwayAppBaseTest {
             LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
             LoginPage loginPage = landingPage.gotoLogInPage();
             HomePage homePage = loginPage.login(mobileUser);
-            MenuPage menuPage = homePage.getUserDetails();
-            AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+            UserProfilePage userProfilePage = homePage.getUserDetails();
+            AddCardPage addCardPage = userProfilePage.gotoAddPaymentMethods();
             addCardPage.addPayment(mobileUser,PaymentMethod.SUBWAYCARD);
             Assert.assertTrue(addCardPage.checkGiftCardElementPresence(),"Subway Card got added successfully");
             addCardPage.selectBackButton();
@@ -110,12 +101,12 @@ public class PaymentMethods extends SubwayAppBaseTest {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        UserProfilePage userProfilePage = homePage.getUserDetails();
+        AddCardPage addCardPage = userProfilePage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser,PaymentMethod.PAYPAL);
         Assert.assertTrue(addCardPage.checkPayPalElementPresence(),"Paypal Card/account got added successfully");
         addCardPage.selectBackButton();
-        menuPage.logout();
+        userProfilePage.logout();
 
     }
 

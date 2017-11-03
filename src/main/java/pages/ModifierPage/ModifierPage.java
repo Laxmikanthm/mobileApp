@@ -68,8 +68,21 @@ public abstract class ModifierPage<T extends AppiumDriver> extends MobileBasePag
     CommonElements commonElements = new CommonElements( (AppiumDriver) driver );
 
     public void selectModifier() throws Exception {
+    switch (getRandomModifier()){
+        case"Less":
+            getLess().click();//less 1, regular 2
+            break;
+        case"More":
+            getMore().click();
+            break;
+        case"Regular":
+            getRegular().click();
+            break;
+            default:
+                Logz.step( "Modifier is none" );
+    }
 
-        if (getRandomModifier().contains( "Less" )) {
+       /* if (getRandomModifier().contains( "Less" )) {
             getLess().click();//less 1, regular 2
         } else if (getRandomModifier().contains( "More" )) {
             getMore().click();
@@ -77,13 +90,30 @@ public abstract class ModifierPage<T extends AppiumDriver> extends MobileBasePag
             getRegular().click();
         } else {
             Logz.step( "Modifier is none" );
-        }
+        }*/
         getLooksGood().click();
     }
 
     public void selectCheeseModifier() throws Exception {
 
-        getMore().click();
+        switch (getRandomModifier()){
+            case"More":
+                getMore().click();
+                break;
+            case"Regular":
+                getRegular().click();
+                break;
+            default:
+                Logz.step( "Modifier is none" );
+        }
+        /*if (getRandomModifier().contains( "More" )) {
+            getMore().click();
+        } else if (getRandomModifier().contains( "Regular" )) {
+            getRegular().click();
+        } else {
+            Logz.step( "Modifier is none" );
+        }
+        getMore().click();*/
         getLooksGood().click();
 
     }

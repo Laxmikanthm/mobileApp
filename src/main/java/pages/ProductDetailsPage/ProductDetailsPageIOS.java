@@ -50,6 +50,11 @@ public class ProductDetailsPageIOS extends ProductDetailsPage {
     }
 
     @Override
+    MobileButton getCustomize() throws Exception {
+        return null;
+    }
+
+    @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
     }

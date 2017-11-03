@@ -1,27 +1,19 @@
 package userIdentityTest;
-import Base.Order;
 import Base.SubwayAppBaseTest;
-import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
-import enums.Country;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.annotations.Test;
-import pages.ContactInformationPage.ContactInformationPage;
 import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
-import pages.MenuPage.MenuPage;
-import pages.RegistrationPage.RegistrationPage;
 import pages.UserProfilePage.UserProfilePage;
-import pojos.user.MobileUser;
-import pojos.user.RegisterUser;
+import pages.RegistrationPage.RegistrationPage;
 import pojos.user.RemoteOrderCustomer;
 
 @ContextConfiguration({"classpath:order-data.xml"})
@@ -35,7 +27,7 @@ public class UserIdentity extends SubwayAppBaseTest {
     LandingPage landingPage;
     LoginPage loginPage;
     RegistrationPage registrationPage;
-    MenuPage menuPage;
+    UserProfilePage userProfilePage;
     HomePage homePage;
     ForgotYourPasswordPage forgotPasswordPage;
     UserProfilePage profilePage;

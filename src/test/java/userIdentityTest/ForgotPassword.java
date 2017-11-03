@@ -2,25 +2,16 @@ package userIdentityTest;
 
 import Base.Order;
 import Base.SubwayAppBaseTest;
-import cardantApiFramework.utils.JdbcUtil;
-import enums.Country;
-import io.appium.java_client.AppiumDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.ForgotPasswordPage.ForgotYourPasswordPage;
-import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
-import pages.MenuPage.MenuPage;
-import pages.RegistrationPage.RegistrationPage;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 

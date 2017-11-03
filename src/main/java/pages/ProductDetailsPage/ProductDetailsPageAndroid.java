@@ -3,6 +3,7 @@ package pages.ProductDetailsPage;
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
+import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -60,5 +61,9 @@ public class ProductDetailsPageAndroid extends ProductDetailsPage {
     @Override
     protected void waitForPageToLoad() throws Exception {
 
+    }
+    public MobileButton getCustomize() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+ BaseTest.bundle.getString("Customize")+"']"), "Customize button");
+        return button;
     }
 }

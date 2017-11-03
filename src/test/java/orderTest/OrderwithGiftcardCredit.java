@@ -14,14 +14,9 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
-import pages.LoginPage.LoginPage;
-import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
-import pages.SearchStore.SearchStore;
-import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 

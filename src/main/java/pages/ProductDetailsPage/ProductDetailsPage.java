@@ -7,6 +7,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.testng.Assert;
+import pages.CustomizePage.CustomizePage;
 import pojos.CustomizedItem.CustomizedItem;
 import pojos.user.MobileUser;
 import util.MobileApi;
@@ -41,17 +42,44 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
     abstract MobileButton getProductCalories() throws Exception;
     abstract MobileButton getSingleProductPrice() throws Exception;
     abstract MobileButton getSingleProductCalories() throws Exception;
+    abstract MobileButton getCustomize() throws Exception;
+
+    public CustomizePage goToCustomizePage() throws Exception {
+        getCustomize().click();
+        return CustomizePage.get((AndroidDriver) driver);
+    }
+    public ProductDetailsPage assertProductNameInProductDetailsPage(CustomizedItem customizedItem) throws Exception{
+
+        try {
+            Logz.step("##### Started asserting product name in Product Details page #####");
+          //  Assert.assertEquals(getProductName().getText(), customizedItem.getCustomizedProductDetail().getProductName());
+            Logz.step("##### Ended asserting product name in Product Details page #####");
+
+        }catch (Exception ex) {
+            throw new Exception("Unable to assert product name in Product Details page\n"+ ex.getMessage());
+        }
+
+
+        return ProductDetailsPage.get((AppiumDriver)driver);
+    }
+    public boolean assertIngredients(String aIngredients, String eIngredients){
+        List<String> aIngredientsList = Arrays.asList(aIngredients.split("\\s*,\\s*"));
+        List<String> eIngredientsList = Arrays.asList(eIngredients.split("\\s*,\\s*"));
+        Collections.sort(aIngredientsList);
+        Collections.sort(eIngredientsList);
+        return aIngredientsList.equals(eIngredientsList);
+    }
     public ProductDetailsPage assertProductDetails(MobileUser mobileUser) throws Exception{
         Logz.step("##### Started asserting Product Details #####");
         try {
             CustomizedItem customizedItem = new CustomizedItem();
             Assert.assertEquals(getProductName().getText(), customizedItem.getCustomizedProductDetail().getProductName());
-           // Assert.assertEquals(getProductIngredientsText().getText(), BaseTest.getStringfromBundleFile("Ingredient"));
+            // Assert.assertEquals(getProductIngredientsText().getText(), BaseTest.getStringfromBundleFile("Ingredient"));
             Assert.assertTrue( assertIngredients(getProductIngredientsList().getText(), MobileApi.getExpectedDefaultIngredients(customizedItem.getProductDetail())) );
-           Assert.assertEquals(getProductDisclaimer().getText(), customizedItem.getProductDetail().getPromoDisclaimer());
+            Assert.assertEquals(getProductDisclaimer().getText(), customizedItem.getProductDetail().getPromoDisclaimer());
             if (MobileApi.getBreadOptionCount(customizedItem, mobileUser) > 1) {
-                    Assert.assertEquals(getProductPrice().getText(), "$"+customizedItem.getCustomizedProductDetail().getPrice());
-                    Assert.assertEquals(getProductCalories().getText(), customizedItem.getCustomizedProductDetail().getCalories()+" Cals*");
+                Assert.assertEquals(getProductPrice().getText(), "$"+customizedItem.getCustomizedProductDetail().getPrice());
+                Assert.assertEquals(getProductCalories().getText(), customizedItem.getCustomizedProductDetail().getCalories()+" Cals*");
             }else{
                 Assert.assertEquals(getSingleProductPrice().getText(), "$"+customizedItem.getCustomizedProductDetail().getPrice());
                 Assert.assertEquals(getSingleProductCalories().getText(), customizedItem.getCustomizedProductDetail().getCalories()+" Cals*");
@@ -64,12 +92,4 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
 
         return ProductDetailsPage.get((AppiumDriver)driver);
     }
-    public boolean assertIngredients(String aIngredients, String eIngredients){
-        List<String> aIngredientsList = Arrays.asList(aIngredients.split("\\s*,\\s*"));
-        List<String> eIngredientsList = Arrays.asList(eIngredients.split("\\s*,\\s*"));
-        Collections.sort(aIngredientsList);
-        Collections.sort(eIngredientsList);
-        return aIngredientsList.equals(eIngredientsList);
-    }
-
 }

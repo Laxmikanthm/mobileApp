@@ -107,7 +107,9 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
     By customizerPciker = By.id( "ingredient_text" );
     By breadName = By.id( "bread_top" );
     String breadNameText = "";
+    CustomizedItem customizedItem;
     public CustomizePage randomCustomization(CustomizedItem customizedItem) throws Exception {
+        this.customizedItem = customizedItem;
         selectBreads( customizedItem );
         PickerPage pickerPage = goToPickerPage();
         pickerPage.selectCustomizerIngredients( customizedItem );
@@ -164,5 +166,18 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
 
     public void assertCustomizePageDetails() throws Exception{
         commonElements.getElementListCount( By.id( "data_layout"), By.id( "data_layout"), (AppiumDriver)driver) ;
+    }
+    private void assertProductNameInCustomizerPage() throws Exception{
+
+        try {
+            Logz.step("##### Started asserting product name in Product Details page #####");
+            Assert.assertEquals(getTitleText().getText(), customizedItem.getCustomizedProductDetail().getProductName());
+            Assert.assertEquals( getAddToBagButton().getText(), BaseTest.getStringfromBundleFile( "AddToBagText" ) + " | $"+customizedItem.getCustomizedProductDetail().getPrice() );
+            Logz.step("##### Ended asserting product name in Product Details page #####");
+
+        }catch (Exception ex) {
+            throw new Exception("Unable to assert product name in Product Details page\n"+ ex.getMessage());
+        }
+
     }
 }

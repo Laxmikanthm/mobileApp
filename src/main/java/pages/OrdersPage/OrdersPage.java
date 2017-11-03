@@ -8,10 +8,6 @@ import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
-import cardantApiFramework.serviceUtilities.cardantClientV2.data.LocationData;
-import cardantApiFramework.serviceUtilities.cardantClientV2.data.ProductData;
-import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.Product;
-import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.ProductGroup;
 import cardantApiFramework.utils.JdbcUtil;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.AppiumDriver;
@@ -31,7 +27,7 @@ import Enums.Menu;
 import Enums.Tax;
 import pages.DrinksPage.DrinksPage;
 import pages.HomePage.HomePage;
-import pages.MenuPage.MenuPage;
+import pages.UserProfilePage.UserProfilePage;
 import pages.OffersPage.OffersPage;
 import pages.OrderConfirmationPage.OrderConfirmationPage;
 import pages.ProductDetailsPage.ProductDetailsPage;
@@ -228,7 +224,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     RemoteOrderCustomer customer;
     public int Rewards = 0;
     AddCardPage addCardPage;
-    MenuPage menuPage;
+    UserProfilePage userProfilePage;
     HomePage homePage;
     TouchAction action = new TouchAction((MobileDriver) driver);
     CommonElements elements = new CommonElements((AppiumDriver) driver);
@@ -1527,7 +1523,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         return Rewards;
     }
 
-    public MenuPage placeRandomOrderForSixTimes(String menuItem, MobileUser mobileUser, String storeName, int i, HomePage homePage) throws Exception {
+    public UserProfilePage placeRandomOrderForSixTimes(String menuItem, MobileUser mobileUser, String storeName, int i, HomePage homePage) throws Exception {
         try {
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
@@ -1553,7 +1549,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getTokens(remoteOrder);
             getGotIt().isReady();
             getGotIt().click();
-            return MenuPage.get((AppiumDriver) driver);
+            return UserProfilePage.get((AppiumDriver) driver);
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -1676,8 +1672,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void ValidatingPlacingOrderForSixTimes(MobileUser mobileUser, String Address, HomePage homePage) throws Exception {
         for (int i = 0; i <= 6; i++) {
-            MenuPage menuPage = placeRandomOrderForSixTimes("All Sandwiches", mobileUser, Address, i, homePage);//Plcaing order more than 6 times
-            homePage = menuPage.assertMobileOrderHistory(orderValue);
+            UserProfilePage userProfilePage = placeRandomOrderForSixTimes("All Sandwiches", mobileUser, Address, i, homePage);//Plcaing order more than 6 times
+            homePage = userProfilePage.assertMobileOrderHistory(orderValue);
             //Asserting each time token generation.
             Assert.assertEquals(String.valueOf(tokens), homePage.tokenValue().toString());//verifying order in order History
 
@@ -2159,13 +2155,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-   /* private void placeOrderAndAssert() throws Exception {
+    private void assertOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage) throws Exception {
 
-        YourOrderPage yourOrderPage = goToYourOrderPage(customized);
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.goToOrderConfirmationPage();
-        orderConfirmationPage.assertTotalAmountInOrderConfirmationPage();
+        HomePage homePage = orderConfirmationPage.assertTotalAmountInOrderConfirmationPage();
+        PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 
-    }*/
+    }
 
     private void placeOrderAndAssert(MobileUser mobileUser, String menuCategories, Store store) throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage(customized);
@@ -2174,11 +2171,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             if (!time) {
                 assertBreakfastUnavailablePopUp(customizedItem);
             } else {
-                OrderConfirmationPage orderConfirmationPage = yourOrderPage.goToOrderConfirmationPage();
-                HomePage homePage = orderConfirmationPage.assertTotalAmountInOrderConfirmationPage();
-                PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-                purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+                assertOrderDetails(mobileUser, yourOrderPage);
             }
+        }
+        else{
+            assertOrderDetails(mobileUser, yourOrderPage);
         }
 
     }
@@ -2349,7 +2346,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             Logz.step("##### Selecting: "+productName+" #####");
             Logz.step("product name: " + productName);
-            elements.scrollAndClick(productGroupHeader, productGroupHeader, productName);
+           ProductDetailsPage productDetailsPage =  goToProductDetailsPage(productName);
             if (!(customizedItem.getCustomizedProductDetail().getBreadSize().contains("FOOTLONG™") || breadSize.toString().contains("none"))) {
                 if (MobileApi.getBreadOptionCount(customizedItem, mobileUser) > 1) {
                     getSixInchOption().click();
@@ -2357,7 +2354,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
 
             if (customized) {
-                CustomizePage customizePage = goToCustomizePage();
+                CustomizePage customizePage =   productDetailsPage.assertProductNameInProductDetailsPage( customizedItem ).goToCustomizePage();
                 customizePage.randomCustomization(customizedItem);
             }
             Logz.step("##### Selected: "+productName+" #####");
@@ -2368,7 +2365,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-
+private ProductDetailsPage goToProductDetailsPage(String productName) throws Exception{
+    elements.scrollAndClick(productGroupHeader, productGroupHeader, productName);
+    return ProductDetailsPage.get( (AppiumDriver)driver );
+}
 
     private void placeLoyaltyOrderAndAssert() throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage(customized);

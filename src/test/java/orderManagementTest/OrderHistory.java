@@ -2,8 +2,6 @@ package orderManagementTest;
 
 import Base.SubwayAppBaseTest;
 import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.PaymentResponse;
-import cardantApiFramework.utils.JdbcUtil;
-import enums.Country;
 import enums.PaymentMethod;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -13,7 +11,7 @@ import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
-import pages.MenuPage.MenuPage;
+import pages.UserProfilePage.UserProfilePage;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
@@ -39,8 +37,8 @@ public class OrderHistory extends SubwayAppBaseTest {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        menuPage.assertMobileOrderHistory(paymentResponse.getOrderNumber());
+        UserProfilePage userProfilePage = homePage.getUserDetails();
+        userProfilePage.assertMobileOrderHistory(paymentResponse.getOrderNumber());
 
 
     }

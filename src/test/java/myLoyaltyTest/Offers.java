@@ -4,30 +4,21 @@ import Base.SubwayAppBaseTest;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
-import enums.Country;
-import enums.CountryOffer;
 import enums.PaymentMethod;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
-import pages.ManageRewardsPage.ManageRewardsPage;
-import pages.MenuPage.MenuPage;
-import pages.MyWayRewards.MyWayRewards;
+import pages.UserProfilePage.UserProfilePage;
 import pages.OrdersPage.OrdersPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
 import pages.SearchStore.SearchStore;
-import pages.UserProfilePage.UserProfilePage;
-import pages.YourOrderPage.YourOrderPage;
-import pojos.enums.OfferPLU;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
@@ -86,16 +77,16 @@ public class Offers extends SubwayAppBaseTest {
         LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage = loginPage.login(mobileUser);
-        MenuPage menuPage = homePage.getUserDetails();
-        AddCardPage addCardPage = menuPage.gotoAddPaymentMethods();
+        UserProfilePage userProfilePage = homePage.getUserDetails();
+        AddCardPage addCardPage = userProfilePage.gotoAddPaymentMethods();
         addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
         addCardPage.selectBackButton();
-        menuPage.goHome();
+        userProfilePage.goHome();
         SearchStore searchStore = homePage.findYourSubWay();
         OrdersPage ordersPage = searchStore.findYourStore(store.getZipCode());
         ordersPage.placeOrderwithRedeemOffersandCertificates("All Sandwiches", mobileUser, store.getAddress1());
         Assert.assertEquals(String.valueOf(ordersPage.tokens), homePage.tokenValue().toString());//tokenVerification
-        menuPage.assertMobileOrderHistory(ordersPage.orderValue);//Order Verification
+        userProfilePage.assertMobileOrderHistory(ordersPage.orderValue);//Order Verification
         //need to do error log
 
 

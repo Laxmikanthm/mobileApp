@@ -22,13 +22,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import pages.MenuPage.MenuPage;
+import pages.UserProfilePage.UserProfilePage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
 import pages.ProductDetailsPage.ProductDetailsPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
 import pages.SearchStore.SearchStore;
-import pages.UserProfilePage.UserProfilePage;
 import pages.YourOrderPage.YourOrderPage;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
@@ -189,19 +188,19 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-    public MenuPage gotoMenuPage() throws Exception {
+    public UserProfilePage gotoMenuPage() throws Exception {
         try {
             this.getMenu().click();
-            return MenuPage.get( (AppiumDriver) driver );
+            return UserProfilePage.get( (AppiumDriver) driver );
         } catch (Exception ex) {
             throw new Exception( ex );
         }
     }
 
-    public MenuPage getUserDetails() throws Exception {
+    public UserProfilePage getUserDetails() throws Exception {
         try {
             this.getMenu().click();
-            return MenuPage.get( (AppiumDriver) driver );
+            return UserProfilePage.get( (AppiumDriver) driver );
         } catch (Exception ex) {
             throw new Exception( ex );
         }

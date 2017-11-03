@@ -129,7 +129,7 @@ public class CustomizePageAndroid extends CustomizePage{
 
     @Override
     MobileButton getAddToBagButton() throws Exception {
-        return null;
+        return new AndroidButton( (AndroidDriver)driver, By.id("addToBag"), "Add To Bag" );
     }
 
     @Override

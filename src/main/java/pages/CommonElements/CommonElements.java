@@ -108,7 +108,30 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         Logz.step("Scrolled to element and get element list");
         return HomePage.get((AppiumDriver) driver);
     }
+    public boolean isAvailable(By locatorIOS, By locatorAndroid) throws Exception {
+        try {
+            switch (platform) {
+                case "iOS":
+                    if (exits(SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locatorIOS)) {
+                        return ((IOSDriver) driver).findElement(locatorIOS).isDisplayed();
 
+                    }
+
+                case "Android":
+                    if (exits(SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locatorAndroid)) {
+                        return ((AndroidDriver) driver).findElement(locatorAndroid).isDisplayed();
+
+                    }
+
+                default:
+                    throw new Exception("Unable to get element for platform " + platform);
+            }
+        } catch (Exception ex) {
+            return false;
+           // throw new Exception("Unable to get element list\n" + ex.getMessage());
+        }
+
+    }
 
     public List<WebElement> getElements(By locatorIOS, By locatorAndroid) throws Exception {
         try {
