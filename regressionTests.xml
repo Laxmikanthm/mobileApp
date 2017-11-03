@@ -31,7 +31,7 @@
             <!-- orderManagementTest-->
             <class name="orderManagementTest.OrderHistory"/>
             <!-- orderTest-->
-            <class name="orderTest.PaymentMethods">
+            <class name="orderTest.PlaceOrderMultipleTender">
                 <methods>
                     <include name="addCreditCard"/>
 
@@ -40,54 +40,16 @@
                     <include name="addPayPal"/>
                 </methods>
             </class>
-            <class name="orderTest.PlaceRandomOrder">
+            <class name="orderTest.PlaceDefaultOrder"/>
 
-                <methods>
+            <class name="orderTest.EditYourOrder"/>
 
-                    <include name="placeOrderAllSandwiches"/>
-                    <include name="placeOrderSubwayFreshFit"/>
-                    <include name="placeOrderPersonalPizza"/>
-                    <include name="placeOrderChoppedSalads"/>
-                    <include name="placeOrderSUBWAYFreshFitforKids"/>
-                    <include name="placeOrderDrinks"/>
-                    <include name="placeOrderBreakfast"/>
-                    <include name="placeOrderforMoreThanSixTimes"/>
-                </methods>
-            </class>
-            <class name="orderTest.OrderwithSpecialInstructions"/>
-            <class name="orderTest.EditCardAndPlaceOrder">
-                <methods>
-                    <include name="editCartVerifyPlaceOrder"/>
-                    <include name="editCartAddAnotherVerifyPlaceOrder"/>
-                    <include name="editCartDeleteItemVerifyPlaceOrder"/>
-                    <include name="editCartSomethingElseVerifyPlaceOrder"/>
-                </methods>
-            </class>
-            <class name="orderTest.AddMoreItemsatCheckout">
-                <methods>
-                    <include name="addMoreItemsAtCheckOut"/>
-                </methods>
-            </class>
-
-            <class name="orderTest.CustomizeOrder">
-                <methods>
-                    <include name="placeCustomizeOrderAllSandwiches"/>
-                </methods>
-            </class>
-            <class name="orderTest.DeleteTopppings">
-                <methods>
-                    <include name="placeRandomOrderAndDeleteToppings"/>
-                </methods>
-            </class>
+            <class name="orderTest.PlaceCustomizedOrder"/>
             <!-- userIdentityTest-->
-            <class name="userIdentityTest.Privacypolicy"/>
-            <class name="userIdentityTest.ResetPasswordTest"/>
-            <class name="userIdentityTest.ForgotPassword"/>
-            <class name="userIdentityTest.UserLoginTest"/>
-            <class name="userIdentityTest.TermsandConditions"/>
+            <class name="userIdentityTest.UserIdentity"/>
+
             <!-- userProfileTest-->
-            <class name="userProfileTest.AppVersion"/>
-            <class name="userProfileTest.HelpPage"/>
+            <class name="userProfileTest.UserProfile"/>
         </classes>
     </test>
 

@@ -177,8 +177,8 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-    public RemoteOrderCustomer getUser() throws Exception {
-        RemoteOrderCustomer mobileUser;
+    public MobileUser getUser() throws Exception {
+        MobileUser mobileUser;
         if (System.getProperty("country").contains("US")) {
             mobileUser = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));//JdbcUtil.getOnlineStore()));////
         } else {

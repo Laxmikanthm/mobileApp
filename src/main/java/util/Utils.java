@@ -1,5 +1,6 @@
 package util;
 
+import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import Enums.BreadSize;
 import Enums.Menu;
@@ -7,9 +8,7 @@ import utils.Logz;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 public class Utils {
    private static Random rand ;
@@ -26,6 +25,7 @@ public class Utils {
        }
        return menu;
     }
+
     public static String removeTrailingZero(String value)  {
         value = value.replaceAll("\\$","").trim();
         DecimalFormat decimalFormat = new DecimalFormat("0.#####");
@@ -118,6 +118,16 @@ public class Utils {
     public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
         int x = rand.nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
+    }
+    public static String getRandomMenuName() throws Exception {
+        List<String> menuNames = new ArrayList<>();
+        menuNames.add( BaseTest.getStringfromBundleFile( "AllSandwiches" ) );
+        menuNames.add( BaseTest.getStringfromBundleFile( "SUBWAYFreshFit" ) );
+        menuNames.add( BaseTest.getStringfromBundleFile( "ChoppedSalads" ) );
+        menuNames.add( BaseTest.getStringfromBundleFile( "KidsMeal" ) );
+        Random random = new Random();
+        int index = random.nextInt( menuNames.size() );
+        return menuNames.get( index ).toString();
     }
 
 }

@@ -2062,8 +2062,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     //##########################################################################################################################
     CustomizedItem customizedItem;
-    By productGroupLayout = By.id("product_group_layout");
-    By productGroupHeader = By.id("product_group_header");
+    By productGroupHeaderAndroid = By.id("product_group_header");
+    By productGroupHeaderIOS = By.id("product_group_header");
+    By getProductGroupLayoutAndroid =  By.id("product_group_layout");
+    By getProductGroupLayoutIOS =  By.id("product_group_layout");
     boolean customized = false;
 
 
@@ -2124,7 +2126,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public HomePage placeRandomOrderMyLoyalty() throws Exception {
         try {
-
+            customized = false;
             Logz.step("##### Started placing Random Order #####");
             selectRandomItem();
             placeLoyaltyOrderAndAssert();
@@ -2276,8 +2278,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             selectRandomMenu();
             //Get Product Details - click random Product
             selectRandomProduct(BreadSize.NONE);
-            //Click Add to bag
-            getAddToBag().click();
+            /*//Click Add to bag
+            getAddToBag().click();*/
             Logz.step("##### Ended placing Random Order #####");
         } catch (Exception ex) {
             throw new Exception("Unable to place Random Order:\n" + ex.getMessage());
@@ -2289,10 +2291,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectRandomMenu() throws Exception {
         try {
             Logz.step("##### Selecting a random menu #####");
-            List<WebElement> ProductCategoriesList = elements.scrollToElement(By.id("product_group_layout"), By.id("product_group_header"), Utils.selectRandomMenu());
-            int getProductMenuIndex = ProductCategoriesList.size();
-            getProductMenuIndex = Utils.selectRandomItem(getProductMenuIndex);
-            ProductCategoriesList.get(getProductMenuIndex).click();
+            elements.scrollAndClick(getProductGroupLayoutIOS, getProductGroupLayoutAndroid, Utils.getRandomMenuName());
             Logz.step("##### Selected a random menu #####");
         } catch (Exception ex) {
             throw new Exception("Unable to select Random menu\n" + ex.getMessage());
@@ -2304,13 +2303,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectRandomProduct(BreadSize breadSize) throws Exception {
         try {
             Logz.step("##### Selecting a random product #####");
-            List<WebElement> ProductList = elements.getElements(By.id(""), By.id("product_group_header"));//product_list
+            List<WebElement> ProductList = elements.getElements(productGroupHeaderIOS, productGroupHeaderAndroid);//product_list
             int getProductCount = ProductList.size();
             getProductCount = Utils.selectRandomItem(getProductCount);
             ProductList.get(getProductCount).click();
-            if (!(breadSize.toString().contains("Footlong") || breadSize.toString().contains("none"))) {
-                getSixInchOption().click();
-            }
             Logz.step("##### Selected a random product #####");
         } catch (Exception ex) {
             throw new Exception("Unable to select Random Product\n" + ex.getMessage());
@@ -2333,7 +2329,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectSpecificMenu(String itemName) throws Exception {
         try {
             Logz.step("##### Selecting a "+itemName+" menu #####");
-            elements.scrollAndClick(productGroupHeader, productGroupHeader, itemName);
+            elements.scrollAndClick(productGroupHeaderIOS, productGroupHeaderAndroid, itemName);
             Logz.step("##### Selected a "+itemName+" menu #####");
         } catch (Exception ex) {
             throw new Exception("Unable to select "+itemName+" menu\n" + ex.getMessage());
@@ -2366,7 +2362,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 private ProductDetailsPage goToProductDetailsPage(String productName) throws Exception{
-    elements.scrollAndClick(productGroupHeader, productGroupHeader, productName);
+    elements.scrollAndClick(productGroupHeaderIOS, productGroupHeaderAndroid, productName);
     return ProductDetailsPage.get( (AppiumDriver)driver );
 }
 

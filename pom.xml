@@ -72,7 +72,7 @@
                           the value we have set in the POM as a default.-->
                         <!--Mobile-->
                         <mobilePlatform>Android</mobilePlatform>
-                        <platformVersions>6.0.1</platformVersions>
+                        <platformVersions>5.0.1</platformVersions>
                         <deviceName>Subway</deviceName>
                         <platform>mobile</platform>
                         <!-- driverName can be MobileApp/WebApp -->

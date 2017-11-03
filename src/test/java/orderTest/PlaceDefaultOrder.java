@@ -234,16 +234,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     }
 
 
-    @Test
-    public void OrderAMeal() throws Exception {
-        mobileUser=setCountryName();
-        mobileUser=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.orderForMakeItAMeal("All Sandwiches", mobileUser, store.getAddress1(), ordersPage);
-        ordersPage.clickOnPlaceOrder();
-    }
+
     //DFA-9165
     //Place Order for more than 6 times...R2
     @Test

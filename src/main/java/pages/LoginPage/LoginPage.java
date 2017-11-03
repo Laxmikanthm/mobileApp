@@ -110,7 +110,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         d.hideKeyboard();
     }
 
-    public ForgotYourPasswordPage forgotPassword() throws Exception
+    public ForgotYourPasswordPage goToForgotPasswordPage() throws Exception
     {
         try{
             getForgotPassword().waitForClickable();
