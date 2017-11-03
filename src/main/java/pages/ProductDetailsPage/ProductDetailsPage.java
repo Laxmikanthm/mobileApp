@@ -52,7 +52,8 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
 
         try {
             Logz.step("##### Started asserting product name in Product Details page #####");
-          //  Assert.assertEquals(getProductName().getText(), customizedItem.getCustomizedProductDetail().getProductName());
+            Assert.assertEquals(getProductName().getText(), customizedItem.getCustomizedProductDetail().getProductName());
+            Assert.assertEquals( getProductPrice().getText(), "$"+customizedItem.getCustomizedProductDetail().getPrice());
             Logz.step("##### Ended asserting product name in Product Details page #####");
 
         }catch (Exception ex) {

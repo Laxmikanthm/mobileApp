@@ -1,5 +1,6 @@
 package util;
 
+import Enums.BreadSize;
 import base.gui.controls.mobile.generic.MobileButton;
 import cardantApiFramework.pojos.StringUtils;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.ProductData;
@@ -138,5 +139,8 @@ public class MobileApi {
         return ingredients.substring(1, ingredients.length() - 1);
     }
 
-
+public static CustomizedItem getCustomizedItemDetails(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception{
+    RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
+    return  remoteOrder.getCustomizedItemDetail(menuName, breadSize.toString());
+}
 }
