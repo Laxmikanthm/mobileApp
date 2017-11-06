@@ -29,6 +29,7 @@ import pages.ProductDetailsPage.ProductDetailsPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
 import pages.SearchStore.SearchStore;
 import pages.YourOrderPage.YourOrderPage;
+import pojos.CustomizedItem.CustomizedItem;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
@@ -572,9 +573,9 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         return UserProfilePage.get( (AndroidDriver) driver );
     }
 
-    public ProductDetailsPage goToProductDetailsPage(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception {
+    public ProductDetailsPage goToProductDetailsPage(MobileUser mobileUser, String menuName, BreadSize breadSize, CustomizedItem customizedItem) throws Exception {
         OrdersPage ordersPage = goToOrderPage();
-        ordersPage.addDefaultItemInCart( mobileUser, menuName, breadSize );
+        ordersPage.addDefaultItemInCart( mobileUser, menuName, breadSize , customizedItem);
         return ProductDetailsPage.get( (AndroidDriver) driver );
     }
 

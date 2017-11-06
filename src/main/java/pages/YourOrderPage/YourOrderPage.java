@@ -82,6 +82,8 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     }
     public YourOrderPage assertOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
         Logz.step("Started asserting total amount In Your Order Page");
+        //Assert item name
+        //assert price
         /*String aTotalAmount =  commonElements.getElement(totalAmount, totalAmount, (AppiumDriver)driver).getText();
         String eTotalAmount = "";
         Assert.assertEquals(aTotalAmount, eTotalAmount);*/

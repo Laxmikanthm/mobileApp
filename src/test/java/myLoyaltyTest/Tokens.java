@@ -16,10 +16,13 @@ import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
+import pages.MyWayRewards.MyWayRewards;
 import pages.UserProfilePage.UserProfilePage;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
+import utils.Logz;
 
 /**
  * Created by E001599 on 17-05-2017.
@@ -27,10 +30,11 @@ import pojos.user.RegisterUser;
 @ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class MyWayTokenTracker extends SubwayAppBaseTest {
+public class Tokens extends SubwayAppBaseTest {
 
 
     MobileUser mobileUser;
+    RemoteOrderCustomer remoteOrderCustomer;
     Store store=JdbcUtil.getStoreDetails();
     //DFA-9139_DFA-7615_DFA-7112
     @Test
@@ -65,4 +69,23 @@ public class MyWayTokenTracker extends SubwayAppBaseTest {
 
 
     }
+    @Test
+    public void tokenGeneration() throws Exception {
+        try {
+            mobileUser=setCountryName();
+            remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
+            LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+            LoginPage loginPage = landingPage.gotoLogInPage();
+            HomePage homePage = loginPage.login(mobileUser);
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            remoteOrder.placeRandomOrderForGivenNumberOfTokens(2, PaymentMethod.CREDITCARD);
+            MyWayRewards myWayRewards = homePage.getTokensSparkle();
+            myWayRewards.validateTokensandCerts(homePage,remoteOrderCustomer);
+
+        } catch (Exception ex) {
+            Logz.error("As tokens are not same as api");
+            throw ex;
+        }
+    }
+
 }

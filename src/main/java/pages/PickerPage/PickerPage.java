@@ -412,8 +412,9 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     private void selectIngredient(String pickerName, CustomizerDetails customizerDetail) throws Exception {
-        Logz.step( "##### Selecting Picker ingredient Name: " + customizerName + " #####" );
-        commonElements.scrollAndClick( customizerPicker, customizerPicker, pickerName );
+        Logz.step( "##### Selecting Picker ingredient Name: " + customizerDetail.getPickerName() + " #####" );
+        commonElements.scrollAndClick( customizerPicker, customizerPicker, customizerDetail.getPickerName());
+
         /*List<WebElement> elementList =  commonElements.getElements(customizerPicker, customizerPicker );
         for(WebElement element: elementList){
             element.getText();
@@ -428,7 +429,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
 
         try {
             Logz.step( "##### Started asserting product name in Product Details page #####" );
-            //  Assert.assertEquals(getTitleText().getText(), customizedItem.getCustomizedProductDetail().getProductName());
+            Assert.assertEquals(getTitleText().getText(), customizedItem.getCustomizedProductDetail().getProductName());
             Logz.step( "##### Ended asserting product name in Product Details page #####" );
 
         } catch (Exception ex) {
