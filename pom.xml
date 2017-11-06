@@ -12,7 +12,7 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>4.8.6-SNAPSHOT</version>
+            <version>4.8.13-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
@@ -24,11 +24,7 @@
             <artifactId>spring-context-support</artifactId>
             <version>4.3.10.RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.6.2</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -85,7 +81,7 @@
                         <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>Users/sultana_m/Documents/AndroidApp/Subway_R2_QE_7.1.6.0_5000768.apk</app>
+                        <app>Users/sultana_m/Documents/AndroidApp/Subway_Sprint_QE_7.1.7.0_5000783.apk</app>
                         <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>120</newCommandTimeout>
@@ -114,15 +110,15 @@
 
                         <executionPlatform></executionPlatform>
                         <appName>R2-Mobile</appName>
-                        <!--  <spring.profiles.active>local</spring.profiles.active>-->
+                       <!--   <spring.profiles.active>local</spring.profiles.active>-->
                         <!--Test Object-->
                         <spring.profiles.active>testObject</spring.profiles.active>
                         <driverName>MobileApp</driverName>
                         <platform>mobile</platform>
                         <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>7309A4455C6F4FE393D204E510B83B45</testObjectApiKey>
+                        <testObjectApiKey>F6E2E240BDAF41F9B59C21954CEA0055</testObjectApiKey>
                         <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
-                        <appName>oct31str2</appName>
+                        <appName>subway-mariumsprint</appName>
                         <appiumVersion>1.6.5</appiumVersion>
                         <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
                     </systemPropertyVariables>
