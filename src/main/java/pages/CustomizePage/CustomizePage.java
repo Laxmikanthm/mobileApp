@@ -107,9 +107,8 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
     By customizerPciker = By.id( "ingredient_text" );
     By breadName = By.id( "bread_top" );
     String breadNameText = "";
-    CustomizedItem customizedItem;
     public CustomizePage randomCustomization(CustomizedItem customizedItem) throws Exception {
-        this.customizedItem = customizedItem;
+
         selectBreads( customizedItem );
         PickerPage pickerPage = goToPickerPage();
         pickerPage.selectCustomizerIngredients( customizedItem );
@@ -141,7 +140,7 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
                             commonElements.swipe( (AppiumDriver) driver, "Left" );
                         }
                     }
-                   // Assert.assertEquals( getBreadCalories().getText(), customizerDetails.get( 0 ).getCalories() + " Cals" );
+
                     if (!customizerDetails.get( 0 ).getModifierName().trim().contains( "Wrap" )) {
                         Assert.assertEquals( getToastIt().getText(), BaseTest.getStringfromBundleFile( "ToastItText" ) );
                         if (!customizerDetails.get( 1 ).getModifierName().contains( "Not Toasted" )) {
@@ -167,7 +166,7 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
     public void assertCustomizePageDetails() throws Exception{
         commonElements.getElementListCount( By.id( "data_layout"), By.id( "data_layout"), (AppiumDriver)driver) ;
     }
-    private void assertProductNameInCustomizerPage() throws Exception{
+    private void assertProductNameInCustomizerPage(CustomizedItem customizedItem) throws Exception{
 
         try {
             Logz.step("##### Started asserting product name in Product Details page #####");

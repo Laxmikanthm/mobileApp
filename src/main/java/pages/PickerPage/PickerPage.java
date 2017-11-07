@@ -40,7 +40,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    String customizerName;
+   // String customizerName;
 
     CommonElements commonElements = new CommonElements( (AppiumDriver) driver );
     By customizerPicker = By.id( "ingredient_text" );
@@ -79,20 +79,18 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    CustomizedItem customizedItem;
-
     public void selectIngredients(Customizer customizer) throws Exception {
         List<CustomizerDetails> customizerDetails = customizer.getCustomizerDetails();
 
         switch (customizer.getCustomizerName()) {
             case "Cheese":
-                selectCheeseIngredient( customizerDetails, isExtrasCheeseAvailable() );
+                //selectCheeseIngredient( customizerDetails, isExtrasCheeseAvailable() );
                 break;
             case "Extras":
                 selectExtrasIngredient( customizerDetails );
                 break;
             case "Meat":
-                selectMeatIngredient( customizerDetails, isDoubleMeatAvailable() );
+              //  selectMeatIngredient( customizerDetails, isDoubleMeatAvailable() );
                 break;
             case "Veggies":
                 selectOtherIngredient( customizerDetails );
@@ -127,38 +125,29 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
         }*/
     }
 
-    private void selectCheeseIngredient(List<CustomizerDetails> customizerDetails, boolean extraCheeseAvailable) throws Exception {
+    private void selectCheeseIngredient(CustomizedItem customizedItem, List<CustomizerDetails> customizerDetails) throws Exception {
         try {
 
             for (CustomizerDetails customizerDetail : customizerDetails) { //"Monterey Cheddar (shredded)"
                 if (customizerDetail.getModifierName().contains( "No Cheese" )) {
-                    Logz.step( "Cheese is Not Selected" + customizerName );
+                    Logz.step( "Cheese is Not Selected" + customizerDetail.getModifierName( ));
                 } else {
-                    customizerName = customizerDetail.getModifierName();
-                    selectIngredient( customizerName, customizerDetail );
-                    selectCheeseModifier( customizerDetail, extraCheeseAvailable );
+                    selectIngredient( customizerDetail.getModifierName() );
+
                 }
             }
-
+            selectCheeseModifier( customizedItem, customizerDetails, isExtrasCheeseAvailable(customizedItem) );
         } catch (Exception ex) {
-            throw new Exception( "Unable to select: " + customizerName + "\n" + ex.getMessage() );
+            throw new Exception( "Unable to select picker\n" + ex.getMessage() );
         }
     }
 
-    private void selectMeatIngredient(List<CustomizerDetails> customizerDetails, boolean isDoubleMeatAvailable) throws Exception {
+    private void selectMeatIngredient(CustomizedItem customizedItem, List<CustomizerDetails> customizerDetails)  throws Exception {
         try {
-            for (CustomizerDetails customizerDetail : customizerDetails) {
-                /*if (customizerDetails.size() > 1) {
-                    customizerName = customizerDetail.getPickerName();
-                    selectIngredient( customizerName, customizerDetail );
-                }*/
-              //  selectIngredient( customizerName, customizerDetail );
-                selectCheeseModifier( customizerDetail, isDoubleMeatAvailable );
-
-            }
+                selectCheeseModifier( customizedItem, customizerDetails, isDoubleMeatAvailable( customizedItem ) );
 
         } catch (Exception ex) {
-            throw new Exception( "Unable to select: " + customizerName + "\n" + ex.getMessage() );
+            throw new Exception( "Unable to select: " + customizedItem.getMenuName() + "\n" + ex.getMessage() );
         }
 
     }
@@ -169,18 +158,17 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
                 if (!(customizerDetail.getPickerName().contains( "Deluxe" )
                         || customizerDetail.getPickerName().contains( "Extra Cheese" )
                         || customizerDetail.getPickerName().contains( "Double Meat" ))) {
-                    customizerName = customizerDetail.getPickerName();
-                    selectIngredient( customizerName, customizerDetail );
+                    selectIngredient( customizerDetail.getPickerName() );
                 }
 
             }
         } catch (Exception ex) {
-            throw new Exception( "Unable to select: " + customizerName + "\n" + ex.getMessage() );
+            throw new Exception( "Unable to select:  customizerName \n" + ex.getMessage() );
         }
 
     }
 
-    private boolean isExtrasCheeseAvailable() throws Exception {
+    private boolean isExtrasCheeseAvailable(CustomizedItem customizedItem) throws Exception {
         boolean extraCheese = false;
         try {
             for (Customizer customizer : customizedItem.getCustomizedProductDetail().getCustomizer()) {
@@ -196,12 +184,12 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
             }
 
         } catch (Exception ex) {
-            throw new Exception( "Unable to select: " + customizerName + "\n" + ex.getMessage() );
+            throw new Exception( "Unable to select: " + customizedItem.getMenuName() + "\n" + ex.getMessage() );
         }
         return extraCheese;
     }
 
-    private boolean isDoubleMeatAvailable() throws Exception {
+    private boolean isDoubleMeatAvailable(CustomizedItem customizedItem) throws Exception {
         boolean extraCheese = false;
         try {
             for (Customizer customizer : customizedItem.getCustomizedProductDetail().getCustomizer()) {
@@ -218,7 +206,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
 
 
         } catch (Exception ex) {
-            throw new Exception( "Unable to select: " + customizerName + "\n" + ex.getMessage() );
+            throw new Exception( "Unable to select: " + customizedItem.getMenuName() + "\n" + ex.getMessage() );
         }
         return extraCheese;
     }
@@ -226,9 +214,8 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectOtherIngredient(List<CustomizerDetails> customizerDetails) throws Exception {
         try {
             Random random = new Random();
-            int customizedList = 0;
-            int index = random.nextInt( customizedList );
-            selectIngredient( customizerName, customizerDetails.get( index ) );
+            int index = random.nextInt( customizerDetails.size() );
+            selectIngredient( customizerDetails.get( index ).getPickerName());
            /* int i = 0;
             while (i < 2) {
                 if (customizerDetails.size() > 5) {
@@ -244,65 +231,13 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
             }*/
             selectModifier();
         } catch (Exception ex) {
-            throw new Exception( "Unable to select: " + customizerName + "\n" + ex.getMessage() );
+            throw new Exception( "Unable to select: \n" + ex.getMessage() );
         }
     }
 
     public void selectCustomizerIngredients(CustomizedItem customizedItem) throws Exception {
-        this.customizedItem = customizedItem;
-        //List<Customizer> customizers = customizedItem.getCustomizedProductDetail().getCustomizer();
-       // List<WebElement> picker = commonElements.getElementListByClass( androidPickerList, androidPickerList, (AppiumDriver) driver );
+        assertProductNameInPickerPage();
 
-      /*  int i = 0;
-        while (i < 3) {
-            int index = Utils.selectRandomItem( customizers.subList( 1, customizers.size() ).size() );
-            Logz.step( "Picker Name: " + customizers.get( index ).getCustomizerName() );
-            for (WebElement pick : picker.subList( 1, 6 )) {
-                if (pick.getText().contains( customizers.get( index ).getCustomizerName() )) {
-                    pick.click();
-                    selectIngredients( customizers.get( index ) );
-
-                } else {
-                    if (customizers.get( index ).getCustomizerName().contains( "Meat" )) {
-                        commonElements.swipe( (AppiumDriver) driver, "Right" );
-                    } else {
-                        commonElements.swipe( (AppiumDriver) driver, "Left" );
-                    }
-
-                }
-
-            }
-            customizers.remove( index ); // removing so same index will not select next random selection
-            i++;
-        }*/
-        /*List<CustomizerDetails> customizerDetails = customizer.getCustomizerDetails();
-
-        switch (customizer.getCustomizerName()) {
-            case "Cheese":
-                selectCheeseIngredient( customizerDetails, isExtrasCheeseAvailable() );
-                break;
-            case "Extras":
-                selectExtrasIngredient( customizerDetails );
-                break;
-            case "Meat":
-                selectMeatIngredient( customizerDetails, isDoubleMeatAvailable() );
-                break;
-            case "Veggies":
-                selectOtherIngredient( customizerDetails );
-                break;
-            case "Sauces":
-                selectOtherIngredient( customizerDetails );
-                break;
-            case "Seasoning":
-                selectOtherIngredient( customizerDetails );
-                break;
-            case "Egg":
-                selectOtherIngredient( customizerDetails );
-                break;
-
-            default:
-                Logz.step( "No picker ingredient is found to select" );
-*/
         List<Customizer> customizers = customizedItem.getCustomizedProductDetail().getCustomizer();
         int i = 0;
         while (i < 4) {
@@ -312,7 +247,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
                 case "Meat":
                     commonElements.swipe( (AppiumDriver) driver, "Right" );
                     getMeatText().click();
-                    selectMeatIngredient( customizerDetails, isDoubleMeatAvailable() );
+                    selectMeatIngredient( customizedItem, customizerDetails );
                     break;
                 case "Extras":
                     commonElements.swipe( (AppiumDriver) driver, "Left" );
@@ -333,11 +268,12 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
                     break;
                 case "Cheese":
                     getCheeseText().click();
-                    selectCheeseIngredient( customizerDetails, isExtrasCheeseAvailable() );
+                    selectCheeseIngredient(customizedItem, customizerDetails);
                     break;
                 case "Egg":
                     getEggText().click();
                     selectOtherIngredient( customizerDetails );
+
                     break;
                 default:
                     Logz.step( "No picker ingredient is found to select" );
@@ -372,13 +308,15 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
         return ModifierPage.get( (AppiumDriver) driver );
     }
 
-    private void selectCheeseModifier(CustomizerDetails customizerDetail, boolean isModifierAvailable) throws Exception {
+    private void selectCheeseModifier(CustomizedItem customizedItem, List<CustomizerDetails>  customizerDetails, boolean isModifierAvailable) throws Exception {
         try {
             Logz.step( "##### Selecting Modifier Option #####" );
             if (customizedItem.getMenuName().contains( BaseTest.getStringfromBundleFile( "KidsMeal" ) )) {
-                if (customizerDetail.getPickerName().contains( "Cheese" ) || customizerDetail.getPickerName().contains( "Meat" )) {
-                    if (commonElements.isAvailable( modifierList, modifierList )) {
-                        throw new Exception( "Modify button is present in " + customizerDetail.getPickerName() + " option - Kids Meal menu " );
+                for(CustomizerDetails customizerDetail: customizerDetails) {
+                    if (customizerDetail.getPickerName().contains( "Cheese" ) || customizerDetail.getPickerName().contains( "Meat" )) {
+                        if (commonElements.isAvailable( modifierList, modifierList )) {
+                            throw new Exception( "Modify button is present in " + customizerDetail.getPickerName() + " option - Kids Meal menu " );
+                        }
                     }
                 }
             } else {
@@ -393,7 +331,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
             }
 
         } catch (Exception ex) {
-            throw new Exception( "Unable to select: " + customizerName + "\n" + ex.getMessage() );
+            throw new Exception( "Unable to select: " + customizedItem.getMenuName() + "\n" + ex.getMessage() );
         }
     }
 
@@ -407,29 +345,22 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
             }
             Logz.step( "##### Selected Modifier Option #####" );
         } catch (Exception ex) {
-            throw new Exception( "Unable to select: " + customizerName + "\n" + ex.getMessage() );
+            throw new Exception( "Unable to select: modifier\n" + ex.getMessage() );
         }
     }
 
-    private void selectIngredient(String pickerName, CustomizerDetails customizerDetail) throws Exception {
-        Logz.step( "##### Selecting Picker ingredient Name: " + customizerDetail.getPickerName() + " #####" );
-        commonElements.scrollAndClick( customizerPicker, customizerPicker, customizerDetail.getPickerName());
+    private void selectIngredient(String pickerName) throws Exception {
+        Logz.step( "##### Selecting Picker ingredient Name: " + pickerName + " #####" );
+        commonElements.scrollAndClick( customizerPicker, customizerPicker, pickerName);
+        Logz.step( "##### Selected Picker ingredient Name: " + pickerName + " #####" );
 
-        /*List<WebElement> elementList =  commonElements.getElements(customizerPicker, customizerPicker );
-        for(WebElement element: elementList){
-            element.getText();
-            element.click();
-        }*/
-
-        Logz.step( "##### Selected Picker ingredient Name: " + customizerName + " #####" );
-        assertProductNameInPickerPage();
     }
 
     private PickerPage assertProductNameInPickerPage() throws Exception {
 
         try {
             Logz.step( "##### Started asserting product name in Product Details page #####" );
-            Assert.assertEquals(getTitleText().getText(), customizedItem.getCustomizedProductDetail().getProductName());
+           // Assert.assertEquals(getTitleText().getText(), customizedItem.getCustomizedProductDetail().getProductName());
             Logz.step( "##### Ended asserting product name in Product Details page #####" );
 
         } catch (Exception ex) {
