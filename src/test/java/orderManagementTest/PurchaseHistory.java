@@ -62,7 +62,7 @@ public class PurchaseHistory extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         MobileApi.placeOrder(2,1,mobileUser); // where should I keep the method
-     //   mobileUser = landingPage.getUser("AngeBaistow@qasubway.com",54588);// CedMayne@qasubway.com
+       // mobileUser = landingPage.getUser("CedMayne@qasubway.com");// CedMayne@qasubway.com//"AngeBaistow@qasubway.com",54588
         homePage = landingPage.gotoLogInPage().login(mobileUser);
         homePage.goToUserProfilePage().goToPurchaseHistoryPage().assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 

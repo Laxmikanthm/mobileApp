@@ -1,8 +1,10 @@
 package pages.PurchaseHistoryPage;
 
 import base.gui.controls.mobile.android.AndroidButton;
+import base.gui.controls.mobile.android.AndroidTextBox;
 import base.gui.controls.mobile.android.AndroidWebElement;
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.MobileWebElement;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
@@ -60,5 +62,16 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
     List<WebElement> getOrderTotalList() throws Exception {
         return new AndroidWebElement((AndroidDriver) driver, "order total list").getWebElements(By.id("order_total"));
     }
+
+    @Override
+    MobileTextBox getReceiptHeaderText() throws Exception {
+//com.subway.mobile.subwayapp03:id/item_header
+        return new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/item_receipt"),"order total list");
+    }
+
+//    @Override
+//    MobileTextBox getPaymentRewardsHeaderText() throws Exception {
+//        return null;
+//    }
 
 }

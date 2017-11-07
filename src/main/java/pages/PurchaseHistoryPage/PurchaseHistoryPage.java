@@ -2,6 +2,7 @@ package pages.PurchaseHistoryPage;
 
 import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.MobileWebElement;
 import base.test.BaseTest;
 import com.amazonaws.services.opsworks.model.App;
@@ -50,6 +51,10 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getProductTitleList() throws Exception;
     abstract List<WebElement> getProductDescriptionList() throws Exception;
     abstract List<WebElement> getOrderTotalList() throws Exception;
+    abstract MobileTextBox getReceiptHeaderText() throws Exception;
+   // abstract MobileTextBox getPaymentRewardsHeaderText() throws Exception;
+
+
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;

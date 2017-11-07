@@ -139,11 +139,11 @@ public class MobileApi {
         return ingredients.substring(1, ingredients.length() - 1);
     }
 
-public static CustomizedItem getCustomizedItemDetails(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception{
+public static CustomizedItem getCustomizedItemDetails(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception {
     RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
-    Logz.step( "##### getting Customized Item Details #####" );
-    return  remoteOrder.getCustomizedItemDetail(menuName, breadSize.toString());
-
+    Logz.step("##### getting Customized Item Details #####");
+    return remoteOrder.getCustomizedItemDetail(menuName, breadSize.toString());
+}
 
     public static void placeOrder(int numberOfOrder, int numberOfItem, MobileUser mobileUser) throws Exception {
         try {
@@ -161,5 +161,5 @@ public static CustomizedItem getCustomizedItemDetails(MobileUser mobileUser, Str
     }
 
 
-}
+
 }

@@ -2,6 +2,7 @@ package pages.PurchaseHistoryPage;
 
 import base.gui.controls.mobile.android.AndroidWebElement;
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.ios.IOSWebElement;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -59,6 +60,11 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     @Override
     List<WebElement> getOrderTotalList() throws Exception {
         return new IOSWebElement((IOSDriver) driver, "order total list").getWebElements(By.id("order_total"));
+    }
+
+    @Override
+    MobileTextBox getReceiptHeaderText() throws Exception {
+        return null;
     }
 
 
