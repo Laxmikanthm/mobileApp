@@ -76,7 +76,7 @@ public class PickerPageAndroid extends PickerPage{
 
     @Override
     MobileButton getSaucesText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Cheese" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Sauces" )+"']"),"Sauces ");
 
     }
 }

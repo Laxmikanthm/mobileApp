@@ -141,6 +141,8 @@ public class MobileApi {
 
 public static CustomizedItem getCustomizedItemDetails(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception{
     RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
+    Logz.step( "##### getting Customized Item Details #####" );
     return  remoteOrder.getCustomizedItemDetail(menuName, breadSize.toString());
+
 }
 }

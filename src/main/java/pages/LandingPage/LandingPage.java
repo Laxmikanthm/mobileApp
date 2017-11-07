@@ -258,7 +258,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     }
     public void placeCustomizedOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
-        MobileUser mobileUser = registerUser("OatesJodlkowski@qasubway.com");
+        MobileUser mobileUser = registerUser();//"OatesJodlkowski@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
         logAllMenuCategoriesName(productGroups, store);
