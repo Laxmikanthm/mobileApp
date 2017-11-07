@@ -22,6 +22,7 @@ import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 import pages.UserProfilePage.UserProfilePage;
+import pojos.RemoteOrder;
 import pojos.enums.OfferPLU;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
@@ -230,6 +231,15 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
         return HomePage.get((AndroidDriver) driver);
     }
+    public MobileUser addFavouriteOrderThroughApi(OrdersPage ordersPage)throws Exception
+    {
+        MobileUser mobileUser = registerUser();
+        String ProductName=ordersPage.selectMenuGetProductName(BaseTest.getStringfromBundleFile("AllSandwiches"));
+        RemoteOrder remoteOrder=new RemoteOrder(mobileUser);
+        remoteOrder.addFavoriteItems(mobileUser,1,ProductName);
+
+        return  mobileUser;
+    }
 
     public void placeDefaultOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
         MobileUser mobileUser = registerUser();
@@ -261,6 +271,36 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
 
     }
+
+    public void placeFavouriteOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
+        MobileUser mobileUser = registerUser();
+        mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+        List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
+        logAllMenuCategoriesName(productGroups, store);
+        for (ProductGroup productGroup : productGroups) {
+            if (productGroup.getName().contains(menuCategories)) {
+                OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+                ordersPage.placeFavouriteOrder(mobileUser,menuCategories,breadSize, store);
+            }else {
+                Logz.step("##### Product menu: " + menuCategories + " is not present at this store: " + store.getStoreNumber() + " #####");
+            }
+        }
+
+
+    }
+    public void placeFavouriteReOrderThenAssert(MobileUser mobileUser, Store store) throws Exception {
+                mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+                OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+                ordersPage.placeFavouriteReOrder(mobileUser);
+
+        }
+    public void placeUnFavouriteOrderThenAssert(MobileUser mobileUser, Store store) throws Exception {
+        mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+        OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+        ordersPage.removeFavouriteOrder(mobileUser);
+
+    }
+
     private void logAllMenuCategoriesName(List<ProductGroup> productGroups, Store store) throws Exception{
         for (ProductGroup productGroup : productGroups) {
             Logz.step("##### Product menu category name: " + productGroup.getName() + "  Store: " + store.getStoreNumber() + " #####");

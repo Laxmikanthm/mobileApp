@@ -1438,24 +1438,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void removeFavouriteOrder(String menuItem, MobileUser mobileUser, String storeName, RemoteOrderCustomer remoteOrderCustomer) throws Exception {
+    public void removeFavouriteOrder(MobileUser mobileUser) throws Exception {
         try {
-            HomePage homePage = placeFavouriteRandomOrder( menuItem, mobileUser, storeName );
-            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-            homePage.addSomethingElse();
-            getItems().isReady();
+
             getAllFavourites();
             getUnFavouriteIcon().isReady();
             getUnFavouriteIcon().click();
             getRemoveFavourite().isReady();
             getRemoveFavourite().click();
-            getAddToBag().click();
-            Thread.sleep( 5000 );
-            getTokens( remoteOrder );
-            getPlaceOrder().click();
-            getGotIt().isReady();
-            getGotIt().click();
-
         } catch (Exception ex) {
             throw new Exception( ex );
         }
@@ -2125,6 +2115,19 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
         return HomePage.get( (AndroidDriver) driver );
     }
+    public HomePage placeFavouriteOrder(MobileUser mobileUser, String menuCategories, BreadSize breadSize, Store store) throws Exception {
+        try {
+            customized = true;
+            Logz.step( "##### Started placing Customized Order #####" + menuCategories );
+            CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, menuCategories, breadSize );
+            addCustomizedItemInCart( mobileUser, menuCategories, breadSize, customizedItemDetails );
+            placeFavouriteOrderAndAssert( mobileUser, menuCategories, store );
+            Logz.step( "##### Ended placing Customized Order #####" );
+        } catch (Exception ex) {
+            throw new Exception( "Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage() );
+        }
+        return HomePage.get( (AndroidDriver) driver );
+    }
 
     public HomePage placeRandomOrderMyLoyalty() throws Exception {
         try {
@@ -2167,6 +2170,21 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser );
 
     }
+    private void assertFavouriteOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage) throws Exception {
+
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
+        scrollToElement(FavouriteIconLocator, 0.9, 0.5 );
+        getFavouriteIcon().click();
+        favoriteOrderName = "Subway" + random.nextInt( 10 );
+        getFavouriteText().setText( favoriteOrderName );
+        getFavouriteSave().click();
+        //Need to assert favoriteorder details through favopurite Object.
+        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem );
+        PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser );
+
+    }
+
 
     private void placeOrderAndAssert(MobileUser mobileUser, String menuCategories, Store store) throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage( customized );
@@ -2180,6 +2198,21 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
         } else {
             assertOrderDetails( mobileUser, yourOrderPage );
+        }
+
+    }
+    private void placeFavouriteOrderAndAssert(MobileUser mobileUser, String menuCategories, Store store) throws Exception {
+        YourOrderPage yourOrderPage = goToYourOrderPage( customized );
+
+        if (menuCategories.contains( "Breakfast" )) {
+            boolean time = Utils.getTime( store );
+            if (!time) {
+                assertBreakfastUnavailablePopUp( customizedItem );
+            } else {
+                assertFavouriteOrderDetails( mobileUser, yourOrderPage );
+            }
+        } else {
+            assertFavouriteOrderDetails( mobileUser, yourOrderPage );
         }
 
     }
@@ -2259,7 +2292,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         selectSpecificProduct( mobileUser, productName, breadSize, true );
     }
 
-    private String selectMenuGetProductName(String menuName) throws Exception {
+    public String selectMenuGetProductName(String menuName) throws Exception {
         selectSpecificMenu( customizedItem.getMenuName() );
         return getProductName( menuName, customizedItem.getCustomizedProductDetail().getProductClassName() );
     }
