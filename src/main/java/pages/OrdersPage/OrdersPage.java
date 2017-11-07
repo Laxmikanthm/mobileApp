@@ -2210,10 +2210,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             if (!time) {
                 assertBreakfastUnavailablePopUp( customizedItem );
             } else {
-                assertFavouriteOrderDetails( mobileUser, yourOrderPage );
+                assertFavouriteOrderDetails( mobileUser, yourOrderPage, customizedItem );
             }
         } else {
-            assertFavouriteOrderDetails( mobileUser, yourOrderPage );
+            assertFavouriteOrderDetails( mobileUser, yourOrderPage, customizedItem );
         }
 
     }

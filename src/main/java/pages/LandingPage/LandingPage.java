@@ -234,9 +234,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     public MobileUser addFavouriteOrderThroughApi(OrdersPage ordersPage)throws Exception
     {
         MobileUser mobileUser = registerUser();
-        String ProductName=ordersPage.selectMenuGetProductName(BaseTest.getStringfromBundleFile("AllSandwiches"));
-        RemoteOrder remoteOrder=new RemoteOrder(mobileUser);
-        remoteOrder.addFavoriteItems(mobileUser,1,ProductName);
+        MobileApi.addFavorite(mobileUser);
 
         return  mobileUser;
     }

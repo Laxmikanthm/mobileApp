@@ -53,7 +53,7 @@ public class MobileApi {
         }
         return null;
     }
-    public static void addFavorite(RemoteOrderCustomer user) throws Exception {
+    public static void addFavorite(MobileUser user) throws Exception {
         try {
             RemoteOrder remoteOrder = user.getCart().getRemoteOrder();
             remoteOrder.addFavoriteItems(user, 1, StringUtils.getRandomString(14));
@@ -62,7 +62,7 @@ public class MobileApi {
             Logz.step("Unable to add favorite item" + ex.getMessage());
         }
     }
-    public static void addFavoriteItem(RemoteOrderCustomer user, int NoOfFavoriteItem) throws Exception {
+    public static void addFavoriteItem(MobileUser user, int NoOfFavoriteItem) throws Exception {
         Logz.step("####### Started adding Favorite Items: " +NoOfFavoriteItem + " #######");
         for (int i = 0; i < NoOfFavoriteItem; i++) {
             addFavorite(user);
