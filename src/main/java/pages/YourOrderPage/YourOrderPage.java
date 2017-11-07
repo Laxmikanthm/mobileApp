@@ -18,6 +18,7 @@ import pages.HomePage.HomePageIOS;
 import pages.ManageRewardsPage.ManageRewardsPage;
 import pages.OrderConfirmationPage.OrderConfirmationPage;
 import pages.OrdersPage.OrdersPage;
+import pojos.CustomizedItem.CustomizedItem;
 import util.MobileApi;
 import utils.Logz;
 
@@ -79,16 +80,18 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     public OrderConfirmationPage assertOrderSummaryInYourOrderPage() throws Exception{
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
-    public OrderConfirmationPage assertTotalAmountInYourOrderPage() throws Exception{
+    public YourOrderPage assertOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
         Logz.step("Started asserting total amount In Your Order Page");
+        //Assert item name
+        //assert price
         /*String aTotalAmount =  commonElements.getElement(totalAmount, totalAmount, (AppiumDriver)driver).getText();
         String eTotalAmount = "";
         Assert.assertEquals(aTotalAmount, eTotalAmount);*/
         Logz.step("Started asserting total amount In Your Order Page");
-        return OrderConfirmationPage.get((AppiumDriver)driver);
+        return YourOrderPage.get((AppiumDriver)driver);
     }
     public OrderConfirmationPage goToOrderConfirmationPage() throws Exception{
-       // assertTotalAmountInYourOrderPage();
+       // assertOrderDetailsInYourOrderPage();
         Logz.step("Navigating to Order Confirmation Page......");
         getPlaceOrder().click();
         return OrderConfirmationPage.get((AppiumDriver)driver);

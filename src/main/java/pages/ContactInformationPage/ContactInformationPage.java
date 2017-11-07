@@ -8,7 +8,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import pages.ForgotPasswordPage.ForgotYourPasswordPage;
-import pages.MenuPage.MenuPage;
+import pages.UserProfilePage.UserProfilePage;
 import pages.NamePage.NamePage;
 import pages.PhonePage.PhonePage;
 
@@ -84,12 +84,12 @@ public abstract  class ContactInformationPage<T extends AppiumDriver> extends Mo
         }
     }
 
-    public MenuPage selectBackButton()  throws Exception
+    public UserProfilePage selectBackButton()  throws Exception
     {
         try{
             getBackButton().waitForClickable();
             getBackButton().click();
-            return MenuPage.get((AppiumDriver) driver);
+            return UserProfilePage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);
         }

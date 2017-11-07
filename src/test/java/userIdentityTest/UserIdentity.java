@@ -1,10 +1,7 @@
 package userIdentityTest;
-import Base.Order;
 import Base.SubwayAppBaseTest;
-import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
-import enums.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,12 +14,10 @@ import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
-import pages.MenuPage.MenuPage;
-import pages.RegistrationPage.RegistrationPage;
 import pages.UserProfilePage.UserProfilePage;
+import pages.RegistrationPage.RegistrationPage;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
-import pojos.user.RemoteOrderCustomer;
 
 @ContextConfiguration({"classpath:order-data.xml"})
 @TestExecutionListeners(inheritListeners = false, listeners =
@@ -30,16 +25,14 @@ import pojos.user.RemoteOrderCustomer;
 
 public class UserIdentity extends SubwayAppBaseTest {
     @Autowired
-    RemoteOrderCustomer mobileUser;
-    Store store=JdbcUtil.getLoyaltyStoreDetails();
+    MobileUser mobileUser;
     LandingPage landingPage;
-    LoginPage loginPage;
     RegistrationPage registrationPage;
-    MenuPage menuPage;
+    UserProfilePage userProfilePage;
     HomePage homePage;
-    ForgotYourPasswordPage forgotPasswordPage;
+    ForgotYourPasswordPage forgotYourPasswordPage;
     UserProfilePage profilePage;
-
+    LoginPage loginPage;
 
     @Test
     public void testRegisterNewUser() throws Exception {
@@ -49,10 +42,61 @@ public class UserIdentity extends SubwayAppBaseTest {
         homePage = registrationPage.signUp(mobileUser);
         profilePage = homePage.goToUserProfilePage();
         profilePage.assertUserLoggedIn(mobileUser).logout();
-        // .assertUserLoggedOut();
     }
 
-   /* @Test
+    //DFA-9172_DFA-5490_DFA-5489_DFA-5488_DFA-5487_DFA-5486_DFA-5485_DFA-5484
+    @Test
+    public void forgotPassword()throws Exception
+    {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
+        loginPage =  landingPage.gotoLogInPage();
+        forgotYourPasswordPage = loginPage.goToForgotPasswordPage();
+        loginPage = forgotYourPasswordPage.setNewPassword(mobileUser);
+        loginPage.loginAfterResetPassoword(mobileUser);
+    }
+
+    @Test
+    @DirtiesContext
+    public void resetPassword()throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
+        userProfilePage =  landingPage.logIn(mobileUser).goToUserProfilePage();
+        ContactInformationPage contactInformation= userProfilePage.getContactInformation();
+        forgotYourPasswordPage = contactInformation.getPasswordField();
+        loginPage = forgotYourPasswordPage.setNewPassword(mobileUser);
+        landingPage.gotoLogInPage();
+        loginPage.loginAfterResetPassoword(mobileUser);
+
+    }
+   /*
+    @Test
+    public void userLogin() throws Exception {
+        mobileUser=setCountryName();
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        loginPage.login(mobileUser);
+    }
+
+    @Test
+    public void createUser_4929() throws Exception {
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        RegistrationPage registrationPage = landingPage.gotoRegistrationPage();
+        registrationPage.signUp();
+    }
+
+    @Test
+    public void userLogout_8820() throws Exception {
+        mobileUser=setCountryName();
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage = loginPage.login(mobileUser);
+        UserProfilePage userProfilePage = homePage.getUserDetails();
+        userProfilePage.logout();
+    }
+   @Test
     public void testUserLoginLogout() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("IdentityUser"));
@@ -83,15 +127,16 @@ public class UserIdentity extends SubwayAppBaseTest {
     //DFA-9172_DFA-5490_DFA-5489_DFA-5488_DFA-5487_DFA-5486_DFA-5485_DFA-5484
     @Test
     @DirtiesContext
-    public void forgotPassword()throws Exception
+    public void goToForgotPasswordPage()throws Exception
     {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser(BaseTest.getStringfromBundleFile("IdentityUser"));
         loginPage = landingPage.gotoLogInPage();
-        forgotPasswordPage= loginPage.forgotPassword();
+        forgotPasswordPage= loginPage.goToForgotPasswordPage();
         loginPage = forgotPasswordPage.setNewPassword(mobileUser);
         loginPage.loginAfterResetPassoword(mobileUser);
     }
+
     //DFA-9174
     @Test
     public void verifyTermandConditions() throws Exception

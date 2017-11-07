@@ -14,6 +14,7 @@ import pages.HomePage.HomePage;
 import pages.NamePage.NamePage;
 import pages.NamePage.NamePageAndroid;
 import pages.NamePage.NamePageIOS;
+import pojos.CustomizedItem.CustomizedItem;
 import utils.Logz;
 
 public abstract class OrderConfirmationPage<T extends AppiumDriver> extends MobileBasePage {
@@ -39,7 +40,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
     abstract MobileButton getGotIt() throws Exception;
 
 
-    public HomePage assertTotalAmountInOrderConfirmationPage() throws Exception{
+    public HomePage assertOrderDetailsInOrderConfirmationPage(CustomizedItem customizedItem) throws Exception{
         Logz.step("Started asserting total amount In Your Order Page");
         /*String aTotalAmount =  commonElements.getElement(totalAmount, totalAmount, (AppiumDriver)driver).getText();
         String eTotalAmount = "";

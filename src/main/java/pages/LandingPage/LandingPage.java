@@ -11,17 +11,14 @@ import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.LocationData;
 import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.ProductGroup;
-import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.CountryOffer;
 import enums.PaymentMethod;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import pages.AddCardPage.AddCardPage;
 import pages.HomePage.HomePage;
 import pages.LoginPage.LoginPage;
-import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 import pages.UserProfilePage.UserProfilePage;
@@ -30,7 +27,6 @@ import pojos.enums.OfferPLU;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
-import pojos.user.WebUser;
 import util.MobileApi;
 import utils.Logz;
 
@@ -141,10 +137,10 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public MobileUser registerUser() throws Exception {
         if (System.getProperty("country").contains("US")) {
-            return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.UnitedStates, Integer.parseInt(JdbcUtil.getLoyaltyStoreDetails().getStoreNumber())));//JdbcUtil.getOnlineStore()));////
+            return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
 
         } else {
-            return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.Canada, Integer.parseInt(JdbcUtil.getLoyaltyStoreDetails().getStoreNumber())));//JdbcUtil.getOnlineStore()));////
+            return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.Canada, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
 
         }
     }
@@ -182,27 +178,8 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-
-    public MobileUser getUser(String email, int storeId) throws Exception {
-        try{
-            MobileUser mobileUser;
-            if (System.getProperty("country").contains("US")) {
-                mobileUser = new MobileUser(false, Country.UnitedStates, storeId);//JdbcUtil.getOnlineStore()));////
-            } else {
-                mobileUser = new MobileUser(false, Country.Canada, storeId);//JdbcUtil.getOnlineStore()));////
-
-            }
-            mobileUser.setEmailAddress(email);
-            mobileUser.getReltioAuthorizationToken();
-        return mobileUser;
-    }catch(Exception ex) {
-        throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
-    }
-
-}
-
-    public RemoteOrderCustomer getUser() throws Exception {
-        RemoteOrderCustomer mobileUser;
+    public MobileUser getUser() throws Exception {
+        MobileUser mobileUser;
         if (System.getProperty("country").contains("US")) {
             mobileUser = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));//JdbcUtil.getOnlineStore()));////
         } else {
@@ -254,6 +231,13 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
         return HomePage.get((AndroidDriver) driver);
     }
+    public MobileUser addFavouriteOrderThroughApi(OrdersPage ordersPage)throws Exception
+    {
+        MobileUser mobileUser = registerUser();
+        MobileApi.addFavorite(mobileUser);
+
+        return  mobileUser;
+    }
 
     public void placeDefaultOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
         MobileUser mobileUser = registerUser();
@@ -272,7 +256,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     }
     public void placeCustomizedOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
-        MobileUser mobileUser = registerUser();
+        MobileUser mobileUser = registerUser();//"OatesJodlkowski@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
         logAllMenuCategoriesName(productGroups, store);
@@ -285,6 +269,36 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
 
     }
+
+    public void placeFavouriteOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
+        MobileUser mobileUser = registerUser();
+        mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+        List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
+        logAllMenuCategoriesName(productGroups, store);
+        for (ProductGroup productGroup : productGroups) {
+            if (productGroup.getName().contains(menuCategories)) {
+                OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+                ordersPage.placeFavouriteOrder(mobileUser,menuCategories,breadSize, store);
+            }else {
+                Logz.step("##### Product menu: " + menuCategories + " is not present at this store: " + store.getStoreNumber() + " #####");
+            }
+        }
+
+
+    }
+    public void placeFavouriteReOrderThenAssert(MobileUser mobileUser, Store store) throws Exception {
+                mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+                OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+                ordersPage.placeFavouriteReOrder(mobileUser);
+
+        }
+    public void placeUnFavouriteOrderThenAssert(MobileUser mobileUser, Store store) throws Exception {
+        mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+        OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+        ordersPage.removeFavouriteOrder(mobileUser);
+
+    }
+
     private void logAllMenuCategoriesName(List<ProductGroup> productGroups, Store store) throws Exception{
         for (ProductGroup productGroup : productGroups) {
             Logz.step("##### Product menu category name: " + productGroup.getName() + "  Store: " + store.getStoreNumber() + " #####");

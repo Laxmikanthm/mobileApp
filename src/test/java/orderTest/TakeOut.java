@@ -1,15 +1,12 @@
 package orderTest;
 
 import Base.SubwayAppBaseTest;
-import Enums.BreadSize;
-import base.test.BaseTest;
 import cardantApiFramework.pojos.Menu;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.PaymentMethod;
-import orderTest.PlaceRandomOrder;
 import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;

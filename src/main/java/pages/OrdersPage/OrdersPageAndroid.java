@@ -177,7 +177,7 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getBackButton() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.className("android.widget.ImageButton"), "Back button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Backbutton")), "Back button");
         return button;
     }
 

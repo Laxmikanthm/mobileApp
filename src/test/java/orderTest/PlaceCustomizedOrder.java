@@ -4,14 +4,21 @@ import Base.SubwayAppBaseTest;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import Enums.BreadSize;
 import Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
+import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
+import pages.SearchStore.SearchStore;
+import pojos.Orders.Order;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
+import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
 
 public class PlaceCustomizedOrder extends SubwayAppBaseTest {
@@ -101,4 +108,34 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
 
     }*/
     //mobileUser = landingPage.registerUser("LarisaWoolliams@qasubway.com");
+
+  /*  RemoteOrder remoteOrder;
+    @Autowired
+    Base.Order ord;
+    MobileUser mobileUser;
+    Store store=JdbcUtil.getLoyaltyStoreDetails();
+    @BeforeClass
+    public void init() throws Exception {
+
+        remoteOrder = mobileUser.getCart().getRemoteOrder();
+
+    }
+
+    @Test
+    public void placeCustomizeOrderAllSandwiches() throws Exception
+    {
+        mobileUser=setCountryName();
+        RegisterUser.registerAUserWithoutCardLink(mobileUser);
+        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        LoginPage loginPage = landingPage.gotoLogInPage();
+        HomePage homePage=loginPage.login(mobileUser);
+        SearchStore searchStore = homePage.findYourSubWay();
+        OrdersPage ordersPage =searchStore.findYourStore(ord.getZipCode());
+        RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+        Order order = remoteOrder.placeRandomOrderWithSpecificProduct(ord.getCategoryAllSandwiches());
+        ordersPage.selectItemTypeAndClickCustomize(order);
+        ordersPage.customizeOrder(mobileUser,order);
+        ordersPage.addToCartAndPlaceOrder();
+
+    }*/
 }
