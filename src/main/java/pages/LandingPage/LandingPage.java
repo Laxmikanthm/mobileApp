@@ -11,6 +11,7 @@ import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.LocationData;
 import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.ProductGroup;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.CountryOffer;
 import enums.PaymentMethod;
@@ -24,6 +25,7 @@ import pages.MenuPage.MenuPage;
 import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 import pages.UserProfilePage.UserProfilePage;
+import pojos.RemoteOrder;
 import pojos.enums.OfferPLU;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
@@ -139,10 +141,10 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
     public MobileUser registerUser() throws Exception {
         if (System.getProperty("country").contains("US")) {
-            return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
+            return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.UnitedStates, Integer.parseInt(JdbcUtil.getLoyaltyStoreDetails().getStoreNumber())));//JdbcUtil.getOnlineStore()));////
 
         } else {
-            return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.Canada, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber"))));//JdbcUtil.getOnlineStore()));////
+            return RegisterUser.registerAUserWithoutCardLink(new MobileUser(false, Country.Canada, Integer.parseInt(JdbcUtil.getLoyaltyStoreDetails().getStoreNumber())));//JdbcUtil.getOnlineStore()));////
 
         }
     }
@@ -179,6 +181,25 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             return user;
         }
     }
+
+
+    public MobileUser getUser(String email, int storeId) throws Exception {
+        try{
+            MobileUser mobileUser;
+            if (System.getProperty("country").contains("US")) {
+                mobileUser = new MobileUser(false, Country.UnitedStates, storeId);//JdbcUtil.getOnlineStore()));////
+            } else {
+                mobileUser = new MobileUser(false, Country.Canada, storeId);//JdbcUtil.getOnlineStore()));////
+
+            }
+            mobileUser.setEmailAddress(email);
+            mobileUser.getReltioAuthorizationToken();
+        return mobileUser;
+    }catch(Exception ex) {
+        throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
+    }
+
+}
 
     public RemoteOrderCustomer getUser() throws Exception {
         RemoteOrderCustomer mobileUser;

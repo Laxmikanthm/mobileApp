@@ -9,7 +9,7 @@ import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 
 public class UserProfilePageAndroid extends UserProfilePage {
-    public UserProfilePageAndroid(AppiumDriver driver) {
+    public UserProfilePageAndroid(AndroidDriver driver) {
         super(driver);
     }
 

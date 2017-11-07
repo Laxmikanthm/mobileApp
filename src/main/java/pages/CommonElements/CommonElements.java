@@ -231,8 +231,33 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         }
     }
 
+
+
+    public String getElementTextById(String locatorIOS, String locatorAndroid, AppiumDriver driver, int index) throws Exception {
+        try {
+            switch (platform) {
+                case "iOS":
+                    return getElementById(locatorIOS, driver, index);
+                case "Android":
+                    return getElementById(locatorAndroid, driver, index);
+                default:
+                    throw new Exception("Unable to get element for platform " + platform);
+            }
+
+        } catch (Exception ex) {
+            throw new Exception("Unable to get element \n" + ex.getMessage());
+        }
+    }
+
     private String getElementByClass(String locator, AppiumDriver driver, int index) throws Exception {
         List elementList = driver.findElementsByClassName(locator);
+        AndroidElement element = (AndroidElement) elementList.get(index);
+        return element.getText();
+    }
+
+
+    private String getElementById(String locator, AppiumDriver driver, int index) throws Exception {
+        List elementList = driver.findElementsById(locator);
         AndroidElement element = (AndroidElement) elementList.get(index);
         return element.getText();
     }

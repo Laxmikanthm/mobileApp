@@ -139,4 +139,21 @@ public class MobileApi {
     }
 
 
+
+    public static void placeOrder(int numberOfOrder, int numberOfItem, MobileUser mobileUser) throws Exception {
+        try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            //   RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
+            for (int i = 0; i < numberOfOrder; i++) {
+                remoteOrder.placeRandomOrder(numberOfItem, enums.PaymentMethod.CREDITCARD);
+            }
+
+        } catch (Exception ex) {
+            throw new Exception(("Failed to place order throw api.\n" + ex.getMessage()));
+
+        }
+
+    }
+
+
 }

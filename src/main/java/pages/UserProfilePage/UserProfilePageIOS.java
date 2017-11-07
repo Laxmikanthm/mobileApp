@@ -3,9 +3,10 @@ package pages.UserProfilePage;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.ios.IOSDriver;
 
 public class UserProfilePageIOS extends UserProfilePage {
-    public UserProfilePageIOS(AppiumDriver driver) {
+    public UserProfilePageIOS(IOSDriver driver) {
         super(driver);
     }
 
