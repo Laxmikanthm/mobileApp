@@ -10,9 +10,6 @@ import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pages.CommonElements.CommonElements;
-import pages.MenuPage.MenuPage;
-import pages.MenuPage.MenuPageAndroid;
-import pages.MenuPage.MenuPageIOS;
 import pojos.CartItemList;
 import pojos.PurchaseHistoryDetails;
 import pojos.PaymentDetails;
@@ -95,10 +92,10 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     public void assertPlacedOrderDetailsInPurchaseHistoryPage(RemoteOrderCustomer mobileUser) throws Exception {
         try {
 
-       //     List<PurchaseHistoryDetails> expectedOrderHistoryList = getExpectedPurchaseHistoryList(mobileUser);
+            List<PurchaseHistoryDetails> expectedOrderHistoryList = getExpectedPurchaseHistoryList(mobileUser);
             List<PurchaseHistoryDetails> actualOrderHistoryList = getActualPurchaseHistoryList();
             Logz.step("!!!!! Started asserting placed order details in Purchase History Page !!!!!");
-        //    Assert.assertEquals(actualOrderHistoryList, expectedOrderHistoryList);
+            Assert.assertEquals(actualOrderHistoryList, expectedOrderHistoryList);
             Logz.step("!!!!! Ended asserting placed order details in Purchase History Page !!!!!");
 
         } catch (Exception ex) {

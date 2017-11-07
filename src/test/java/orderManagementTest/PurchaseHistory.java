@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
-import pages.MenuPage.MenuPage;
+//import pages.MenuPage.MenuPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
@@ -33,7 +33,7 @@ public class PurchaseHistory extends SubwayAppBaseTest {
     LandingPage landingPage;
     LoginPage loginPage;
     HomePage homePage;
-    MenuPage menuPage;
+  //  MenuPage menuPage;
     PurchaseHistoryPage purchaseHistoryPage;
 
 //    //DFA-7115
@@ -62,7 +62,7 @@ public class PurchaseHistory extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         MobileApi.placeOrder(2,1,mobileUser); // where should I keep the method
-      //  mobileUser = landingPage.getUser("AngeBaistow@qasubway.com",54588);// CedMayne@qasubway.com
+     //   mobileUser = landingPage.getUser("AngeBaistow@qasubway.com",54588);// CedMayne@qasubway.com
         homePage = landingPage.gotoLogInPage().login(mobileUser);
         homePage.goToUserProfilePage().goToPurchaseHistoryPage().assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 
