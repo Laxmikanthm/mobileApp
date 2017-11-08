@@ -22,6 +22,7 @@ import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 import pages.UserProfilePage.UserProfilePage;
+import pojos.CustomizedItem.CustomizedItem;
 import pojos.RemoteOrder;
 import pojos.enums.OfferPLU;
 import pojos.user.MobileUser;
@@ -187,6 +188,18 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
         }
         mobileUser.setEmailAddress(mobileUser.getFirstName() + mobileUser.getLastName() + "@qasubway.com");
+        return mobileUser;
+    }
+
+    public MobileUser getUser(String email) throws Exception {
+        MobileUser mobileUser;
+        if (System.getProperty("country").contains("US")) {
+            mobileUser = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));//JdbcUtil.getOnlineStore()));////
+        } else {
+            mobileUser = new MobileUser(false, Country.Canada, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));//JdbcUtil.getOnlineStore()));////
+
+        }
+        mobileUser.setEmailAddress(email);
         return mobileUser;
     }
 //logIn

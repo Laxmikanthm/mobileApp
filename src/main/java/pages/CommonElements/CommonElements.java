@@ -87,7 +87,7 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
                 }
                 count++;
                 Logz.step( "count:" + count );
-                if (count > 3) {
+                if (count > 6) {
                     flag = false;
                     //break;
                     throw new Exception( "Unable to scroll and click element \n" );

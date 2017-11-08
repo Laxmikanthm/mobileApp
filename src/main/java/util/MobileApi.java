@@ -139,16 +139,27 @@ public class MobileApi {
         return ingredients.substring(1, ingredients.length() - 1);
     }
 
-public static CustomizedItem getCustomizedItemDetails(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception{
+public static CustomizedItem getCustomizedItemDetails(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception {
     RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
-    Logz.step( "##### getting Customized Item Details #####" );
-    return  remoteOrder.getCustomizedItemDetail(menuName, breadSize.toString());
-
+    Logz.step("##### getting Customized Item Details #####");
+    return remoteOrder.getCustomizedItemDetail(menuName, breadSize.toString());
 }
-    public static CustomizedItem getSidesDrinksCustomizedItemDetails(MobileUser mobileUser, String menuName) throws Exception{
-        RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
-        Logz.step( "##### getting Customized Item Details #####" );
-        return  remoteOrder.getCustomizedSidesDrinksDetail(menuName);
+
+    public static void placeOrder(int numberOfOrder, int numberOfItem, MobileUser mobileUser) throws Exception {
+        try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            //   RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
+            for (int i = 0; i < numberOfOrder; i++) {
+                remoteOrder.placeRandomOrder(numberOfItem, enums.PaymentMethod.CREDITCARD);
+            }
+
+        } catch (Exception ex) {
+            throw new Exception(("Failed to place order throw api.\n" + ex.getMessage()));
+
+        }
 
     }
+
+
+
 }

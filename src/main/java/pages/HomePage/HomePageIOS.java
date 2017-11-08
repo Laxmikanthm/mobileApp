@@ -18,7 +18,7 @@ import org.openqa.selenium.By;
  */
 public class HomePageIOS extends HomePage {
 
-    public HomePageIOS(AppiumDriver driver) throws Exception {
+    public HomePageIOS(IOSDriver driver) throws Exception {
         super(driver);
     }
 

@@ -29,7 +29,7 @@
                 </methods>
             </class>
             <!-- orderManagementTest-->
-            <class name="orderManagementTest.OrderHistory"/>
+            <class name="orderManagementTest.PurchaseHistory"/>
             <!-- orderTest-->
             <class name="orderTest.PlaceOrderMultipleTender">
                 <methods>

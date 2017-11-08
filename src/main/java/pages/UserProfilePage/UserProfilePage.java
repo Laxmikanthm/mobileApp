@@ -403,7 +403,7 @@ public abstract  class UserProfilePage<T extends AppiumDriver> extends MobileBas
 
         getPurchaseHistory().click();
         Logz.step("##### Navigated to Purchase History Page #####");
-        return PurchaseHistoryPage.get((AndroidDriver)driver);
+        return PurchaseHistoryPage.get((AppiumDriver) driver);
     }
     public UserProfilePage assertUserLoggedIn(RemoteOrderCustomer mobileUser) throws Exception{
         try {
