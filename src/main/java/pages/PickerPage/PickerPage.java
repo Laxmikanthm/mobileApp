@@ -240,7 +240,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
 
         List<Customizer> customizers = customizedItem.getCustomizedProductDetail().getCustomizer();
         int i = 0;
-        while (i < 4) {
+        while (i < 3) {
             int index = Utils.selectRandomItem( customizers.subList( 1, customizers.size() ).size() );
             List<CustomizerDetails> customizerDetails = customizers.get( index ).getCustomizerDetails();
             switch (customizers.get( index ).getCustomizerName()) {
