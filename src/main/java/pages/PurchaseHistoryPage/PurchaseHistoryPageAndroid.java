@@ -21,13 +21,14 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
     }
 
     @Override
-    MobileButton getPaymentMethod() throws Exception {
-        return new AndroidButton((AndroidDriver) driver, By.id("payment_method"), "getPaymentMethod");
+     List<WebElement> getPaymentMethod() throws Exception {
+        return new AndroidWebElement((AndroidDriver) driver, "payment and rewards text").getWebElements(By.id("payment_method"));
+
     }
 
     @Override
-    MobileButton getEarnedTokensText() throws Exception {
-        return new AndroidButton((AndroidDriver) driver, By.id("earned_tokens_text"), "getEarnedTokensText");
+    List<WebElement> getEarnedTokensText() throws Exception {
+        return new AndroidWebElement((AndroidDriver) driver, "earned myway token text").getWebElements(By.id("earned_tokens_text")); //this should work
     }
     @Override
     List<WebElement> getOrderList() throws Exception{
@@ -64,9 +65,13 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
     }
 
     @Override
-    MobileTextBox getReceiptHeaderText() throws Exception {
-//com.subway.mobile.subwayapp03:id/item_header
-        return new AndroidTextBox((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/item_receipt"),"order total list");
+    By getEarnedTokens() throws Exception {
+        return By.id("earned_tokens_text");
+    }
+
+    @Override
+    List<WebElement> getReceiptHeaderText() throws Exception {
+        return new AndroidWebElement((AndroidDriver) driver, "Item text").getWebElements(By.xpath("//android.widget.TextView[@text='Items']"));
     }
 
 //    @Override
