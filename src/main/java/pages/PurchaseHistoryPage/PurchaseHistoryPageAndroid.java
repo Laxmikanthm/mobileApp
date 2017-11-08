@@ -38,7 +38,7 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
 
     @Override
     List<WebElement> getOrderNumberList() throws Exception {
-        return new AndroidWebElement((AndroidDriver) driver, "order number list").getWebElements(By.xpath("//android.widget.TextView[contains(@text,'Order')]"));
+        return new AndroidWebElement((AndroidDriver) driver, "order number list").getWebElements(By.xpath("//android.widget.TextView[contains(@text,'"+BaseTest.getStringfromBundleFile("Order")+"')]"));
     }
 
     @Override
@@ -71,7 +71,7 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
 
     @Override
     List<WebElement> getReceiptHeaderText() throws Exception {
-        return new AndroidWebElement((AndroidDriver) driver, "Item text").getWebElements(By.xpath("//android.widget.TextView[@text='Items']"));
+        return new AndroidWebElement((AndroidDriver) driver, "Item text").getWebElements(By.xpath("//android.widget.TextView[@text='"+BaseTest.getStringfromBundleFile("items")+"']"));
     }
 
 //    @Override
