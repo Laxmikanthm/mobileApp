@@ -7,6 +7,7 @@ import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.PasswordTextBox;
 import base.pages.mobile.MobileBasePage;
+import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;

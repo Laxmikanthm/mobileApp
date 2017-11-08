@@ -190,6 +190,18 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         mobileUser.setEmailAddress(mobileUser.getFirstName() + mobileUser.getLastName() + "@qasubway.com");
         return mobileUser;
     }
+
+    public MobileUser getUser(String email) throws Exception {
+        MobileUser mobileUser;
+        if (System.getProperty("country").contains("US")) {
+            mobileUser = new MobileUser(false, Country.UnitedStates, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));//JdbcUtil.getOnlineStore()));////
+        } else {
+            mobileUser = new MobileUser(false, Country.Canada, Integer.valueOf(BaseTest.getStringfromBundleFile("StoreNumber")));//JdbcUtil.getOnlineStore()));////
+
+        }
+        mobileUser.setEmailAddress(email);
+        return mobileUser;
+    }
 //logIn
 
     public HomePage logInAddCreditCard(RemoteOrderCustomer mobileUser) throws Exception {
@@ -235,10 +247,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     public MobileUser addFavouriteOrderThroughApi(OrdersPage ordersPage)throws Exception
     {
         MobileUser mobileUser = registerUser();
-        CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.NONE );
-        String ProductName=ordersPage.selectMenuGetProductName(customizedItemDetails);
-        RemoteOrder remoteOrder=new RemoteOrder(mobileUser);
-        //remoteOrder.addFavoriteItems(mobileUser,1,ProductName);
+        MobileApi.addFavorite(mobileUser);
 
         return  mobileUser;
     }

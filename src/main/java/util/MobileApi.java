@@ -53,7 +53,7 @@ public class MobileApi {
         }
         return null;
     }
-    public static void addFavorite(RemoteOrderCustomer user) throws Exception {
+    public static void addFavorite(MobileUser user) throws Exception {
         try {
             RemoteOrder remoteOrder = user.getCart().getRemoteOrder();
             remoteOrder.addFavoriteItems(user, 1, StringUtils.getRandomString(14));
@@ -62,7 +62,7 @@ public class MobileApi {
             Logz.step("Unable to add favorite item" + ex.getMessage());
         }
     }
-    public static void addFavoriteItem(RemoteOrderCustomer user, int NoOfFavoriteItem) throws Exception {
+    public static void addFavoriteItem(MobileUser user, int NoOfFavoriteItem) throws Exception {
         Logz.step("####### Started adding Favorite Items: " +NoOfFavoriteItem + " #######");
         for (int i = 0; i < NoOfFavoriteItem; i++) {
             addFavorite(user);
@@ -139,10 +139,27 @@ public class MobileApi {
         return ingredients.substring(1, ingredients.length() - 1);
     }
 
-public static CustomizedItem getCustomizedItemDetails(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception{
+public static CustomizedItem getCustomizedItemDetails(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception {
     RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
-    Logz.step( "##### getting Customized Item Details #####" );
-    return  remoteOrder.getCustomizedItemDetail(menuName, breadSize.toString());
-
+    Logz.step("##### getting Customized Item Details #####");
+    return remoteOrder.getCustomizedItemDetail(menuName, breadSize.toString());
 }
+
+    public static void placeOrder(int numberOfOrder, int numberOfItem, MobileUser mobileUser) throws Exception {
+        try {
+            RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
+            //   RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
+            for (int i = 0; i < numberOfOrder; i++) {
+                remoteOrder.placeRandomOrder(numberOfItem, enums.PaymentMethod.CREDITCARD);
+            }
+
+        } catch (Exception ex) {
+            throw new Exception(("Failed to place order throw api.\n" + ex.getMessage()));
+
+        }
+
+    }
+
+
+
 }
