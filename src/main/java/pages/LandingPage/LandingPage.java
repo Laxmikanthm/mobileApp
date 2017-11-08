@@ -22,6 +22,7 @@ import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 import pages.UserProfilePage.UserProfilePage;
+import pojos.CustomizedItem.CustomizedItem;
 import pojos.RemoteOrder;
 import pojos.enums.OfferPLU;
 import pojos.user.MobileUser;
@@ -234,9 +235,10 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     public MobileUser addFavouriteOrderThroughApi(OrdersPage ordersPage)throws Exception
     {
         MobileUser mobileUser = registerUser();
-        String ProductName=ordersPage.selectMenuGetProductName(BaseTest.getStringfromBundleFile("AllSandwiches"));
+        CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.NONE );
+        String ProductName=ordersPage.selectMenuGetProductName(customizedItemDetails);
         RemoteOrder remoteOrder=new RemoteOrder(mobileUser);
-        remoteOrder.addFavoriteItems(mobileUser,1,ProductName);
+        //remoteOrder.addFavoriteItems(mobileUser,1,ProductName);
 
         return  mobileUser;
     }
