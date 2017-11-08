@@ -159,7 +159,13 @@ public static CustomizedItem getCustomizedItemDetails(MobileUser mobileUser, Str
         }
 
     }
+    public static CustomizedItem getSidesDrinksCustomizedItemDetails(MobileUser mobileUser, String menuName) throws Exception{
+        RemoteOrder remoteOrder = new RemoteOrder(mobileUser);
+        Logz.step( "##### getting Customized Item Details #####" );
+        return  remoteOrder.getCustomizedSidesDrinksDetail(menuName);
 
+    
+}
 
 
 }
