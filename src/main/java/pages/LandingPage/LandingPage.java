@@ -22,6 +22,7 @@ import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
 import pages.RegistrationPage.RegistrationPage;
 import pages.UserProfilePage.UserProfilePage;
+import pojos.CustomizedItem.CustomizedItem;
 import pojos.RemoteOrder;
 import pojos.enums.OfferPLU;
 import pojos.user.MobileUser;
@@ -252,7 +253,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public void placeDefaultOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
-        MobileUser mobileUser = registerUser();
+        MobileUser mobileUser = registerUser("HaydenHinemoor@qasubway.com");//HaydenHinemoor@qasubway.com
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
         logAllMenuCategoriesName(productGroups, store);
