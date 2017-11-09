@@ -73,9 +73,9 @@
                           the value we have set in the POM as a default.-->
                         <!--Mobile-->
                        <!-- Android-Local-->
-                        <spring.profiles.active>local</spring.profiles.active>
+                       <!-- <spring.profiles.active>local</spring.profiles.active>
                         <platformVersions>5.0.1</platformVersions>
-                        <app>Users/sultana_m/Documents/AndroidApp/Subway_Sprint_QE_7.1.7.0_5000783.apk</app>
+                        <app>Users/sultana_m/Documents/AndroidApp/Subway_Sprint_QE_7.1.7.0_5000783.apk</app>-->
 
                         <!-- Android-TestObject-->
                           <spring.profiles.active>testObject</spring.profiles.active>
@@ -90,17 +90,17 @@
 
 
                         <!-- iOS-Local-->
-                        <spring.profiles.active>local</spring.profiles.active>
+                       <!-- <spring.profiles.active>local</spring.profiles.active>
                         <mobilePlatform>iOS</mobilePlatform>
                         <platformVersions>10.3.3</platformVersions>
                         <app>Users/sultana_m/Documents/iOSApp/Subway_09_26_2017.ipa</app>
-                        <udid>fade3cc4f301c0da10d7e53b0dfcf23a7ccf6173</udid>
+                        <udid>fade3cc4f301c0da10d7e53b0dfcf23a7ccf6173</udid>-->
 
                         <!-- iOS-TestObject-->
-                          <spring.profiles.active>testObject</spring.profiles.active>
+                         <!-- <spring.profiles.active>testObject</spring.profiles.active>
                         <testObjectApiKey>A982DA797F3B4E699978B7E47156BF65</testObjectApiKey>
                         <testObjectDevice>iPhone_6S_16GB_real_us</testObjectDevice>
-                        <appName>vindhya1ios</appName>
+                        <appName>vindhya1ios</appName>-->
 
 
                         <!-- ios-Common-->
