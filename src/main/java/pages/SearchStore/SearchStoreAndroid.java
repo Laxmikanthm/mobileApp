@@ -24,7 +24,7 @@ public class SearchStoreAndroid extends SearchStore {
     }
 
     public AndroidTextBox getSearchByZipCode() throws Exception {
-        AndroidTextBox searchByZipCode = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SearchInputBox")), "SearchInputBox button");
+        AndroidTextBox searchByZipCode = new AndroidTextBox((AndroidDriver) driver, By.id("search"), "SearchInputBox button");
         return searchByZipCode;
     }
 
@@ -59,7 +59,7 @@ public class SearchStoreAndroid extends SearchStore {
     }
 
     public MobileButton getToggleView() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ToggleView")), "ToggleView button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("toggle_view"), "ToggleView button");
         return button;
     }
 
@@ -79,7 +79,7 @@ public class SearchStoreAndroid extends SearchStore {
     }
 
     public MobileButton getSearchKeyButton() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SearchButton")), "Search Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("search_button"), "Search Button");
         return button;
 
     }
@@ -90,17 +90,17 @@ public class SearchStoreAndroid extends SearchStore {
     }
 
     public MobileButton getSearchArea() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SearchArea")), "Search This Area Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("search_area"), "Search This Area Button");
         return button;
     }
 
     public MobileButton getLocaion() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("LocationImage")), "LocationImage Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("my_location"), "LocationImage Button");
         return button;
     }
 
     public MobileLabel getMapView() throws Exception{
-        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("MapView")),"Map View Image");
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("mapView"),"Map View Image");
         return label;
     }
 }

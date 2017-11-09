@@ -16,20 +16,20 @@ public class LandingPageAndroid extends LandingPage{
 
     public AndroidButton getLoginButton() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SignInButton")), "Sign In with existing user");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("signIn"), "Sign In with existing user");
 
         return button;
     }
 
     public AndroidButton getRegistrationButton() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("RegisterButton")), "Register button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("signUp"), "Register button");
 
         return button;
     }
 
     public AndroidButton getSkipButton() throws Exception {
-        AndroidButton skipButton = new AndroidButton ((AndroidDriver)driver, By.id(BaseTest.bundle.getString("SkipButton")), "Skip Button");
+        AndroidButton skipButton = new AndroidButton ((AndroidDriver)driver, By.id("android:id/button3"), "Skip Button");
 
         return skipButton;
     }

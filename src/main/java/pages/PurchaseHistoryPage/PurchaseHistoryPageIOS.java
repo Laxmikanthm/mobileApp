@@ -19,12 +19,12 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     }
 
     @Override
-    MobileButton getPaymentMethod() throws Exception {
+    List<WebElement>  getPaymentMethod() throws Exception {
         return null;
     }
 
     @Override
-    MobileButton getEarnedTokensText() throws Exception {
+    List<WebElement>  getEarnedTokensText() throws Exception {
         return null;
     }
 
@@ -63,8 +63,13 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     }
 
     @Override
-    MobileTextBox getReceiptHeaderText() throws Exception {
+    List<WebElement>  getReceiptHeaderText() throws Exception {
         return null;
+    }
+
+    @Override
+    By getEarnedTokens() throws Exception {
+        return By.id("earned_tokens_text");
     }
 
 

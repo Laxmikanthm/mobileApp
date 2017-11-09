@@ -36,7 +36,23 @@ public class PurchaseHistory extends SubwayAppBaseTest {
   //  MenuPage menuPage;
     PurchaseHistoryPage purchaseHistoryPage;
 
-//    //DFA-7115
+
+
+    //DFA-7115
+    @Test
+    public void verifyOrderHistory() throws Exception
+    {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
+        MobileApi.placeOrder(2,1,mobileUser);
+       // mobileUser = landingPage.getUser("CedMayne@qasubway.com");//SollieShearn@qasubway.com CedMayne@qasubway.com//"AngeBaistow@qasubway.com",54588  CedMayne@qasubway.com IdalineNorsister@qasubway.com
+        homePage = landingPage.gotoLogInPage().login(mobileUser);
+        homePage.goToUserProfilePage().goToPurchaseHistoryPage().assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+
+
+    }
+
+    //    //DFA-7115
 //    @Test
 //    public void verifyOrderHistory() throws Exception
 //    {
@@ -52,22 +68,6 @@ public class PurchaseHistory extends SubwayAppBaseTest {
 //
 //
 //    }
-
-
-
-    //DFA-7115
-    @Test
-    public void verifyOrderHistory() throws Exception
-    {
-        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
-        MobileApi.placeOrder(2,1,mobileUser); // where should I keep the method
-       // mobileUser = landingPage.getUser("CedMayne@qasubway.com");// CedMayne@qasubway.com//"AngeBaistow@qasubway.com",54588
-        homePage = landingPage.gotoLogInPage().login(mobileUser);
-        homePage.goToUserProfilePage().goToPurchaseHistoryPage().assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
-
-
-    }
 
 
 

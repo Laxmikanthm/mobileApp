@@ -11,91 +11,96 @@
     <parameter name="projectName" value="${driverName}"></parameter>
     <classes>
 
-         <class name="userProfileTest.AppVersion">
+         <class name="userProfileTest.UserProfile">
              <methods>
 
                  <include name="verifyAppVersion"/>
-             </methods>
-         </class>
-         <class name="userIdentityTest.EmailPreferences">
-             <methods>
-
+                 <include name="verifyPrivacyPolicy"/>
+                 <include name="verifyTermsAndConditions"/>
                  <include name="verifyEmailPreferencesPage"/>
+                 <include name="updateProfile"/>
+                 <include name="verifyAppVersion_9134"/>
              </methods>
          </class>
-         <class name="userProfileTest.HelpPage">
+
+
+         <class name="userIdentityTest.UserIdentity">
              <methods>
-
-                 <include name="verifyHelpPage"/>
+                 <include name="testRegisterNewUser"/>
+                 <include name="forgotPassword"/>
+                 <include name="resetPassword"/>
              </methods>
          </class>
-        <class name="userIdentityTest.Privacypolicy">
+        <class name="productDataTest.ProductData">
             <methods>
-                <include name="verifyPrivacyPolicy"/>
+                <include name="testProductDetailsAllSandwichesFootLong"/>
+                <include name="testProductDetailsAllSandwichesSixInch"/>
+                <include name="testProductDetailsSubwayFreshFitFootLong"/>
+                <include name="testProductDetailsSubwayFreshFitSixInch"/>
+                <include name="testProductDetailsBreakfastFootLongFootLong"/>
+                <include name="testProductDetailsBreakfastSixInch"/>
+                <include name="testProductDetailsKidsMeal"/>
+                <include name="testProductDetailsChoppedSalad"/>
             </methods>
         </class>
-        <class name="userIdentityTest.TermsandConditions">
+        <class name="orderTest.PlaceDefaultOrder">
             <methods>
-                <include name="verifyTermandConditions"/>
+                <include name="testPlaceDefaultOrderAllSandwichesFootLong"/>
+                <include name="testPlaceDefaultOrderAllSandwichesSixInch"/>
+                <include name="testPlaceDefaultOrderSubwayFreshFitFootLong"/>
+                <include name="testPlaceDefaultOrderSubwayFreshFitSixInch"/>
+                <include name="testPlaceDefaultOrderBreakfastFootLong"/>
+                <include name="testPlaceDefaultOrderBreakfastSixInch"/>
+                <include name="testPlaceDefaultOrderChoppedSalads"/>
+                <include name="testPlaceDefaultOrderKidsMeal"/>
+                <include name="testPlaceDefaultOrderSubOfTheDayFootLong"/>
+                <include name="testPlaceDefaultOrderSubOfTheDaySixInch"/>
+                <include name="testPlaceDefaultOrderPersonalPizzaFootLong"/>
             </methods>
         </class>
-        <class name="userIdentityTest.UpdateProfileTest">
+        <class name="myLoyaltyTest.Certificates">
             <methods>
-                <include name="updateProfile"/>
+                <include name="redeemCertificate_9188"/>
+                <include name="redeemMultipleCertificate_5049"/>
             </methods>
         </class>
-        <class name="userIdentityTest.ForgotPassword">
+
+        <class name="myLoyaltyTest.MyWayTokenTracker">
             <methods>
-                <include name="forgotPassword"/>
+                <include name="tokenTracker"/>
+
             </methods>
         </class>
-         <class name="orderTest.PaymentMethods">
 
-             <methods>
-                 <include name="addCreditCard"/>
-
-                 <include name="addDebitCard"/>
-
-                 <include name="addPayPal"/>
-             </methods>
-
-         </class>
-         <class name="userIdentityTest.UserLoginTest">
-             <methods>
-
-                 <include name="userLogin"/>
-                 <include name="userLogout"/>
-                 <include name="createUser"/>
-             </methods>
-         </class>
-        <class name="orderTest.PlaceRandomOrder">
-
-            <methods>
-
-                <include name="placeOrderAllSandwiches"/>
-                <include name="placeOrderSubwayFreshFit"/>
-                <include name="placeOrderPersonalPizza"/>
-                <include name="placeOrderChoppedSalads"/>
-                <include name="placeOrderSUBWAYFreshFitforKids"/>
-                <include name="placeOrderDrinks"/>
-            </methods>
-        </class>
         <class name="myLoyaltyTest.TokenGeneration">
             <methods>
                 <include name="tokenGeneration"/>
             </methods>
         </class>
-        <class name="myLoyaltyTest.Certificates">
-            <methods>
-                <include name="redeemCertificate"/>
-              <!--  <include name="verifyCertificate"/>-->
-            </methods>
-        </class>
+
         <class name="favoriteTest.AddFavoriteOrder">
             <methods>
                 <include name="addFavoriteOrder"/>
                 <include name="addFavoriteReOrder"/>
                 <include name="UnFavouriteOrder"/>
+            </methods>
+        </class>
+
+        <class name="orderManagementTest.OrderHistory">
+            <methods>
+                <include name="verifyOrderHistory"/>
+            </methods>
+        </class>
+
+        <class name="orderTest.EditYourOrder">
+            <methods>
+                <include name="placeRandomOrderAndDeleteToppings"/>
+                <include name="editCartVerifyPlaceOrder"/>
+                <include name="editCartAddAnotherVerifyPlaceOrder"/>
+                <include name="editCartDeleteItemVerifyPlaceOrder"/>
+                <include name="editCartSomethingElseVerifyPlaceOrder"/>
+                <include name="addMoreItemsAtCheckOut"/>
+                <include name="OrderSpecialInstructions"/>
             </methods>
         </class>
 

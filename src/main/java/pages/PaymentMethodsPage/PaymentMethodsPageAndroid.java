@@ -31,7 +31,7 @@ public class PaymentMethodsPageAndroid extends  PaymentMethodsPage{
     }
 
     public MobileLabel getCardType() throws Exception {
-        AndroidLabel items = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("GiftCardType")), "GiftCard label");
+        AndroidLabel items = new AndroidLabel((AndroidDriver) driver, By.id("payment_type"), "GiftCard label");
         return items;
     }
 }
