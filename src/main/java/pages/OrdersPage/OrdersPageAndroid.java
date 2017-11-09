@@ -39,7 +39,7 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getAddToBag() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/product_add_to_bag"), "Add to bag button");        return button;
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("product_add_to_bag"), "Add to bag button");        return button;
     }
 
     public MobileButton getCustomize() throws Exception {
@@ -81,17 +81,17 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getChange() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Change")), "Change field");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("change_time"), "Change field");
         return button;
     }
 
     public AndroidTextBox getSpecialInstructions() throws Exception {
-        AndroidTextBox specialInstructions = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("TypeInstructions")), "Type Instructions field");
+        AndroidTextBox specialInstructions = new AndroidTextBox((AndroidDriver) driver, By.id("instructions_edit_text"), "Type Instructions field");
         return specialInstructions;
     }
 
     public MobileButton getAddIngredient() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("AddIngredient")), "Add Ingredient button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("add_ingredient"), "Add Ingredient button");
         return button;
     }
 
@@ -132,17 +132,17 @@ public class OrdersPageAndroid extends OrdersPage {
 
 
     public MobileButton getRegularCheeseOrDeluxe() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("RegularCheeseOrDeluxe")), "RegularCheeseOrDeluxe button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("option2_layout"), "RegularCheeseOrDeluxe button");
         return button;
     }
 
     public MobileButton getExtraCheeseOrDoubleMeat() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ExtraCheeseOrDoubleMeat")), "ExtraCheeseOrDoubleMeat button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("option3_layout"), "ExtraCheeseOrDoubleMeat button");
         return button;
     }
 
     public MobileButton getToastIt() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ToastIt")), "ToastIt button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("toasted_image"), "ToastIt button");
         return button;
     }
 
@@ -157,7 +157,7 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getDeleteItem() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("DeleteItem")), "DeleteItem button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("delete_button"), "DeleteItem button");
         return button;
     }
 
@@ -212,54 +212,54 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileLabel getItems() throws Exception {
-        AndroidLabel items = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Items")), "Items label");
+        AndroidLabel items = new AndroidLabel((AndroidDriver) driver, By.id("product_group_header"), "Items label");
         return items;
     }
 
     public MobileButton getExpandArrow() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ExpandButton")), "Expand Button in MakeItAMeal");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("item_title_layout"), "Expand Button in MakeItAMeal");
         return button;
     }
 
     public MobileButton getSelectFlavor() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SelectFlavor")), "SelectFlavor Button in MakeItAMeal");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("flavor_selector"), "SelectFlavor Button in MakeItAMeal");
         return button;
     }
 
     public MobileButton getItemSelectFlavor() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SelectItemInSides")), "SelectItemInSides Button in MakeItAMeal");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("flavor_text_item"), "SelectItemInSides Button in MakeItAMeal");
         return button;
     }
     public MobileButton getFavouriteIcon() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavouriteIcon")), "Expand Button in MakeItAMeal");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("favorite_animation"), "Expand Button in MakeItAMeal");
         return button;
     }
     public MobileButton getFavouriteSave() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavouriteSaveButton")), "SelectItemInSides Button in MakeItAMeal");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("android:id/button1"), "SelectItemInSides Button in MakeItAMeal");
         return button;
     }
     public MobileTextBox getFavouriteText() throws Exception{
-        AndroidTextBox button = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavouriteEditText")), "SelectItemInSides Button in MakeItAMeal");
+        AndroidTextBox button = new AndroidTextBox((AndroidDriver) driver, By.id("editTextName"), "SelectItemInSides Button in MakeItAMeal");
         return button;
     }
     public MobileButton getFavourites() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Favourites")), "Select Favourites");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("product_group_header"), "Select Favourites");
         return button;
     }
     public MobileButton getFavouriteAddToBag() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavouriteAddToBag")), "Select Favourites  Add to Bag");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("product_add_to_bag"), "Select Favourites  Add to Bag");
         return button;
     }
     public MobileButton getUnFavouriteIcon() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("UnFavouriteIcon")), "Select Favourites  Add to Bag");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("favorite"), "Select Favourites  Add to Bag");
         return button;
     }
     public MobileButton getRemoveFavourite() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("RemoveButton")), "Remove Favourites ");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("android:id/button1"), "Remove Favourites ");
         return button;
     }
     public MobileLabel getSubTotal() throws Exception{
-        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/item_price"), "Sub Total Amount");
+        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("item_price"), "Sub Total Amount");
         return button;
     }
     public MobileLabel getRewardsAmt() throws Exception{
@@ -281,29 +281,29 @@ public class OrdersPageAndroid extends OrdersPage {
 
     }
     public MobileButton getErrorOk() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("errorOk")), "ErrorOk ");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("android:id/button1"), "ErrorOk ");
         return button;
     }
 
     public MobileButton getpopupGotIt() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("popupGot")), "Popup GotIt");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("android:id/button1"), "Popup GotIt");
         return button;
     }
     public MobileLabel getTaxPrice() throws Exception{
-        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/tax_amount"), "Tax Price ");
+        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("tax_amount"), "Tax Price ");
         return button;
     }
     public MobileButton getCustomizeOrder() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("CutomizeOrder")), "Customize Order Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("customize"), "Customize Order Button");
         return button;
     }
     public MobileButton getDineIn() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("DineIn")), "DineIn Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("dine_in_button"), "DineIn Button");
         return button;
     }
 
     public MobileButton getToGo() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ToGo")), "ToGo Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("to_go_button"), "ToGo Button");
         return button;
     }
 
@@ -316,32 +316,32 @@ public class OrdersPageAndroid extends OrdersPage {
 //
 
     public MobileButton getTotalAmount() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/ordertotal_amount"), "get total amount");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("ordertotal_amount"), "get total amount");
         return button;
     }
     
     public MobileButton getSubmitOrder() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/submit_order"), "submit order button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("submit_order"), "submit order button");
         return button;
     }
     
     public MobileButton getGrandTotalAmount() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/order_total_amount"), "get grand total amount");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("order_total_amount"), "get grand total amount");
         return button;
     }
     
     public MobileButton getTotal() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/total"), "get total");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("total"), "get total");
         return button;
     }
     
     public MobileButton getProfile() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/profile"), "profile icon");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("profile"), "profile icon");
         return button;
     }
     
     public MobileButton getSeeDetails() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/check_details"), "See details link");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("check_details"), "See details link");
         return button;
     }
 
@@ -352,11 +352,11 @@ public class OrdersPageAndroid extends OrdersPage {
 
     }
     public MobileButton getCustomizebread() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SelectBread")), "Select Bread");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("data_layout"), "Select Bread");
         return button;
     }
     public MobileButton getlooksgoodbutton() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Looksgood")), "Looks Good Button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("done_button"), "Looks Good Button");
         return button;
     }
 
@@ -367,42 +367,42 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileLabel getOrderNumInOrderConfirmation() throws Exception{
-        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("orderNum")), "OrderNumberInConfirmationPage");
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("order_number"), "OrderNumberInConfirmationPage");
         return label;
     }
 
     public MobileLabel getItemName() throws Exception{
-        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("itemName")), "ItemNameInConfirmationPage");
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("item_title"), "ItemNameInConfirmationPage");
         return label;
     }
 
     public MobileLabel getOrderTotalAmount() throws Exception{
-        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("ordertotal_amount"), "OrderTotalAmountInConfirmationPage");
         return label;
     }
 
     public MobileLabel getSides() throws Exception{
-        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("side_title_1")), "Sides");
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("side_title_1"), "Sides");
         return label;
     }
 
     public MobileLabel getLiquids() throws Exception{
-        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("drink_title")), "Liquids/Drinks");
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("drink_title"), "Liquids/Drinks");
         return label;
     }
 
     public MobileButton getSidesChange() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("side_change")), "Change in Sides");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("side_change"), "Change in Sides");
         return button;
     }
 
     public MobileButton getDrinksChange() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("drink_change")), "Change in Drinks");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("drink_change"), "Change in Drinks");
         return button;
     }
 
     public MobileLabel getFlavourDropDown() throws Exception{
-        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id(BaseTest.bundle.getString("flavor_selector_text")), "Liquids/Drinks");
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("flavor_selector_text"), "Liquids/Drinks");
         return label;
     }
 

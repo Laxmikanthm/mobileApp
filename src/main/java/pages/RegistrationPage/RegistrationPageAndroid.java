@@ -67,7 +67,7 @@ public class RegistrationPageAndroid extends RegistrationPage {
         return button;
     }
     public AndroidButton getCheckboxOffers() throws Exception{
-        AndroidButton button =new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("OffersCheckbox")), "Offers checkbx");
+        AndroidButton button =new AndroidButton((AndroidDriver) driver, By.id("custom-extension_emailOptIn_true"), "Offers checkbx");
 
         return button;
     }

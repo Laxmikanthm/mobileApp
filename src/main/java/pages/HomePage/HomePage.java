@@ -574,7 +574,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
 
     public ProductDetailsPage goToProductDetailsPage(MobileUser mobileUser, String menuName, BreadSize breadSize) throws Exception {
         OrdersPage ordersPage = goToOrderPage();
-        ordersPage.addDefaultItemInCart( mobileUser, menuName, breadSize );
+       // ordersPage.addDefaultItemInCart( mobileUser, menuName, breadSize );
         return ProductDetailsPage.get( (AndroidDriver) driver );
     }
 

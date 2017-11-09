@@ -18,7 +18,7 @@ public class HomePageAndroid extends HomePage {
         super(driver);
     }
     public MobileButton getMenu() throws Exception {
-        AndroidButton menuPageButton = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("UserProfile")), "UserProfilePage field");
+        AndroidButton menuPageButton = new AndroidButton((AndroidDriver) driver, By.id("profile"), "UserProfilePage field");
         return menuPageButton;
     }
 
@@ -42,7 +42,7 @@ public class HomePageAndroid extends HomePage {
         return button;
     }
     public MobileLabel getYourFavoriteOrderName() throws Exception {
-        AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.id(BaseTest.bundle.getString("FavoriteNameInApp")), "FavoriteNameInApp button");
+        AndroidLabel label = new AndroidLabel((AndroidDriver)driver, By.id("favorites_1_title"), "FavoriteNameInApp button");
         return label;
     }
     public MobileButton getFavoritesAddIcon() throws Exception {
@@ -50,31 +50,31 @@ public class HomePageAndroid extends HomePage {
         return button;
     }
     public MobileLabel getTokenValue() throws Exception{
-        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TokenValue")+"']"), "Get Token Value from Dashboard");
-        return token;
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver,By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TokenValue")+"']"), "Get Token Value from Dashboard");
+        return label;
     }
     public MobileLabel getZeroTokenMessage() throws Exception{
-        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("ZeroTokenMessage")+"']"), "Get zero Token Message from Dashboard");
-        return token;
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("ZeroTokenMessage")+"']"), "Get zero Token Message from Dashboard");
+        return label;
     }
     public MobileLabel getTokenMessage() throws Exception{
-        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,    By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TokenMessage")+"']"), "Get Token Message from Dashboard");
-        return token;
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver,    By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TokenMessage")+"']"), "Get Token Message from Dashboard");
+        return label;
     }
     public MobileButton getTellMeHow() throws Exception{
-        AndroidButton token = new AndroidButton((AndroidDriver) driver,   By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TellMeHow")+"']"), "Get zero token link");
-        return token;
+        AndroidButton label = new AndroidButton((AndroidDriver) driver,   By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("TellMeHow")+"']"), "Get zero token link");
+        return label;
     }
     public MobileButton getStartAnotherOrder() throws Exception{
-        AndroidButton token = new AndroidButton((AndroidDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/order_divider_1"), "Get zero token link");
-        return token;
+        AndroidButton button = new AndroidButton((AndroidDriver) driver,  By.id("order_divider_1"), "Get zero token link");
+        return button;
     }
     public MobileButton getAnimationSparkle() throws Exception{
-        AndroidButton token = new AndroidButton((AndroidDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/animation_sparkle"), "Get zero token link");
-        return token;
+        AndroidButton button = new AndroidButton((AndroidDriver) driver,  By.id("animation_sparkle"), "Get zero token link");
+        return button;
     }
     public MobileButton getStartAnother() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/start_order"), "Add Something Else button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("start_order"), "Add Something Else button");
         return button;
     }
     public MobileButton getRewardsApply() throws Exception{
@@ -82,23 +82,23 @@ public class HomePageAndroid extends HomePage {
         return button;
     }
     public MobileLabel getCertificatesMessage() throws Exception{
-        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("CertificatesCount")+"']"), "Get Certificates Count");
-        return token;
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("CertificatesCount")+"']"), "Get Certificates Count");
+        return label;
     }
 
     public MobileLabel gethomepagecertificatemessage() throws Exception{
-        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.id("com.subway.mobile.subwayapp03:id/txt_loyalty_reward_count"), "Rewards certificate count");
-        return token;
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver,  By.id("txt_loyalty_reward_count"), "Rewards certificate count");
+        return label;
     }
 
 
     public MobileLabel getRedeemText() throws Exception{
-        AndroidLabel token = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("RedeemText")+"']"), "Get zero Token Message from Dashboard");
-        return token;
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@text='"+BaseTest.bundle.getString("RedeemText")+"']"), "Get zero Token Message from Dashboard");
+        return label;
     }
     public MobileButton getRedeemButton() throws Exception{
-        AndroidButton token = new AndroidButton((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("RedeemText")+"']"), "Get zero Token Message from Dashboard");
-        return token;
+        AndroidButton button = new AndroidButton((AndroidDriver) driver,  By.xpath("//android.widget.TextView[@resource-id='"+BaseTest.bundle.getString("RedeemText")+"']"), "Get zero Token Message from Dashboard");
+        return button;
     }
 
 

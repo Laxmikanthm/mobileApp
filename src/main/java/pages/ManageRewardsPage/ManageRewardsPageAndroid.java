@@ -23,17 +23,17 @@ public class ManageRewardsPageAndroid  extends ManageRewardsPage{
     }
 
     public MobileButton getApplyButton() throws Exception {
-        AndroidButton ApplyButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/apply"), "Apply Button");
+        AndroidButton ApplyButton = new AndroidButton((AndroidDriver) driver, By.id("apply"), "Apply Button");
         return ApplyButton;
     }
 
 
     public MobileButton getRemoveButton() throws Exception {
-        AndroidButton removeButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/remove"),"RemoveButton)");
+        AndroidButton removeButton = new AndroidButton((AndroidDriver) driver, By.id("remove"),"RemoveButton)");
         return removeButton;
     }
     public MobileButton getDoneButton  () throws Exception {
-        AndroidButton doneButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/done"),"Done Button");
+        AndroidButton doneButton = new AndroidButton((AndroidDriver) driver, By.id("done"),"Done Button");
         return doneButton;
     }
     public MobileLabel getcertificatemessage() throws Exception {
@@ -41,7 +41,7 @@ public class ManageRewardsPageAndroid  extends ManageRewardsPage{
         return certsamount;
     }
     public MobileButton getManageButton  () throws Exception {
-        AndroidButton doneButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/done"),"Manage Button");
+        AndroidButton doneButton = new AndroidButton((AndroidDriver) driver, By.id("manage"),"Manage Button");
         return doneButton;
     }
 

@@ -34,12 +34,12 @@ public class UserProfilePageAndroid extends UserProfilePage {
         return label;
     }
     public AndroidButton getLogOut() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("LogOut")), "LogOut button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("logout"), "LogOut button");
         return button;
     }
 
     public AndroidButton getLogOutButtonInPopUp() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("LogoutBtn")), "LogoutBtn in PopUp");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("button1"), "LogoutBtn in PopUp");
         return button;
     }
 
@@ -51,16 +51,16 @@ public class UserProfilePageAndroid extends UserProfilePage {
 
 
     public AndroidButton getGoHome() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/x_icon"), "Back button");        return button;
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("x_icon"), "Back button");        return button;
     }
 
     public AndroidButton getEmailPreferences() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("EmailPref")), "Email Preferences button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("communication_prefs"), "Email Preferences button");
         return button;
     }
 
     public AndroidButton getMobileOrderHistory() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("MobileOrderHistory")), "MobileOrderHistory button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("order_history"), "MobileOrderHistory button");
         return button;
     }
 
@@ -70,11 +70,11 @@ public class UserProfilePageAndroid extends UserProfilePage {
     }
 
     public AndroidButton getAbout() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("About")), "About button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("about"), "About button");
         return button;
     }
     public AndroidButton getEmail() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("UpdateEmailPrefernce")), "UpdateEmailPrefernce button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("emailSwitch"), "UpdateEmailPrefernce button");
         return button;
     }
     public AndroidButton getPrivacyPolicy() throws Exception {
@@ -129,7 +129,7 @@ public class UserProfilePageAndroid extends UserProfilePage {
 
     @Override
     AndroidButton getPurchaseHistory() throws Exception {
-        return  new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("MobileOrderHistory")), "MobileOrderHistory button");
+        return  new AndroidButton((AndroidDriver) driver, By.id("order_history"), "MobileOrderHistory button");
     }
 
 
