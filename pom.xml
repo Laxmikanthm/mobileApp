@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>ServiceFramework</artifactId>
-            <version>3.3.36-SNAPSHOT</version>
+            <version>3.3.43-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -72,17 +72,47 @@
                          the -D switch; if we do not override its value, it will use
                           the value we have set in the POM as a default.-->
                         <!--Mobile-->
-                        <mobilePlatform>Android</mobilePlatform>
+                       <!-- Android-Local-->
+                        <spring.profiles.active>local</spring.profiles.active>
                         <platformVersions>5.0.1</platformVersions>
+                        <app>Users/sultana_m/Documents/AndroidApp/Subway_Sprint_QE_7.1.7.0_5000783.apk</app>
+
+                        <!-- Android-TestObject-->
+                          <spring.profiles.active>testObject</spring.profiles.active>
+                        <testObjectApiKey>F6E2E240BDAF41F9B59C21954CEA0055</testObjectApiKey>
+                        <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
+                        <appName>subway-mariumsprint</appName>
+
+
+                        <!-- Android-Common-->
+                        <mobilePlatform>Android</mobilePlatform>
+                        <appiumVersion>1.6.5</appiumVersion>
+
+
+                        <!-- iOS-Local-->
+                        <spring.profiles.active>local</spring.profiles.active>
+                        <mobilePlatform>iOS</mobilePlatform>
+                        <platformVersions>10.3.3</platformVersions>
+                        <app>Users/sultana_m/Documents/iOSApp/Subway_09_26_2017.ipa</app>
+                        <udid>fade3cc4f301c0da10d7e53b0dfcf23a7ccf6173</udid>
+
+                        <!-- iOS-TestObject-->
+                          <spring.profiles.active>testObject</spring.profiles.active>
+                        <testObjectApiKey>A982DA797F3B4E699978B7E47156BF65</testObjectApiKey>
+                        <testObjectDevice>iPhone_6S_16GB_real_us</testObjectDevice>
+                        <appName>vindhya1ios</appName>
+
+
+                        <!-- ios-Common-->
+                        <appPackage>com.subway.sandbox.mobile</appPackage>
+                        <appiumVersion>1.7.1</appiumVersion>
+
+                        <!-- ios&Android-Common-->
                         <deviceName>Subway</deviceName>
                         <platform>mobile</platform>
-                        <!-- driverName can be MobileApp/WebApp -->
                         <driverName>MobileApp</driverName>
-                        <appiumVersion>1.6.5</appiumVersion>
                         <appiumGrid>"http://localhost:4723/wd/hub"</appiumGrid>
                         <browserOrDevice>Subway</browserOrDevice>
-                        <app>Users/sultana_m/Documents/AndroidApp/Subway_Sprint_QE_7.1.7.0_5000783.apk</app>
-                        <appPackage>com.subway.mobile.subwayapp03</appPackage>
                         <deviceOrientation>portrait</deviceOrientation>
                         <newCommandTimeout>120</newCommandTimeout>
                         <operatingSystem>mac</operatingSystem>
@@ -92,6 +122,13 @@
                         <azureEnv>qa</azureEnv>
                         <roEnv>https://qe-order.remote-order.com/LoyaltyPilot.aspx</roEnv>
                         <zephyrUpdate>false</zephyrUpdate>
+                        <appName>R2-Mobile</appName>
+                        <testObjectUser>dias_p</testObjectUser>
+                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
+
+
+
+
                         <!-- R2/E2E-->
                         <!--<environment>stage</environment>
                         <environmentR1R2>r2</environmentR1R2>
@@ -103,24 +140,13 @@
                         <azureEnv>stage</azureEnv>
                         <roEnv>https://pat-order.test.subway.com</roEnv>-->
 
-                        <udid></udid>
+
 
                         <!--<appURL>${appURL}</appURL>-->
                         <!--End Mobile-->
 
                         <executionPlatform></executionPlatform>
-                        <appName>R2-Mobile</appName>
-                       <!--   <spring.profiles.active>local</spring.profiles.active>-->
-                        <!--Test Object-->
-                        <spring.profiles.active>testObject</spring.profiles.active>
-                        <driverName>MobileApp</driverName>
-                        <platform>mobile</platform>
-                        <testObjectUser>dias_p</testObjectUser>
-                        <testObjectApiKey>F6E2E240BDAF41F9B59C21954CEA0055</testObjectApiKey>
-                        <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
-                        <appName>subway-mariumsprint</appName>
-                        <appiumVersion>1.6.5</appiumVersion>
-                        <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
+
                     </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!-- TestNG suite XML files -->

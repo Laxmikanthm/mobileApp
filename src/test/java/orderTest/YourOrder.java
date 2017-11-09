@@ -1,11 +1,25 @@
 package orderTest;
 
 import Base.SubwayAppBaseTest;
+import homePageTest.HomePage;
 import org.testng.annotations.Test;
+import pages.LandingPage.LandingPage;
+import pages.UserProfilePage.UserProfilePage;
+import pojos.user.MobileUser;
 
 public class YourOrder extends SubwayAppBaseTest {
 
     @Test
+    public void LogIn() throws Exception {
+       LandingPage landingPage = goToHomePage( LandingPage.getLandingPageClass(), "MobileApp");
+       MobileUser mobileUser = landingPage.registerUser("NancyBottoms@qasubway.com");
+       pages.HomePage.HomePage homePage =  landingPage.logIn( mobileUser );
+        UserProfilePage userProfilePage = homePage.goToUserProfilePage();
+        userProfilePage.logout();
+
+    }
+
+   /* @Test
     public void testYourOrderDefaultOrder() throws Exception {
         //picking up from assertion
         //ready today assertion
@@ -85,6 +99,6 @@ public class YourOrder extends SubwayAppBaseTest {
         //place order
         //assert order confirmation in checkout page and home page
 
-    }
+    }*/
 
 }
