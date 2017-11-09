@@ -2,6 +2,7 @@ package favoriteTest;
 
 import Base.Order;
 import Base.SubwayAppBaseTest;
+import Enums.BreadSize;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
@@ -20,6 +21,7 @@ import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
 import pages.OrdersPage.OrdersPage;
+import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
@@ -34,28 +36,18 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
 
     MobileUser mobileUser;
     Store store = JdbcUtil.getLoyaltyStoreDetails();
-    RemoteOrderCustomer remoteOrderCustomer;
     LandingPage landingPage;
     HomePage homePage;
     OrdersPage ordersPage;
 
-    @Autowired
-    Base.Order order1;
 
 
     //DFA-9157
     @Test
     public void addFavoriteOrder_9157() throws Exception
     {
-        mobileUser=setCountryName();
-        remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
-        homePage.validateTokens(remoteOrderCustomer);
-        homePage.addSomethingElse();
-        Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeFavouriteOrderThenAssert(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.NONE, store);
 
     }
     //DFA-7675_DFA-7241
@@ -63,17 +55,9 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void addFavoriteReOrder_7675_7241() throws Exception
     {
-        mobileUser=setCountryName();
-        remoteOrderCustomer = RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.placeFavouriteRandomOrder("All Sandwiches", mobileUser, store.getAddress1());
-        homePage.validateTokens(remoteOrderCustomer);
-        homePage.addSomethingElse();
-        Assert.assertEquals(ordersPage.favoriteOrderName(), ordersPage.favoriteOrderName);
-        ordersPage.placeFavouriteReOrder(mobileUser);
-        homePage.validateTokens(remoteOrderCustomer);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser=landingPage.addFavouriteOrderThroughApi(ordersPage);
+        landingPage.placeFavouriteReOrderThenAssert(mobileUser, store);
 
     }
     //DFA-9157
@@ -81,15 +65,9 @@ public class AddFavoriteOrder extends SubwayAppBaseTest {
     @DirtiesContext
     public void UnFavouriteOrder_9157()throws Exception
     {
-        mobileUser=setCountryName();
-        remoteOrderCustomer=RegisterUser.registerAUserWithoutCardLink(mobileUser);
-        LandingPage landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
-        OrdersPage ordersPage=homePage.findStore(store.getZipCode());
-        ordersPage.removeFavouriteOrder("All Sandwiches",mobileUser, store.getAddress1(),remoteOrderCustomer);
-        homePage.validateTokens(remoteOrderCustomer);
-        //ordersPage.removeFavouriteOrder(mobileUser,store.getAddress1());
-
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser=landingPage.addFavouriteOrderThroughApi(ordersPage);
+        landingPage.placeUnFavouriteOrderThenAssert(mobileUser, store);
 
     }
 

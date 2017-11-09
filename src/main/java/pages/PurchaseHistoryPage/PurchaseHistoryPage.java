@@ -2,9 +2,12 @@ package pages.PurchaseHistoryPage;
 
 import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileTextBox;
+import base.gui.controls.mobile.generic.MobileWebElement;
 import base.test.BaseTest;
 import com.amazonaws.services.opsworks.model.App;
 import enums.Country;
+import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pages.CommonElements.CommonElements;
@@ -39,9 +42,21 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     String orderNumber;
     String dateTime;
 
-   //payment_method earned_tokens_text
-   abstract MobileButton getPaymentMethod() throws Exception;
-    abstract MobileButton getEarnedTokensText() throws Exception;
+   abstract List<WebElement> getPaymentMethod() throws Exception;
+    abstract List<WebElement> getEarnedTokensText() throws Exception;
+    abstract List<WebElement> getReceiptHeaderText() throws Exception;
+
+    abstract List<WebElement> getOrderList() throws Exception;
+    abstract List<WebElement> getOrderNumberList() throws Exception;
+    abstract List<WebElement> getOrderTimeAddressList() throws Exception;
+    abstract List<WebElement> getProductTitleList() throws Exception;
+    abstract List<WebElement> getProductDescriptionList() throws Exception;
+    abstract List<WebElement> getOrderTotalList() throws Exception;
+
+    abstract By getEarnedTokens() throws Exception;
+
+
+
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -66,6 +81,8 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         }
     }
 
+
+
     public void assertPlacedOrderDetailsInPurchaseHistoryPage(RemoteOrderCustomer mobileUser) throws Exception {
         try {
 
@@ -85,9 +102,9 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         try {
             Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
             List<PurchaseHistoryDetails> orderHistoryList = new ArrayList<>();
-            int webElementCount = commonElements.getElementListCount(By.id(""), By.id("order_header"), (AppiumDriver) driver);
+            int webElementCount = getOrderList().size();
             for (int i = 0; i < webElementCount; i++) {
-                List<WebElement> getOrderHistoryList = commonElements.getElements(By.id(""), By.id("order_time_address"));
+                List<WebElement> getOrderHistoryList =getOrderTimeAddressList();
                 getOrderHistoryList.get(i).click();
                 orderHistoryList.add(getActualPurchaseHistory(i));
             }
@@ -102,19 +119,24 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         }
     }
 
+
     private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
         try {
             Logz.step("##### Started setting actual purchase details in Purchase History Page #####");
             PurchaseHistoryDetails purchaseHistoryDetails = new PurchaseHistoryDetails();
-            orderNumber = commonElements.getElementTextByClassName("", "android.widget.TextView", (AppiumDriver) driver, 1);
-            List<WebElement> getOrderTimeAddress = commonElements.getElements(By.id(""), By.id("order_time_address"));
+          //  List<WebElement> getOrderNumbers = commonElements.getElements(By.id(""), By.xpath("//android.widget.TextView[contains(@text,'Order')]"));
+            List<WebElement> getOrderNumbers = getOrderNumberList();
+            String orderNumber = getOrderNumbers.get(index).getText();
+            Logz.step("Order number: "+orderNumber);
+          //  List<WebElement> getOrderTimeAddress = commonElements.getElements(By.id(""), By.id("order_time_address"));
+            List<WebElement> getOrderTimeAddress = getOrderTimeAddressList();
             String orderTimeAddress = getOrderTimeAddress.get(index).getText();
             String[] split = orderTimeAddress.split("\n");
             purchaseHistoryDetails.setPickupDateTime(split[0]);
             purchaseHistoryDetails.setStoreAddress(split[1]);
             purchaseHistoryDetails.setOrderNumber(orderNumber);
-            purchaseHistoryDetails.setCartItemList(getActualCartItemList());
-            purchaseHistoryDetails.setPaymentDetails(getActualPaymentDetails());
+            purchaseHistoryDetails.setCartItemList(getActualCartItemList(index));
+            purchaseHistoryDetails.setPaymentDetails(getActualPaymentDetails(index));
             purchaseHistoryDetails.setTotal(actualTotal);
             Logz.step("##### Ended setting actual purchase details in Purchase History Page #####");
             return purchaseHistoryDetails;
@@ -123,21 +145,20 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         }
     }
 
-    private List<CartItemList> getActualCartItemList() throws Exception {
+
+
+
+    private List<CartItemList> getActualCartItemList(int index) throws Exception {
         try {
             Logz.step("##### Started setting actual cart item list in Purchase History Page #####");
             List<CartItemList> cartItemList = new ArrayList<>();
-            assertReceiptHeaderText();
-            //assert item receipt icon - item_receipt
-            int webElementCount = commonElements.getElementListCount(By.id(""), By.id("product_title"), (AppiumDriver)driver);
-             for (int i = 0; i < webElementCount; i++) {
+            assertReceiptHeaderText(index);
                 CartItemList cart = new CartItemList();
-                List<WebElement> getProductTitle = commonElements.getElements(By.id(""), By.id("product_title"));
-                cart.setItemName(getProductTitle.get(i).getText());
-                List<WebElement> getProductDescription = commonElements.getElements(By.id(""), By.id("product_description"));
-                cart.setIngredients(getProductDescription.get(i).getText());
+                List<WebElement> getProductTitle = getProductTitleList();
+                cart.setItemName(getProductTitle.get(index).getText());
+                List<WebElement> getProductDescription = getProductDescriptionList();
+                cart.setIngredients(getProductDescription.get(index).getText());
                 cartItemList.add(cart);
-            }
             ComparatorByIteName comparatorByIteName = new ComparatorByIteName();
             cartItemList = comparatorByIteName.getSortItemName(cartItemList);
             Logz.step("##### Ended setting actual cart item list in Purchase History Page #####");
@@ -147,31 +168,32 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         }
     }
 
-    private List<PaymentDetails> getActualPaymentDetails() throws Exception {
+
+    private List<PaymentDetails> getActualPaymentDetails(int index) throws Exception {
         try {
             Logz.step("##### Started setting actual payment details in Purchase History Page #####");
             List<PaymentDetails> paymentDetails = new ArrayList<>();
             //assert dollar symble icon is present --coin_icon
-            assertEarnedTokensText();
-            assesrtPaymentRewardsHeaderText();
+            assertEarnedTokensText(index);
+            assesrtPaymentRewardsHeaderText(index);
             //break down of order_total
-            int paymentDetailList = commonElements.getElements(By.id(""), By.id("order_total")).size();
-            for (int i = 0; i < paymentDetailList; i++) {
-                PaymentDetails payment = new PaymentDetails();
-                List<WebElement> getCardType = commonElements.getElements(By.id(""), By.id("order_total"));
-                String orderTotal = getCardType.get(i).getText();
-                payment.setCardType(Utils.getConnectionString(orderTotal, "paid with ", " ending "));
-                actualTotal = Utils.getConnectionString(orderTotal, 0, " paid with ");
-                payment.setAmount(actualTotal);
-                payment.setCardEndingNumber(Utils.getConnectionString(orderTotal, "ending in "));
-                paymentDetails.add(payment);
-            }
+            WebElement getCardType = getOrderTotalList().get(index);
+            PaymentDetails payment = new PaymentDetails();
+            String orderTotal = getCardType.getText();
+            payment.setCardType(Utils.getConnectionString(orderTotal, "paid with ", " ending "));
+            actualTotal = Utils.getConnectionString(orderTotal, 0, " paid with ");
+            payment.setAmount(actualTotal);
+            payment.setCardEndingNumber(Utils.getConnectionString(orderTotal, "ending in "));
+            paymentDetails.add(payment);
             Logz.step("##### Ended setting actual payment details in Purchase History Page #####");
             return paymentDetails;
         } catch (Exception ex) {
             throw new Exception(("Failed to set actual payment details in Purchase History Page\n" + ex.getMessage()));
         }
     }
+
+
+
 
     public List<PurchaseHistoryDetails> getExpectedPurchaseHistoryList(RemoteOrderCustomer remoteOrderCustomer) throws Exception {
         try {
@@ -283,33 +305,47 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             throw new Exception(("Failed to get options from API\n" + ex.getMessage()));
         }
     }
-    private void assesrtPaymentRewardsHeaderText() throws Exception{
-        String actualPaymentRewardsHeaderText = getPaymentMethod().getText();//payment_method
-        String expectedPaymentRewardsHeaderText = BaseTest.getStringfromBundleFile("PaymentRewardsHeaderText");
-        Assert.assertEquals(actualPaymentRewardsHeaderText, expectedPaymentRewardsHeaderText);
-    }
-    private void assertReceiptHeaderText() throws Exception{
-        String actualReceiptHeaderText = commonElements.getElementTextByClassName("", "android.widget.TextView", (AppiumDriver) driver, 5);
 
-        if(actualReceiptHeaderText.contains("Earned MyWay tokens")) {
-            actualReceiptHeaderText = commonElements.getElementTextByClassName("", "android.widget.TextView", (AppiumDriver) driver, 6);
 
+
+    private void assesrtPaymentRewardsHeaderText(int index) throws Exception {
+        try {
+            String actualPaymentRewardsHeaderText = getPaymentMethod().get(index).getText();//payment_method
+            String expectedPaymentRewardsHeaderText = BaseTest.getStringfromBundleFile("PaymentRewardsHeaderText");
+            Assert.assertEquals(actualPaymentRewardsHeaderText, expectedPaymentRewardsHeaderText);
+        } catch (Exception ex) {
+            throw new Exception(("Failed to assert Payment & Rewards text\n" + ex.getMessage()));
         }
+    }
+
+
+
+    private void assertReceiptHeaderText(int index) throws Exception{
+        try{
+        String actualReceiptHeaderText = getReceiptHeaderText().get(index).getText();
         String expectedReceiptHeaderText = BaseTest.getStringfromBundleFile("ReceiptHeaderText");
         Assert.assertEquals(actualReceiptHeaderText, expectedReceiptHeaderText);
+    }catch (Exception ex) {
+        throw new Exception(("Failed to assert item text\n" + ex.getMessage()));
     }
+}
 
-    private void assertEarnedTokensText() throws Exception{
-        String receiptHeaderText = commonElements.getElementTextByClassName("", "android.widget.TextView", (AppiumDriver) driver, 5);
-        if(receiptHeaderText.contains("Earned MyWay tokens")) {
-            String  actualEarnedTokensText = getEarnedTokensText().getText();
-            String expectedEarnedTokensText = BaseTest.getStringfromBundleFile("EarnedTokensText");
-            Assert.assertEquals(actualEarnedTokensText, expectedEarnedTokensText);
-        }else {
-            Logz.step("##### Not Earned MyWay tokens #####");
-        }
 
+    private void assertEarnedTokensText(int index) throws Exception{
+        try{
+            if(commonElements.isAvailable(getEarnedTokens(),getEarnedTokens())) {
+                //   getEarnedTokensText().get(index).isEnabled()
+                String actualEarnedTokensText = getEarnedTokensText().get(index).getText();
+                String expectedEarnedTokensText = BaseTest.getStringfromBundleFile("EarnedTokensText");
+                Assert.assertEquals(actualEarnedTokensText, expectedEarnedTokensText);
+            }
+            else{
+                Logz.step("There is no earned my way token text");
+            }
+    }catch (Exception ex) {
+        throw new Exception(("Failed to assert Earned my way Tokens Text\n" + ex.getMessage()));
     }
+}
 
   public static class ComparatorByIteName implements Comparator<CartItemList> {
         List<CartItemList> sortItemName = new ArrayList<CartItemList>();
@@ -329,5 +365,109 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             return sortItemName;
         }
     }
+
+
+
+    //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
+//        try {
+//            Logz.step("##### Started setting actual purchase details in Purchase History Page #####");
+//            PurchaseHistoryDetails purchaseHistoryDetails = new PurchaseHistoryDetails();
+//            orderNumber = commonElements.getElementTextByClassName("", "android.widget.TextView", (AppiumDriver) driver, 1);
+//            List<WebElement> getOrderTimeAddress = commonElements.getElements(By.id(""), By.id("order_time_address"));
+//            String orderTimeAddress = getOrderTimeAddress.get(index).getText();
+//            String[] split = orderTimeAddress.split("\n");
+//            purchaseHistoryDetails.setPickupDateTime(split[0]);
+//            purchaseHistoryDetails.setStoreAddress(split[1]);
+//            purchaseHistoryDetails.setOrderNumber(orderNumber);
+//            purchaseHistoryDetails.setCartItemList(getActualCartItemList());
+//            purchaseHistoryDetails.setPaymentDetails(getActualPaymentDetails());
+//            purchaseHistoryDetails.setTotal(actualTotal);
+//            Logz.step("##### Ended setting actual purchase details in Purchase History Page #####");
+//            return purchaseHistoryDetails;
+//        } catch (Exception ex) {
+//            throw new Exception(("Failed to set actual purchase details in Purchase History Page\n" + ex.getMessage()));
+//        }
+//    }
+
+//    private List<CartItemList> getActualCartItemList() throws Exception {
+//        try {
+//            Logz.step("##### Started setting actual cart item list in Purchase History Page #####");
+//            List<CartItemList> cartItemList = new ArrayList<>();
+//            assertReceiptHeaderText();
+//            //assert item receipt icon - item_receipt
+//            int webElementCount = commonElements.getElementListCount(By.id(""), By.id("product_title"), (AppiumDriver)driver);
+//            for (int i = 0; i < webElementCount; i++) {
+//                CartItemList cart = new CartItemList();
+//                List<WebElement> getProductTitle = commonElements.getElements(By.id(""), By.id("product_title"));
+//                cart.setItemName(getProductTitle.get(i).getText());
+//                List<WebElement> getProductDescription = commonElements.getElements(By.id(""), By.id("product_description"));
+//                cart.setIngredients(getProductDescription.get(i).getText());
+//                cartItemList.add(cart);
+//            }
+//            ComparatorByIteName comparatorByIteName = new ComparatorByIteName();
+//            cartItemList = comparatorByIteName.getSortItemName(cartItemList);
+//            Logz.step("##### Ended setting actual cart item list in Purchase History Page #####");
+//            return cartItemList;
+//        } catch (Exception ex) {
+//            throw new Exception(("Failed to get actual cart item list in Purchase History Page\n" + ex.getMessage()));
+//        }
+//    }
+
+//    private List<PaymentDetails> getActualPaymentDetails() throws Exception {
+//        try {
+//            Logz.step("##### Started setting actual payment details in Purchase History Page #####");
+//            List<PaymentDetails> paymentDetails = new ArrayList<>();
+//            //assert dollar symble icon is present --coin_icon
+//            assertEarnedTokensText();
+//            assesrtPaymentRewardsHeaderText();
+//            //break down of order_total
+//            int paymentDetailList = commonElements.getElements(By.id(""), By.id("order_total")).size();
+//            for (int i = 0; i < paymentDetailList; i++) {
+//                PaymentDetails payment = new PaymentDetails();
+//                List<WebElement> getCardType = commonElements.getElements(By.id(""), By.id("order_total"));
+//                String orderTotal = getCardType.get(i).getText();
+//                payment.setCardType(Utils.getConnectionString(orderTotal, "paid with ", " ending "));
+//                actualTotal = Utils.getConnectionString(orderTotal, 0, " paid with ");
+//                payment.setAmount(actualTotal);
+//                payment.setCardEndingNumber(Utils.getConnectionString(orderTotal, "ending in "));
+//                paymentDetails.add(payment);
+//            }
+//            Logz.step("##### Ended setting actual payment details in Purchase History Page #####");
+//            return paymentDetails;
+//        } catch (Exception ex) {
+//            throw new Exception(("Failed to set actual payment details in Purchase History Page\n" + ex.getMessage()));
+//        }
+//    }
+
+    //    private void assesrtPaymentRewardsHeaderText() throws Exception{
+//        String actualPaymentRewardsHeaderText = getPaymentMethod().getText();//payment_method
+//        String expectedPaymentRewardsHeaderText = BaseTest.getStringfromBundleFile("PaymentRewardsHeaderText");
+//        Assert.assertEquals(actualPaymentRewardsHeaderText, expectedPaymentRewardsHeaderText);
+//    }
+//    private void assertReceiptHeaderText() throws Exception{
+//        String actualReceiptHeaderText = commonElements.getElementTextByClassName("", "android.widget.TextView", (AppiumDriver) driver, 5);
+//
+//        if(actualReceiptHeaderText.contains("Earned MyWay tokens")) {
+//            actualReceiptHeaderText = commonElements.getElementTextByClassName("", "android.widget.TextView", (AppiumDriver) driver, 6);
+//
+//        }
+//        String expectedReceiptHeaderText = BaseTest.getStringfromBundleFile("ReceiptHeaderText");
+//        Assert.assertEquals(actualReceiptHeaderText, expectedReceiptHeaderText);
+//    }
+
+
+//    private void assertEarnedTokensText() throws Exception{
+//        String receiptHeaderText = commonElements.getElementTextByClassName("", "android.widget.TextView", (AppiumDriver) driver, 5);
+//        if(receiptHeaderText.contains("Earned MyWay tokens")) {
+//            String  actualEarnedTokensText = getEarnedTokensText().getText();
+//            String expectedEarnedTokensText = BaseTest.getStringfromBundleFile("EarnedTokensText");
+//            Assert.assertEquals(actualEarnedTokensText, expectedEarnedTokensText);
+//        }else {
+//            Logz.step("##### Not Earned MyWay tokens #####");
+//        }
+//
+//    }
+
+
 
 }

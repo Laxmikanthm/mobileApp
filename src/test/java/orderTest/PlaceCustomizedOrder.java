@@ -71,6 +71,30 @@ public class PlaceCustomizedOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         landingPage.placeCustomizedOrderThenAssert(BaseTest.getStringfromBundleFile("KidsMeal"), BreadSize.NONE, store);
     }
+    @Test
+    public void testPlaceCustomizedOrderSubOfTheDayFootLong() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeCustomizedOrderThenAssert(BaseTest.getStringfromBundleFile("SubOfTheDay"), BreadSize.FOOTLONG, store);
+
+    }
+
+    @Test
+    public void testPlaceCustomizedOrderSubOfTheDaySixInch() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeCustomizedOrderThenAssert(BaseTest.getStringfromBundleFile("SubOfTheDay"), BreadSize.SIXINCH, store);
+
+    }
+
+    @Test
+    public void testPlaceCustomizedPersonalPizzaFootLong() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeCustomizedOrderThenAssert(BaseTest.getStringfromBundleFile("PersonalPizza"), BreadSize.NONE, store);
+    }
+    @Test
+    public void testPlaceCustomizedOrderFlatizzas() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeCustomizedOrderThenAssert(BaseTest.getStringfromBundleFile("Flatizzas"), BreadSize.NONE, store);
+    }
     /*
     
     @Test

@@ -21,6 +21,10 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
 
     Store store = JdbcUtil.getLoyaltyStoreDetails();
     LandingPage landingPage;
+    MobileUser mobileUser;
+    OrdersPage ordersPage;
+    HomePage homePage;
+    PurchaseHistoryPage purchaseHistoryPage;
 
     //we have to check first if the menu is returning from API then proceed  further else come out from the test
 
@@ -95,37 +99,58 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("PersonalPizza"), BreadSize.NONE, store);
     }
+    @Test
+    public void testPlaceDefaultOrderFlatizzas() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("Flatizzas"), BreadSize.NONE, store);
+    }
 
 
-    @Test(enabled = false)
+    @Test
     public void testPlaceDefaultOrderSides() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-       /* mobileUser = landingPage.registerUser();
+        mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"), store);
+        homePage = ordersPage.placeSidesDrinksDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"));
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);*/
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+
     }
 
     @Test(enabled = false)
     public void testPlaceDefaultOrderDrinks() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-       /* mobileUser = landingPage.registerUser();
+        mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"), BreadSize.NONE);
+        homePage = ordersPage.placeSidesDrinksDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"));
         purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);*/
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+
+
+
+    }
+
+    //DFA-9165
+    //Place Order for more than 6 times...R2
+    @Test(enabled = false)
+    public void placeOrderForMoreThanSixTimes() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        ordersPage.ValidatingPlacingOrderForSixTimes(mobileUser, store.getAddress1(), homePage);
+
     }
 
     @Test(enabled = false)
-    public void testPlaceDefaultOrder2ItemsAllSandwich() throws Exception {
-
+    public void placeOrder8Under6() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
+        ordersPage.placeRandomOrder("8 Under 6", mobileUser, store.getAddress1());
+        homePage.validateTokens(mobileUser);
+        //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }
 
-    @Test(enabled = false)
-    public void testPlaceDefaultOrderMaxItemsFreshFits() throws Exception {
 
-    }
     //Signature Wraps Flatizzas™
     ////homePage = ordersPage.goToHomePage();OsmondOrred@qasubway.com NancyBottoms@qasubway.com
 
