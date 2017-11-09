@@ -2007,11 +2007,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     boolean customized = false;
 
 
-    public HomePage placeSidesDrinksDefaultOrder(MobileUser mobileUser, String menuCategories) throws Exception {
+    public HomePage placeSidesDrinksDefaultOrderThenAssert(MobileUser mobileUser, String menuCategories) throws Exception {
         try {
+
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             CustomizedItem customizedItemDetails = MobileApi.getSidesDrinksCustomizedItemDetails( mobileUser, menuCategories );
-            addDefaultItemInCart(mobileUser, menuCategories, customizedItemDetails);
+            addDefaultSidesDrinksItemInCart(mobileUser, menuCategories, customizedItemDetails);
             placeSidesDrinksOrderAndAssert(mobileUser, customizedItemDetails);
             Logz.step("##### Ended placing Default Order #####");
         } catch (Exception ex) {
@@ -2211,13 +2212,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         selectSpecificProduct( mobileUser, productName, breadSize, false, customizedItemDetails );
     }
 
-    public void addDefaultItemInCart(MobileUser mobileUser, String menuName, CustomizedItem customizedItem) throws Exception {
+    public void addDefaultSidesDrinksItemInCart(MobileUser mobileUser, String menuName, CustomizedItem customizedItem) throws Exception {
         if (menuName.contains( "Sides" )) {
             SidesPage sidesPage = goToSidesPage(menuName);
-            sidesPage.placeSidesOrder(mobileUser, customizedItem );
+            sidesPage.selectSidesOrder(mobileUser, customizedItem );
         } else {
             DrinksPage drinksPage = goToDrinkPage(menuName);
-            drinksPage.placeDrinksOrder(mobileUser, customizedItem );
+            drinksPage.selectDrinksOrder(mobileUser, customizedItem );
         }
     }
 

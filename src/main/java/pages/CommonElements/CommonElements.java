@@ -379,8 +379,17 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         }
         Logz.step( "Scrolled to element and get element list" );
     }
+    public void scroll(WebElement element, String direction) throws Exception{
+        MobileElement ele = (MobileElement) element;
+        int startY = ele.getLocation().getY();
+        int endY = (int) (startY * 0.3);
+        if(direction.contains( "up" )) {
+            action.longPress( 0, startY ).moveTo( endY, 0 ).release().perform();
+        }else{
+            action.longPress( 0, startY ).moveTo( 0, endY ).release().perform();
+        }
 
-
+    }
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;

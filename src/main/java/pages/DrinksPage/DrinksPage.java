@@ -30,7 +30,7 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public DrinksPage placeDrinksOrder(MobileUser mobileUser, CustomizedItem customizedItem) throws Exception{
+    public DrinksPage selectDrinksOrder(MobileUser mobileUser, CustomizedItem customizedItem) throws Exception{
         //ToDo
         return DrinksPage.get((AppiumDriver)driver);
     }
