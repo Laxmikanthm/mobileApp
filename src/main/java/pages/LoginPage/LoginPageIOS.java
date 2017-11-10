@@ -1,5 +1,6 @@
 package pages.LoginPage;
 
+import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.ios.IOSButton;
 import base.gui.controls.mobile.ios.IOSPasswordTextBox;
 import base.gui.controls.mobile.ios.IOSTextBox;
@@ -43,5 +44,10 @@ public class LoginPageIOS extends LoginPage {
         IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAButton[@label='"+BaseTest.bundle.getString("ForgotPasswordiOS")), "Forgot Password button");
 
         return Button;
+    }
+
+    @Override
+    MobileButton getProfile() throws Exception {
+        return null;
     }
 }

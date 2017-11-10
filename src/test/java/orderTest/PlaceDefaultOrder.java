@@ -116,10 +116,10 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
 
     }
 
-    @Test(enabled = false)
+    @Test
     public void testPlaceDefaultOrderDrinks() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+        mobileUser = landingPage.registerUser("OsmondOrred@qasubway.com");//HerminaPadell@qasubway.com
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"));
     }

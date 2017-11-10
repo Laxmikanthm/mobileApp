@@ -1,15 +1,18 @@
 package pages.DrinksPage;
 
 import Base.SubwayAppBaseTest;
+import base.gui.controls.mobile.generic.MobileButton;
 import base.pages.mobile.MobileBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import pages.HomePage.HomePage;
+import org.openqa.selenium.WebElement;
+import pages.CommonElements.CommonElements;
 import pojos.CustomizedItem.CustomizedItem;
-import pojos.Orders.Order;
 import pojos.user.MobileUser;
 import utils.Logz;
+
+import java.util.List;
 
 public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage {
     public DrinksPage(AppiumDriver driver) {
@@ -29,9 +32,47 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
+    abstract MobileButton getSelectFlavor() throws Exception;
 
+    abstract List<WebElement> getItemFlavorList() throws Exception;
+
+    abstract WebElement getDrinks() throws Exception;
+    abstract WebElement getItemFlavor() throws Exception;
+    CommonElements commonElements = new CommonElements( (AppiumDriver) driver );
     public DrinksPage selectDrinksOrder(MobileUser mobileUser, CustomizedItem customizedItem) throws Exception{
         //ToDo
+        String drinksName = customizedItem.getCustomizedProductDetail().getProductClassName();
+        String drinksFlavorName = customizedItem.getCustomizedProductDetail().getProductName();
+
+        if (drinksName.contains( "Bottled Beverage" )) {
+            if (!getDrinks().getText().contains( drinksName )) {
+                commonElements.swipe( (AppiumDriver) driver, "Left" );
+            }
+            getSelectFlavor().click();
+            commonElements.scroll(getItemFlavor(), "up"); //Bottled Beverage
+
+            for(WebElement webElement : getItemFlavorList()) {
+                if(webElement.getText().contains( customizedItem.getCustomizedProductDetail().getProductName() )){
+                    webElement.click();
+                    break;
+                  /* customizedItem.getCustomizedProductDetail().getProductName()
+                   customizedItem.getCustomizedProductDetail().getCalories()
+                   customizedItem.getCustomizedProductDetail().getPrice()*/
+                }
+
+            }
+            Logz.step( drinksName + "is selected" );
+
+        } else {
+            for (int i = 0; i < 4; i++) { // get the count
+                if (!getDrinks().getText().contains( drinksFlavorName )) {
+                    commonElements.swipe( (AppiumDriver) driver, "Left" );
+                }
+            }
+
+
+
+        }
         return DrinksPage.get((AppiumDriver)driver);
     }
     public void placeRandomOrderDrinks(String menuItem, MobileUser mobileUser, String storeName) throws Exception {

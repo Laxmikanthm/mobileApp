@@ -11,6 +11,7 @@ import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
 import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.HomePage.HomePage;
 import pojos.user.MobileUser;
@@ -41,7 +42,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
 
     }
-
+    abstract MobileButton getProfile() throws Exception;
     public static LoginPage get(AppiumDriver driver) throws Exception{
 
         String platform = SubwayAppBaseTest.platformName;
@@ -98,19 +99,58 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
             HideKeyboard();
             getLogin().isReady();
             getLogin().click();
-            try {
-                Thread.sleep(80000);
-                if( driver.findElementById("com.android.chrome:id/terms_accept").isDisplayed()) {
-                    driver.findElementById( "com.android.chrome:id/terms_accept" ).click();
+            try{
+                Thread.sleep( 10000 );
+                driver.findElement( By.id("profile") ).isDisplayed();
+                Logz.step( "user is in home page" );
+
+            }catch (org.openqa.selenium.NoSuchElementException exs) {
+                try {
+                    Thread.sleep( 50000 );
+                    getLogin().isReady();
+                    Thread.sleep( 50000 );
+                    getLogin().isReady();
+                      Thread.sleep( 30000 );
+                    if (driver.findElementById( "com.android.chrome:id/button_secondary" ).isDisplayed()) {
+                        driver.findElementById( "com.android.chrome:id/button_secondary" ).click();
+                        getLogin().click();
+                        Logz.step( "user clicked on never chrome popup option in login page" );
+
+                    }
+                } catch (org.openqa.selenium.NoSuchElementException ex) {
+                    Logz.step( "Pop up is not present" );
                 }
             }
-            catch (org.openqa.selenium.NoSuchElementException ex) {
-                Logz.step( "Pop up is not present" );
-            }
+
+            /*try{
+                Thread.sleep( 10000 );
+                driver.findElement( By.id("profile") ).isDisplayed();
+                Logz.step( "user is in home page" );
+
+            }catch (org.openqa.selenium.NoSuchElementException exs) {
+                try {
+                    Thread.sleep( 50000 );
+                    getLogin().isReady();
+                    Thread.sleep( 50000 );
+                    getLogin().isReady();
+                  //  Thread.sleep( 30000 )
+                    if (driver.findElementById( "com.android.chrome:id/button_secondary" ).isDisplayed()) {
+                        driver.findElementById( "com.android.chrome:id/button_secondary" ).click();
+                        Logz.step( "user clicked on never chrome popup option in login page" );
+
+                        *//*WebElement webElement = driver.findElement( By.id("btn-signin") );
+                        webElement.sendKeys( Keys.TAB);
+                        webElement.sendKeys(Keys.ENTER);*//*
+                    }
+                } catch (org.openqa.selenium.NoSuchElementException ex) {
+                    Logz.step( "Pop up is not present" );
+                }
+            }*/
 
         }catch (Exception ex){
             throw new Exception("Unable to Login\n" +ex.getMessage());
         }
+
         return HomePage.get((AppiumDriver) driver);
 
     }

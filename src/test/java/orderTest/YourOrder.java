@@ -9,7 +9,7 @@ import pojos.user.MobileUser;
 
 public class YourOrder extends SubwayAppBaseTest {
 
-    @Test
+    @Test(invocationCount = 10)
     public void LogIn() throws Exception {
        LandingPage landingPage = goToHomePage( LandingPage.getLandingPageClass(), "MobileApp");
        MobileUser mobileUser = landingPage.registerUser("NancyBottoms@qasubway.com");

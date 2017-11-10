@@ -80,14 +80,14 @@
                         <!-- Android-TestObject-->
                           <spring.profiles.active>testObject</spring.profiles.active>
                         <testObjectApiKey>F6E2E240BDAF41F9B59C21954CEA0055</testObjectApiKey>
-                        <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
-                        <appName>subway-mariumsprint</appName>
+                        <testObjectDevice> Samsung_Galaxy_Note_4_5_real</testObjectDevice>
+                        <appName>mariums</appName>
 
 
                         <!-- Android-Common-->
                         <mobilePlatform>Android</mobilePlatform>
-                        <appiumVersion>1.6.5</appiumVersion>
-
+                        <appiumVersion>1.7.1</appiumVersion>
+                        <appPackage> </appPackage>
 
                         <!-- iOS-Local-->
                        <!-- <spring.profiles.active>local</spring.profiles.active>

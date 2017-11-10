@@ -16,7 +16,7 @@ public class LandingPageAndroid extends LandingPage{
 
     public AndroidButton getLoginButton() throws Exception {
 
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("signIn"), "Sign In with existing user");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("signIn"), "Sign In with existing user Link");
 
         return button;
     }

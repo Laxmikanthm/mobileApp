@@ -27,8 +27,7 @@ public class SidesPageAndroid extends SidesPage{
 
     }
     public MobileButton getSelectFlavor() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id( BaseTest.bundle.getString("SelectFlavor")), "SelectFlavor Button in MakeItAMeal");
-        return button;
+        return  new AndroidButton((AndroidDriver) driver, By.id("flavor_selector"), "Select Flavor dropdown");
     }
 
     @Override

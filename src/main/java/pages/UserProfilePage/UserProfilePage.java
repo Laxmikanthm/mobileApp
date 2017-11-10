@@ -15,6 +15,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.AddCardPage.AddCardPage;
+import pages.CommonElements.CommonElements;
 import pages.ContactInformationPage.ContactInformationPage;
 import pages.HomePage.HomePage;
 import pages.MobileOrderHistoryPage.MobileOrderHistoryPage;
@@ -142,7 +143,8 @@ public abstract  class UserProfilePage<T extends AppiumDriver> extends MobileBas
     public UserProfilePage logout() throws Exception
     {
         try {
-          scrollToElement(logout,0.9,0.5);
+            CommonElements commonElements = new CommonElements( (AppiumDriver)driver );
+            commonElements.scroll( getHelp().getControl(), "up");
             getLogOut().isReady();
             getLogOut().click();
             logOutInpopupButton();

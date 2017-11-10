@@ -58,7 +58,6 @@ public abstract class SidesPage<T extends AppiumDriver> extends MobileBasePage {
             Logz.step( SidesName + "is selected" );
 
         } else {
-            // commonElements.scrollAndClick( categoryLocatorIOS, categoryLocatorAndroid, customizedItem.getMenuName() );
             for (int i = 0; i < 4; i++) {
                 if (!getSides().getText().contains( SidesName )) {
                     commonElements.swipe( (AppiumDriver) driver, "Left" );
@@ -83,30 +82,5 @@ public abstract class SidesPage<T extends AppiumDriver> extends MobileBasePage {
         return HomePage.get( (AppiumDriver) driver );
     }
 
-    public void placeRandomOrderSides(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
-        try {
-            /*remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
-            getDirections().isReady();
-            scrollAndClick( storeNamesLocator, storeName, "Up" );
-            getStartOrderButton().click();
-            getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            String subCategoryName = order.getCart().getProductDetail().getName();
-            if (subCategoryName.equalsIgnoreCase( "Apple Slices" )) {
-                getAddToBag().isReady();
-            } else {
-                swipe( sidesOrDrinks, subCategoryName, "Left" );
-                getSelectFlavor().isReady();
-                getSelectFlavor().click();
-                getItemSelectFlavor().isReady();
-                getItemSelectFlavor().click();
-                getAddToBag().isReady();
-            }
-            */
-        } catch (Exception ex) {
-            throw new Exception( ex );
-        }
-    }
 
 }

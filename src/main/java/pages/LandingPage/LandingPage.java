@@ -75,6 +75,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     public LoginPage gotoLogInPage() throws Exception {
 
         try {
+            Thread.sleep( 7000 );
             getLoginButton();
         } catch (Exception ex) {
             if (driver instanceof IOSDriver) {
@@ -240,7 +241,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             LoginPage loginPage = gotoLogInPage();
             loginPage.login(mobileUser);
         } catch (Exception ex) {
-            throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
+            throw new Exception("Unable to log In \n" + ex.getMessage());
         }
         return HomePage.get((AndroidDriver) driver);
     }
