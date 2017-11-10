@@ -85,7 +85,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         }
         expectedFavourites.setIngrediants(result);
         expectedFavourites.setFavouriteName(FavouriteName);
-      //  expectedFavourites.setPrice(Price.toString());
+        expectedFavourites.setPrice(Price.toString());
         /*String aTotalAmount =  commonElements.getElement(totalAmount, totalAmount, (AppiumDriver)driver).getText();
         String eTotalAmount = "";*/
         Assert.assertEquals(actualFavourites, expectedFavourites);
