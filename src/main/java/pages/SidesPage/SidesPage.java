@@ -64,13 +64,14 @@ public abstract class SidesPage<T extends AppiumDriver> extends MobileBasePage {
                     commonElements.swipe( (AppiumDriver) driver, "Left" );
                 }
             }
-
+            Logz.step( SidesName + "is selected" );
             getSelectFlavor().click();
             commonElements.scroll(getItemFlavor(), "up");
 
            for(WebElement webElement : getItemFlavorList()) {
                if(webElement.getText().contains( customizedItem.getCustomizedProductDetail().getProductName() )){
                    webElement.click();
+                   Logz.step( webElement.getText() + "is selected" );
                    break;
                   /* customizedItem.getCustomizedProductDetail().getProductName()
                    customizedItem.getCustomizedProductDetail().getCalories()

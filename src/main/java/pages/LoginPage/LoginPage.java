@@ -98,7 +98,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
             HideKeyboard();
             getLogin().isReady();
             getLogin().click();
-            try {
+           /* try {
                 Thread.sleep(80000);
                 if( driver.findElementById("com.android.chrome:id/terms_accept").isDisplayed()) {
                     driver.findElementById( "com.android.chrome:id/terms_accept" ).click();
@@ -106,7 +106,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
             }
             catch (org.openqa.selenium.NoSuchElementException ex) {
                 Logz.step( "Pop up is not present" );
-            }
+            }*/
 
         }catch (Exception ex){
             throw new Exception("Unable to Login\n" +ex.getMessage());

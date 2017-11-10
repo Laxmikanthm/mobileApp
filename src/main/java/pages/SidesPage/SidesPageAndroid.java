@@ -27,9 +27,9 @@ public class SidesPageAndroid extends SidesPage{
 
     }
     public MobileButton getSelectFlavor() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id( BaseTest.bundle.getString("SelectFlavor")), "SelectFlavor Button in MakeItAMeal");
-        return button;
+        return  new AndroidButton((AndroidDriver) driver, By.id("flavor_selector"), "Select Flavor dropdown");
     }
+
 
     @Override
     List<WebElement> getItemFlavorList() throws Exception {
@@ -38,12 +38,12 @@ public class SidesPageAndroid extends SidesPage{
 
     @Override
     WebElement getSides() throws Exception {
-        return new AndroidWebElement((AndroidDriver) driver, "order total list").getWebElement(By.id("product_title"));
+        return new AndroidWebElement((AndroidDriver) driver, "Sides Flavors List").getWebElement(By.id("product_title"));
     }
 
     @Override
     WebElement getItemFlavor() throws Exception {
-        return new AndroidWebElement((AndroidDriver) driver, "order total list").getWebElement(By.id("flavor_text_item"));
+        return new AndroidWebElement((AndroidDriver) driver, "Sides Flavors item").getWebElement(By.id("flavor_text_item"));
     }
 
     public MobileButton getItemSelectFlavor() throws Exception{
