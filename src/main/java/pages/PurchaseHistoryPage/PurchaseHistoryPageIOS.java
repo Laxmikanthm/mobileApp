@@ -35,6 +35,11 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     }
 
     @Override
+    MobileButton getOrderListText() throws Exception {
+        return null;
+    }
+
+    @Override
     List<WebElement> getOrderNumberList() throws Exception {
         return new IOSWebElement((IOSDriver) driver, "order number list").getWebElements(By.xpath("//android.widget.TextView[contains(@text,'Order')]"));
     }

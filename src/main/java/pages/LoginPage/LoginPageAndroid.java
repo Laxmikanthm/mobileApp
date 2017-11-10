@@ -25,11 +25,14 @@ public class LoginPageAndroid extends LoginPage {
         AndroidPasswordTextBox passwordTextBox = new AndroidPasswordTextBox((AndroidDriver) driver, By.xpath("//android.widget.EditText[@resource-id='"+BaseTest.bundle.getString("Password")+"']"), "password text field");
         return passwordTextBox;
     }
-
     public AndroidButton getLogin() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("btn-signin"), "Login button");
         return button;
     }
+   /* public AndroidButton getLogin() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
+        return button;
+    }*/
 
     public AndroidButton getForgotPassword() throws Exception {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.view.View[@content-desc='"+BaseTest.bundle.getString("Forgotpassword")+"']"), "ForgotPassword button");
