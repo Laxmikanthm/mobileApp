@@ -18,22 +18,22 @@ public class MyWayRewardsAndroid extends MyWayRewards {
     }
 
     public MobileButton getGotIt() throws Exception {
-        AndroidButton gotItButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/btn_gotit"), "GotIt Button");
+        AndroidButton gotItButton = new AndroidButton((AndroidDriver) driver, By.id("btn_gotit"), "GotIt Button");
         return gotItButton;
     }
 
     public MobileButton getToolbarClose() throws Exception {
-        AndroidButton toolbarCloseButton = new AndroidButton((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toolbar_close"), "ToolBar Close Button");
+        AndroidButton toolbarCloseButton = new AndroidButton((AndroidDriver) driver, By.id("toolbar_close"), "ToolBar Close Button");
         return toolbarCloseButton;
     }
 
     public MobileLabel gettokensmyreward() throws Exception {
-        AndroidLabel tokenscount = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_token_count_text"), "Token count");
+        AndroidLabel tokenscount = new AndroidLabel((AndroidDriver) driver, By.id("rewards_token_count_text"), "Token count");
         return tokenscount;
     }
 
     public MobileLabel getCertsmyreward() throws Exception {
-        AndroidLabel Certscount = new AndroidLabel((AndroidDriver) driver, By.id("com.subway.mobile.subwayapp03:id/rewards_count"), "Certs Count");
+        AndroidLabel Certscount = new AndroidLabel((AndroidDriver) driver, By.id("rewards_count"), "Certs Count");
         return Certscount;
     }
 

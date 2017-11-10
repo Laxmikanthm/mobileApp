@@ -47,6 +47,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getReceiptHeaderText() throws Exception;
 
     abstract List<WebElement> getOrderList() throws Exception;
+    abstract MobileButton getOrderListText() throws Exception;
     abstract List<WebElement> getOrderNumberList() throws Exception;
     abstract List<WebElement> getOrderTimeAddressList() throws Exception;
     abstract List<WebElement> getProductTitleList() throws Exception;
@@ -102,6 +103,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         try {
             Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
             List<PurchaseHistoryDetails> orderHistoryList = new ArrayList<>();
+            getOrderListText().isReady();
             int webElementCount = getOrderList().size();
             for (int i = 0; i < webElementCount; i++) {
                 List<WebElement> getOrderHistoryList =getOrderTimeAddressList();

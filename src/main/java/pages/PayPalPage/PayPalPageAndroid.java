@@ -26,7 +26,7 @@ public class PayPalPageAndroid extends PayPalPage {
     }
 
     public AndroidTextBox getPaypalUname() throws Exception {
-        AndroidTextBox userNameTextbox = new AndroidTextBox ((AndroidDriver) driver, By.id(BaseTest.bundle.getString("PaypalUname")), "PaypalUserName field");
+        AndroidTextBox userNameTextbox = new AndroidTextBox ((AndroidDriver) driver, By.id("email"), "PaypalUserName field");
         return userNameTextbox;
     }
 
@@ -36,7 +36,7 @@ public class PayPalPageAndroid extends PayPalPage {
     }
 
     public AndroidPasswordTextBox getPaypalPwd() throws Exception{
-        AndroidPasswordTextBox passwordField = new AndroidPasswordTextBox((AndroidDriver)driver, By.id(BaseTest.bundle.getString("PaypalPwd")), "PaypalPwd field");
+        AndroidPasswordTextBox passwordField = new AndroidPasswordTextBox((AndroidDriver)driver, By.id("password"), "PaypalPwd field");
         return passwordField;
     }
 
@@ -45,12 +45,12 @@ public class PayPalPageAndroid extends PayPalPage {
         return button;
     }
     public AndroidButton getAgreeAndContinue() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("AgreeBtn")), "AgreeAndContinue button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("confirmButtonTop"), "AgreeAndContinue button");
         return button;
     }
 
     public AndroidButton getBackBtn() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Backbutton")), "Back button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("back_arrow"), "Back button");
         return button;
     }
 

@@ -20,15 +20,15 @@ public class MobileOrderHistoryPageAndroid extends MobileOrderHistoryPage {
 
 
     public AndroidButton getFavorite() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavoriteOrder")), "FavoriteOrder button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("favorite_icon"), "FavoriteOrder button");
         return button;
     }
     public AndroidButton getFavoriteSaveButton() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("FavoriteOrderSaveButton")), "Save button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("button1"), "Save button");
         return button;
     }
     public AndroidTextBox getFavoriteOrderName() throws Exception {
-        AndroidTextBox userNameTextbox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("NameYourFavorite")), "NameYourFavorite field");
+        AndroidTextBox userNameTextbox = new AndroidTextBox((AndroidDriver) driver, By.id("editTextName"), "NameYourFavorite field");
         return userNameTextbox;
     }
     public MobileButton getBackButton() throws Exception {

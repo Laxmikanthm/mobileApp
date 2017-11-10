@@ -12,6 +12,7 @@ import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.OrdersPage.OrdersPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
+import pages.UserProfilePage.UserProfilePage;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
@@ -109,11 +110,9 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     @Test
     public void testPlaceDefaultOrderSides() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+        mobileUser = landingPage.registerUser();//DorolisaWiddup@qasubway.com
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeSidesDrinksDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"));
-        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"));
 
     }
 
@@ -122,12 +121,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        homePage = ordersPage.placeSidesDrinksDefaultOrder(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"));
-        purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
-
-
-
+        ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"));
     }
 
     //DFA-9165

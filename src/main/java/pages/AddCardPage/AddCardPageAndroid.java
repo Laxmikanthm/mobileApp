@@ -20,36 +20,36 @@ public class AddCardPageAndroid extends  AddCardPage {
     }
 
     public AndroidTextBox getCardNumber() throws Exception {
-        AndroidTextBox cardNumberInputBox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("CardNumber")), "CardNumber field");
+        AndroidTextBox cardNumberInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("card_number"), "CardNumber field");
         return cardNumberInputBox;
     }
     public AndroidTextBox getNameOnCard() throws Exception {
-        AndroidTextBox nameOnCardInputBox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("NameOnCard")), "NameOnCard field");
+        AndroidTextBox nameOnCardInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("full_name"), "NameOnCard field");
         return nameOnCardInputBox;
     }
 
     public AndroidTextBox getCCV() throws Exception {
-        AndroidTextBox cCVInputBox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("CCV")), "CCV field");
+        AndroidTextBox cCVInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("ccv"), "CCV field");
         return cCVInputBox;
     }
 
     public AndroidTextBox getExpiresOn() throws Exception {
-        AndroidTextBox expiresOnInputBox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ExpiresOn")), "ExpiresOn field");
+        AndroidTextBox expiresOnInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("expiration"), "ExpiresOn field");
         return expiresOnInputBox;
     }
 
     public AndroidTextBox getBillingStreetAddress() throws Exception {
-        AndroidTextBox InputBox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("BillingStreetAddress")), "BillingStreetAddress field");
+        AndroidTextBox InputBox = new AndroidTextBox((AndroidDriver) driver, By.id("address"), "BillingStreetAddress field");
         return InputBox;
     }
 
     public AndroidTextBox getBillingZipCode() throws Exception {
-        AndroidTextBox InputBox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("BillingZipCode")), "BillingZipCode field");
+        AndroidTextBox InputBox = new AndroidTextBox((AndroidDriver) driver, By.id("zip"), "BillingZipCode field");
         return InputBox;
     }
 
     public AndroidTextBox getPin() throws Exception {
-        AndroidTextBox pinInputBox = new AndroidTextBox((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Pin")), "Pin field");
+        AndroidTextBox pinInputBox = new AndroidTextBox((AndroidDriver) driver, By.id("pin"), "Pin field");
         return pinInputBox;
     }
     public AndroidButton getNextButton() throws Exception {
@@ -58,22 +58,22 @@ public class AddCardPageAndroid extends  AddCardPage {
     }
 
     public AndroidButton getReviewDetails() throws Exception {
-        AndroidButton reviewButton = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("ReviewDetails")), "ReviewDetails field");
+        AndroidButton reviewButton = new AndroidButton((AndroidDriver) driver, By.id("review_details"), "ReviewDetails field");
         return reviewButton;
     }
 
     public AndroidButton getSavePaymentMethod() throws Exception {
-        AndroidButton savePaymentMethodButtoon = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SavePaymentMethod")), "SavePaymentMethod field");
+        AndroidButton savePaymentMethodButtoon = new AndroidButton((AndroidDriver) driver, By.id("summary_save_payment"), "SavePaymentMethod field");
         return savePaymentMethodButtoon;
     }
 
     public AndroidButton getGiftCardSavePayment() throws Exception {
-        AndroidButton savePaymentButtoon = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SavePaymentForGiftCard")), "SavePaymentForGiftCard field");
+        AndroidButton savePaymentButtoon = new AndroidButton((AndroidDriver) driver, By.id("save_button"), "SavePaymentForGiftCard field");
         return savePaymentButtoon;
     }
 
     public AndroidButton getBackButton() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Backbutton")), "Back button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("back_arrow"), "Back button");
         return button;
     }
 

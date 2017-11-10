@@ -24,7 +24,7 @@ import pojos.user.RegisterUser;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 
 public class UserIdentity extends SubwayAppBaseTest {
-    @Autowired
+
     MobileUser mobileUser;
     LandingPage landingPage;
     RegistrationPage registrationPage;
@@ -65,7 +65,6 @@ public class UserIdentity extends SubwayAppBaseTest {
         ContactInformationPage contactInformation= userProfilePage.getContactInformation();
         forgotYourPasswordPage = contactInformation.getPasswordField();
         loginPage = forgotYourPasswordPage.setNewPassword(mobileUser);
-        landingPage.gotoLogInPage();
         loginPage.loginAfterResetPassoword(mobileUser);
 
     }

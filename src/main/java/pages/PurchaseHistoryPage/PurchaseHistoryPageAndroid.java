@@ -37,6 +37,11 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
     }
 
     @Override
+    MobileButton getOrderListText() throws Exception {
+        return new AndroidButton( (AndroidDriver)driver, By.id( "order_header" ), "order_header is ready" );
+    }
+
+    @Override
     List<WebElement> getOrderNumberList() throws Exception {
         return new AndroidWebElement((AndroidDriver) driver, "order number list").getWebElements(By.xpath("//android.widget.TextView[contains(@text,'"+BaseTest.getStringfromBundleFile("Order")+"')]"));
     }

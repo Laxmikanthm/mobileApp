@@ -47,7 +47,7 @@ public class SubwayAppBaseTest extends BaseTest {
     public static String cycleID,cloneCycleId;
     Boolean flag = Boolean.parseBoolean(System.getProperty("zephyrUpdate"));
     MobileUser mobileUser;
-    Store store = JdbcUtil.getLoyaltyStoreDetails();
+    //Store store = JdbcUtil.getLoyaltyStoreDetails();
     public static String countryName;
 
     @BeforeSuite(alwaysRun = true)
@@ -124,7 +124,7 @@ public class SubwayAppBaseTest extends BaseTest {
 
     public MobileUser setCountryName() throws Exception {
         countryName = System.getProperty("country");
-        Logz.step("Country " +countryName+ " is selected");
+        /*Logz.step("Country " +countryName+ " is selected");
         String localeName = System.getProperty("locale");
         Logz.step("Locale " +localeName+ " is selected");
         if(countryName.equalsIgnoreCase("US") && localeName.equalsIgnoreCase("us_En")) {
@@ -132,7 +132,7 @@ public class SubwayAppBaseTest extends BaseTest {
         }
         else if(countryName.equals("CA") && localeName.equalsIgnoreCase("ca_En")) {
             mobileUser = new MobileUser(false, Country.Canada, store.getLocationCode());
-        }
+        }*/
         return mobileUser;
     }
 
