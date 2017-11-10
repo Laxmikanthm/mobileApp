@@ -27,6 +27,7 @@ import Enums.BreadSize;
 import Enums.Menu;
 import Enums.Tax;
 import pages.DrinksPage.DrinksPage;
+import pages.FavouritePage.FavouritePage;
 import pages.HomePage.HomePage;
 import pages.UserProfilePage.UserProfilePage;
 import pages.OffersPage.OffersPage;
@@ -2132,6 +2133,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         getpopupGotIt().click();
         //Need to assert favoriteorder details through favopurite Object.
         HomePage homePage = orderConfirmationPage.assertFavouriteOrderDetailsInOrderConfirmationPage( mobileUser );
+        FavouritePage favouritePage=homePage.goToFavouritePage();
+        favouritePage.assertFavourites(mobileUser);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser );
 

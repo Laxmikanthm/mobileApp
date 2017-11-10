@@ -22,6 +22,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import pages.FavouritePage.FavouritePage;
 import pages.UserProfilePage.UserProfilePage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrdersPage.OrdersPage;
@@ -543,7 +544,11 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
             throw new Exception( ex );
         }
     }
-
+    public FavouritePage goToFavouritePage()throws Exception
+    {
+        getStartAnother().click();
+       return FavouritePage.get((AppiumDriver)driver);
+    }
     //assertOffersDisplay
     public HomePage assertOffersDisplay() throws Exception {
         try {

@@ -72,22 +72,22 @@
                          the -D switch; if we do not override its value, it will use
                           the value we have set in the POM as a default.-->
                         <!--Mobile-->
-                       <!-- Android-Local-->
-                       <!-- <spring.profiles.active>local</spring.profiles.active>
+                       <!-- Android-Local  5.0.1-->
+                        <spring.profiles.active>local</spring.profiles.active>
                         <platformVersions>5.0.1</platformVersions>
-                        <app>Users/sultana_m/Documents/AndroidApp/Subway_Sprint_QE_7.1.7.0_5000783.apk</app>-->
+                        <app>Users/sultana_m/Documents/AndroidApp/Subway_R2_QE_7.1.7.0_5000770.apk</app>
 
                         <!-- Android-TestObject-->
-                          <spring.profiles.active>testObject</spring.profiles.active>
+                       <!--   <spring.profiles.active>testObject</spring.profiles.active>
                         <testObjectApiKey>F6E2E240BDAF41F9B59C21954CEA0055</testObjectApiKey>
-                        <testObjectDevice> Samsung_Galaxy_Note_4_5_real</testObjectDevice>
-                        <appName>mariums</appName>
+                        <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
+                        <appName>subway-mariumsprint</appName>-->
 
 
                         <!-- Android-Common-->
                         <mobilePlatform>Android</mobilePlatform>
-                        <appiumVersion>1.7.1</appiumVersion>
-                        <appPackage> </appPackage>
+                        <appPackage>com.subway.mobile.subwayapp03</appPackage>
+
 
                         <!-- iOS-Local-->
                        <!-- <spring.profiles.active>local</spring.profiles.active>
@@ -104,8 +104,7 @@
 
 
                         <!-- ios-Common-->
-                        <appPackage>com.subway.sandbox.mobile</appPackage>
-                        <appiumVersion>1.7.1</appiumVersion>
+                      <!--  <appPackage>com.subway.sandbox.mobile</appPackage>-->
 
                         <!-- ios&Android-Common-->
                         <deviceName>Subway</deviceName>
@@ -125,6 +124,7 @@
                         <appName>R2-Mobile</appName>
                         <testObjectUser>dias_p</testObjectUser>
                         <testObjectURL>us1.appium.testobject.com/wd/hub</testObjectURL>
+                        <appiumVersion>1.7.1</appiumVersion>
 
 
 
