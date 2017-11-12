@@ -110,11 +110,12 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
                     getLogin().isReady();
                     Thread.sleep( 50000 );
                     getLogin().isReady();
-                      Thread.sleep( 30000 );
+                    Logz.step( "user is still on login page" );
+                    Thread.sleep( 30000 );
                     if (driver.findElementById( "com.android.chrome:id/button_secondary" ).isDisplayed()) {
-                        driver.findElementById( "com.android.chrome:id/button_secondary" ).click();
-                        getLogin().click();
-                        Logz.step( "user clicked on never chrome popup option in login page" );
+                        driver.findElementById("com.android.chrome:id/button_secondary").click();
+                        driver.findElementById("custom-createAccount").click();
+                        Logz.step("user clicked on never chrome popup option in login page");
 
                     }
                 } catch (org.openqa.selenium.NoSuchElementException ex) {
