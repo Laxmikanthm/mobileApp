@@ -30,10 +30,16 @@ public class LoginPageAndroid extends LoginPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("btn-signin"), "Login button");
         return button;
     }
-   /* public AndroidButton getLogin() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
-        return button;
-    }*/
+
+    @Override
+    MobileButton getSignUp() throws Exception {
+      return   new AndroidButton((AndroidDriver) driver, By.id("custom-createAccount"), "Sign Up");
+    }
+
+    /* public AndroidButton getLogin() throws Exception {
+         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@content-desc='"+BaseTest.bundle.getString("Login")+"']"), "Login button");
+         return button;
+     }*/
    public MobileButton getProfile() throws Exception {
        AndroidButton menuPageButton = new AndroidButton((AndroidDriver) driver, By.id("profile"), "UserProfile icon is not ready");
        return menuPageButton;

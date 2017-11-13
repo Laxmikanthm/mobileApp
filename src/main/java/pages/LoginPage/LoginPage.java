@@ -30,6 +30,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileTextBox getUserName() throws Exception;
     abstract PasswordTextBox getPassword() throws Exception;
     abstract MobileButton getLogin() throws Exception;
+    abstract MobileButton getSignUp() throws Exception;
     abstract MobileButton getForgotPassword() throws Exception;
 
     @Override
@@ -92,60 +93,25 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
                 driver.findElementById("com.android.chrome:id/terms_accept").click();
                 driver.findElementById("com.android.chrome:id/negative_button").click();
             }
-            // getUserName().getControl().clear();
             getUserName().setText(mobileUser.getEmailAddress());
-            // getPassword().isReady();
             getPassword().setText(mobileUser.getPassword());
             HideKeyboard();
             getLogin().isReady();
             getLogin().click();
             try{
-                Thread.sleep( 10000 );
+                Thread.sleep( 15000 );
                 driver.findElement( By.id("profile") ).isDisplayed();
-                Logz.step( "user is in home page" );
+                Logz.step( "User is in home page" );
 
             }catch (org.openqa.selenium.NoSuchElementException exs) {
                 try {
-                    Thread.sleep( 50000 );
-                    getLogin().isReady();
-                    Thread.sleep( 50000 );
-                    getLogin().isReady();
-                      Thread.sleep( 30000 );
-                    if (driver.findElementById( "com.android.chrome:id/button_secondary" ).isDisplayed()) {
-                        driver.findElementById( "com.android.chrome:id/button_secondary" ).click();
-                        getLogin().click();
-                        Logz.step( "user clicked on never chrome popup option in login page" );
-
-                    }
+                    getSignUp().click();
+                    Logz.step( "User is in home page" );
                 } catch (org.openqa.selenium.NoSuchElementException ex) {
                     Logz.step( "Pop up is not present" );
                 }
             }
 
-            /*try{
-                Thread.sleep( 10000 );
-                driver.findElement( By.id("profile") ).isDisplayed();
-                Logz.step( "user is in home page" );
-
-            }catch (org.openqa.selenium.NoSuchElementException exs) {
-                try {
-                    Thread.sleep( 50000 );
-                    getLogin().isReady();
-                    Thread.sleep( 50000 );
-                    getLogin().isReady();
-                  //  Thread.sleep( 30000 )
-                    if (driver.findElementById( "com.android.chrome:id/button_secondary" ).isDisplayed()) {
-                        driver.findElementById( "com.android.chrome:id/button_secondary" ).click();
-                        Logz.step( "user clicked on never chrome popup option in login page" );
-
-                        *//*WebElement webElement = driver.findElement( By.id("btn-signin") );
-                        webElement.sendKeys( Keys.TAB);
-                        webElement.sendKeys(Keys.ENTER);*//*
-                    }
-                } catch (org.openqa.selenium.NoSuchElementException ex) {
-                    Logz.step( "Pop up is not present" );
-                }
-            }*/
 
         }catch (Exception ex){
             throw new Exception("Unable to Login\n" +ex.getMessage());

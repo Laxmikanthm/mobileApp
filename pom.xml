@@ -12,7 +12,7 @@
         <dependency>
             <groupId>com.fwh.qa</groupId>
             <artifactId>automationFramework</artifactId>
-            <version>4.8.14-SNAPSHOT</version>
+            <version>4.8.16-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.fwh.qa</groupId>
@@ -73,16 +73,15 @@
                           the value we have set in the POM as a default.-->
                         <!--Mobile-->
                        <!-- Android-Local  5.0.1-->
-                        <spring.profiles.active>local</spring.profiles.active>
+                        <!--<spring.profiles.active>local</spring.profiles.active>
                         <platformVersions>5.0.1</platformVersions>
-                        <app>Users/sultana_m/Documents/AndroidApp/Subway_R2_QE_7.1.7.0_5000770.apk</app>
+                        <app>Users/sultana_m/Documents/AndroidApp/Subway_R2_QE_7.1.7.0_5000770.apk</app>-->
 
-                        <!-- Android-TestObject-->
-                       <!--   <spring.profiles.active>testObject</spring.profiles.active>
-                        <testObjectApiKey>F6E2E240BDAF41F9B59C21954CEA0055</testObjectApiKey>
-                        <testObjectDevice>Asus_Google_Nexus_7_2013_real</testObjectDevice>
-                        <appName>subway-mariumsprint</appName>-->
-
+                        <!-- Android-TestObject  Asus_Google_Nexus_7_2013_real-->
+                          <spring.profiles.active>testObject</spring.profiles.active>
+                        <testObjectApiKey>D58560A590BA4E74BE305ABE7E702AA7</testObjectApiKey>
+                        <testObjectDevice>Samsung_Galaxy_Note_4_5_real</testObjectDevice>
+                        <appName>mariums</appName>
 
                         <!-- Android-Common-->
                         <mobilePlatform>Android</mobilePlatform>

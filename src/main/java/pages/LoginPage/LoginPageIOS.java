@@ -39,6 +39,11 @@ public class LoginPageIOS extends LoginPage {
         return Button;
     }
 
+    @Override
+    MobileButton getSignUp() throws Exception {
+        return null;
+    }
+
     public IOSButton getForgotPassword() throws Exception {
 
         IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAButton[@label='"+BaseTest.bundle.getString("ForgotPasswordiOS")), "Forgot Password button");
