@@ -12,6 +12,7 @@ import org.testng.Assert;
 import pages.CommonElements.CommonElements;
 import pojos.CustomizedItem.CustomizedItem;
 import pojos.user.MobileUser;
+import util.Utils;
 import utils.Logz;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileTextBox getDrinksPriceText() throws Exception;
     abstract MobileTextBox getDrinksCaloriesText() throws Exception;
     abstract List<WebElement> getDrinksPriceCaloriesList() throws Exception;
-
+    abstract MobileTextBox getItemCountText() throws Exception;
 
 
     CommonElements commonElements = new CommonElements( (AppiumDriver) driver );
@@ -58,7 +59,7 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
 
         if (drinksName.contains( "Bottled Beverage" )) {
             if (drinksFlavorName.contains( "Dasani® Water" )) {
-                for (int i = 0; i < 9; i++) { // get the count
+                for (int i = 0; i < getItemCount(); i++) { // get the count
                     if (!getDrinksText().getText().contains( drinksFlavorName )) {
                         commonElements.swipe( (AppiumDriver) driver, "Left" );
                     }
@@ -66,7 +67,7 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
             } else {
 
                 int count = 0;
-                while (count < 10) {
+                while (count < getItemCount()) {
                     if (!getDrinksText().getText().equalsIgnoreCase( drinksName.replaceAll( "s", "" ) )) {
                         commonElements.swipe( (AppiumDriver) driver, "Left" );
                     }
@@ -90,7 +91,7 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
             Logz.step( drinksName + drinksFlavorName + "is selected" );
 
         } else {
-            for (int i = 0; i < 9; i++) { // get the count
+            for (int i = 0; i < getItemCount(); i++) { // get the count
                 if (!getDrinksText().getText().contains( drinksFlavorName )) {
                     commonElements.swipe( (AppiumDriver) driver, "Left" );
                 }
@@ -101,7 +102,10 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
         return DrinksPage.get( (AppiumDriver) driver );
     }
 
-
+private int getItemCount() throws Exception{
+    String[] strings = getItemCountText().getText().split( "OF " );
+    return Integer.parseInt( strings[1] );
+}
     public void assertDrinksDescriptions(CustomizedItem customizedItem) throws Exception {
         Logz.step( "Asserting drinks product title" );
         Assert.assertEquals( getDrinksDescriptionText().getText().trim(), customizedItem.getCustomizedProductDetail().getDescription().trim(), "Drink flavors title assertion is failed" );
@@ -111,18 +115,18 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
         Logz.step( "Asserting drinks product title" );
         for(WebElement element: getDrinksPriceCaloriesList()){
            if( element.getText().contains( "$" )){
-               Assert.assertEquals( element.getText(), "$" +String.format("%.2f", Double.valueOf( customizedItem.getCustomizedProductDetail().getPrice()), "Drink flavors title assertion is failed" ));
+               Assert.assertEquals( element.getText(), Utils.getExpectedPrice(customizedItem) , "Drink flavors title assertion is failed" );
            }else if(element.getText().contains( "Cals" )){
-               Assert.assertEquals( element.getText().trim(), customizedItem.getCustomizedProductDetail().getCalories().trim()+" Cals*", "Drink flavors title assertion is failed" );
+               Assert.assertEquals( element.getText().trim(), Utils.getExpectedCalories(customizedItem), "Drink flavors title assertion is failed" );
            }
         }
         Logz.step( "Asserted drinks product title" );
     }
     public void assertFlavoredDrinksDetails(CustomizedItem customizedItem) throws Exception {
         Logz.step( "Asserting drinks product title" );
-        Assert.assertEquals( getFlavorDrinksTitleText().getText().trim(), "$" +String.format("%.2f", Double.valueOf( customizedItem.getCustomizedProductDetail().getPrice()), "Drink flavors title assertion is failed" ));
-        Assert.assertEquals( getFlavorCaloriesText().getText().trim(), customizedItem.getCustomizedProductDetail().getCalories().trim()+" Cals*", "Drink flavors title assertion is failed" );
-        Assert.assertEquals( getFlavorPriceText().getText().trim(), customizedItem.getCustomizedProductDetail().getPrice().trim(), "Drink flavors title assertion is failed" );
+        Assert.assertEquals( getFlavorDrinksTitleText().getText().trim(),  customizedItem.getCustomizedProductDetail().getProductName(), "Drink flavors title assertion is failed" );
+        Assert.assertEquals( getFlavorCaloriesText().getText().trim(), Utils.getExpectedCalories(customizedItem), "Drink flavors title assertion is failed" );
+       /* Assert.assertEquals( getFlavorPriceText().getText().trim(), customizedItem.getCustomizedProductDetail().getPrice().trim(), "Drink flavors title assertion is failed" );*/
         Logz.step( "Asserted drinks product title" );
     }
     public void assertDrinksDetails(CustomizedItem customizedItem) throws Exception {

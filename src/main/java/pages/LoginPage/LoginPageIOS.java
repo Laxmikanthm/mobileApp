@@ -18,7 +18,7 @@ public class LoginPageIOS extends LoginPage {
         super(driver);
     }
 
-    public IOSTextBox getUserName() throws Exception {
+   /* public IOSTextBox getUserName() throws Exception {
 
         IOSTextBox userNameTextbox  = new IOSTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("UserNameiOS")+"']"), "username text field");
 
@@ -31,14 +31,34 @@ public class LoginPageIOS extends LoginPage {
 
         return passwordTextBox;
     }
-
+UserNameiOS=EMAIL
+PasswordiOS=PASSWORD
     public IOSButton getLogin() throws Exception {
 
         IOSButton Button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
 
         return Button;
+    }*/
+   public IOSTextBox getUserName() throws Exception {
+
+       IOSTextBox userNameTextbox  = new IOSTextBox((IOSDriver) driver, By.name("EMAIL"), "username text field");
+
+       return userNameTextbox;
+   }
+
+    public IOSPasswordTextBox getPassword() throws Exception {
+
+        IOSPasswordTextBox passwordTextBox = new IOSPasswordTextBox((IOSDriver) driver, By.name("PASSWORD"), "password text field");
+
+        return passwordTextBox;
     }
 
+    public IOSButton getLogin() throws Exception {
+
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.name("LOG IN"), "Login button");
+
+        return Button;
+    }
     @Override
     MobileButton getSignUp() throws Exception {
         return null;

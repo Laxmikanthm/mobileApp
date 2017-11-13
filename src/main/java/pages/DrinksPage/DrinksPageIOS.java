@@ -59,6 +59,11 @@ public class DrinksPageIOS extends DrinksPage {
     }
 
     @Override
+    MobileTextBox getItemCountText() throws Exception {
+        return null;
+    }
+
+    @Override
     List<WebElement> getItemFlavorList() throws Exception {
         return null;
     }

@@ -3,6 +3,7 @@ package pages.YourOrderPage;
 import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
@@ -10,6 +11,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.CommonElements.CommonElements;
 import pages.HomePage.HomePage;
@@ -20,6 +22,7 @@ import pages.OrderConfirmationPage.OrderConfirmationPage;
 import pages.OrdersPage.OrdersPage;
 import pojos.CustomizedItem.CustomizedItem;
 import util.MobileApi;
+import util.Utils;
 import utils.Logz;
 
 public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePage {
@@ -37,9 +40,12 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
-  OrdersPage ordersPage;
+  abstract WebElement getPickupTimeHeader() throws Exception;
+    abstract MobileTextBox getItemTitle() throws Exception;
+    abstract MobileTextBox getItemPrice() throws Exception;
+    abstract MobileTextBox getTotalText() throws Exception;
 
-    By totalAmount = By.id("ordertotal_amount");
+
     CommonElements commonElements = new CommonElements((AppiumDriver) driver);
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -81,17 +87,15 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
     public YourOrderPage assertOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
-        Logz.step("Started asserting total amount In Your Order Page");
-        //Assert item name
-        //assert price
-        /*String aTotalAmount =  commonElements.getElement(totalAmount, totalAmount, (AppiumDriver)driver).getText();
-        String eTotalAmount = "";
-        Assert.assertEquals(aTotalAmount, eTotalAmount);*/
-        Logz.step("Started asserting total amount In Your Order Page");
+        Logz.step("Started asserting order details In Your Order Page");
+        commonElements.scroll( getPickupTimeHeader(), "up" );
+        Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+        Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
+       // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+        Logz.step("Started asserting order details In Your Order Page");
         return YourOrderPage.get((AppiumDriver)driver);
     }
     public OrderConfirmationPage goToOrderConfirmationPage() throws Exception{
-       // assertOrderDetailsInYourOrderPage();
         Logz.step("Navigating to Order Confirmation Page......");
         getPlaceOrder().click();
         return OrderConfirmationPage.get((AppiumDriver)driver);

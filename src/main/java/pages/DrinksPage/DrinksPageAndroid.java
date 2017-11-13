@@ -73,6 +73,11 @@ public class DrinksPageAndroid  extends DrinksPage{
         return new AndroidWebElement((AndroidDriver) driver, "order total list").getWebElements(By.className("android.widget.TextView"));
     }
 
+    @Override
+    MobileTextBox getItemCountText() throws Exception {
+        return  new AndroidTextBox((AndroidDriver) driver, By.id("page_count"), "getItemCountText");
+    }
+
 
     @Override
     List<WebElement> getItemFlavorList() throws Exception {

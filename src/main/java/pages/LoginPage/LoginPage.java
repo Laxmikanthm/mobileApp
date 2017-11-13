@@ -85,14 +85,10 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public HomePage login(RemoteOrderCustomer mobileUser) throws Exception {
         Logz.step("##### "+mobileUser.getEmailAddress()+" is logging in ##### ");
         try {
-            try {
-                Thread.sleep(15000);
-                driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-signInName']");
+            if((AppiumDriver)driver instanceof AndroidDriver) {
+                androidPopUpCheck();
             }
-            catch (org.openqa.selenium.NoSuchElementException ex) {
-                driver.findElementById("com.android.chrome:id/terms_accept").click();
-                driver.findElementById("com.android.chrome:id/negative_button").click();
-            }
+            getUserName().isReady();
             getUserName().setText(mobileUser.getEmailAddress());
             getPassword().setText(mobileUser.getPassword());
             HideKeyboard();
@@ -121,7 +117,15 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-
+private void androidPopUpCheck() throws Exception{
+    try {
+        Thread.sleep( 15000 );
+        driver.findElementByXPath( "//android.widget.EditText[@resource-id='custom-signInName']" );
+    } catch (org.openqa.selenium.NoSuchElementException ex) {
+        driver.findElementById( "com.android.chrome:id/terms_accept" ).click();
+        driver.findElementById( "com.android.chrome:id/negative_button" ).click();
+    }
+}
 
     public void HideKeyboard()
     {

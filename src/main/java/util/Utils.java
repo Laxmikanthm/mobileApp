@@ -4,6 +4,7 @@ import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import Enums.BreadSize;
 import Enums.Menu;
+import pojos.CustomizedItem.CustomizedItem;
 import utils.Logz;
 
 import java.text.DateFormat;
@@ -170,5 +171,11 @@ public class Utils {
         df.format( startTime ).toString();
         return parser.format( startTime ).toString();
     }
+    public static String getExpectedPrice(CustomizedItem customizedItem) throws Exception{
+       return  "$" +String.format("%.2f", Double.valueOf( customizedItem.getCustomizedProductDetail().getPrice()));
+    }
 
+    public static String getExpectedCalories(CustomizedItem customizedItem) throws Exception{
+        return  customizedItem.getCustomizedProductDetail().getCalories().trim()+" Cals*";
+    }
 }
