@@ -93,11 +93,9 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
             for (int i = 0; i < 9; i++) { // get the count
                 if (!getDrinksText().getText().contains( drinksFlavorName )) {
                     commonElements.swipe( (AppiumDriver) driver, "Left" );
-                } else {
-                    assertDrinksDetails(customizedItem);
                 }
             }
-
+            assertDrinksDetails(customizedItem);
 
         }
         return DrinksPage.get( (AppiumDriver) driver );
