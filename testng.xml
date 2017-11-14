@@ -65,14 +65,14 @@
             </methods>
         </class>
 
-        <class name="myLoyaltyTest.MyWayTokenTracker">
+        <class name="myLoyaltyTest.Tokens">
             <methods>
                 <include name="tokenTracker"/>
 
             </methods>
         </class>
 
-        <class name="myLoyaltyTest.TokenGeneration">
+        <class name="myLoyaltyTest.Tokens">
             <methods>
                 <include name="tokenGeneration"/>
             </methods>
@@ -86,7 +86,7 @@
             </methods>
         </class>
 
-        <class name="orderManagementTest.OrderHistory">
+        <class name="orderManagementTest.PurchaseHistory">
             <methods>
                 <include name="verifyOrderHistory"/>
             </methods>

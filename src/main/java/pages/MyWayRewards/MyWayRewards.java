@@ -28,6 +28,7 @@ import pages.LoginPage.LoginPageIOS;
 import pojos.user.RemoteOrderCustomer;
 import org.openqa.selenium.interactions.touch.FlickAction;
 import util.MobileApi;
+import utils.Logz;
 
 import java.time.Duration;
 import java.util.List;
@@ -61,6 +62,8 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
 
     abstract MobileButton getToolbarClose() throws Exception;
 
+    abstract MobileLabel getCertsmyreward() throws Exception;
+
     Dimension size;
 
     By Swipe = By.id("com.subway.mobile.subwayapp03:id/reward_page_text");
@@ -91,6 +94,16 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         getGotIt().click();
         getToolbarClose().click();
 
+    }
+
+    public void swipeForTokens() throws Exception {
+        List<WebElement> elements = getElements(Swipe);
+        for (int i = 0; i < 3; i++) {
+            WebElement ele = elements.get(0);
+            Thread.sleep(3000L);
+            swipeLeft(ele);
+        }
+        getGotIt().click();
     }
 
     public void swipeLeft(WebElement element) throws Exception {
@@ -160,49 +173,41 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     }
 
     public HomePage assertTokensAndCertificates(RemoteOrderCustomer user,boolean tokenCertificatesAdded) throws Exception {
-    /*    user = MobileApi.getLoyaltyLookUp(user);
-            String tokencount = gettokensmyreward().getText();
-              if (user.getConfirmToken() != null) {
-                   Assert.assertEquals(user.getConfirmToken(), tokencount);
-                   Logz.step("tokens asserted");
-                   } else {
-                          Logz.step("Tokens are not available");
-                          }
-            int myrewardcertcount = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/rewards_count")).size();
-               if (myrewardcertcount > 0) {
-                     int myreardspagecertcount = Integer.parseInt(getCertsmyreward().getText());
-                     Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(), myreardspagecertcount);
-                     } else {
-                             Logz.step("Certificates not avalable");
-
-                            }*/
-
-        pojos.MyLoyalty actualMyLoyalty = getActualMyLoyaltyDetails();
-        pojos.MyLoyalty expectedMyLoyalty = getExpectedMyLoyaltyDetails(user);
-        if(tokenCertificatesAdded) {
-            actualMyLoyalty = getActualMyLoyaltyDetails();
-            expectedMyLoyalty = getExpectedMyLoyaltyDetails(user);
-        }else{
-            // certificare control is not present();
-        }
-        Assert.assertEquals(actualMyLoyalty, expectedMyLoyalty);
-
+        swipeForTokens();
+        Thread.sleep(3000);
+        Assert.assertTrue(tokenCertificatesAdded, "No certificates are available");
+        getActualExpectedMyLoyaltyDetails(user);
         return HomePage.get((AppiumDriver) driver);
 
     }
-    private pojos.MyLoyalty getActualMyLoyaltyDetails() throws Exception{
-        pojos.MyLoyalty actualMyLoyalty = new pojos.MyLoyalty();
-        //get and set data from ui to actualMyLoyalty object
-        actualMyLoyalty.setTokens("get the token value");
-        //actualMyLoyalty.setCertificates("get list of certificates");
-        return actualMyLoyalty;
+    private pojos.MyLoyalty getActualExpectedMyLoyaltyDetails(RemoteOrderCustomer user) throws Exception{
+        pojos.MyLoyalty actualAndExpectedMyLoyalty = new pojos.MyLoyalty();
+        Logz.step("Started asserting certificates from MyWayRewards page");
+        String tokens = gettokensmyreward().getText();
+        actualAndExpectedMyLoyalty.setTokens(tokens);
+        user = MobileApi.getLoyaltyLookUp(user);
+        if (user.getConfirmToken() != null) {
+            Assert.assertEquals(user.getConfirmToken(), tokens);
+            Logz.step("tokens asserted");
+        } else {
+            Logz.step("Tokens are not available");
+        }
+        int myrewardcertcount = driver.findElements(By.id("rewards_count")).size()*2;
+        if (myrewardcertcount > 0) {
+            int myRewardsPagecertcount = Integer.parseInt(getCertsmyreward().getText());
+            Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(), myRewardsPagecertcount);
+        } else {
+            Logz.step("Certificates not available");
+        }
+        return actualAndExpectedMyLoyalty;
     }
+
     private pojos.MyLoyalty getExpectedMyLoyaltyDetails(RemoteOrderCustomer user) throws Exception{
         pojos.MyLoyalty expectedMyLoyalty = new pojos.MyLoyalty();
         user = MobileApi.getLoyaltyLookUp(user);
         //get and set data from api to expectedMyLoyalty
-        expectedMyLoyalty.setTokens("get the token value");
-      //  expectedMyLoyalty.setCertificates("get list of certificates");
+        /*expectedMyLoyalty.setTokens("get the token value");*/
+       //  expectedMyLoyalty.setCertificates("get list of certificates");
         return expectedMyLoyalty;
     }
 

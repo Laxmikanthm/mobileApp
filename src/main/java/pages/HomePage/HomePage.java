@@ -565,19 +565,21 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user, boolean tokenCertificatesAdded) throws Exception {
         Logz.step( "##### Asserting tokens and certificates in home Page#####" );
         user = MobileApi.getLoyaltyLookUp( user );
-        Assert.assertEquals( user.getConfirmToken(), Integer.parseInt( tokenValue() ) );
+        Assert.assertEquals( Integer.parseInt(user.getConfirmToken()), Integer.parseInt( tokenValue() ) );
         Logz.step( "Tokens asserted" );
         Assert.assertEquals( user.getLoyaltyLookup().getCertificates().getCertificateCount(), certsCount() );
         Logz.step( "Certificates asserted" );
         //assert n# token and n# certificate in home page
-        //user MyLoyalty object for assertion
+        //use MyLoyalty object for assertion
         //Get expected data from API, Get actual data from mobile ui
-
         MyWayRewards myWayRewards = goToMyWayRewardsPage();
         myWayRewards.assertTokensAndCertificates( user, tokenCertificatesAdded );
         Logz.step( "##### Asserted tokens and certificates in home Page#####" );
         return UserProfilePage.get( (AndroidDriver) driver );
     }
+
+
+
 
     public ProductDetailsPage goToProductDetailsPage(MobileUser mobileUser, String menuName, BreadSize breadSize, CustomizedItem customizedItem) throws Exception {
         OrdersPage ordersPage = goToOrderPage();
