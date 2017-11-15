@@ -56,6 +56,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
 
     public HomePage assertOrderDetailsInOrderConfirmationPage(CustomizedItem customizedItem) throws Exception{
         Logz.step("Started asserting order details In Order Confirmation Page");
+        getPickupTimeHeader().isDisplayed();
         commonElements.scroll( getPickupTimeHeader(), "down" );
         if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )){
             Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
