@@ -9,6 +9,7 @@ import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pages.CommonElements.CommonElements;
+import pages.DrinksPage.DrinksPage;
 import pages.HomePage.HomePage;
 import pojos.CustomizedItem.CustomizedItem;
 import pojos.Orders.Order;
@@ -46,10 +47,7 @@ public abstract class SidesPage<T extends AppiumDriver> extends MobileBasePage {
     abstract MobileButton getItemSelectFlavor() throws Exception;
 
     CommonElements commonElements = new CommonElements( (AppiumDriver) driver );
-    By categoryLocatorIOS = By.id( "product_group_header" );
-    By categoryLocatorAndroid = By.id( "product_group_header" );
-    By sidesOrDrinksIOS = By.id( "product_title" );
-    By sidesOrDrinksAndroid = By.id( "product_title" );
+
 
     public HomePage selectSidesOrder(MobileUser mobileUser, CustomizedItem customizedItem) throws Exception {
 //ToDo
@@ -58,7 +56,7 @@ public abstract class SidesPage<T extends AppiumDriver> extends MobileBasePage {
             Logz.step( SidesName + "is selected" );
 
         } else {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
                 if (!getSides().getText().contains( SidesName )) {
                     commonElements.swipe( (AppiumDriver) driver, "Left" );
                 }
@@ -72,14 +70,12 @@ public abstract class SidesPage<T extends AppiumDriver> extends MobileBasePage {
                    webElement.click();
                    Logz.step( webElement.getText() + "is selected" );
                    break;
-                  /* customizedItem.getCustomizedProductDetail().getProductName()
-                   customizedItem.getCustomizedProductDetail().getCalories()
-                   customizedItem.getCustomizedProductDetail().getPrice()*/
                }
 
            }
 
         }
+
         return HomePage.get( (AppiumDriver) driver );
     }
 

@@ -102,7 +102,7 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
         return DrinksPage.get( (AppiumDriver) driver );
     }
 
-private int getItemCount() throws Exception{
+public int getItemCount() throws Exception{
     String[] strings = getItemCountText().getText().split( "OF " );
     return Integer.parseInt( strings[1] );
 }

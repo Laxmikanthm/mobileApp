@@ -2119,7 +2119,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem );
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
       // homePage.validateTokens(mobileUser);
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser );
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem);
 
     }
     private void assertFavouriteOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage,CustomizedItem customizedItem) throws Exception {
@@ -2136,7 +2136,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         FavouritePage favouritePage=homePage.goToFavouritePage();
         favouritePage.assertFavourites(mobileUser);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser );
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser, customizedItem );
 
     }
     private void placeSidesDrinksOrderAndAssert(MobileUser mobileUser, CustomizedItem customizedItem) throws Exception {

@@ -49,6 +49,11 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
         return new IOSWebElement((IOSDriver) driver, "product title list").getWebElements(By.id("product_title"));
     }
 
+    @Override
+    MobileTextBox getProductTitle() throws Exception {
+        return null;
+    }
+
 
     @Override
     List<WebElement> getOrderTimeAddressList() throws Exception {
