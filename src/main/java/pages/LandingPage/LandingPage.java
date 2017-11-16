@@ -73,8 +73,18 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     abstract MobileButton getSkipButton() throws Exception;
 
     public LoginPage gotoLogInPage() throws Exception {
+        Thread.sleep(7000);
+        if(driver.getPageSource().contains(BaseTest.bundle.getString("SignInWithExistingAccount"))){
+            Logz.step("Sign In button found!!");
+        }else {
+            if (driver instanceof IOSDriver) {
+                driver.switchTo().alert().accept(); // Accept Notification permission
+            }
+            getSkipButton().click();
+            Logz.error("Skip button clicked");
+        }
 
-        try {
+        /*try {
             Thread.sleep( 7000 );
             getLoginButton();
         } catch (Exception ex) {
@@ -83,7 +93,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             }
             getSkipButton().click();
             Logz.error("Skip button clicked");
-        }
+        }*/
         //this.getLoginButton().click();
         getLoginButton().click();
         Logz.step("##### Navigating to login page .......##### ");

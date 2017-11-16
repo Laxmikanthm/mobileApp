@@ -42,6 +42,7 @@ PasswordiOS=PASSWORD
    public IOSTextBox getUserName() throws Exception {
 
        IOSTextBox userNameTextbox  = new IOSTextBox((IOSDriver) driver, By.name("EMAIL"), "username text field");
+       //IOSTextBox userNameTextbox  = new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeOther[@name='" + BaseTest.getStringfromBundleFile("LogInText") + "']/XCUIElementTypeTextField"), "username text field");
 
        return userNameTextbox;
    }
