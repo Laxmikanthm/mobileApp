@@ -53,7 +53,52 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         Logz.step( "Clicked the " + controlButton + " button" );
     }
 
+    public HomePage scrollAndClick(By locator, String itemName) throws Exception {
+        Logz.step( "Scrolling to element and get element list" );
+        List<WebElement> allElements = getElements( locator);
+        try {
+            flag = false;
+            if (allElements.size() == 0) {
+                throw new Exception( "No element is available\n" + allElements.size() );
+            }
+            //allElements = getElements( locator );
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get( i ).getText().contains( itemName )) {
+                    allElements.get( i ).click();
+                    flag = true;
+                    break;
+                }
+            }
+            int count = 0;
+            while (flag == false) {
+                WebElement element = allElements.get( allElements.size() - 1 );
+                MobileElement ele = (MobileElement) element;
+                int startY = ele.getLocation().getY();
+                int endY = (int) (startY * 0.3);
+                action.longPress( 0, startY ).moveTo( 0, endY ).release().perform();
+                allElements = getElements( locator );
+                for (int j = 0; j < allElements.size(); j++) {
+                    if (allElements.get( j ).getText().contains( itemName )) {
+                        allElements.get( j ).click();
+                        flag = true;
+                        break;
+                    }
+                }
+                count++;
+                Logz.step( "count:" + count );
+                if (count > 6) {
+                    flag = false;
+                    //break;
+                    throw new Exception( "Unable to scroll and click element \n" );
+                }
+            }
 
+        } catch (Exception ex) {
+            throw new Exception( "Unable to scroll and click element \n" + ex.getMessage() );
+        }
+        Logz.step( "Scrolled to element and get element list" );
+        return HomePage.get( (AppiumDriver) driver );
+    }
     public HomePage scrollAndClick(By locatorIOS, By locatorAndroid, String itemName) throws Exception {
         Logz.step( "Scrolling to element and get element list" );
         List<WebElement> allElements = getElements( locatorIOS, locatorAndroid );
@@ -129,6 +174,29 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
+    public List<WebElement> getElements(By locator) throws Exception {
+        try {
+            switch (platform) {
+                case "iOS":
+                    if (exits( SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locator )) {
+                        return ((IOSDriver) driver).findElements( locator );
+
+                    }
+
+                case "Android":
+                    if (exits( SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locator )) {
+                        return ((AndroidDriver) driver).findElements( locator);
+
+                    }
+
+                default:
+                    throw new Exception( "Unable to get element for platform " + platform );
+            }
+        } catch (Exception ex) {
+            throw new Exception( "Unable to get element list\n" + ex.getMessage() );
+        }
+
+    }
     public List<WebElement> getElements(By locatorIOS, By locatorAndroid) throws Exception {
         try {
             switch (platform) {

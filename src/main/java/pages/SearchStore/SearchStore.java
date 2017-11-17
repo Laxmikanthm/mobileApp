@@ -63,6 +63,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     abstract MobileButton getSearchArea() throws Exception;
     abstract MobileButton getLocaion() throws Exception;
     abstract MobileLabel getMapView() throws Exception;
+    abstract By getAddressLocation() throws Exception;
 
     Store store= new Store();
     By Address = MobileBy.AccessibilityId("Google Map");
@@ -93,14 +94,19 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
+    private void setSearchByZipCode(String zipCode) throws Exception{
+        MobileTextBox searchTxtBox = getSearchByZipCode();
+        searchTxtBox.isReady();
+        searchTxtBox.setText(zipCode);
+    }
+
     public void searchStoreByZipCode(Store store) throws Exception {
         okPopUp();
         getSearchButton().click();
-        getSearchByZipCode().isReady();
-        getSearchByZipCode().setText(store.getZipCode());
+        setSearchByZipCode(store.getZipCode());
         getSearchKeyButton().click();
         Logz.step("Store Address is: " + store.getAddress1());
-        commonElements.scrollAndClick(By.id("address"), By.id("address"), store.getAddress1());
+        commonElements.scrollAndClick(getAddressLocation(), store.getAddress1());
     }
     public void searchStoreByZipCode(String  store) throws Exception {
         okPopUp();
@@ -145,34 +151,32 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
                     getOkPopupButton().isReady();
                     getOkPopupButton().click();
                 }
-            } else {
+            }
+            /*else {
                 int d = ((IOSDriver) driver).findElements(By.xpath("//android.widget.Button[@text='OK']")).size();
                 if (d > 0) {
                     getOkPopupButton().isReady();
                     getOkPopupButton().click();
                 }
-            }
+            }*/
         } catch (Exception ex) {
             throw new Exception(ex);
         }
     }
 
     public void toggleView() throws Exception {
+        MobileButton toggleBtn = null;
+        int size = 0;
         try {
-            if (driver instanceof AndroidDriver) {
-                int d = ((AndroidDriver) driver).findElements(By.id("toggle_view")).size();
-                if (d > 0) {
-                    getToggleView().isReady();
-                    getToggleView().click();
-                }
-            } else {
-                int d = ((IOSDriver) driver).findElements(By.id("toggle_view")).size();
-                if (d > 0) {
-                    getToggleView().isReady();
-                    getToggleView().click();
-                }
+            if (driver instanceof AndroidDriver)
+                size = ((AndroidDriver) driver).findElements(By.id("toggle_view")).size();
+            else
+                size = ((IOSDriver) driver).findElements(By.name("icListView")).size();
+            if (size > 0) {
+                toggleBtn = getToggleView();
+                toggleBtn.isReady();
+                toggleBtn.click();
             }
-
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -182,13 +186,15 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
 
     public OrdersPage findYourStore(String zipCode) throws Exception {
         try {
-            okPopUp();
-            allowPopUp();
-            Thread.sleep(5000);
-            okPopUp();
-            Thread.sleep(5000);
-            Logz.info(driver.getSessionId().toString());
-            Thread.sleep(20000);
+            if (driver instanceof AndroidDriver) {
+                okPopUp();
+                allowPopUp();
+                Thread.sleep(5000);
+                okPopUp();
+                Thread.sleep(5000);
+                Logz.info(driver.getSessionId().toString());
+                Thread.sleep(20000);
+            }
             toggleView();
             Thread.sleep(5000);
             okPopUp();

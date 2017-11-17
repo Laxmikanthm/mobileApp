@@ -95,7 +95,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             Logz.error("Skip button clicked");
         }*/
         //this.getLoginButton().click();
-        getLoginButton().click();
+        //getLoginButton().click();
         Logz.step("##### Navigating to login page .......##### ");
         return LoginPage.get((AppiumDriver) driver);
     }
@@ -230,7 +230,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         } catch (Exception ex) {
             throw new Exception("Unable to log In and Select Store \n" + ex.getMessage());
         }
-        return HomePage.get((AndroidDriver) driver);
+        return HomePage.get((AppiumDriver) driver);
     }
 
     public HomePage logInSelectStore(RemoteOrderCustomer mobileUser, String store) throws Exception {
@@ -264,7 +264,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public void placeDefaultOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
-        MobileUser mobileUser = registerUser();//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
+        MobileUser mobileUser = registerUser("MellisentHarrowell@qasubway.com");//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
         logAllMenuCategoriesName(productGroups, store);

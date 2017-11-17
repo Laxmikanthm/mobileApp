@@ -211,9 +211,8 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
 
     public SearchStore findYourSubWay() throws Exception {
         try {
-
-            Assert.assertEquals( getFindYourSubWay().getText(), BaseTest.getStringfromBundleFile( "FindYourSubWay" ) );
-            Thread.sleep( 5000 );
+            //Assert.assertEquals( getFindYourSubWay().getText(), BaseTest.getStringfromBundleFile( "FindYourSubWay" ) );
+            //Thread.sleep( 5000 );
             getFindYourSubWay().click();
             return SearchStore.get( (AppiumDriver) driver );
         } catch (Exception ex) {
@@ -507,14 +506,14 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         Logz.step( "##### Navigating to Order Page ...... #####" );
         getOrderButton().click();
         Logz.step( "##### Navigated to Order Page ...... #####" );
-        return OrdersPage.get( (AndroidDriver) driver );
+        return OrdersPage.get( (AppiumDriver) driver );
     }
 
     public YourOrderPage goToYourOrderPage() throws Exception {
         Logz.step( "##### Navigating to your Order Page ...... #####" );
 
         Logz.step( "##### Navigated to your Order Page ...... #####" );
-        return YourOrderPage.get( (AndroidDriver) driver );
+        return YourOrderPage.get( (AppiumDriver) driver );
     }
 
     public MyWayRewards goToMyWayRewardsPage() throws Exception {
@@ -522,7 +521,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         Logz.step( "##### Navigating to My Way Rewards Page ...... #####" );
         getAnimationSparkle().click();
         Logz.step( "##### Navigated to My Way Rewards Page ...... #####" );
-        return MyWayRewards.get( (AndroidDriver) driver );
+        return MyWayRewards.get( (AppiumDriver) driver );
     }
 
     public HomePage assertOfferIsNotPresent() throws Exception {
@@ -530,7 +529,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         Logz.step( "##### #####" );
         //assert offers are not present in the promo card stake
         Logz.step( "##### #####" );
-        return HomePage.get( (AndroidDriver) driver );
+        return HomePage.get( (AppiumDriver) driver );
     }
 
     public PurchaseHistoryPage goToPurchaseHistoryPage() throws Exception {
@@ -575,7 +574,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         MyWayRewards myWayRewards = goToMyWayRewardsPage();
         myWayRewards.assertTokensAndCertificates( user, tokenCertificatesAdded );
         Logz.step( "##### Asserted tokens and certificates in home Page#####" );
-        return UserProfilePage.get( (AndroidDriver) driver );
+        return UserProfilePage.get( (AppiumDriver) driver );
     }
 
 
@@ -584,7 +583,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     public ProductDetailsPage goToProductDetailsPage(MobileUser mobileUser, String menuName, BreadSize breadSize, CustomizedItem customizedItem) throws Exception {
         OrdersPage ordersPage = goToOrderPage();
         ordersPage.addDefaultItemInCart( mobileUser, breadSize , customizedItem);
-        return ProductDetailsPage.get( (AndroidDriver) driver );
+        return ProductDetailsPage.get( (AppiumDriver) driver );
     }
 
 }

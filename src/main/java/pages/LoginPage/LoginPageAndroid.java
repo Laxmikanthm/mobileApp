@@ -31,6 +31,21 @@ public class LoginPageAndroid extends LoginPage {
         return button;
     }
 
+    protected AndroidButton getCloseBtn() throws Exception{
+        AndroidButton close = new AndroidButton((AndroidDriver) driver, By.xpath(""), "");
+        return close;
+    }
+
+    protected AndroidButton getShowIcon() throws Exception{
+        AndroidButton show = new AndroidButton((AndroidDriver) driver, By.xpath(""), "");
+        return show;
+    }
+
+    protected AndroidButton getAllowBtn() throws Exception{
+        AndroidButton allow = new AndroidButton((AndroidDriver) driver, By.xpath(""), "");
+        return allow;
+    }
+
     @Override
     MobileButton getSignUp() throws Exception {
       return   new AndroidButton((AndroidDriver) driver, By.id("custom-createAccount"), "Sign Up");

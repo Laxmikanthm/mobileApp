@@ -1,6 +1,7 @@
 package pages.LoginPage;
 
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.ios.IOSButton;
 import base.gui.controls.mobile.ios.IOSPasswordTextBox;
 import base.gui.controls.mobile.ios.IOSTextBox;
@@ -41,16 +42,16 @@ PasswordiOS=PASSWORD
     }*/
    public IOSTextBox getUserName() throws Exception {
 
-       IOSTextBox userNameTextbox  = new IOSTextBox((IOSDriver) driver, By.name("EMAIL"), "username text field");
-       //IOSTextBox userNameTextbox  = new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeOther[@name='" + BaseTest.getStringfromBundleFile("LogInText") + "']/XCUIElementTypeTextField"), "username text field");
+       //IOSTextBox userNameTextbox  = new IOSTextBox((IOSDriver) driver, By.name("EMAIL"), "username text field");
+       IOSTextBox userNameTextbox  = new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeOther[@name='" + BaseTest.getStringfromBundleFile("LogInText") + "']/XCUIElementTypeTextField"), "username text field");
 
        return userNameTextbox;
    }
 
-    public IOSPasswordTextBox getPassword() throws Exception {
+    public IOSTextBox getPassword() throws Exception {
 
-        IOSPasswordTextBox passwordTextBox = new IOSPasswordTextBox((IOSDriver) driver, By.name("PASSWORD"), "password text field");
-
+        //IOSPasswordTextBox passwordTextBox = new IOSPasswordTextBox((IOSDriver) driver, By.name("PASSWORD"), "password text field");
+        IOSTextBox passwordTextBox  = new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeOther[@name='" + BaseTest.getStringfromBundleFile("LogInText") + "']/XCUIElementTypeTextField[2]"), "password text field");
         return passwordTextBox;
     }
 
@@ -60,6 +61,22 @@ PasswordiOS=PASSWORD
 
         return Button;
     }
+
+    protected IOSButton getCloseBtn() throws Exception{
+        IOSButton close = new IOSButton((IOSDriver) driver, By.name("ic-x"), "Close button");
+        return close;
+    }
+
+    protected IOSButton getShowIcon() throws Exception{
+        IOSButton show = new IOSButton((IOSDriver) driver, By.name("ic-show"), "Show button");
+        return show;
+    }
+
+    protected IOSButton getAllowBtn() throws Exception{
+        IOSButton allow = new IOSButton((IOSDriver) driver, By.name(BaseTest.getStringfromBundleFile("Allow")), "Show button");
+        return allow;
+    }
+
     @Override
     MobileButton getSignUp() throws Exception {
         return null;
@@ -74,6 +91,7 @@ PasswordiOS=PASSWORD
 
     @Override
     MobileButton getProfile() throws Exception {
-        return null;
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.name("icProfile"), "Forgot Password button");
+        return Button;
     }
 }
