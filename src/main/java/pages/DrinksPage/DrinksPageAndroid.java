@@ -34,11 +34,11 @@ public class DrinksPageAndroid  extends DrinksPage{
 
     @Override
     MobileTextBox getFlavorDrinksTitleText() throws Exception {
-        return  new AndroidTextBox((AndroidDriver) driver, By.id("flavor_selector"), "Select Flavor dropdown");
+        return  new AndroidTextBox((AndroidDriver) driver, By.id("flavor_selector_text"), "Select Flavor dropdown");//flavor_selector_text
     }
 
     @Override
-    MobileTextBox getFlavorPriceText() throws Exception {
+    MobileTextBox getFlavorTitleText() throws Exception {
         return  new AndroidTextBox((AndroidDriver) driver, By.id("flavor_text_item"), "Select Flavor dropdown");
     }
 

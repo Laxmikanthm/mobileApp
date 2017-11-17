@@ -153,6 +153,60 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         Logz.step( "Scrolled to element and get element list" );
         return HomePage.get( (AppiumDriver) driver );
     }
+    public HomePage scrollAndClickBreakfast(By locatorIOS, By locatorAndroid, String itemName) throws Exception {
+        Logz.step( "Scrolling to element and get element list" );
+        List<WebElement> allElements = getElements( locatorIOS, locatorAndroid );
+        try {
+            flag = false;
+            if (allElements.size() == 0) {
+                throw new Exception( "No element is available\n" + allElements.size() );
+            }
+            allElements = getElements( locatorIOS, locatorAndroid );
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get( i ).getText().equalsIgnoreCase( itemName )) {
+                    allElements.get( i ).click();
+                    flag = true;
+                    break;
+                }
+            }
+            int count = 0;
+            while (flag == false) {
+                WebElement element = allElements.get( allElements.size() - 1 );
+                MobileElement ele = (MobileElement) element;
+                int startY = ele.getLocation().getY();
+                int endY = (int) (startY * 0.3);
+                action.longPress( 0, startY ).moveTo( 0, endY ).release().perform();
+                allElements = getElements( locatorIOS, locatorAndroid );
+                for (int j = 0; j < allElements.size(); j++) {
+                    if (allElements.get( j ).getText().equalsIgnoreCase( itemName )) {
+                        allElements.get( j ).click();
+                        flag = true;
+                        break;
+                    }
+                }
+                count++;
+                Logz.step( "count:" + count );
+                if (count > 6) {
+                    flag = false;
+                    //break;
+                    throw new Exception( "Unable to scroll and click element \n" );
+                }
+            }
+
+
+            /*if(flag == false) {
+
+                allElements.get(3).click();
+                    Logz.step("selected random " +allElements.get(3).getText());
+            }*/
+
+
+        } catch (Exception ex) {
+            throw new Exception( "Unable to scroll and click element \n" + ex.getMessage() );
+        }
+        Logz.step( "Scrolled to element and get element list" );
+        return HomePage.get( (AppiumDriver) driver );
+    }
 
     public boolean isAvailable(By locatorIOS, By locatorAndroid) throws Exception {
         try {

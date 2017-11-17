@@ -40,6 +40,11 @@ public class YourOrderPageAndroid  extends YourOrderPage{
     }
 
     @Override
+    MobileTextBox getPickupTimeHeaderText() throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("pickup_time_header"), "getTotalText");
+    }
+
+    @Override
     MobileButton getPlaceOrder() throws Exception {
         return new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+ BaseTest.bundle.getString("PlaceOrder")+"']"), "Place Order button");
     }

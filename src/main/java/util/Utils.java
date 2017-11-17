@@ -160,16 +160,16 @@ public class Utils {
         SimpleDateFormat parser = new SimpleDateFormat( "HH:mm:ss" );
         Date endTime = parser.parse( store.getBreakEndTime() );
         Date breakEndTime = toNearestWholeHour( endTime );
-        parser = new SimpleDateFormat( "HH:mm a" );
+        parser = new SimpleDateFormat( "H:mm a" );
         return parser.format( breakEndTime ).toString();
     }
 
     public static String getBreakFastStartTimeRounded(Store store) throws Exception {
         SimpleDateFormat parser = new SimpleDateFormat( "HH:mm:ss" );
         Date startTime = parser.parse( store.getBreakStartTime() );
-        DateFormat df = new SimpleDateFormat( "hh:'00' a" );
-        df.format( startTime ).toString();
-        return parser.format( startTime ).toString();
+        DateFormat df = new SimpleDateFormat( "h:'00' a" );
+        return df.format( startTime ).toString();
+        //return parser.format( startTime ).toString();
     }
     public static String getExpectedPrice(CustomizedItem customizedItem) throws Exception{
        return  "$" +String.format("%.2f", Double.valueOf( customizedItem.getCustomizedProductDetail().getPrice()));

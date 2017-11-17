@@ -35,6 +35,11 @@ public class YourOrderPageIOS  extends YourOrderPage{
     }
 
     @Override
+    MobileTextBox getPickupTimeHeaderText() throws Exception {
+        return null;
+    }
+
+    @Override
     MobileButton getPlaceOrder() throws Exception {
         return null;
     }
