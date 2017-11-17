@@ -2,6 +2,7 @@ package pages.SidesPage;
 
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
+import base.gui.controls.mobile.generic.MobileTextBox;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 
@@ -28,6 +29,11 @@ public class SidesPageIOS extends SidesPage{
     }
 
     @Override
+    MobileTextBox getItemCountText() throws Exception {
+        return null;
+    }
+
+    @Override
     WebElement getSides() throws Exception {
         return null;
     }
@@ -38,7 +44,27 @@ public class SidesPageIOS extends SidesPage{
     }
 
     @Override
+    MobileTextBox getSidesDescriptionText() throws Exception {
+        return null;
+    }
+
+    @Override
     MobileButton getItemSelectFlavor() throws Exception {
+        return null;
+    }
+
+    @Override
+    List<WebElement> getAddToBag() throws Exception {
+        return null;
+    }
+
+    @Override
+    List<WebElement> getSidesPriceCaloriesList() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getFlavorSidesTitleText() throws Exception {
         return null;
     }
 

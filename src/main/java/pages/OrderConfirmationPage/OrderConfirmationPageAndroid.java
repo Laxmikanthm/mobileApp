@@ -36,7 +36,17 @@ public class OrderConfirmationPageAndroid extends OrderConfirmationPage {
     }
 
     @Override
+    MobileTextBox getFlavorItemTitle() throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("item_options"), "getFlavorItemTitle");
+    }
+
+    @Override
     MobileTextBox getTotalText() throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("total"), "getTotalText");
+    }
+
+    @Override
+    MobileTextBox getPickupTimeHeaderText() throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("total"), "ready_today_at");
     }
 }
