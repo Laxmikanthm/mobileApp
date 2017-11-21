@@ -91,7 +91,7 @@ PasswordiOS=PASSWORD
 
     @Override
     MobileButton getProfile() throws Exception {
-        IOSButton Button = new IOSButton((IOSDriver) driver, By.name("icProfile"), "Forgot Password button");
+        IOSButton Button = new IOSButton((IOSDriver) driver, By.name("icProfile"), "Profile button");
         return Button;
     }
 }

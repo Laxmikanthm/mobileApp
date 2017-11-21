@@ -67,7 +67,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         MobileTextBox userName = getUserName();
         userName.isReady();
         userName.getControl().click();
-        if((IOSDriver)driver instanceof IOSDriver) {
+        if((AppiumDriver)driver instanceof IOSDriver) {
             getCloseBtn().click();
         }
         //userName.getControl().clear();
@@ -76,7 +76,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     }
 
     private void setPassword(String pwd) throws Exception{
-        if((IOSDriver)driver instanceof IOSDriver) {
+        if((AppiumDriver)driver instanceof IOSDriver) {
             getShowIcon().click();
         }
         MobileTextBox password = getPassword();
@@ -126,9 +126,9 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
                 Thread.sleep(15000);
                 getProfile().getControl().isDisplayed();
                 Logz.step("User is in home page");
-            } catch (org.openqa.selenium.NoSuchElementException exs) {
+            } catch (Exception exs) {
                 try {
-                    if ((IOSDriver) driver instanceof IOSDriver) {
+                    if ((AppiumDriver) driver instanceof IOSDriver) {
                         getAllowBtn().click();
                     } else {
                         getSignUp().click();

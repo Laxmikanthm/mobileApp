@@ -412,5 +412,8 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
 
+    protected By getProductGroupHeader() throws Exception{
+        return By.id( "product_group_header" );
+    }
 
 }

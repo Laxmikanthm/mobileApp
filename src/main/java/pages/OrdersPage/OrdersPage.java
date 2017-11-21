@@ -217,6 +217,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     abstract MobileLabel getFlavourDropDown() throws Exception;
 
+    abstract By getProductGroupHeader() throws Exception;
+
     Dimension size;
 
     Random random = new Random();
@@ -2001,8 +2003,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     //##########################################################################################################################
    // CustomizedItem customizedItem;
-    By productGroupHeaderAndroid = By.id( "product_group_header" );
-    By productGroupHeaderIOS = By.id( "product_group_header" );
+    //By productGroupHeaderAndroid = By.id( "product_group_header" );
+    //By productGroupHeaderIOS = By.id( "product_group_header" );
     By getProductGroupLayoutAndroid = By.id( "product_group_layout" );
     By getProductGroupLayoutIOS = By.id( "product_group_layout" );
     boolean customized = false;
@@ -2019,7 +2021,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception("Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage());
         }
-        return HomePage.get((AndroidDriver) driver);
+        return HomePage.get((AppiumDriver) driver);
 
     }
 
@@ -2034,7 +2036,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception( "Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage() );
         }
-        return HomePage.get( (AndroidDriver) driver );
+        return HomePage.get( (AppiumDriver) driver );
 
     }
 
@@ -2055,7 +2057,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception("Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage());
         }
-        return HomePage.get((AndroidDriver) driver);
+        return HomePage.get((AppiumDriver) driver);
 
     }
 
@@ -2070,7 +2072,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception( "Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage() );
         }
-        return HomePage.get( (AndroidDriver) driver );
+        return HomePage.get( (AppiumDriver) driver );
     }
     public HomePage placeFavouriteOrder(MobileUser mobileUser, String menuCategories, BreadSize breadSize, Store store) throws Exception {
         try {
@@ -2116,7 +2118,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception( "Unable to place Random Order:\n" + ex.getMessage() );
         }
-        return HomePage.get( (AndroidDriver) driver );
+        return HomePage.get( (AppiumDriver) driver );
 
     }
 
@@ -2193,13 +2195,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public HomePage goToHomePage() throws Exception {
         Logz.step( "going to home page..." );
-        return HomePage.get( (AndroidDriver) driver );
+        return HomePage.get( (AppiumDriver) driver );
 
     }
 
     private CustomizePage goToCustomizePage() throws Exception {
         getCustomize().click();
-        return CustomizePage.get( (AndroidDriver) driver );
+        return CustomizePage.get( (AppiumDriver) driver );
     }
 
     private YourOrderPage goToYourOrderPage(boolean customized) throws Exception {
@@ -2208,26 +2210,26 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } else {
             getAddToBag().click();
         }
-        return YourOrderPage.get( (AndroidDriver) driver );
+        return YourOrderPage.get( (AppiumDriver) driver );
     }
     private YourOrderPage goToYourOrderPage() throws Exception {
 
-        return YourOrderPage.get( (AndroidDriver) driver );
+        return YourOrderPage.get( (AppiumDriver) driver );
     }
 
     private SidesPage goToSidesPage(String menuName) throws Exception {
         selectSpecificMenu(menuName);
-        return SidesPage.get( (AndroidDriver) driver );
+        return SidesPage.get( (AppiumDriver) driver );
     }
 
     private DrinksPage goToDrinkPage(String menuName) throws Exception {
         selectSpecificMenu(menuName);
-        return DrinksPage.get( (AndroidDriver) driver );
+        return DrinksPage.get( (AppiumDriver) driver );
     }
 
     private OffersPage goToOfferPage() throws Exception {
 
-        return OffersPage.get( (AndroidDriver) driver );
+        return OffersPage.get( (AppiumDriver) driver );
     }
 
     public void addDefaultItemInCart(MobileUser mobileUser, BreadSize breadSize, CustomizedItem customizedItemDetails) throws Exception {
@@ -2299,7 +2301,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception( "Unable to place Random Order:\n" + ex.getMessage() );
         }
-        return YourOrderPage.get( (AndroidDriver) driver );
+        return YourOrderPage.get( (AppiumDriver) driver );
 
     }
 
@@ -2318,7 +2320,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectRandomProduct(BreadSize breadSize) throws Exception {
         try {
             Logz.step( "##### Selecting a random product #####" );
-            List<WebElement> ProductList = elements.getElements( productGroupHeaderIOS, productGroupHeaderAndroid );//product_list
+            List<WebElement> ProductList = elements.getElements( getProductGroupHeader() );//product_list
             int getProductCount = ProductList.size();
             getProductCount = Utils.selectRandomItem( getProductCount );
             ProductList.get( getProductCount ).click();
@@ -2344,7 +2346,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectSpecificMenu(String itemName) throws Exception {
         try {
             Logz.step( "##### Selecting a " + itemName + " menu #####" );
-            elements.scrollAndClick( productGroupHeaderIOS, productGroupHeaderAndroid, itemName );
+            elements.scrollAndClick( getProductGroupHeader(), itemName );
             Logz.step( "##### Selected a " + itemName + " menu #####" );
         } catch (Exception ex) {
             throw new Exception( "Unable to select " + itemName + " menu\n" + ex.getMessage() );
@@ -2384,11 +2386,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     private ProductDetailsPage goToProductDetailsPage(String productName) throws Exception {
-        elements.scrollAndClick( productGroupHeaderIOS, productGroupHeaderAndroid, productName );
+        elements.scrollAndClick( getProductGroupHeader(), productName );
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
     private ProductDetailsPage goToBreakfastProductDetailsPage(String productName) throws Exception {
-        elements.scrollAndClickBreakfast( productGroupHeaderIOS, productGroupHeaderAndroid, productName );
+        elements.scrollAndClickBreakfast( getProductGroupHeader(), productName );
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
     private void placeLoyaltyOrderAndAssert() throws Exception {

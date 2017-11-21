@@ -62,14 +62,14 @@ public class OrdersPageIOS extends OrdersPage {
 
     public IOSButton getAddToBag() throws Exception {
 
-        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("AddToBagText").toUpperCase()), "AddToBagText button");
 
         return addToBag;
     }
 
     public IOSButton getCustomize() throws Exception {
 
-        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("CustomizeText").toUpperCase()), "CustomizeText button");
 
         return addToBag;
     }
@@ -496,5 +496,9 @@ public class OrdersPageIOS extends OrdersPage {
     public MobileButton getFullMenu() throws Exception {
         IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/view_full_menu_text"), "See FullMenu Details");
         return button;
+    }
+
+    protected By getProductGroupHeader() throws Exception{
+        return By.xpath( "//XCUIElementTypeCollectionView//XCUIElementTypeStaticText" );
     }
 }
