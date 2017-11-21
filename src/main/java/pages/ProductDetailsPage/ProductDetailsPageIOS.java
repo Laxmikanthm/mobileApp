@@ -2,7 +2,10 @@ package pages.ProductDetailsPage;
 
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
+import base.gui.controls.mobile.ios.IOSButton;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
 
 public class ProductDetailsPageIOS extends ProductDetailsPage {
     public ProductDetailsPageIOS(AppiumDriver driver) {
@@ -10,8 +13,8 @@ public class ProductDetailsPageIOS extends ProductDetailsPage {
     }
 
     @Override
-    MobileButton getProductName() throws Exception {
-        return null;
+    MobileButton getProductName(String productName) throws Exception {
+        return new IOSButton((IOSDriver) driver, By.name(productName.toUpperCase()), productName + " product name");
     }
 
     @Override
@@ -30,8 +33,8 @@ public class ProductDetailsPageIOS extends ProductDetailsPage {
     }
 
     @Override
-    MobileButton getProductPrice() throws Exception {
-        return null;
+    MobileButton getProductPrice(String price) throws Exception {
+        return new IOSButton((IOSDriver) driver, By.name(price), price + " product price");
     }
 
     @Override
