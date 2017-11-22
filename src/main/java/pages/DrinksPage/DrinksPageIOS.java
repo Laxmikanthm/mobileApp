@@ -24,9 +24,10 @@ public class DrinksPageIOS extends DrinksPage {
     }
 
     @Override
-    MobileTextBox getFlavorPriceText() throws Exception {
+    MobileTextBox getFlavorTitleText() throws Exception {
         return null;
     }
+
 
     @Override
     MobileTextBox getFlavorCaloriesText() throws Exception {
