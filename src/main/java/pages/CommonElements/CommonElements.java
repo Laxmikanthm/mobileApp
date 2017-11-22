@@ -63,7 +63,14 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
             //allElements = getElements( locator );
             for (int i = 0; i < allElements.size(); i++) {
                 if (allElements.get( i ).getText().toUpperCase().contains( itemName.toUpperCase() )) {
-                    allElements.get( i ).click();
+                    if(driver instanceof IOSDriver){
+                        int startX = allElements.get(i).getLocation().getX();
+                        int startY = allElements.get(i).getLocation().getY();
+                        action = new TouchAction((AppiumDriver) driver);
+                        action.longPress(allElements.get(i),startX, startY).release().perform();
+                    }else {
+                        allElements.get(i).click();
+                    }
                     flag = true;
                     break;
                 }
@@ -562,6 +569,17 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
             action.longPress( 0, startY ).moveTo( endY, 0 ).release().perform();
         }else{
             action.longPress( 0, startY ).moveTo( 0, endY ).release().perform();
+        }
+
+    }
+    public void scrollIOS(WebElement element, String direction) throws Exception{
+        int startX = element.getLocation().getX();
+        int startY = element.getLocation().getY();
+
+        if(direction.contains( "up" )) {
+            action.press( element ).moveTo( startX, -startY ).release().perform();
+        }else{
+            action.press( element ).moveTo( startX, startY + startY ).release().perform();
         }
 
     }

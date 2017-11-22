@@ -25,12 +25,12 @@ public class YourOrderPageIOS  extends YourOrderPage{
 
     @Override
     MobileTextBox getItemTitle(String itemTitle) throws Exception {
-        return new IOSTextBox((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("PickingUpFrom")), "Item title text");
+        return new IOSTextBox((IOSDriver) driver, By.id(itemTitle), "Item title text");
     }
 
     @Override
     MobileTextBox getItemPrice(String itemPrice) throws Exception {
-        return new IOSTextBox((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("PickingUpFrom")), "Item price text");
+        return new IOSTextBox((IOSDriver) driver, By.id(itemPrice), "Item price text");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class YourOrderPageIOS  extends YourOrderPage{
 
     @Override
     MobileButton getPlaceOrder() throws Exception {
-        return null;
+        return new IOSButton((IOSDriver) driver, By.xpath("//XCUIElementTypeButton[contains(@name,'" + BaseTest.getStringfromBundleFile("PlaceOrderText") + "')]"), BaseTest.getStringfromBundleFile("PlaceOrderText"));
     }
 
 

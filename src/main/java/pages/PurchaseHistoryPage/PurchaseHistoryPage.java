@@ -53,7 +53,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getOrderNumberList() throws Exception;
     abstract List<WebElement> getOrderTimeAddressList() throws Exception;
     abstract List<WebElement> getProductTitleList() throws Exception;
-    abstract MobileTextBox getProductTitle() throws Exception;
+    abstract MobileTextBox getProductTitle(String productTitle) throws Exception;
     abstract List<WebElement> getProductDescriptionList() throws Exception;
     abstract List<WebElement> getOrderTotalList() throws Exception;
 
@@ -415,9 +415,9 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
         Logz.step( "Started asserting order details In Order Confirmation Page" );
 
         if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )) {
-            Assert.assertEquals( getProductTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+            Assert.assertEquals( getProductTitle(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
         } else {
-            Assert.assertEquals( getProductTitle().getText(), customizedItem.getProductDetail().getName() );
+            Assert.assertEquals( getProductTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
         }
 
         // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));

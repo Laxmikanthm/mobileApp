@@ -73,7 +73,7 @@ PasswordiOS=PASSWORD
     }
 
     protected IOSButton getAllowBtn() throws Exception{
-        IOSButton allow = new IOSButton((IOSDriver) driver, By.name(BaseTest.getStringfromBundleFile("Allow")), "Show button");
+        IOSButton allow = new IOSButton((IOSDriver) driver, By.name(BaseTest.getStringfromBundleFile("Allow")), "Allow button");
         return allow;
     }
 

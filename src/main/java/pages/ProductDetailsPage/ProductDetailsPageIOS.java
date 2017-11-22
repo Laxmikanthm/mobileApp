@@ -14,6 +14,9 @@ public class ProductDetailsPageIOS extends ProductDetailsPage {
 
     @Override
     MobileButton getProductName(String productName) throws Exception {
+        if("Rotisserie-Style Chicken Sandwich".contains(productName)) {
+            productName = "Rotisserie-Style Chicken";
+        }
         return new IOSButton((IOSDriver) driver, By.name(productName.toUpperCase()), productName + " product name");
     }
 

@@ -91,7 +91,11 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         Logz.step("Started asserting order details In Your Order Page");
         Thread.sleep( 20000 );
         getPickupTimeHeaderText().isReady();
-        commonElements.scroll( getPickupTimeHeader(), "down" );
+        if(driver instanceof AndroidDriver) {
+            commonElements.scroll( getPickupTimeHeader(), "down" );
+        }else {
+            commonElements.scrollIOS( getPickupTimeHeader(), "up" );
+        }
         Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
         Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
        // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
@@ -124,8 +128,9 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
 
     public OrderConfirmationPage goToOrderConfirmationPage() throws Exception{
         Logz.step("Navigating to Order Confirmation Page......");
-        getPlaceOrder().isReady();
-        getPlaceOrder().click();
+        MobileButton placeOrder = getPlaceOrder();
+        placeOrder.isReady();
+        placeOrder.click();
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
     public ManageRewardsPage goToManageRewardPage() throws Exception{

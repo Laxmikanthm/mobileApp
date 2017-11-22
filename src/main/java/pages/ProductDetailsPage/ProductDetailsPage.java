@@ -54,7 +54,7 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
 
         try {
             Logz.step("##### Started asserting product name in Product Details page #####");
-           Assert.assertEquals(getProductName(customizedItem.getCustomizedProductDetail().getProductName()).getText().toUpperCase(), customizedItem.getCustomizedProductDetail().getProductName().toUpperCase());
+           Assert.assertTrue(customizedItem.getCustomizedProductDetail().getProductName().toUpperCase().contains(getProductName(customizedItem.getCustomizedProductDetail().getProductName()).getText().toUpperCase()));
            Assert.assertEquals( getProductPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem));
             Logz.step("##### Ended asserting product name in Product Details page #####");
 

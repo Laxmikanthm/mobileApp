@@ -3,7 +3,10 @@ package pages.PurchaseHistoryPage;
 import base.gui.controls.mobile.android.AndroidWebElement;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileTextBox;
+import base.gui.controls.mobile.ios.IOSButton;
+import base.gui.controls.mobile.ios.IOSTextBox;
 import base.gui.controls.mobile.ios.IOSWebElement;
+import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
@@ -30,13 +33,13 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
 
     @Override
     List<WebElement> getOrderList() throws Exception{
-        return new IOSWebElement((IOSDriver) driver, "order list").getWebElements( By.id("order_header"));
+        return new IOSWebElement((IOSDriver) driver, "order list").getWebElements( By.xpath("//XCUIElementTypeTable/XCUIElementTypeCell"));
 
     }
 
     @Override
     MobileButton getOrderListText() throws Exception {
-        return null;
+        return new IOSButton((IOSDriver) driver, By.xpath("//XCUIElementTypeNavigationBar[@name'" + BaseTest.getStringfromBundleFile("PurchaseHistory") + "']"), BaseTest.getStringfromBundleFile("PurchaseHistory") +" button");
     }
 
     @Override
@@ -50,8 +53,8 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     }
 
     @Override
-    MobileTextBox getProductTitle() throws Exception {
-        return null;
+    MobileTextBox getProductTitle(String productTitle) throws Exception {
+        return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + productTitle + "']"), "PurchaseHistory button");
     }
 
 
