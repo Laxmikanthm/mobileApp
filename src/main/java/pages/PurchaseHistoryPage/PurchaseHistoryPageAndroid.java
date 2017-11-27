@@ -1,18 +1,20 @@
 package pages.PurchaseHistoryPage;
 
+
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.android.AndroidTextBox;
 import base.gui.controls.mobile.android.AndroidWebElement;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileTextBox;
-import base.gui.controls.mobile.generic.MobileWebElement;
 import base.test.BaseTest;
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import pojos.CustomizedItem.CustomizedItem;
+import pojos.PurchaseHistoryDetails;
+import utils.Logz;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
@@ -21,7 +23,7 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
     }
 
     @Override
-     List<WebElement> getPaymentMethod() throws Exception {
+    List<WebElement> getPaymentMethod() throws Exception {
         return new AndroidWebElement((AndroidDriver) driver, "payment and rewards text").getWebElements(By.id("payment_method"));
 
     }
@@ -43,7 +45,7 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
 
     @Override
     List<WebElement> getOrderNumberList() throws Exception {
-        return new AndroidWebElement((AndroidDriver) driver, "order number list").getWebElements(By.xpath("//android.widget.TextView[contains(@text,'"+BaseTest.getStringfromBundleFile("Order")+"')]"));
+        return new AndroidWebElement((AndroidDriver) driver, "order number list").getWebElements(By.xpath("//android.widget.TextView[contains(@text,'"+ BaseTest.getStringfromBundleFile("Order")+"')]"));
     }
 
     @Override

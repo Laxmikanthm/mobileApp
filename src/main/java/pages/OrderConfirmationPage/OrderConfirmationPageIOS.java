@@ -32,7 +32,8 @@ public class OrderConfirmationPageIOS  extends OrderConfirmationPage{
 
     @Override
     MobileTextBox getItemPrice(String price) throws Exception {
-        return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + price + "']/following-sibling::XCUIElementTypeStaticText[1]"), price + " text");
+        //return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + price + "']/following-sibling::XCUIElementTypeStaticText[1]"), price + " text");
+        return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + price + "'][1]"), price + " text");
     }
 
     @Override

@@ -104,7 +104,7 @@ public class SearchStoreAndroid extends SearchStore {
         return label;
     }
 
-    protected By getAddressLocation() throws Exception{
+    protected By getAddressLocation(String address) throws Exception{
         return By.id("address");
     }
 }

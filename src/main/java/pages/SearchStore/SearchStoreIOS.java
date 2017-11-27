@@ -134,7 +134,7 @@ public class SearchStoreIOS extends SearchStore {
         return label;
     }
 
-    protected By getAddressLocation() throws Exception{
-        return By.xpath("//XCUIElementTypeTable//XCUIElementTypeStaticText");
+    protected By getAddressLocation(String address) throws Exception{
+        return By.xpath("//XCUIElementTypeTable//XCUIElementTypeStaticText[contains(@name,'" + address + "')]");
     }
 }

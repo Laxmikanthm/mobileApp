@@ -63,7 +63,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     abstract MobileButton getSearchArea() throws Exception;
     abstract MobileButton getLocaion() throws Exception;
     abstract MobileLabel getMapView() throws Exception;
-    abstract By getAddressLocation() throws Exception;
+    abstract By getAddressLocation(String address) throws Exception;
 
     Store store= new Store();
     By Address = MobileBy.AccessibilityId("Google Map");
@@ -106,7 +106,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         setSearchByZipCode(store.getZipCode());
         getSearchKeyButton().click();
         Logz.step("Store Address is: " + store.getAddress1());
-        commonElements.scrollAndClick(getAddressLocation(), store.getAddress1());
+        commonElements.scrollAndClick(getAddressLocation(store.getAddress1()), store.getAddress1());
     }
     public void searchStoreByZipCode(String  store) throws Exception {
         okPopUp();
