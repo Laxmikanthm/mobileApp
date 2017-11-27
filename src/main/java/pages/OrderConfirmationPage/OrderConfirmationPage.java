@@ -82,7 +82,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         if (customizedItem.getMenuName().contains( "Drinks" )) {
             if (customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Bottled Beverage" )) {
                 Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
-                Assert.assertEquals( getFlavorItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+                Assert.assertEquals( getFlavorItemTitle().getText().substring(2).trim(), customizedItem.getCustomizedProductDetail().getProductName() );
 
             } else {
                 Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
@@ -93,7 +93,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
 
             } else {
                 Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
-                Assert.assertEquals( getFlavorItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+                Assert.assertEquals( getFlavorItemTitle().getText().substring(2).trim(), customizedItem.getCustomizedProductDetail().getProductName() );
             }
 
         }
