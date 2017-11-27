@@ -74,7 +74,7 @@ public class HomePageAndroid extends HomePage {
         return button;
     }
     public MobileButton getStartAnother() throws Exception{
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("start_order"), "Add Something Else button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("start_order"), "Start order button");
         return button;
     }
     public MobileButton getRewardsApply() throws Exception{

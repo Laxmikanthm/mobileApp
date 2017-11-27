@@ -100,7 +100,7 @@ public class Offers extends SubwayAppBaseTest {
         //user =  RegisterUser.getUserWithOffers(1);
         user = landingPage.registerUser("StephenieLenglet@qasubway.com");
         ordersPage = landingPage.logInSelectStore(user, BaseTest.getStringfromBundleFile("StoreNumber")).goToOrderPage();
-        homePage = ordersPage.placeSpecificOrderRedeemOffers(mobileUser, BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.FOOTLONG);
+        homePage = ordersPage.placeSpecificOrderRedeemOffers(mobileUser, BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.FOOTLONG,1);
         purchaseHistoryPage = homePage.assertOfferIsNotPresent().goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
     }

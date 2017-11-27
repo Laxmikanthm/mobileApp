@@ -27,7 +27,7 @@ public class ProductData extends SubwayAppBaseTest {
         landingPage.productDetailsAssertion(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG, store);
     }
 
-   /* @Test
+    /*@Test
     public void testProductDetailsAllSandwichesSixInch() throws Exception{
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();

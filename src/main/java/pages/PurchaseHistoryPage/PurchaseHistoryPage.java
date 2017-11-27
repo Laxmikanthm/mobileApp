@@ -5,6 +5,7 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.MobileWebElement;
 import base.test.BaseTest;
+import cardantApiFramework.pojos.SubwayCard;
 import com.amazonaws.services.opsworks.model.App;
 import enums.Country;
 import io.appium.java_client.MobileElement;
@@ -12,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pages.CommonElements.CommonElements;
 import pages.HomePage.HomePage;
+import pages.UserProfilePage.UserProfilePage;
 import pojos.CartItemList;
 import pojos.CustomizedItem.CustomizedItem;
 import pojos.PurchaseHistoryDetails;
@@ -25,6 +27,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.testng.Assert;
 import pojos.RemoteOrder;
+import pojos.user.MobileUser;
 import pojos.user.RemoteOrderCustomer;
 import util.Utils;
 import utils.Logz;
@@ -44,7 +47,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     String orderNumber;
     String dateTime;
 
-   abstract List<WebElement> getPaymentMethod() throws Exception;
+    abstract List<WebElement> getPaymentMethod() throws Exception;
     abstract List<WebElement> getEarnedTokensText() throws Exception;
     abstract List<WebElement> getReceiptHeaderText() throws Exception;
 
@@ -58,8 +61,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getOrderTotalList() throws Exception;
 
     abstract By getEarnedTokens() throws Exception;
-
-
+    UserProfilePage userProfilePage;
 
     @Override
     public MobileLabel getPageLabel() throws Exception {
@@ -85,11 +87,18 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         }
     }
 
-public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem) throws Exception{
+    public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem) throws Exception{
 
 
         return PurchaseHistoryPage.get( (AppiumDriver)driver);
-}
+    }
+
+    public UserProfilePage assertOrderInPurchaseHostoryPage(MobileUser mobileUser) throws Exception{
+        userProfilePage.goToPurchaseHistoryPage();
+        assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        return UserProfilePage.get((AppiumDriver)driver);
+    }
+
 
     public void assertPlacedOrderDetailsInPurchaseHistoryPage(RemoteOrderCustomer mobileUser) throws Exception {
         try {
@@ -425,7 +434,7 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
 
     }
 
-        //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
+    //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
 //        try {
 //            Logz.step("##### Started setting actual purchase details in Purchase History Page #####");
 //            PurchaseHistoryDetails purchaseHistoryDetails = new PurchaseHistoryDetails();
