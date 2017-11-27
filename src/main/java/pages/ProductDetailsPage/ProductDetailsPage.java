@@ -3,6 +3,7 @@ package pages.ProductDetailsPage;
 import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.pages.mobile.MobileBasePage;
+import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -11,6 +12,7 @@ import pages.CustomizePage.CustomizePage;
 import pojos.CustomizedItem.CustomizedItem;
 import pojos.user.MobileUser;
 import util.MobileApi;
+import util.Utils;
 import utils.Logz;
 
 import java.util.*;
@@ -52,8 +54,8 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
 
         try {
             Logz.step("##### Started asserting product name in Product Details page #####");
-//            Assert.assertEquals(getProductName().getText(), customizedItem.getCustomizedProductDetail().getProductName());
-//            Assert.assertEquals( getProductPrice().getText(), "$"+customizedItem.getCustomizedProductDetail().getPrice());
+           Assert.assertEquals(getProductName().getText(), customizedItem.getCustomizedProductDetail().getProductName());
+           Assert.assertEquals( getProductPrice().getText(), Utils.getExpectedPrice(customizedItem));
             Logz.step("##### Ended asserting product name in Product Details page #####");
 
         }catch (Exception ex) {
@@ -70,20 +72,20 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
         Collections.sort(eIngredientsList);
         return aIngredientsList.equals(eIngredientsList);
     }
-    public ProductDetailsPage assertProductDetails(MobileUser mobileUser) throws Exception{
+    public ProductDetailsPage assertProductDetails(MobileUser mobileUser, CustomizedItem customizedItem) throws Exception{
         Logz.step("##### Started asserting Product Details #####");
         try {
-            CustomizedItem customizedItem = new CustomizedItem();
+
             Assert.assertEquals(getProductName().getText(), customizedItem.getCustomizedProductDetail().getProductName());
-            // Assert.assertEquals(getProductIngredientsText().getText(), BaseTest.getStringfromBundleFile("Ingredient"));
+            Assert.assertEquals(getProductIngredientsText().getText(), BaseTest.getStringfromBundleFile("Ingredient"));
             Assert.assertTrue( assertIngredients(getProductIngredientsList().getText(), MobileApi.getExpectedDefaultIngredients(customizedItem.getProductDetail())) );
             Assert.assertEquals(getProductDisclaimer().getText(), customizedItem.getProductDetail().getPromoDisclaimer());
             if (MobileApi.getBreadOptionCount(customizedItem, mobileUser) > 1) {
-                Assert.assertEquals(getProductPrice().getText(), "$"+customizedItem.getCustomizedProductDetail().getPrice());
-                Assert.assertEquals(getProductCalories().getText(), customizedItem.getCustomizedProductDetail().getCalories()+" Cals*");
+                Assert.assertEquals(getProductPrice().getText(), Utils.getExpectedPrice( customizedItem ));
+                Assert.assertEquals(getProductCalories().getText(), Utils.getExpectedCalories( customizedItem ));
             }else{
-                Assert.assertEquals(getSingleProductPrice().getText(), "$"+customizedItem.getCustomizedProductDetail().getPrice());
-                Assert.assertEquals(getSingleProductCalories().getText(), customizedItem.getCustomizedProductDetail().getCalories()+" Cals*");
+                Assert.assertEquals(getSingleProductPrice().getText(), Utils.getExpectedPrice( customizedItem ));
+                Assert.assertEquals(getSingleProductCalories().getText(), Utils.getExpectedCalories( customizedItem ));
             }
 
         }catch (Exception ex) {

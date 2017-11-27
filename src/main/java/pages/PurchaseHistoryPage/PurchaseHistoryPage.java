@@ -12,8 +12,10 @@ import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pages.CommonElements.CommonElements;
+import pages.HomePage.HomePage;
 import pages.UserProfilePage.UserProfilePage;
 import pojos.CartItemList;
+import pojos.CustomizedItem.CustomizedItem;
 import pojos.PurchaseHistoryDetails;
 import pojos.PaymentDetails;
 import base.gui.controls.mobile.generic.MobileLabel;
@@ -54,6 +56,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getOrderNumberList() throws Exception;
     abstract List<WebElement> getOrderTimeAddressList() throws Exception;
     abstract List<WebElement> getProductTitleList() throws Exception;
+    abstract MobileTextBox getProductTitle() throws Exception;
     abstract List<WebElement> getProductDescriptionList() throws Exception;
     abstract List<WebElement> getOrderTotalList() throws Exception;
 
@@ -84,12 +87,18 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         }
     }
 
+    public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem) throws Exception{
+
+
+        return PurchaseHistoryPage.get( (AppiumDriver)driver);
+    }
 
     public UserProfilePage assertOrderInPurchaseHostoryPage(MobileUser mobileUser) throws Exception{
         userProfilePage.goToPurchaseHistoryPage();
         assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
         return UserProfilePage.get((AppiumDriver)driver);
     }
+
 
     public void assertPlacedOrderDetailsInPurchaseHistoryPage(RemoteOrderCustomer mobileUser) throws Exception {
         try {
@@ -105,7 +114,43 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         }
 
     }
+    public void assertPlacedOrderDetailsInPurchaseHistoryPage(RemoteOrderCustomer mobileUser, CustomizedItem customizedItem) throws Exception {
+        try {
 
+            List<PurchaseHistoryDetails> expectedOrderHistoryList = getExpectedPurchaseHistoryList(mobileUser);
+            List<PurchaseHistoryDetails> actualOrderHistoryList = getActualPurchaseHistoryList(customizedItem);
+            Logz.step("!!!!! Started asserting placed order details in Purchase History Page !!!!!");
+            Assert.assertEquals(actualOrderHistoryList, expectedOrderHistoryList);
+            Logz.step("!!!!! Ended asserting placed order details in Purchase History Page !!!!!");
+
+        } catch (Exception ex) {
+            throw new Exception(("Failed to assert placed order details in Purchase History Page\n" + ex.getMessage()));
+        }
+
+    }
+
+    public List<PurchaseHistoryDetails> getActualPurchaseHistoryList(CustomizedItem customizedItem) throws Exception {
+        try {
+            Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
+            List<PurchaseHistoryDetails> orderHistoryList = new ArrayList<>();
+            getOrderListText().isReady();
+            int webElementCount = getOrderList().size();
+            for (int i = 0; i < webElementCount; i++) {
+                List<WebElement> getOrderHistoryList =getOrderTimeAddressList();
+                getOrderHistoryList.get(i).click();
+                assertProductTitleInPurchaseHistoryPage(customizedItem);
+                orderHistoryList.add(getActualPurchaseHistory(i));
+            }
+            Logz.step("##### Ended getting actual purchase details in Purchase History Page #####");
+
+            return orderHistoryList;
+
+        } catch (Exception ex) {
+            throw new Exception(("Failed to get actual purchase details in Purchase History Page\n" + ex.getMessage()));
+
+
+        }
+    }
     public List<PurchaseHistoryDetails> getActualPurchaseHistoryList() throws Exception {
         try {
             Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
@@ -127,6 +172,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
 
         }
     }
+
 
 
     private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
@@ -374,8 +420,19 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             return sortItemName;
         }
     }
+    public void assertProductTitleInPurchaseHistoryPage(CustomizedItem customizedItem) throws Exception {
+        Logz.step( "Started asserting order details In Order Confirmation Page" );
 
+        if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )) {
+            Assert.assertEquals( getProductTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+        } else {
+            Assert.assertEquals( getProductTitle().getText(), customizedItem.getProductDetail().getName() );
+        }
 
+        // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+        Logz.step( "Started asserting order details In Order Confirmation Page" );
+
+    }
 
     //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
 //        try {

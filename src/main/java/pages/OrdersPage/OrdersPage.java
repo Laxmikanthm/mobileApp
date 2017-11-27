@@ -2044,11 +2044,20 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    public HomePage placeOrderForRedeemingCertificate(MobileUser mobileUser, String menuCategories, BreadSize breadSize, Store store) throws Exception {
+    public HomePage productDetailsAssertion(MobileUser mobileUser, String menuCategories, BreadSize breadSize) throws Exception {
         try {
             customized = false;
-            Logz.step("##### Started placing Order for certificates #####" + menuCategories);
+            Logz.step("##### Started placing Default Order #####" + menuCategories);
             CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, menuCategories, breadSize );
+            String productName = selectMenuGetProductName( customizedItemDetails );
+            ProductDetailsPage productDetailsPage = goToProductDetailsPage( productName );
+            if (!(customizedItemDetails.getCustomizedProductDetail().getBreadSize().contains( "FOOTLONG™" ) || breadSize.toString().contains( "none" ))) {
+                if (MobileApi.getBreadOptionCount( customizedItemDetails, mobileUser ) > 1) {
+                    getSixInchOption().click();
+                }
+            }
+            productDetailsPage.assertProductDetails( mobileUser, customizedItemDetails );
+            Logz.step("##### Started placing Order for certificates #####" + menuCategories);
             addDefaultItemInCart( mobileUser, breadSize, customizedItemDetails );
             placeOrderAndAssert(mobileUser, menuCategories, store, customizedItemDetails);
             Logz.step("##### Ended placing Default Order #####");
@@ -2126,7 +2135,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem );
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
       // homePage.validateTokens(mobileUser);
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser );
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem);
+
+    }
+    private void assertSidesDrinksOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem) throws Exception {
+
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertSidesDrinksOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
+        HomePage homePage = orderConfirmationPage.assertSidesDrinksOrderDetailsInOrderConfirmationPage( customizedItem );
+        PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        // homePage.validateTokens(mobileUser);
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem);
 
     }
     private void assertFavouriteOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage,CustomizedItem customizedItem) throws Exception {
@@ -2138,12 +2156,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         FavouritePage favouritePage=homePage.goToFavouritePage();
         favouritePage.assertFavourites(mobileUser);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser );
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser, customizedItem );
 
     }
     private void placeSidesDrinksOrderAndAssert(MobileUser mobileUser, CustomizedItem customizedItem) throws Exception {
-        YourOrderPage yourOrderPage = goToYourOrderPage( customized );
-        assertOrderDetails( mobileUser, yourOrderPage, customizedItem );
+        YourOrderPage yourOrderPage = goToYourOrderPage( );
+        assertSidesDrinksOrderDetails( mobileUser, yourOrderPage, customizedItem );
 
     }
 
@@ -2206,6 +2224,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
         return YourOrderPage.get( (AndroidDriver) driver );
     }
+    private YourOrderPage goToYourOrderPage() throws Exception {
+
+        return YourOrderPage.get( (AndroidDriver) driver );
+    }
 
     private SidesPage goToSidesPage(String menuName) throws Exception {
         selectSpecificMenu(menuName);
@@ -2230,10 +2252,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void addDefaultSidesDrinksItemInCart(MobileUser mobileUser, String menuName, CustomizedItem customizedItem) throws Exception {
         if (menuName.contains( "Sides" )) {
             SidesPage sidesPage = goToSidesPage(menuName);
-            sidesPage.selectSidesOrder(mobileUser, customizedItem );
+            sidesPage.selectSidesOrder(customizedItem );
         } else {
             DrinksPage drinksPage = goToDrinkPage(menuName);
-            drinksPage.selectDrinksOrder(mobileUser, customizedItem );
+            drinksPage.selectDrinksOrder(customizedItem );
         }
     }
 
@@ -2272,9 +2294,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void assertBreakfastUnavailablePopUp(CustomizedItem customizedItem, Store store) throws Exception {
         String startTime = Utils.getBreakFastStartTimeRounded(store);
         String endTime = Utils.getBreakFastEndTimeRounded( store );
-        getErrorTitle().getText();
+        String startEndTime = " "+startTime+" "+BaseTest.getStringfromBundleFile( "to" ) +" "+endTime+". ";
         Assert.assertEquals( getErrorTitle().getText(), BaseTest.getStringfromBundleFile( "BreakfastAlertTitle" ) );
-        Assert.assertEquals( getErrorMessage().getText(), BaseTest.getStringfromBundleFile( "BreakfastAlertMsg1" )+ startTime + endTime + BaseTest.getStringfromBundleFile( "BreakfastAlertMsg1" ) );
+        Assert.assertEquals( getErrorMessage().getText(), BaseTest.getStringfromBundleFile( "BreakfastAlertMsg1" )+ startEndTime + BaseTest.getStringfromBundleFile( "BreakfastAlertMsg2" ) );
         getErrorOk().click();
     }
 
@@ -2348,8 +2370,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectSpecificProduct(MobileUser mobileUser, String productName, BreadSize breadSize, boolean customized, CustomizedItem customizedItem) throws Exception {
         try {
             Logz.step( "##### Selecting: " + productName + " #####" );
-            Logz.step( "product name: " + productName );
-            ProductDetailsPage productDetailsPage = goToProductDetailsPage( productName );
+            ProductDetailsPage productDetailsPage;
+            if(customizedItem.getMenuName().contains( BaseTest.getStringfromBundleFile( "Breakfast" ) )){
+                productDetailsPage = goToBreakfastProductDetailsPage( productName );
+            }else{
+
+                productDetailsPage = goToProductDetailsPage( productName );
+            }
+
             productDetailsPage.assertProductNameInProductDetailsPage( customizedItem );
             if (!(customizedItem.getCustomizedProductDetail().getBreadSize().contains( "FOOTLONG™" ) || breadSize.toString().contains( "none" ))) {
                 if (MobileApi.getBreadOptionCount( customizedItem, mobileUser ) > 1) {
@@ -2373,7 +2401,11 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
 
-    private void placeLoyaltyOrderAndAssert(int certRedeemCount) throws Exception {
+    private ProductDetailsPage goToBreakfastProductDetailsPage(String productName) throws Exception {
+        elements.scrollAndClickBreakfast( productGroupHeaderIOS, productGroupHeaderAndroid, productName );
+        return ProductDetailsPage.get( (AppiumDriver) driver );
+    }
+    private void placeLoyaltyOrderAndAssert() throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage( customized );
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertLoyaltyDisplay(certRedeemCount);
         orderConfirmationPage.assertLoyaltyDisplay();

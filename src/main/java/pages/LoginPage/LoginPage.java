@@ -31,6 +31,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     abstract PasswordTextBox getPassword() throws Exception;
     abstract MobileButton getLogin() throws Exception;
     abstract MobileButton getSignUp() throws Exception;
+
     abstract MobileButton getForgotPassword() throws Exception;
 
     @Override
@@ -119,11 +120,14 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
 private void androidPopUpCheck() throws Exception{
     try {
-        Thread.sleep( 15000 );
+        Thread.sleep( 30000 );
         driver.findElementByXPath( "//android.widget.EditText[@resource-id='custom-signInName']" );
+        Logz.step( "Found user name" );
     } catch (org.openqa.selenium.NoSuchElementException ex) {
+        Logz.step( "didnt Find user name" );
         driver.findElementById( "com.android.chrome:id/terms_accept" ).click();
         driver.findElementById( "com.android.chrome:id/negative_button" ).click();
+        Logz.step( "Clicked on terms" );
     }
 }
 

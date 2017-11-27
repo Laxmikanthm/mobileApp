@@ -30,7 +30,17 @@ public class OrderConfirmationPageIOS  extends OrderConfirmationPage{
     }
 
     @Override
+    MobileTextBox getFlavorItemTitle() throws Exception {
+        return null;
+    }
+
+    @Override
     MobileTextBox getTotalText() throws Exception {
+        return null;
+    }
+
+    @Override
+    MobileTextBox getPickupTimeHeaderText() throws Exception {
         return null;
     }
 }
