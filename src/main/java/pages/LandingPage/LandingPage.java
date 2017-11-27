@@ -92,7 +92,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             Logz.error("Skip button clicked");
         }*/
         //this.getLoginButton().click();
-        //getLoginButton().click();
+        getLoginButton().click();
         Logz.step("##### Navigating to login page .......##### ");
         return LoginPage.get((AppiumDriver) driver);
     }
