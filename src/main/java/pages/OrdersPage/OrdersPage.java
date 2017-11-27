@@ -2405,7 +2405,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         elements.scrollAndClickBreakfast( productGroupHeaderIOS, productGroupHeaderAndroid, productName );
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
-    private void placeLoyaltyOrderAndAssert() throws Exception {
+    private void placeLoyaltyOrderAndAssert(int certRedeemCount) throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage( customized );
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertLoyaltyDisplay(certRedeemCount);
         orderConfirmationPage.assertLoyaltyDisplay();
