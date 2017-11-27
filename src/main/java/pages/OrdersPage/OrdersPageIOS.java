@@ -508,4 +508,14 @@ public class OrdersPageIOS extends OrdersPage {
         IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
         return label;
     }
+
+    public MobileLabel getLoyaltyError() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
+    }
+
+    public MobileLabel getAlertTitle() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
+    }
 }

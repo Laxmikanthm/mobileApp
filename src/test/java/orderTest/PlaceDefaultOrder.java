@@ -126,12 +126,12 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
 
     //DFA-9165
     //Place Order for more than 6 times...R2
-    @Test(enabled = false)
+    @Test
     public void placeOrderForMoreThanSixTimes() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        ordersPage.ValidatingPlacingOrderForSixTimes(mobileUser, store.getAddress1(), homePage);
+        ordersPage.validatingPlacingOrderForSixTimes(mobileUser, store.getAddress1());
 
     }
 

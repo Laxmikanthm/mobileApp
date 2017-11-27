@@ -91,12 +91,12 @@ public abstract  class UserProfilePage<T extends AppiumDriver> extends MobileBas
     public HomePage assertMobileOrderHistory(String expectedOrderNum) throws Exception
     {
         try{
-           getMobileOrderHistory().click();
+            getMobileOrderHistory().click();
             //need to change
-           String orderNum= ((AndroidDriver)driver).findElementByXPath("//*[starts-with(@text,'Order ') and @class='android.widget.TextView']").getText();
+            String orderNum= ((AppiumDriver)driver).findElementByXPath("//*[starts-with(@text,'Order ') and @class='android.widget.TextView']").getText();
             String actualOrderNumber[]=orderNum.split(" ");
-
             Assert.assertEquals(actualOrderNumber[1],expectedOrderNum);
+
             return HomePage.get((AppiumDriver) driver);
         }catch(Exception ex){
             throw new Exception(ex);

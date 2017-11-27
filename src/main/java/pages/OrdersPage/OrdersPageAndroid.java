@@ -422,5 +422,14 @@ public class OrdersPageAndroid extends OrdersPage {
         return label;
     }
 
+    public MobileLabel getLoyaltyError() throws Exception{
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("alertTitle"), "Loyalty Error");
+        return label;
+    }
+
+    public MobileLabel getAlertTitle() throws Exception{
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("alertTitle"), "Error pop up title");
+        return label;
+    }
 
 }
