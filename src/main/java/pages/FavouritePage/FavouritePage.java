@@ -57,32 +57,27 @@ public abstract class FavouritePage<T extends AppiumDriver> extends MobileBasePa
         actuaFavourites.setPrice(getPrice().getText());
         FavoriteItems expectedApiFavourites= MobileApi.getFavoriteItems(mobileUser);
         String result = "";
-        String FavouriteName="";
-        Double Price=0.0;
+        String favouriteName="";
+        Double price=0.0;
         for(int i=0;i<expectedApiFavourites.getResults().length;i++)
         {
-
-            FavouriteName= expectedApiFavourites.getResults()[i].getFavoriteName();
-            Price= expectedApiFavourites.getResults()[i].getPrice();
+            favouriteName= expectedApiFavourites.getResults()[i].getFavoriteName();
+            price= expectedApiFavourites.getResults()[i].getPrice();
             List<FavoriteOptions> favoriteOptionsList=expectedApiFavourites.getResults()[i].getOptions().subList(0,expectedApiFavourites.getResults()[i].getOptions().size()-1);
             for(int k=0;k<favoriteOptionsList.size();k++)
             {
-
                 if(k==0) {
                     result=favoriteOptionsList.get(k).getName();
                 }
-                else
-                {
+                else {
                     result+=","+favoriteOptionsList.get(k).getName();
                 }
             }
-
         }
         expectedFavourites.setIngrediants(result);
-        expectedFavourites.setFavouriteName(FavouriteName);
-        expectedFavourites.setPrice(Price.toString());
+        expectedFavourites.setFavouriteName(favouriteName);
+        expectedFavourites.setPrice(price.toString());
         Assert.assertEquals(actuaFavourites, expectedFavourites);
-
         return HomePage.get( (AppiumDriver) driver );
     }
 }

@@ -402,8 +402,8 @@ public abstract  class UserProfilePage<T extends AppiumDriver> extends MobileBas
     }
     public PurchaseHistoryPage goToPurchaseHistoryPage() throws Exception{
         Logz.step("##### Navigating to Purchase History Page #####");
-
         getPurchaseHistory().click();
+
         Logz.step("##### Navigated to Purchase History Page #####");
         return PurchaseHistoryPage.get((AppiumDriver) driver);
     }

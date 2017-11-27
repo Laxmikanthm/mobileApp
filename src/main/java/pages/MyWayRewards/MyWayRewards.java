@@ -1,6 +1,7 @@
 package pages.MyWayRewards;
 
 import Base.SubwayAppBaseTest;
+import base.gui.controls.mobile.android.AndroidWebElement;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
@@ -14,6 +15,7 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import kobieApi.pojos.Certificates;
+import kobieApi.pojos.CertificatesList;
 import kobieApi.pojos.Loyalty;
 import kobieApi.pojos.Summaries;
 import kobieApi.serviceUtils.Kobie;
@@ -28,11 +30,14 @@ import pages.LoginPage.LoginPageIOS;
 import pojos.user.RemoteOrderCustomer;
 import org.openqa.selenium.interactions.touch.FlickAction;
 import util.MobileApi;
+import util.Utils;
 import utils.Logz;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /**
  * Created by E001599 on 18-05-2017.
  */
@@ -63,9 +68,12 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
     abstract MobileButton getToolbarClose() throws Exception;
 
     abstract MobileLabel getCertsmyreward() throws Exception;
+    abstract List<WebElement> getRewardsList() throws Exception;
+    abstract List<WebElement> getRewardsDetails(WebElement rewards) throws Exception;
 
     Dimension size;
-
+    public int rewards = 0;
+    String expDate;
     By Swipe = By.id("com.subway.mobile.subwayapp03:id/reward_page_text");
 
     @Override
@@ -172,42 +180,77 @@ public abstract class MyWayRewards<T extends AppiumDriver> extends MobileBasePag
         return remoteOrderCustomer;
     }
 
-    public HomePage assertTokensAndCertificates(RemoteOrderCustomer user,boolean tokenCertificatesAdded) throws Exception {
+    public HomePage assertTokensAndCertificates(RemoteOrderCustomer user) throws Exception {
         swipeForTokens();
         Thread.sleep(3000);
-        Assert.assertTrue(tokenCertificatesAdded, "No certificates are available");
-        getActualExpectedMyLoyaltyDetails(user);
+        Assert.assertEquals(getActualMyLoyaltyDetails(user),getExpectedMyLoyaltyDetails(user));
         return HomePage.get((AppiumDriver) driver);
 
     }
-    private pojos.MyLoyalty getActualExpectedMyLoyaltyDetails(RemoteOrderCustomer user) throws Exception{
-        pojos.MyLoyalty actualAndExpectedMyLoyalty = new pojos.MyLoyalty();
+    private pojos.MyLoyalty getActualMyLoyaltyDetails(RemoteOrderCustomer user) throws Exception{
+        pojos.MyLoyalty actualMyLoyalty = new pojos.MyLoyalty();
         Logz.step("Started asserting certificates from MyWayRewards page");
-        String tokens = gettokensmyreward().getText();
-        actualAndExpectedMyLoyalty.setTokens(tokens);
-        user = MobileApi.getLoyaltyLookUp(user);
-        if (user.getConfirmToken() != null) {
-            Assert.assertEquals(user.getConfirmToken(), tokens);
-            Logz.step("tokens asserted");
-        } else {
-            Logz.step("Tokens are not available");
-        }
-        int myrewardcertcount = driver.findElements(By.id("rewards_count")).size()*2;
-        if (myrewardcertcount > 0) {
-            int myRewardsPagecertcount = Integer.parseInt(getCertsmyreward().getText());
-            Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(), myRewardsPagecertcount);
-        } else {
-            Logz.step("Certificates not available");
-        }
-        return actualAndExpectedMyLoyalty;
+        actualMyLoyalty.setTokens(gettokensmyreward().getText());
+        List<Certificates> certificatesList = new ArrayList<>();
+        for(WebElement we: getRewardsList()){
+            Certificates certificates = new Certificates();
+            for(WebElement ele: getRewardsDetails(we)){
+                if(ele.getAttribute("id").equals("rewards_count")){
+                    ele.getText();
+                    //Split the tokens
+                    String amount[] = ele.getText().split( " " );
+                    certificates.setAmount((amount[0]));
+                } else if (we.getAttribute("id").equals("expire_date")) {
+                    certificates.setExpirationDate(we.getText());
+                }
+            }
+            certificatesList.add(certificates);
+            }
+            actualMyLoyalty.setCertificates(certificatesList);
+        return actualMyLoyalty;
     }
 
     private pojos.MyLoyalty getExpectedMyLoyaltyDetails(RemoteOrderCustomer user) throws Exception{
         pojos.MyLoyalty expectedMyLoyalty = new pojos.MyLoyalty();
         user = MobileApi.getLoyaltyLookUp(user);
-        //get and set data from api to expectedMyLoyalty
-        /*expectedMyLoyalty.setTokens("get the token value");*/
-       //  expectedMyLoyalty.setCertificates("get list of certificates");
+        //Condition for tokens and Summaries=null
+        int bonus = 0;
+        int points = 0;
+        if(user.getLoyaltyLookup().getLoyalty().getSummaries()!=null){
+            Logz.step("Tokens are available in MyLoyalty page");
+            List<Summaries> summaries = user.getLoyaltyLookup().getLoyalty().getSummaries();
+            for (Summaries summaries1 : summaries) {
+                if (summaries1.getBucketId() == "30") {
+                    String[] tokens = summaries1.getAvailable().split(".");
+                    points = Integer.parseInt(tokens[0]);
+                }
+                if (summaries1.getBucketId() == "31") {
+                    String[] tokens = summaries1.getAvailable().split(".");
+                    bonus = Integer.parseInt(tokens[0]);
+                }
+            }
+            expectedMyLoyalty.setTokens(String.valueOf(points+bonus));
+        }else{
+            Logz.step("Tokens are not available");
+        }
+        if(user.getLoyaltyLookup().getCertificates().getCertificatesList()!=null){
+            Logz.step("Certificates are available in My Loyalty page");
+            List<CertificatesList> certificates = user.getLoyaltyLookup().getCertificates().getCertificatesList();
+            List<Certificates> certificates1 = new ArrayList<>();
+            for(CertificatesList certificatesList:certificates) {
+                Certificates certList = new Certificates();
+                certList.setAmount("$"+certificatesList.getAmount().split(".")[0]);
+                //Change date format to
+                SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("mm/dd/yy");
+                expDate = Utils.formatDateTime(certificatesList.getExpirationDate(),"yyyy-MM-dd hh:mm:ss a", "MMMM dd, yyyy | hh:mma");
+                String expirationDate = DATE_FORMAT.format(expDate);
+                certList.setExpirationDate(expirationDate);
+                certificates1.add(certList);
+                expectedMyLoyalty.setCertificates(certificates1);
+            }
+        }else{
+            Logz.step("Certificates are not available");
+        }
         return expectedMyLoyalty;
     }
 

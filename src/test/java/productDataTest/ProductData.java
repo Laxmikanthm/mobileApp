@@ -26,11 +26,11 @@ public class ProductData extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         homePage = landingPage.logInSelectStore(mobileUser, store);
-        productDetailsPage =  homePage.goToProductDetailsPage(mobileUser, BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG);
+        productDetailsPage =  homePage.goToProductDetailsPage(mobileUser, BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG,);
         productDetailsPage.assertProductDetails( mobileUser);
-    }*/
+    }
 
-   /* @Test
+    @Test
     public void testProductDetailsAllSandwichesSixInch() throws Exception{
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
