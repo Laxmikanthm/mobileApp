@@ -62,7 +62,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
 
     abstract By getEarnedTokens() throws Exception;
     UserProfilePage userProfilePage;
-
+    CustomizedItem customizedItem;
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -116,7 +116,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     }
     public void assertPlacedOrderDetailsInPurchaseHistoryPage(RemoteOrderCustomer mobileUser, CustomizedItem customizedItem) throws Exception {
         try {
-
+            this.customizedItem = customizedItem;
             List<PurchaseHistoryDetails> expectedOrderHistoryList = getExpectedPurchaseHistoryList(mobileUser);
             List<PurchaseHistoryDetails> actualOrderHistoryList = getActualPurchaseHistoryList(customizedItem);
             Logz.step("!!!!! Started asserting placed order details in Purchase History Page !!!!!");
@@ -310,7 +310,12 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             CartSummary.CartItem[] cartItems = cartSummaryResult.getItems();  //cartSummaryResult.getCartItems();
             for (CartSummary.CartItem cartItem : cartItems) {
                 CartSummary.Option[] options = cartItem.getOptions();
-                CartItemList cart = new CartItemList(Utils.convert12inchToFootLong(cartItem.getName()), getOptions(options), cartItem.getIsFavorite());
+                CartItemList cart;
+                if(customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )){
+                     cart = new CartItemList(Utils.convert12inchToFootLong(cartItem.getName()), "", cartItem.getIsFavorite());
+                }else {
+                     cart = new CartItemList( Utils.convert12inchToFootLong( cartItem.getName() ), getOptions( options ), cartItem.getIsFavorite() );
+                }
                 cartItemList.add(cart);
             }
             ComparatorByIteName comparatorByIteName = new ComparatorByIteName();
@@ -533,7 +538,5 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
 //        }
 //
 //    }
-
-
 
 }
