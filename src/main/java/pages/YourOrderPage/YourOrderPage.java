@@ -83,8 +83,8 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     public OrderConfirmationPage assertOrderSummaryInYourOrderPage(CustomizedItem customizedItem) throws Exception{
         Logz.step("Started asserting order details In Order Confirmation Page");
         commonElements.scroll( getPickupTimeHeader(), "up" );
-        Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName());
-        Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
+        Assert.assertEquals( getItemTitle(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName());
+        Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
     public YourOrderPage assertOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
