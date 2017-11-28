@@ -46,7 +46,7 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
 
     @Override
     List<WebElement> getOrderNumberList() throws Exception {
-        return new IOSWebElement((IOSDriver) driver, "order number list").getWebElements(By.xpath("//android.widget.TextView[contains(@text,'Order')]"));
+        return new IOSWebElement((IOSDriver) driver, "order number list").getWebElements(By.xpath("//XCUIElementTypeCell/XCUIElementTypeOther"));
     }
 
     @Override
@@ -81,6 +81,10 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     @Override
     List<WebElement>  getReceiptHeaderText() throws Exception {
         return null;
+    }
+
+    List<WebElement> getOrderDetails(WebElement element) throws Exception{
+        return element.findElements(By.xpath("//XCUIElementTypeStaticText"));
     }
 
     @Override

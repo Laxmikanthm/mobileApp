@@ -86,6 +86,9 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
         return new AndroidWebElement((AndroidDriver) driver, "Item text").getWebElements(By.xpath("//android.widget.TextView[@text='"+BaseTest.getStringfromBundleFile("items")+"']"));
     }
 
+    List<WebElement> getOrderDetails(WebElement element) throws Exception{
+        return element.findElements(By.id("order_time_address"));
+    }
 //    @Override
 //    MobileTextBox getPaymentRewardsHeaderText() throws Exception {
 //        return null;

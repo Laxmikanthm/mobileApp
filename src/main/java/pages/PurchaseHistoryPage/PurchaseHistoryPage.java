@@ -59,6 +59,8 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract MobileTextBox getProductTitle(String productTitle) throws Exception;
     abstract List<WebElement> getProductDescriptionList() throws Exception;
     abstract List<WebElement> getOrderTotalList() throws Exception;
+    abstract List<WebElement> getOrderDetails(WebElement element) throws Exception;
+
 
     abstract By getEarnedTokens() throws Exception;
 
@@ -112,7 +114,7 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
         try {
 
             List<PurchaseHistoryDetails> expectedOrderHistoryList = getExpectedPurchaseHistoryList(mobileUser);
-            List<PurchaseHistoryDetails> actualOrderHistoryList = getActualPurchaseHistoryList(customizedItem, expectedOrderHistoryList);
+            List<PurchaseHistoryDetails> actualOrderHistoryList = getActualPurchaseHistoryList(customizedItem);
             Logz.step("!!!!! Started asserting placed order details in Purchase History Page !!!!!");
             Assert.assertEquals(actualOrderHistoryList, expectedOrderHistoryList);
             Logz.step("!!!!! Ended asserting placed order details in Purchase History Page !!!!!");
@@ -123,7 +125,7 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
 
     }
 
-    List<PurchaseHistoryDetails> getActualPurchaseHistoryList(CustomizedItem customizedItem, List<PurchaseHistoryDetails> expectedOrderHistoryList) throws Exception {
+    List<PurchaseHistoryDetails> getActualPurchaseHistoryList(CustomizedItem customizedItem) throws Exception {
         try {
             Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
             List<PurchaseHistoryDetails> orderHistoryList = new ArrayList<>();
@@ -131,8 +133,11 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
             List<WebElement> orders = getOrderList();
             for (int i = 0; i < orders.size(); i++) {
                 orders.get(i).click();
-                assertProductTitleInPurchaseHistoryPage(customizedItem);
-                orderHistoryList.add(getActualPurchaseHistory(orders.get(i), i, expectedOrderHistoryList.get(i).getOrderNumber()));
+                if (driver instanceof AndroidDriver) { //This we are not asserting for iOS because on 'Purchase History' page unable to identify purchaser order details individually.
+                    assertProductTitleInPurchaseHistoryPage(customizedItem);
+                }
+                orderHistoryList.add(getActualPurchaseHistory(orders.get(i), i));
+
             }
             Logz.step("##### Ended getting actual purchase details in Purchase History Page #####");
 
@@ -156,7 +161,7 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
             List<WebElement> getOrderHistoryList =getOrderTimeAddressList();
             for (int i = 0; i < webElementCount; i++) {
                 getOrderHistoryList.get(i).click();
-                orderHistoryList.add(getActualPurchaseHistory(getOrderHistoryList.get(i), i, expectedOrderHistoryList.get(i).getOrderNumber()));
+                orderHistoryList.add(getActualPurchaseHistory(getOrderHistoryList.get(i), i));
             }
             Logz.step("##### Ended getting actual purchase details in Purchase History Page #####");
 
@@ -171,24 +176,35 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
 
 
 
-    public PurchaseHistoryDetails getActualPurchaseHistory(WebElement eleOrder, int index, String orderNumber) throws Exception {
+    public PurchaseHistoryDetails getActualPurchaseHistory(WebElement eleOrder, int index) throws Exception {
         try {
             Logz.step("##### Started setting actual purchase details in Purchase History Page #####");
             PurchaseHistoryDetails purchaseHistoryDetails = new PurchaseHistoryDetails();
           //  List<WebElement> getOrderNumbers = commonElements.getElements(By.id(""), By.xpath("//android.widget.TextView[contains(@text,'Order')]"));
             List<WebElement> getOrderNumbers = getOrderNumberList();
             String orderNum = getOrderNumbers.get(index).getText();
-            Logz.step("Order number: "+orderNum);
+            Logz.step("Order number: " + orderNum);
           //  List<WebElement> getOrderTimeAddress = commonElements.getElements(By.id(""), By.id("order_time_address"));
             //List<WebElement> getOrderTimeAddress = getOrderTimeAddressList();
-            String orderTimeAddress = eleOrder.getText();
-            String[] split = orderTimeAddress.split("\n");
-            purchaseHistoryDetails.setPickupDateTime(split[0]);
-            purchaseHistoryDetails.setStoreAddress(split[1]);
-            purchaseHistoryDetails.setOrderNumber(orderNumber);
-            purchaseHistoryDetails.setCartItemList(getActualCartItemList(index));
-            purchaseHistoryDetails.setPaymentDetails(getActualPaymentDetails(index));
-            purchaseHistoryDetails.setTotal(actualTotal);
+
+            List<WebElement> orderDetail = getOrderDetails(eleOrder);
+            if(driver instanceof IOSDriver){
+                purchaseHistoryDetails.setStoreAddress(orderDetail.get(1).getText());
+                purchaseHistoryDetails.setPickupDateTime(orderDetail.get(2).getText() + " | " + orderDetail.get(3).getText());
+                orderNum = BaseTest.getStringfromBundleFile("Order") + " " + orderNum;
+            }else {
+                String orderTimeAddress = orderDetail.get(0).getText();
+                String[] split = orderTimeAddress.split("\n");
+                purchaseHistoryDetails.setPickupDateTime(split[0]);
+                purchaseHistoryDetails.setStoreAddress(split[1]);
+
+                //########### This block we are not asserting for iOS because on 'Purchase History' page unable to identify purchaser order details locators individually. ###################
+                purchaseHistoryDetails.setCartItemList(getActualCartItemList(index));
+                purchaseHistoryDetails.setPaymentDetails(getActualPaymentDetails(index));
+                purchaseHistoryDetails.setTotal(actualTotal);
+                //########### This block we are not asserting for iOS because on 'Purchase History' page unable to identify purchaser order details locators individually. ###################
+            }
+            purchaseHistoryDetails.setOrderNumber(orderNum);
             Logz.step("##### Ended setting actual purchase details in Purchase History Page #####");
             return purchaseHistoryDetails;
         } catch (Exception ex) {
@@ -284,9 +300,11 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
                 purchaseHistoryDetails.setPickupDateTime(dateTime);//Utils.formatDateTime(cartSummaryResult.getPickupDate(), "yyyy-MM-dd hh:mm:ss a", "MMMM d, yyyy | h:m:a"),
                 purchaseHistoryDetails.setOrderNumber("Order " + cartSummaryResult.getOrderNumber());
                 purchaseHistoryDetails.setStoreAddress(cartSummaryResult.getStoreAddress());
-                purchaseHistoryDetails.setCartItemList(getExpectedCartItemList(cartSummaryResult));
-                purchaseHistoryDetails.setPaymentDetails(getExpectedPaymentDetails(cartSummaryResult, mobileUser));
-                purchaseHistoryDetails.setTotal(expectedTotal);
+                if(driver instanceof AndroidDriver) {
+                    purchaseHistoryDetails.setCartItemList(getExpectedCartItemList(cartSummaryResult));
+                    purchaseHistoryDetails.setPaymentDetails(getExpectedPaymentDetails(cartSummaryResult, mobileUser));
+                    purchaseHistoryDetails.setTotal(expectedTotal);
+                }
 
             }
             Logz.step("##### Ended setting expected purchase details from api #####");

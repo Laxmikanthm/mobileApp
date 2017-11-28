@@ -67,16 +67,18 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         MobileTextBox userName = getUserName();
         userName.isReady();
         userName.getControl().click();
-        if((AppiumDriver)driver instanceof IOSDriver) {
+        if(driver instanceof IOSDriver) {
             getCloseBtn().click();
+            userName.setText(emailAddress);
+            driver.getKeyboard().pressKey(Keys.ENTER);
+        }else {
+            userName.setText(emailAddress);
         }
         //userName.getControl().clear();
-        userName.setText(emailAddress);
-        driver.getKeyboard().pressKey(Keys.ENTER);
     }
 
     private void setPassword(String pwd) throws Exception{
-        if((AppiumDriver)driver instanceof IOSDriver) {
+        if(driver instanceof IOSDriver) {
             getShowIcon().click();
         }
         MobileTextBox password = getPassword();
@@ -115,7 +117,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
     public HomePage login(RemoteOrderCustomer mobileUser) throws Exception {
         Logz.step("##### " + mobileUser.getEmailAddress() + " is logging in ##### ");
         try {
-            if ((AppiumDriver) driver instanceof AndroidDriver) {
+            if (driver instanceof AndroidDriver) {
                 androidPopUpCheck();
             }
             setUserName(mobileUser.getEmailAddress());
@@ -128,7 +130,7 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
                 Logz.step("User is in home page");
             } catch (Exception exs) {
                 try {
-                    if ((AppiumDriver) driver instanceof IOSDriver) {
+                    if (driver instanceof IOSDriver) {
                         getAllowBtn().click();
                     } else {
                         getSignUp().click();
@@ -147,22 +149,22 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
-private void androidPopUpCheck() throws Exception{
-    try {
-        Thread.sleep( 30000 );
-        driver.findElementByXPath( "//android.widget.EditText[@resource-id='custom-signInName']" );
-        Logz.step( "Found user name" );
-    } catch (org.openqa.selenium.NoSuchElementException ex) {
-        Logz.step( "didnt Find user name" );
-        driver.findElementById( "com.android.chrome:id/terms_accept" ).click();
-        driver.findElementById( "com.android.chrome:id/negative_button" ).click();
-        Logz.step( "Clicked on terms" );
+    private void androidPopUpCheck() throws Exception{
+        try {
+            Thread.sleep( 30000 );
+            driver.findElementByXPath( "//android.widget.EditText[@resource-id='custom-signInName']" );
+            Logz.step( "Found user name" );
+        } catch (org.openqa.selenium.NoSuchElementException ex) {
+            Logz.step("didnt Find user name");
+            driver.findElementById("com.android.chrome:id/terms_accept").click();
+            driver.findElementById("com.android.chrome:id/negative_button").click();
+            Logz.step("Clicked on terms");
+        }
     }
-}
 
     public void HideKeyboard()
     {
-        if((AppiumDriver)driver instanceof AndroidDriver) {
+        if(driver instanceof AndroidDriver) {
             AppiumDriver d = (AppiumDriver) driver;
             d.hideKeyboard();
         }
