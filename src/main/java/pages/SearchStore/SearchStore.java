@@ -15,6 +15,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.html5.Location;
 import pages.CommonElements.CommonElements;
+import pages.HomePage.HomePage;
 import pages.OrdersPage.OrdersPage;
 
 import util.Utils;
@@ -65,7 +66,10 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     abstract MobileLabel getMapView() throws Exception;
     abstract By getAddressLocation(String address) throws Exception;
 
+    OrdersPage ordersPage;
+    HomePage homePage;
     Store store= new Store();
+    Store store1= new Store();
     By Address = MobileBy.AccessibilityId("Google Map");
     By storeNamesLocator = By.id("address");
     Dimension size;
@@ -315,5 +319,33 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
+    public OrdersPage findAnotherSubway(Store store1) throws Exception {
+        try {
+            okPopUp();
+            allowPopUp();
+            Thread.sleep(5000);
+            okPopUp();
+            Utils.setZipCode(store1);
+            toggleView();
+            searchStoreByZipCode(store1);
+            Logz.step("store number: " +store1.getStoreNumber());
+            return OrdersPage.get((AppiumDriver) driver);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+
+    public HomePage selectStoreAndAssert() throws Exception {
+        try {
+            ordersPage = homePage.selectStore(store);
+            ordersPage.assertStoreDetails();
+            ordersPage = homePage.selectStore(store);
+            ordersPage.assertStoreDetails();
+            return HomePage.get( (AppiumDriver) driver );
+        } catch (Exception ex) {
+            throw new Exception( ex );
+        }
+    }
 
 }

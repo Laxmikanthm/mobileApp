@@ -14,6 +14,7 @@ public class MyLoyalty {
     private List<Certificates> certificates;
     private List<Offers> offers;
 
+
     public MyLoyalty() {
     }
 

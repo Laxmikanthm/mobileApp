@@ -178,4 +178,10 @@ public class Utils {
     public static String getExpectedCalories(CustomizedItem customizedItem) throws Exception{
         return  customizedItem.getCustomizedProductDetail().getCalories().trim()+" Cals*";
     }
+
+    public static int rewardsValue(String rewardAmount) throws Exception {
+        String amt[] = rewardAmount.split( "\\." );
+        int rewards = Integer.parseInt( amt[0].substring( 2 ) );
+        return rewards;
+    }
 }

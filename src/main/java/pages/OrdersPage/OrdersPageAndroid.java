@@ -415,5 +415,24 @@ public class OrdersPageAndroid extends OrdersPage {
     protected By getProductGroupHeader() throws Exception{
         return By.id( "product_group_header" );
     }
+    public MobileLabel getAddress1() throws Exception{
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("expanded_selected_address"), "Address1");
+        return label;
+    }
+
+    public MobileLabel getAddress2() throws Exception{
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("expanded_selected_address2"), "Address2");
+        return label;
+    }
+
+    public MobileLabel getLoyaltyError() throws Exception{
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("alertTitle"), "Loyalty Error");
+        return label;
+    }
+
+    public MobileLabel getAlertTitle() throws Exception{
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("alertTitle"), "Error pop up title");
+        return label;
+    }
 
 }

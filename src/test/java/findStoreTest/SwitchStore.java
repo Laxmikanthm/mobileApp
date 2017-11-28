@@ -1,6 +1,7 @@
 package findStoreTest;
 
 import Base.SubwayAppBaseTest;
+import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import org.openqa.selenium.By;
@@ -22,6 +23,8 @@ import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
+import pojos.user.RemoteOrderCustomer;
+import util.MobileApi;
 
 /**
  * Created by E003705 on 04-04-2017.
@@ -32,8 +35,14 @@ import pojos.user.RegisterUser;
 public class SwitchStore extends SubwayAppBaseTest {
 
     @Autowired
-    Base.Order order;
     MobileUser mobileUser;
+    LandingPage landingPage;
+    RemoteOrderCustomer user;
+    HomePage homePage;
+    OrdersPage ordersPage;
+    Store store = JdbcUtil.getLoyaltyStoreDetails();
+    SearchStore searchStore;
+
 
 
     @Test
@@ -46,12 +55,12 @@ public class SwitchStore extends SubwayAppBaseTest {
         LoginPage loginPage = landingPage.gotoLogInPage();
         HomePage homePage=loginPage.login(mobileUser);
         SearchStore searchStore = homePage.findYourSubWay();
-        OrdersPage ordersPage=searchStore.findYourStore(order.getZipCode());
-        ordersPage.selectRestaurant(order.getStoreName());
+        OrdersPage ordersPage=searchStore.findYourStore(store.getZipCode());
+        ordersPage.selectRestaurant(store.getAddress1());
         homePage.findAnotherSubway();
-        searchStore.findYourStore(order.getZipCode());
+        searchStore.findYourStore(store.getZipCode());
         ordersPage.selectRestaurant();
-        ordersPage.assertSwitchStore(ordersPage.switchStoreName(order.getStoreName1()),order.getStoreName1());
+        ordersPage.assertStoreDetails();
 
 
     }
@@ -62,6 +71,24 @@ public class SwitchStore extends SubwayAppBaseTest {
     }
     @Test(enabled = false)
     public void testFindAnotherSubwaySelectionInMenuPage() throws Exception{
+
+    }
+
+    @Test
+    public void testSwicthStore() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        user = landingPage.registerUser();
+        homePage = landingPage.logIn(user);
+        ordersPage = homePage.selectStore(store);
+        ordersPage.assertStoreDetails();
+    }
+
+    @Test
+    public void testSelectAnotherStore() throws Exception {
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        user = landingPage.registerUser();
+        homePage = landingPage.logIn(user);
+        homePage= searchStore.selectStoreAndAssert();
 
     }
 }

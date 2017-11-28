@@ -26,7 +26,7 @@ import util.MobileApi;
  */
 public class Certificates extends SubwayAppBaseTest {
 
-    UserProfilePage userProfilePage;
+
     MobileUser mobileUser;
     RemoteOrderCustomer user;
     Store store = JdbcUtil.getLoyaltyStoreDetails();
@@ -34,7 +34,7 @@ public class Certificates extends SubwayAppBaseTest {
     OrdersPage ordersPage;
     HomePage homePage;
     PurchaseHistoryPage purchaseHistoryPage;
-    UserProfilePage userProfilePagePage;
+    UserProfilePage userProfilePage;
     YourOrderPage yourOrderPage;
     ManageRewardsPage manageRewardsPage;
     MyWayRewards myWayRewards;
@@ -57,7 +57,7 @@ public class Certificates extends SubwayAppBaseTest {
         OrdersPage ordersPage = homePage.findStore(store.getZipCode());
         CartData.createNewCart(user, store.getLocationCode());
         ordersPage.placeRandomOrderwithRedeemCertificate("All Sandwiches", mobileUser, store.getAddress1());
-        homePage.assertTokensCertificates(user, true);
+        homePage.assertTokensCertificates(user);
         Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(), homePage.certCount);
         Assert.assertEquals(String.valueOf(ordersPage.tokens), homePage.tokenValue().toString());//validating tokens
         userProfilePage.assertMobileOrderHistory(ordersPage.orderValue);//validating order history
@@ -136,14 +136,14 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        homePage.assertTokensCertificates(user, false);
+        homePage.assertTokensCertificates(user);
         user = MobileApi.placeOrderWithNoOfToken(user, 300);
-        homePage.assertTokensCertificates(user, true);
         ordersPage = homePage.selectStore(store);
-        homePage = ordersPage.placeRandomOrderMyLoyalty();
-        userProfilePagePage = homePage.assertTokensCertificates(user, true);
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        homePage.assertTokensCertificates(user);
+        ordersPage = homePage.clickOnApplyAndStartOrder();
+        homePage = ordersPage.placeRandomOrderMyLoyalty(0);
+        userProfilePage = homePage.assertTokensCertificates(user);
+        userProfilePage = purchaseHistoryPage.assertOrderInPurchaseHostoryPage(mobileUser);
 
     }
 
@@ -152,30 +152,30 @@ public class Certificates extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        homePage.assertTokensCertificates(user, false);
+        homePage.assertTokensCertificates(user);
         user = MobileApi.placeOrderWithNoOfToken(user, 300);
         myWayRewards = homePage.getTokensSparkle();
-        homePage.assertTokensCertificates(user, true);
+        homePage.assertTokensCertificates(user);
         myWayRewards = homePage.goToMyWayRewardsPage();
-        homePage = myWayRewards.assertTokensAndCertificates(user,true);
+        homePage = myWayRewards.assertTokensAndCertificates(user);
         ordersPage = homePage.selectStore(store);
         yourOrderPage = ordersPage.selectRandomItem();
-        yourOrderPage.assertLoyaltyDisplay();
+        yourOrderPage.assertLoyaltyDisplay(1);
         manageRewardsPage = yourOrderPage.goToManageRewardPage();
-        manageRewardsPage.assertRewardsList();
+        manageRewardsPage.assertRewardsList(1);
     }
     @Test
     public void testRedeemMultipleCertificates() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         user = landingPage.registerUser();
         homePage = landingPage.logIn(user);
-        homePage.assertTokensCertificates(user, false);
+        homePage.assertTokensCertificates(user);
         user = MobileApi.placeOrderWithNoOfToken(user, 500);
-        homePage.assertTokensCertificates(user, true);
+        homePage.assertTokensCertificates(user);
         ordersPage = homePage.selectStore(store);
-        homePage = ordersPage.placeRandomOrderMyLoyalty();
-        userProfilePagePage = homePage.assertTokensCertificates(user, true);
-        purchaseHistoryPage = userProfilePagePage.goToPurchaseHistoryPage();
+        homePage = ordersPage.placeRandomOrderMyLoyalty(1);
+        userProfilePage = homePage.assertTokensCertificates(user);
+        purchaseHistoryPage = userProfilePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
 
     }

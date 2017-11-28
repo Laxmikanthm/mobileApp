@@ -352,6 +352,7 @@ public class OrdersPageIOS extends OrdersPage {
         IOSButton button = new IOSButton((IOSDriver) driver, By.id("android:id/button1"), "Remove Favourites ");
         return button;
     }
+
     public MobileLabel getSubTotal() throws Exception{
         IOSLabel button = new IOSLabel((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/subtotal"), "Remove Favourites ");
         return button;
@@ -496,6 +497,26 @@ public class OrdersPageIOS extends OrdersPage {
     public MobileButton getFullMenu() throws Exception {
         IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/view_full_menu_text"), "See FullMenu Details");
         return button;
+    }
+
+    public MobileLabel getAddress1() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
+    }
+
+    public MobileLabel getAddress2() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
+    }
+
+    public MobileLabel getLoyaltyError() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
+    }
+
+    public MobileLabel getAlertTitle() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
+        return label;
     }
 
     protected By getProductGroupHeader() throws Exception{
