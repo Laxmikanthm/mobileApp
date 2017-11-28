@@ -4,10 +4,14 @@ import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.ios.IOSButton;
+import base.gui.controls.mobile.ios.IOSWebElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import pages.LoginPage.LoginPage;
+
+import java.util.List;
 
 /**
  * Created by E001599 on 18-05-2017.
@@ -39,5 +43,13 @@ public class MyWayRewardsIOS extends MyWayRewards {
     public MobileLabel getCertsmyreward() throws Exception {
         IOSButton tokenscount = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toolbar_close"), "ToolBar Close Button");
         return null;
+    }
+
+    List<WebElement> getRewardsList() throws Exception {
+        return new IOSWebElement((IOSDriver) driver, "Rewards List").getWebElements(By.id("rewards_item_layout"));
+    }
+
+    List<WebElement> getRewardsDetails(WebElement rewards) throws Exception {
+        return rewards.findElements(By.xpath("//android.widget.TextView"));
     }
 }

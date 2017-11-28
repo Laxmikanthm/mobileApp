@@ -14,7 +14,7 @@ import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class YourOrderPageAndroid  extends YourOrderPage{
+public class YourOrderPageAndroid extends YourOrderPage{
     public YourOrderPageAndroid(AppiumDriver driver) {
         super(driver);
     }
@@ -52,6 +52,16 @@ public class YourOrderPageAndroid  extends YourOrderPage{
     public MobileLabel getcertificatemessage() throws Exception {
         AndroidLabel certsamount = new AndroidLabel((AndroidDriver) driver, By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout[3]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView[1]"), "Certificate amount");
         return certsamount;
+    }
+
+    public MobileButton getManage() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("manage_rewards"), "Manage label");
+        return button;
+    }
+
+    public MobileLabel getRewardsAmt() throws Exception{
+        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView"), "Rewards Amount");
+        return button;
     }
 
 

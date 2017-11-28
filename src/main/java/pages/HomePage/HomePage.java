@@ -108,6 +108,7 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
     By Offers = By.xpath( "//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout" );
     By OffersGetText = By.xpath( "//android.support.v7.widget.RecyclerView[@class='android.support.v7.widget.RecyclerView']/android.widget.RelativeLayout[@index=" + 0 + "]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.Button[@index=" + 0 + "]" );
     By tokenValue = By.id( "loyalty_token_count" );
+    OrdersPage ordersPage;
 
     public List<WebElement> getElements(By locator) {
         List<WebElement> elementsList = ((AndroidDriver) driver).findElements( locator );
@@ -223,6 +224,8 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
 
     public SearchStore findAnotherSubway() throws Exception {
         try {
+            Assert.assertEquals( getFindAnotherSubway().getText(), BaseTest.getStringfromBundleFile( "FindAnotherSubWay" ) );
+            Thread.sleep( 5000 );
             getFindAnotherSubway().click();
             return SearchStore.get( (AppiumDriver) driver );
         } catch (Exception ex) {
@@ -369,6 +372,26 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
+    public OrdersPage clickOnApplyAndStartOrder() throws Exception {
+        Logz.step("Clicking on Apply button in Home Page near certificates");
+        String cert[] = getCertificatesMessage().getText().split( " " );
+        certValue = Integer.parseInt( cert[0].substring( 1 ) );
+        if (certValue > 2) {
+            Logz.step("Hurry!!! You can apply multiple certificates");
+        }
+        getRewardsApply().click();
+        Logz.step("Clicked on Apply button in Home Page");
+        clickStartOrder();
+        return OrdersPage.get( (AppiumDriver) driver );
+    }
+
+    public OrdersPage clickStartOrder() throws Exception{
+        Logz.step("Click on Start another order button");
+        getStartAnother().click();
+        Logz.step("Clicked on Start another order button");
+        return OrdersPage.get((AppiumDriver)driver);
+    }
+
     public String getTokenTrackerValue() throws Exception {
         MyWayRewards myWayRewards = getTokensSparkle();
         myWayRewards.getSwipe();
@@ -404,6 +427,19 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
             SearchStore searchStore = findYourSubWay();
             searchStore.findYourSubway( store );
             Logz.step( " ##### Selected a Store #####" );
+        } catch (Exception ex) {
+            throw new Exception( "Unable to Selected a Store\n" + ex.getMessage() );
+        }
+        return OrdersPage.get( (AppiumDriver) driver );
+    }
+
+    public OrdersPage selectStoreAndClickOnStartOrder(Store store) throws Exception {
+        try {
+            Logz.step( " ##### Selecting a Store #####" );
+            SearchStore searchStore = findYourSubWay();
+            searchStore.findYourSubway( store );
+            Logz.step( " ##### Selected a Store #####" );
+            clickOnApplyAndStartOrder();
         } catch (Exception ex) {
             throw new Exception( "Unable to Selected a Store\n" + ex.getMessage() );
         }
@@ -562,18 +598,16 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         }
     }
 
-    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user, boolean tokenCertificatesAdded) throws Exception {
+    public UserProfilePage assertTokensCertificates(RemoteOrderCustomer user) throws Exception {
         Logz.step( "##### Asserting tokens and certificates in home Page#####" );
         user = MobileApi.getLoyaltyLookUp( user );
         Assert.assertEquals( Integer.parseInt(user.getConfirmToken()), Integer.parseInt( tokenValue() ) );
         Logz.step( "Tokens asserted" );
         Assert.assertEquals( user.getLoyaltyLookup().getCertificates().getCertificateCount(), certsCount() );
         Logz.step( "Certificates asserted" );
-        //assert n# token and n# certificate in home page
-        //use MyLoyalty object for assertion
-        //Get expected data from API, Get actual data from mobile ui
+        Logz.step("Go to my Way rewards page");
         MyWayRewards myWayRewards = goToMyWayRewardsPage();
-        myWayRewards.assertTokensAndCertificates( user, tokenCertificatesAdded );
+        myWayRewards.assertTokensAndCertificates( user);
         Logz.step( "##### Asserted tokens and certificates in home Page#####" );
         return UserProfilePage.get( (AndroidDriver) driver );
     }

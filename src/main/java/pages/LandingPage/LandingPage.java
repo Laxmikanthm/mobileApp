@@ -261,7 +261,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public void placeDefaultOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
-        MobileUser mobileUser = registerUser("InessaCluett@qasubway.com");//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
+        MobileUser mobileUser = registerUser("KasperIvers@qasubway.com");//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
         logAllMenuCategoriesName(productGroups, store);
@@ -273,9 +273,23 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             Logz.step("##### Product menu: " + menuCategories + " is not present at this store: " + store.getStoreNumber() + " #####");
         }
         }
+     }
 
-
+    public void placeDefaultOrderRedeemCertificateAndAssert(String menuCategories, BreadSize breadSize, Store store, int certRedeemCount) throws Exception {
+        MobileUser mobileUser = registerUser();//HaydenHinemoor@qasubway.com
+        mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+        List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
+        logAllMenuCategoriesName(productGroups, store);
+        for (ProductGroup productGroup : productGroups) {
+            if (productGroup.getName().contains(menuCategories)) {
+                OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+                ordersPage.placeRandomOrderMyLoyalty(certRedeemCount);
+            }else {
+                Logz.step("##### Product menu: " + menuCategories + " is not present at this store: " + store.getStoreNumber() + " #####");
+            }
+        }
     }
+
     public void placeCustomizedOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
         MobileUser mobileUser = registerUser();//"OatesJodlkowski@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
@@ -317,7 +331,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
         ordersPage.removeFavouriteOrder(mobileUser);
-
+        //Check whether Favorite Item got removed
     }
 
     private void logAllMenuCategoriesName(List<ProductGroup> productGroups, Store store) throws Exception{

@@ -3,6 +3,7 @@ package util;
 import Enums.BreadSize;
 import base.gui.controls.mobile.generic.MobileButton;
 import cardantApiFramework.pojos.StringUtils;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.OrderData;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.ProductData;
 import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.*;
 import enums.PaymentMethod;
@@ -90,16 +91,16 @@ public class MobileApi {
         Logz.step("##### Added credit card to user through API ##### ");
     }
     public static RemoteOrderCustomer getLoyaltyLookUp(RemoteOrderCustomer user) throws Exception {
-        SnaplogicClient client = new SnaplogicClient();
-        user = client.getProfileByGuestId(user);
+        /*SnaplogicClient client = new SnaplogicClient();
+        user = client.getProfileByGuestId(user);*/
         return KobieClient.getLoyalty(user);
     }
     public static RemoteOrderCustomer placeOrderWithNoOfToken(RemoteOrderCustomer user, int tokenCount) throws Exception {
         RemoteOrder ex = user.getCart().getRemoteOrder();
         ex.customer = user;
         ex.placeRandomOrderForGivenNumberOfTokens(tokenCount, PaymentMethod.CREDITCARD);
-        SnaplogicClient client = new SnaplogicClient();
-        user = client.getProfileByGuestId(user);
+        /*SnaplogicClient client = new SnaplogicClient();
+        user = client.getProfileByGuestId(user);*/
         return KobieClient.getLoyalty(user);
     }
     public static int getBreadOptionCount(CustomizedItem customizedItem, MobileUser mobileUser) throws Exception{

@@ -18,9 +18,12 @@ import pages.HomePage.HomePage;
 import pages.HomePage.HomePageAndroid;
 import pages.HomePage.HomePageIOS;
 import pages.ManageRewardsPage.ManageRewardsPage;
+import pages.MyWayRewards.MyWayRewards;
 import pages.OrderConfirmationPage.OrderConfirmationPage;
 import pages.OrdersPage.OrdersPage;
 import pojos.CustomizedItem.CustomizedItem;
+import pojos.user.MobileUser;
+import pojos.user.RemoteOrderCustomer;
 import util.MobileApi;
 import util.Utils;
 import utils.Logz;
@@ -45,9 +48,13 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     abstract MobileTextBox getItemPrice() throws Exception;
     abstract MobileTextBox getTotalText() throws Exception;
     abstract MobileTextBox getPickupTimeHeaderText() throws Exception;
+    abstract MobileLabel getRewardsAmt() throws Exception;
+    abstract MobileButton getManage() throws Exception;
 
 
     CommonElements commonElements = new CommonElements((AppiumDriver) driver);
+    By ManageLocator = By.id( "manage_rewards" );
+    public int Rewards = 0;
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -60,31 +67,24 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     abstract MobileButton getPlaceOrder() throws Exception;
     abstract MobileLabel getcertificatemessage() throws Exception;
 
+    ManageRewardsPage manageRewardsPage;
+    RemoteOrderCustomer user;
 
-    public OrderConfirmationPage assertLoyaltyDisplay() throws Exception{
 
-        try {
-
-           /* int rewardsamtpresence= driver.findElements(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout[3]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView[1]")).size();
-            if(rewardsamtpresence>0) {
-                int rewadrsAmtapi = ordersPage.rewardsValue();
-                int rewardsAmtui = Integer.parseInt(getcertificatemessage().getText());
-                Logz.step(getcertificatemessage().getText());
-                Assert.assertEquals(rewadrsAmtapi, rewardsAmtui);
-                Logz.step("Loyalty display asserted");
-            }
-            else{Logz.step("rewards not available");}
-            //user MyLoyalty object for assertion
-            //Get expected data from API, Get actual data from mobile ui
-            getPlaceOrder().click();*/
-            return OrderConfirmationPage.get((AppiumDriver) driver);
-        }
-        catch (Exception ex){
-            throw new Exception(ex);
-        }
-
+    public OrderConfirmationPage assertLoyaltyDisplay(int certRedeemCount) throws Exception {
+        Logz.step("Verification of Rewards in Your Order page has started");
+        assertRewardsDetailsInYourOrderPage();
+        goToManageRewardPage();
+        manageRewardsPage.assertRewardsList(certRedeemCount);
+        goToOrderConfirmationPage();
+        return OrderConfirmationPage.get((AppiumDriver) driver);
     }
-    public OrderConfirmationPage assertOrderSummaryInYourOrderPage() throws Exception{
+
+    public OrderConfirmationPage assertOrderSummaryInYourOrderPage(CustomizedItem customizedItem) throws Exception{
+        Logz.step("Started asserting order details In Order Confirmation Page");
+        commonElements.scroll( getPickupTimeHeader(), "up" );
+        Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName());
+        Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
     public YourOrderPage assertOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
@@ -94,7 +94,7 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         commonElements.scroll( getPickupTimeHeader(), "down" );
         Assert.assertEquals( getItemTitle().getText(), customizedItem.getProductDetail().getName() );
         Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
-       // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+     //   Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
         Logz.step("Started asserting order details In Your Order Page");
         return YourOrderPage.get((AppiumDriver)driver);
     }
@@ -124,12 +124,28 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
 
     public OrderConfirmationPage goToOrderConfirmationPage() throws Exception{
         Logz.step("Navigating to Order Confirmation Page......");
-        getPlaceOrder().isReady();
         getPlaceOrder().click();
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
     public ManageRewardsPage goToManageRewardPage() throws Exception{
-
+        Logz.step("Click on Manage locator in Your Order page");
+        getManage().click();
+        Logz.step("Clicked on Manage locator in Your order page");
         return ManageRewardsPage.get((AppiumDriver)driver);
     }
+
+    private pojos.MyLoyalty assertRewardsDetailsInYourOrderPage() throws Exception {
+        pojos.MyLoyalty actualAndExpectedMyRewards = new pojos.MyLoyalty();
+        Logz.step( "Manage Button verification in rewards has started " );
+        commonElements.scrollToElement(null, ManageLocator,0.9, 0.5);
+        Thread.sleep( 5000 );
+        Logz.step("Assertion of certificates in Your Order page started");
+        user = MobileApi.getLoyaltyLookUp(user);
+        Assert.assertEquals(user.getLoyaltyLookup().getCertificates().getCertificateCount(),Utils.rewardsValue(getRewardsAmt().getText()));
+        Logz.step("Rewards/Certificates asserted");
+        return actualAndExpectedMyRewards;
+    }
+
+
+
 }
