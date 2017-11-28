@@ -302,7 +302,10 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             for (CartSummary cartSummaryResult : cartSummaryResults) {
                 expectedTotal = cartSummaryResult.getTotal();
                 purchaseHistoryDetails = new PurchaseHistoryDetails();
-                dateTime = Utils.formatDateTime(cartSummaryResult.getPickupDate(), "yyyy-MM-dd hh:mm:ss a", "MMMM dd, yyyy | hh:mma");
+                if(driver instanceof AndroidDriver)
+                    dateTime = Utils.formatDateTime(cartSummaryResult.getPickupDate(), "yyyy-MM-dd hh:mm:ss a", "MMMM dd, yyyy | hh:mma");
+                else
+                    dateTime = Utils.formatDateTime(cartSummaryResult.getPickupDate(), "yyyy-MM-dd hh:mm:ss a", "MMMM dd, yyyy | h:mma");
                 if (dateTime.contains("PM")) {
                     dateTime = dateTime.replace("PM", "pm");
                 } else {
