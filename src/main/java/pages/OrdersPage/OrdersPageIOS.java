@@ -62,14 +62,14 @@ public class OrdersPageIOS extends OrdersPage {
 
     public IOSButton getAddToBag() throws Exception {
 
-        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("AddToBagText").toUpperCase()), "AddToBagText button");
 
         return addToBag;
     }
 
     public IOSButton getCustomize() throws Exception {
 
-        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("CustomizeText").toUpperCase()), "CustomizeText button");
 
         return addToBag;
     }
@@ -517,5 +517,9 @@ public class OrdersPageIOS extends OrdersPage {
     public MobileLabel getAlertTitle() throws Exception{
         IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
         return label;
+    }
+
+    protected By getProductGroupHeader() throws Exception{
+        return By.xpath( "//XCUIElementTypeCollectionView//XCUIElementTypeStaticText" );
     }
 }

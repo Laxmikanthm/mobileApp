@@ -3,6 +3,8 @@ package orderTest;
 import Base.SubwayAppBaseTest;
 
 //import cardantApiFramework.pojos.Menu;
+import Enums.BreadSize;
+import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.CartData;
 import cardantApiFramework.utils.JdbcUtil;
@@ -44,9 +46,8 @@ public class DineIn extends SubwayAppBaseTest{
     LandingPage landingPage;
     PurchaseHistoryPage purchaseHistoryPage;
 
-/*
 
-    public RO_CartActions AddTAXItemToTheCart(String strStateProveCode, String strOrderType, String strTaxCategoryName, String strMenuCategoryName, int nQuantity, boolean IsDineIn, boolean IsR2Pilot) throws Exception{
+  /*  public RO_CartActions AddTAXItemToTheCart(String strStateProveCode, String strOrderType, String strTaxCategoryName, String strMenuCategoryName, int nQuantity, boolean IsDineIn, boolean IsR2Pilot) throws Exception{
         homeActions = new RO_HomeActions(driver);
         findAStoreActions = homeActions.GotoFindAStorePage();
         Logz.step("Getting store details");
@@ -58,9 +59,9 @@ public class DineIn extends SubwayAppBaseTest{
         roCartActions =  roMenuCategoryActions.AddMenuItemToCart(strMenuCategoryName, menu, nQuantity);
         return  roCartActions;
         roCartActions =  roOrderActions.AddTAXItemToTheCart( hmBundleFile.get("ohProveCode"), hmBundleFile.get("Individual"),  hmBundleFile.get("cold"), hmBundleFile.get("allsandwiches"), 1, true, true );
-    }*/
+    }
     //DFA-9361
-   /* @Test
+    @Test
     public void dineInHotItemsCA() throws Exception {
         Store store = JdbcUtil.getStoreDetails("CA",true,true);
         mobileUser=setCountryName();
@@ -146,7 +147,7 @@ public class DineIn extends SubwayAppBaseTest{
 
     }
 
-    //DFA-10538
+   //DFA-10538
     @Test
     public void certDiscountwithAllItemsInDineInOH() throws Exception {
         store= JdbcUtil.getStoreDetails("OH",true,true);
@@ -187,8 +188,37 @@ public class DineIn extends SubwayAppBaseTest{
         OrdersPage ordersPage = homePage.findStore("43056");
         ordersPage.placeRandomToastedKidsMeal("Kids' Meal",mobileUser,"1134 Hebron Rd., Heath");
         homePage.validateTokens(mobileUser);
-    }
-*/
+    }*/
+/*#########################################################################################################*/
+   @Test
+   public void dineInColdItemsCA() throws Exception {
+       store = JdbcUtil.getStateSpecificStoreDetails("CA",true);
+       landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+       landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,false,true,false);
 
+}
+
+@Test
+    public void dineInHotItemsCA() throws Exception {
+       store = JdbcUtil.getStateSpecificStoreDetails("CA",true);
+       landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+       landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,true,true,false);
+
+    }
+@Test
+    public void dineInHotItemsOH() throws Exception {
+       store = JdbcUtil.getStateSpecificStoreDetails("OH",true);
+       landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+       landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,true,true,false);
+   }
+
+   @Test
+      public void dineInColdItemsOH() throws Exception {
+
+       store = JdbcUtil.getStateSpecificStoreDetails("OH",true);
+       landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+       landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,false,true,false);
+       //customize item need to be replaced with menu object ..remove when not required
+   }
 
 }

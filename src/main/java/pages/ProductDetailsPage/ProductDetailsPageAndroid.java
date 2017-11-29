@@ -14,7 +14,7 @@ public class ProductDetailsPageAndroid extends ProductDetailsPage {
     }
 
     @Override
-    MobileButton getProductName() throws Exception {
+    MobileButton getProductName(String productName) throws Exception {
      return new AndroidButton((AndroidDriver) driver, By.id("product_name"), "product_name");
     }
 
@@ -34,7 +34,7 @@ public class ProductDetailsPageAndroid extends ProductDetailsPage {
     }
 
     @Override
-    MobileButton getProductPrice() throws Exception {
+    MobileButton getProductPrice(String price) throws Exception {
         return new AndroidButton((AndroidDriver)driver, By.id("two_option_price"), "two_option_price");
     }
 

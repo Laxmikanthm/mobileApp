@@ -28,12 +28,13 @@ public class HomePageIOS extends HomePage {
     }
 
     public MobileButton getOrderButton() throws Exception {
-        IOSButton orderButton = new IOSButton ((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("OrderButton")), "Order Button");
+        IOSButton orderButton = new IOSButton ((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.getStringfromBundleFile("OrderButton")), "Order Button");
         return orderButton;
     }
 
     public MobileButton getFindYourSubWay() throws Exception {
-        IOSButton button = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("FindYourSubwayiOS")), "FindYourSubWay button");
+        //IOSButton button = new IOSButton((IOSDriver) driver, MobileBy.AccessibilityId(BaseTest.bundle.getString("FindYourSubwayiOS")), "FindYourSubWay button");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@value='" + BaseTest.bundle.getString("FindYourSubwayiOS") + "']"), "FindYourSubWay button");
         return button;
     }
 

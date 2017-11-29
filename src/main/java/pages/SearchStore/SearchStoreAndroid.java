@@ -103,4 +103,8 @@ public class SearchStoreAndroid extends SearchStore {
         AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("mapView"),"Map View Image");
         return label;
     }
+
+    protected By getAddressLocation(String address) throws Exception{
+        return By.id("address");
+    }
 }

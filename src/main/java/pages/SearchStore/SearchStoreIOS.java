@@ -21,15 +21,13 @@ public class SearchStoreIOS extends SearchStore {
     }
 
     public IOSTextBox getSearchByZipCode() throws Exception {
-
-        IOSTextBox Textbox = new IOSTextBox((IOSDriver) driver, By.xpath("//UIAStaticText[@label='" + BaseTest.bundle.getString("UserNameiOS") + "']"), "username text field");
-
-        return Textbox;
+        IOSTextBox searchByZipCode = new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeTextField"), "Search by zip code text field");
+        return searchByZipCode;
     }
 
     public IOSButton getSearchButton() throws Exception {
 
-        IOSButton searchButton = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+        IOSButton searchButton = new IOSButton((IOSDriver) driver, By.name("icMagnifyingGlassSmGrey"), "Search button");
 
         return searchButton;
     }
@@ -50,9 +48,9 @@ public class SearchStoreIOS extends SearchStore {
 
     public IOSButton getToggleView() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+        IOSButton toggleView = new IOSButton((IOSDriver) driver, By.name("icListView"), "ToggleView button");
 
-        return button;
+        return toggleView;
     }
 
     public IOSButton getMobileOrdering() throws Exception {
@@ -106,9 +104,8 @@ public class SearchStoreIOS extends SearchStore {
 
     public IOSButton getSearchKeyButton() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SearchKey")), "Search button");
-
-        return button;
+        IOSButton searchBtn = new IOSButton((IOSDriver) driver, By.name(BaseTest.getStringfromBundleFile("SearchLabel")), "Search button");
+        return searchBtn;
     }
 
     public IOSButton getSelectRestaurantButton() throws Exception {
@@ -135,5 +132,9 @@ public class SearchStoreIOS extends SearchStore {
     public IOSLabel getMapView() throws Exception{
         IOSLabel label = new IOSLabel((IOSDriver)driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SearchKey")), "Search button");
         return label;
+    }
+
+    protected By getAddressLocation(String address) throws Exception{
+        return By.xpath("//XCUIElementTypeTable//XCUIElementTypeStaticText[contains(@name,'" + address + "')]");
     }
 }

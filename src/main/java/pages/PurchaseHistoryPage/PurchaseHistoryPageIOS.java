@@ -1,16 +1,20 @@
 package pages.PurchaseHistoryPage;
 
-import base.gui.controls.mobile.android.AndroidWebElement;
+
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileTextBox;
+import base.gui.controls.mobile.ios.IOSButton;
+import base.gui.controls.mobile.ios.IOSTextBox;
 import base.gui.controls.mobile.ios.IOSWebElement;
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
+import base.test.BaseTest;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import pojos.CustomizedItem.CustomizedItem;
+import pojos.PurchaseHistoryDetails;
+import utils.Logz;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
@@ -19,7 +23,7 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     }
 
     @Override
-    List<WebElement>  getPaymentMethod() throws Exception {
+    List<WebElement> getPaymentMethod() throws Exception {
         return null;
     }
 
@@ -30,18 +34,20 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
 
     @Override
     List<WebElement> getOrderList() throws Exception{
-        return new IOSWebElement((IOSDriver) driver, "order list").getWebElements( By.id("order_header"));
+        return new IOSWebElement((IOSDriver) driver, "order list").getWebElements( By.xpath("//XCUIElementTypeTable/XCUIElementTypeCell"));
 
     }
 
     @Override
     MobileButton getOrderListText() throws Exception {
-        return null;
+        //return new IOSButton((IOSDriver) driver, By.xpath("//XCUIElementTypeNavigationBar[@name='" + BaseTest.getStringfromBundleFile("PurchaseHistoryTitle") + "']"), BaseTest.getStringfromBundleFile("PurchaseHistoryTitle") +" button");
+        //return new IOSButton((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='ORDER']"), "Order list");
+        return new IOSButton((IOSDriver) driver, By.name("ORDER"), "Order list");
     }
 
     @Override
     List<WebElement> getOrderNumberList() throws Exception {
-        return new IOSWebElement((IOSDriver) driver, "order number list").getWebElements(By.xpath("//android.widget.TextView[contains(@text,'Order')]"));
+        return new IOSWebElement((IOSDriver) driver, "order number list").getWebElements(By.xpath("//XCUIElementTypeCell/XCUIElementTypeOther"));
     }
 
     @Override
@@ -50,14 +56,14 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     }
 
     @Override
-    List<WebElement> getProductTitle() throws Exception {
-        return null;
+    MobileTextBox getProductTitle(String productTitle) throws Exception {
+        return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + productTitle + "']"), "PurchaseHistory button");
     }
 
 
     @Override
     List<WebElement> getOrderTimeAddressList() throws Exception {
-        return new IOSWebElement((IOSDriver) driver, "order time and address list").getWebElements(By.id("order_time_address"));
+        return new IOSWebElement((IOSDriver) driver, "order time and address list").getWebElements(By.xpath("//XCUIElementTypeStaticText[@name='ORDER']"));
     }
 
 
@@ -72,14 +78,27 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
         return new IOSWebElement((IOSDriver) driver, "order total list").getWebElements(By.id("order_total"));
     }
 
+
     @Override
     List<WebElement>  getReceiptHeaderText() throws Exception {
         return null;
     }
 
+    List<WebElement> getOrderDetails(WebElement element) throws Exception{
+        return element.findElements(By.xpath("//XCUIElementTypeStaticText"));
+    }
+
+    WebElement getOrderNumber(WebElement element) throws Exception{
+        return element.findElement(By.className("XCUIElementTypeOther"));
+    }
+
     @Override
     By getEarnedTokens() throws Exception {
         return By.id("earned_tokens_text");
+    }
+
+    MobileTextBox getProducttitle() throws Exception {
+        return null;
     }
 
 

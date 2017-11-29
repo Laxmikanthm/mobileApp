@@ -151,7 +151,7 @@ public class UserProfilePageIOS extends UserProfilePage {
 
     @Override
     MobileButton getPurchaseHistory() throws Exception {
-        return null;
+        return new IOSButton((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("PurchaseHistory")), "PurchaseHistory button");
     }
 
 }
