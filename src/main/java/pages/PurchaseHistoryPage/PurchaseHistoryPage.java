@@ -60,6 +60,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getOrderNumberList() throws Exception;
     abstract List<WebElement> getOrderTimeAddressList() throws Exception;
     abstract List<WebElement> getProductTitleList() throws Exception;
+    abstract List<WebElement> getProductTitle() throws Exception;
     abstract MobileTextBox getProductTitle(String productTitle) throws Exception;
     abstract MobileTextBox getProducttitle() throws Exception;
     abstract List<WebElement> getProductDescriptionList() throws Exception;
@@ -70,6 +71,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract By getEarnedTokens() throws Exception;
     UserProfilePage userProfilePage;
     CustomizedItem customizedItem;
+    String expectedTotalText;
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -121,9 +123,10 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         }
 
     }
-    public void assertPlacedOrderDetailsInPurchaseHistoryPage(RemoteOrderCustomer mobileUser, CustomizedItem customizedItem) throws Exception {
+    public void assertPlacedOrderDetailsInPurchaseHistoryPage(RemoteOrderCustomer mobileUser, CustomizedItem customizedItem,  String expectedTotalText) throws Exception {
         try {
             this.customizedItem = customizedItem;
+            this.expectedTotalText = expectedTotalText;
             List<PurchaseHistoryDetails> expectedOrderHistoryList = getExpectedPurchaseHistoryList(mobileUser);
             List<PurchaseHistoryDetails> actualOrderHistoryList = getActualPurchaseHistoryList(customizedItem);
             Logz.step("!!!!! Started asserting placed order details in Purchase History Page !!!!!");
@@ -460,9 +463,9 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         Logz.step( "Started asserting order details In Order Confirmation Page" );
 
         if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )) {
-            Assert.assertEquals( getProductTitle(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+            Assert.assertEquals( getProductTitle( customizedItem.getCustomizedProductDetail().getProductName() ).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
         } else {
-            Assert.assertEquals( getProductTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
+            Assert.assertEquals( getProductTitle( customizedItem.getProductDetail().getName() ).getText(), customizedItem.getProductDetail().getName() );
         }
 
         // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
@@ -470,6 +473,55 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
 
     }
 
+    public void assertProductTitleInPurchaseHistoryPage(CustomizedItem customizedItem, int index, String expectedTotalText) throws Exception {
+        Logz.step( "Started asserting order details In Order Confirmation Page" );
+
+        if (customizedItem.getMenuName().contains( "Sides" ) ) {
+            if(!customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Apple Slices" )) {
+                Assert.assertEquals( getProductTitle().get(index).getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
+                Assert.assertEquals( getProductDescriptionList().get(index).getText().substring( 2 ), customizedItem.getCustomizedProductDetail().getProductName() );
+
+            }else {
+
+                Assert.assertEquals( getProductTitle().get(index).getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
+            }
+
+        } else if (customizedItem.getMenuName().contains( "Drinks" )){
+            if (customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Bottled Beverage" )) {
+                if (!customizedItem.getCustomizedProductDetail().getProductName().contains( "Dasani® Water" )) {
+                    Assert.assertEquals( getProductTitle().get( index ).getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
+                    Assert.assertEquals( getProductDescriptionList().get( index ).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+                }
+            }else {
+                Assert.assertEquals( getProductTitle().get(index).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+            }
+        }else{
+            Assert.assertEquals( getProductTitle().get(index).getText(), customizedItem.getProductDetail().getName() );
+        }
+
+        Assert.assertEquals( Utils.getConnectionString( getOrderTotalList().get(index).getText(), 0, " paid" ),  expectedTotalText);
+        Logz.step( "Started asserting order details In Order Confirmation Page" );
+
+    }
+
+    public void assertSidesDrinksDetailsInPurchaseHistoryPage(CustomizedItem customizedItem, String expectedTotalText) throws Exception {
+        try {
+            Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
+            getOrderListText().isReady();
+            int webElementCount = getOrderList().size();
+            for (int i = 0; i < webElementCount; i++) {
+                List<WebElement> getOrderHistoryList =getOrderTimeAddressList();
+                getOrderHistoryList.get(i).click();
+                assertProductTitleInPurchaseHistoryPage(customizedItem, i, expectedTotalText);
+            }
+            Logz.step("##### Ended getting actual purchase details in Purchase History Page #####");
+
+        } catch (Exception ex) {
+            throw new Exception(("Failed to get actual purchase details in Purchase History Page\n" + ex.getMessage()));
+
+
+        }
+    }
     //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
 
     public Boolean assertProductTitleInPurchaseHistoryPageForTax(CustomizedItem customizedItem, String sItemName) throws Exception {

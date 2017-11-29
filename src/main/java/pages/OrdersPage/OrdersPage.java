@@ -2032,8 +2032,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             CustomizedItem customizedItemDetails = MobileApi.getSidesDrinksCustomizedItemDetails( mobileUser, menuCategories );
-            addDefaultSidesDrinksItemInCart(mobileUser, menuCategories, customizedItemDetails);
-            placeSidesDrinksOrderAndAssert(mobileUser, customizedItemDetails);
+            YourOrderPage yourOrderPage =  addDefaultSidesDrinksItemInCart(menuCategories, customizedItemDetails);
+            placeSidesDrinksOrderAndAssert(mobileUser, yourOrderPage, customizedItemDetails);
             Logz.step("##### Ended placing Default Order #####");
         } catch (Exception ex) {
             throw new Exception("Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage());
@@ -2166,12 +2166,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     private void assertOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem) throws Exception {
-
+       String expectedTotal =  yourOrderPage.getTotalPrice();
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
-        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem );
+        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem , expectedTotal);
+       // homePage.validateTokens(mobileUser);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-      // homePage.validateTokens(mobileUser);
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem);
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem, expectedTotal);
 
     }
 
@@ -2184,17 +2184,19 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         //purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(  mobileUser ,customizedItem);
 
     }
+    private void assertSidesDrinksOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem) throws Exception {
+        String expectedTotal = "$" +  yourOrderPage.getTotalPrice();
      private void assertSidesDrinksOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem) throws Exception {
 
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertSidesDrinksOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
-        HomePage homePage = orderConfirmationPage.assertSidesDrinksOrderDetailsInOrderConfirmationPage( customizedItem );
+        HomePage homePage = orderConfirmationPage.assertSidesDrinksOrderDetailsInOrderConfirmationPage( customizedItem , expectedTotal);
+       // homePage.validateTokens(mobileUser);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        // homePage.validateTokens(mobileUser);
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem);
+        purchaseHistoryPage.assertSidesDrinksDetailsInPurchaseHistoryPage(customizedItem, expectedTotal);
 
     }
     private void assertFavouriteOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage,CustomizedItem customizedItem) throws Exception {
-
+        String expectedTotal =  yourOrderPage.getTotalPrice();
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
         nameFavoriteItemAndClick();
         //Need to assert favoriteorder details through favopurite Object.
@@ -2202,11 +2204,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         FavouritePage favouritePage=homePage.goToFavouritePage();
         favouritePage.assertFavourites(mobileUser);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser, customizedItem );
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser, customizedItem , expectedTotal);
 
     }
-    private void placeSidesDrinksOrderAndAssert(MobileUser mobileUser, CustomizedItem customizedItem) throws Exception {
-        YourOrderPage yourOrderPage = goToYourOrderPage( );
+    private void placeSidesDrinksOrderAndAssert(MobileUser mobileUser, YourOrderPage yourOrderPage,  CustomizedItem customizedItem) throws Exception {
         assertSidesDrinksOrderDetails( mobileUser, yourOrderPage, customizedItem );
 
     }
@@ -2284,10 +2285,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
         return YourOrderPage.get( (AppiumDriver) driver );
     }
-    private YourOrderPage goToYourOrderPage() throws Exception {
 
-        return YourOrderPage.get( (AppiumDriver) driver );
-    }
+
 
     private SidesPage goToSidesPage(String menuName) throws Exception {
         selectSpecificMenu(menuName);
@@ -2305,9 +2304,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void addDefaultItemInCart(MobileUser mobileUser, BreadSize breadSize, CustomizedItem customizedItemDetails) throws Exception {
-       //String ProdName[] =selectMenuGetProductName(customizedItemDetails).split(2)
         String productName = selectMenuGetProductName( customizedItemDetails );
-
         selectSpecificProduct( mobileUser, productName, breadSize, false, customizedItemDetails );
     }
 
@@ -2320,14 +2317,17 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
 
-    public void addDefaultSidesDrinksItemInCart(MobileUser mobileUser, String menuName, CustomizedItem customizedItem) throws Exception {
+
+    public YourOrderPage  addDefaultSidesDrinksItemInCart(String menuName, CustomizedItem customizedItem) throws Exception {
         if (menuName.contains( "Sides" )) {
             SidesPage sidesPage = goToSidesPage(menuName);
-            sidesPage.selectSidesOrder(customizedItem );
+             sidesPage.selectSidesOrder(customizedItem );
         } else {
             DrinksPage drinksPage = goToDrinkPage(menuName);
-            drinksPage.selectDrinksOrder(customizedItem );
+           drinksPage.selectDrinksOrder(customizedItem );
         }
+
+       return YourOrderPage.get( (AppiumDriver)driver );
     }
 
     private String getProductName(String menuName, String productName) throws Exception {

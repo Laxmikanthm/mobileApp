@@ -95,5 +95,9 @@ public class DrinksPageAndroid  extends DrinksPage{
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("SelectItemInSides")), "SelectItemInSides Button in MakeItAMeal");
         return button;
     }
+    @Override
+    List<WebElement> getAddToBag() throws Exception {
+        return new AndroidWebElement((AndroidDriver) driver, "getItemFlavorList").getWebElements(By.id("product_add_to_bag"));
+    }
 
 }

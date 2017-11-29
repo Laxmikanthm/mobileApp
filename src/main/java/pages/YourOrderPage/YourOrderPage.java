@@ -143,6 +143,9 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     }
 
 
+public String getTotalPrice() throws Exception{
+    return getTotalText().getText().substring( 15 );
+}
 
     public YourOrderPage assertSidesDrinksOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
         Logz.step("Started asserting order details In Your Order Page");

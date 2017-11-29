@@ -65,6 +65,11 @@ public class DrinksPageIOS extends DrinksPage {
     }
 
     @Override
+    List<WebElement> getAddToBag() throws Exception {
+        return null;
+    }
+
+    @Override
     List<WebElement> getItemFlavorList() throws Exception {
         return null;
     }
