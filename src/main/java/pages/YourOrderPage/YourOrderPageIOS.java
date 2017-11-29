@@ -32,9 +32,17 @@ public class YourOrderPageIOS  extends YourOrderPage{
         return new IOSTextBox((IOSDriver) driver, By.id(itemTitle), "Item title text");
     }
 
+    MobileTextBox getItemTitle() throws Exception {
+        return new IOSTextBox((IOSDriver) driver, By.id("item_title"), "Item title text");
+    }
+
     @Override
     MobileTextBox getItemPrice(String itemPrice) throws Exception {
         return new IOSTextBox((IOSDriver) driver, By.id(itemPrice), "Item price text");
+    }
+
+    MobileTextBox getItemPrice() throws Exception {
+        return new IOSTextBox((IOSDriver) driver, By.id("item_price"), "Item price text");
     }
 
      MobileLabel getTaxPrice() throws Exception{

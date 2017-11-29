@@ -2178,7 +2178,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void assertOrderDetailsforTax(MobileUser mobileUser, YourOrderPage yourOrderPage,String Productname,boolean isDineIn,boolean isMakeitameal,double Productprice) throws Exception {
 
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPagefortax(Productname,isDineIn,isMakeitameal,Productprice).goToOrderConfirmationPage();
-        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPageforTax(Productname,Productprice );
+        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPageforTax(Productname,Productprice);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         // homePage.validateTokens(mobileUser);//have to work on this
         //purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(  mobileUser ,customizedItem);

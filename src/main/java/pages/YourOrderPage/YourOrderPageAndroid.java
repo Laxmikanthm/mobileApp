@@ -29,8 +29,16 @@ public class YourOrderPageAndroid extends YourOrderPage{
         return new AndroidTextBox((AndroidDriver) driver, By.id("item_title"), "getItemTitle");
     }
 
+    MobileTextBox getItemTitle() throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("item_title"), "getItemTitle");
+    }
+
     @Override
     MobileTextBox getItemPrice(String itemPrice) throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("item_price"), "getItemPrice");
+    }
+
+    MobileTextBox getItemPrice() throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("item_price"), "getItemPrice");
     }
 
