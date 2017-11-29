@@ -36,6 +36,16 @@ public class OrderConfirmationPageIOS  extends OrderConfirmationPage{
         return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + price + "'][1]"), price + " text");
     }
 
+    MobileTextBox getItemPricetax() throws Exception {
+        //return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + price + "']/following-sibling::XCUIElementTypeStaticText[1]"), price + " text");
+        return null;
+    }
+
+    MobileTextBox getItemTitlefortax() throws Exception {
+        //return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + price + "']/following-sibling::XCUIElementTypeStaticText[1]"), price + " text");
+        return null;
+}
+
     @Override
     MobileTextBox getFlavorItemTitle() throws Exception {
         return null;

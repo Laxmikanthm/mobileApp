@@ -8,9 +8,11 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
+import cardantApiFramework.pojos.Menu;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.serviceUtilities.cardantClientV2.data.LocationData;
 import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.ProductGroup;
+import cardantApiFramework.utils.JdbcUtil;
 import enums.Country;
 import enums.CountryOffer;
 import enums.PaymentMethod;
@@ -273,7 +275,26 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             Logz.step("##### Product menu: " + menuCategories + " is not present at this store: " + store.getStoreNumber() + " #####");
         }
         }
-     }
+    }
+
+    public void placeDefaultOrderForTax(String menuCategories, Store store,Boolean isHot,boolean isDinein,Boolean isMakeitmeal) throws Exception {
+        //MobileUser mobileUser = registerUser("InessaCluett@qasubway.com");//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
+        MobileUser mobileUser = registerUser();
+        mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+
+        //Menu menuItems = JdbcUtil.getHotColdMenuItem(store.getStoreNumber(),menuCategories,isHot,true);
+        Menu menuItems = JdbcUtil.getHotColdMenuItem(store.getStoreNumber(),menuCategories,isHot,true);
+
+            if (menuItems.getProductClassGroupName().contains(menuCategories)) {
+                OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+                ordersPage.placeDefaultOrderforTax(mobileUser,menuCategories, store,menuItems,isHot,isDinein,isMakeitmeal);
+            }
+            else
+            {
+                Logz.step("##### Product menu: " + menuCategories + " is not present at this store: " + store.getStoreNumber() + " #####");
+            }
+    }
+
 
     public void placeDefaultOrderRedeemCertificateAndAssert(String menuCategories, BreadSize breadSize, Store store, int certRedeemCount) throws Exception {
         MobileUser mobileUser = registerUser();//HaydenHinemoor@qasubway.com
@@ -289,6 +310,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             }
         }
     }
+
 
     public void placeCustomizedOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
         MobileUser mobileUser = registerUser();//"OatesJodlkowski@qasubway.com"

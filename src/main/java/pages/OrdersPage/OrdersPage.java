@@ -1725,7 +1725,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public cardantApiFramework.pojos.Menu getMenuDetails(Store store, Tax tax) throws Exception {
-        menu = JdbcUtil.getHotColdMenuItem( String.valueOf( store.getLocationCode() ), Menu.AllSandwiches.toString(), tax.toString(), Tax.strOrderTypeIndividual.toString() );
+        //menu = JdbcUtil.getHotColdMenuItem( String.valueOf( store.getLocationCode() ), Menu.AllSandwiches.toString(), tax.toString(), Tax.strOrderTypeIndividual.toString() );
         return menu;
     }
 
@@ -2057,6 +2057,29 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
+    public HomePage placeDefaultOrderforTax(MobileUser mobileUser, String menuCategories, Store store, cardantApiFramework.pojos.Menu menu, boolean isHot, boolean isDineIn, boolean isMakeitaMeal) throws Exception {
+        try {
+            customized = false;
+            Logz.step( "##### Started placing Default Order #####" + menuCategories );
+            if(isHot){
+                Logz.step( "##### Hot Item  to Select #####" + menu.getProductName() );
+            }
+            else {
+                Logz.step( "##### Cold Item  to Select #####" +menu.getProductName() );
+            }
+
+            //CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, menuCategories, breadSize );
+            addDefaultItemInCartForTax( mobileUser,menuCategories, menu.getProductName());
+            placeOrderAndAssertforTax( mobileUser, menuCategories, store,menu.getProductName(),menu.getProductPrice(),isDineIn,isMakeitaMeal);
+
+            Logz.step( "##### Ended placing Default Order #####" );
+        } catch (Exception ex) {
+            throw new Exception( "Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage() );
+        }
+        return HomePage.get( (AndroidDriver) driver );
+
+    }
+
     public HomePage productDetailsAssertion(MobileUser mobileUser, String menuCategories, BreadSize breadSize) throws Exception {
         try {
             customized = false;
@@ -2151,7 +2174,17 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem);
 
     }
-    private void assertSidesDrinksOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem) throws Exception {
+
+    private void assertOrderDetailsforTax(MobileUser mobileUser, YourOrderPage yourOrderPage,String Productname,boolean isDineIn,boolean isMakeitameal,double Productprice) throws Exception {
+
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPagefortax(Productname,isDineIn,isMakeitameal,Productprice).goToOrderConfirmationPage();
+        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPageforTax(Productname,Productprice);
+        PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        // homePage.validateTokens(mobileUser);//have to work on this
+        //purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(  mobileUser ,customizedItem);
+
+    }
+     private void assertSidesDrinksOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem) throws Exception {
 
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertSidesDrinksOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
         HomePage homePage = orderConfirmationPage.assertSidesDrinksOrderDetailsInOrderConfirmationPage( customizedItem );
@@ -2188,9 +2221,23 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 assertOrderDetails( mobileUser, yourOrderPage, customizedItem );
             }
         } else {
-            assertOrderDetails( mobileUser, yourOrderPage, customizedItem );
+            assertOrderDetails( mobileUser, yourOrderPage, customizedItem);
         }
 
+    }
+    private void placeOrderAndAssertforTax(MobileUser mobileUser, String menuCategories, Store store,String Productname, double Productprice,boolean isDineIn, boolean isMakeitameal) throws Exception {
+        YourOrderPage yourOrderPage = goToYourOrderPage( customized );
+        /*if (menuCategories.contains( "Breakfast" )) {
+            boolean time = Utils.getTime( store );
+            if (!time) {
+                assertBreakfastUnavailablePopUp( customizedItem, store );
+            } else {
+                assertOrderDetailsforTax( mobileUser, yourOrderPage, customizedItem,Productname,isDineIn,isMakeitameal,Productprice);
+            }
+        } else {
+            assertOrderDetailsforTax( mobileUser, yourOrderPage, customizedItem,Productname,isDineIn,isMakeitameal,Productprice );
+        }*/
+        assertOrderDetailsforTax( mobileUser, yourOrderPage,Productname,isDineIn,isMakeitameal,Productprice );
     }
     private void placeFavouriteOrderAndAssert(MobileUser mobileUser, String menuCategories, Store store,CustomizedItem customizedItem) throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage(customized);
@@ -2258,9 +2305,20 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void addDefaultItemInCart(MobileUser mobileUser, BreadSize breadSize, CustomizedItem customizedItemDetails) throws Exception {
+       //String ProdName[] =selectMenuGetProductName(customizedItemDetails).split(2)
         String productName = selectMenuGetProductName( customizedItemDetails );
+
         selectSpecificProduct( mobileUser, productName, breadSize, false, customizedItemDetails );
     }
+
+    public void addDefaultItemInCartForTax(MobileUser mobileUser, String smenu, String sItemName) throws Exception {
+        //String ProdName[] = sItemName.split(" ",2);
+        String splitProdname = selectMenuGetProductNameForTax(sItemName);
+        Logz.step(smenu);
+        Logz.step(sItemName);
+        selectSpecificProductfortax( mobileUser, splitProdname,sItemName);
+    }
+
 
     public void addDefaultSidesDrinksItemInCart(MobileUser mobileUser, String menuName, CustomizedItem customizedItem) throws Exception {
         if (menuName.contains( "Sides" )) {
@@ -2303,6 +2361,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         selectSpecificMenu( customizedItem.getMenuName() );
         return getProductName(  customizedItem.getMenuName() , customizedItem.getCustomizedProductDetail().getProductName() );
     }
+
+    public String selectMenuGetProductNameForTax(String sItemName) throws Exception {
+        String ProdName[] = sItemName.split(" ",2);
+        String splitProdname=ProdName[1];
+        return splitProdname;
+        //return getProductName(  customizedItem.getMenuName() , customizedItem.getCustomizedProductDetail().getProductName() );
+    }
+
 
     private void assertBreakfastUnavailablePopUp(CustomizedItem customizedItem, Store store) throws Exception {
         String startTime = Utils.getBreakFastStartTimeRounded(store);
@@ -2403,6 +2469,21 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 customizePage.randomCustomization( customizedItem );
             }
             Logz.step( "##### Selected: " + productName + " #####" );
+        } catch (Exception ex) {
+            throw new Exception( "Unable to select: " + productName + "\n" + ex.getMessage() );
+        }
+
+    }
+
+    private void selectSpecificProductfortax(MobileUser mobileUser, String productName,String fullProductname) throws Exception {
+        try {
+            Logz.step( "##### Selecting: " + productName + " #####" );
+            //ProductDetailsPage productDetailsPage;
+            goToProductDetailsPage( productName );
+            if (!(fullProductname.contains( "12" ))) {
+                getSixInchOption().click();
+            }
+
         } catch (Exception ex) {
             throw new Exception( "Unable to select: " + productName + "\n" + ex.getMessage() );
         }

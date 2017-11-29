@@ -43,18 +43,27 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
-  abstract WebElement getPickupTimeHeader() throws Exception;
+    abstract WebElement getPickupTimeHeader() throws Exception;
+    abstract WebElement getMakeitaMeal()throws  Exception;
+    abstract WebElement ViewfullMenu()throws  Exception;
+    abstract MobileTextBox getItemTitle() throws Exception;
+    abstract MobileTextBox getItemPrice() throws Exception;
     abstract MobileTextBox getItemTitle(String itemTitle) throws Exception;
     abstract MobileTextBox getItemPrice(String itemPrice) throws Exception;
     abstract MobileTextBox getTotalText() throws Exception;
     abstract MobileTextBox getPickupTimeHeaderText() throws Exception;
     abstract MobileLabel getRewardsAmt() throws Exception;
     abstract MobileButton getManage() throws Exception;
+    abstract MobileLabel getTaxPrice() throws Exception;
+    abstract MobileButton getDineIn() throws Exception;
 
 
     CommonElements commonElements = new CommonElements((AppiumDriver) driver);
     By ManageLocator = By.id( "manage_rewards" );
     public int Rewards = 0;
+    By taxPriceLocator = By.id( "tax_header" );
+    By getTotalText=By.id("submit_order");
+
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -102,6 +111,37 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         Logz.step("Started asserting order details In Your Order Page");
         return YourOrderPage.get((AppiumDriver)driver);
     }
+
+    public YourOrderPage assertOrderDetailsInYourOrderPagefortax (String Productname,boolean isDineIn,boolean isMakeitameal,double Productprice) throws Exception{
+        Logz.step("Started asserting order details In Your Order Page");
+        Thread.sleep( 20000 );
+        getPickupTimeHeaderText().isReady();
+        commonElements.scroll( getPickupTimeHeader(), "down" );
+       if(isDineIn){
+           getDineIn().click();
+       }
+       String Prodname[]=Productname.split(" ",2);
+       String Productnameui[]=getItemTitle().getText().split(" ",2);
+       Logz.step(Productnameui[1]);
+        Logz.step(Prodname[1] );
+        Assert.assertEquals( Productnameui[1],Prodname[1] );
+        Logz.step("api value is p.price " +Double.toString(Productprice));
+        Logz.step("UI value of p.priceis "+getItemPrice().getText());
+        //Assert.assertEquals(getItemPrice().getText(),Double.toString(Productprice));
+        //need to discuss with marium
+        //Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice() );
+        commonElements.scroll( getMakeitaMeal(), "down" );
+         if(isMakeitameal){
+           getMakeitaMeal().click();
+          }
+        commonElements.scroll( ViewfullMenu(), "down" );
+        //commonElements.scrollToElement( null,getTotalText, 0.9,0.5);
+        AssertTaxdetails();
+        // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+        Logz.step("ended asserting order details In Your Order Page");
+        return YourOrderPage.get((AppiumDriver)driver);
+    }
+
 
 
     public YourOrderPage assertSidesDrinksOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
@@ -154,4 +194,12 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
 
 
 
+
+    public  void AssertTaxdetails() throws  Exception
+    {
+        getTaxPrice().getControl().isDisplayed();
+        if(!getTaxPrice().getText().isEmpty()){
+            Logz.step("assert tax sucessful");}
+
+    }
 }

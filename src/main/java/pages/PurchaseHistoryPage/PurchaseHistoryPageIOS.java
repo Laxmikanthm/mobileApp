@@ -97,5 +97,9 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
         return By.id("earned_tokens_text");
     }
 
+    MobileTextBox getProducttitle() throws Exception {
+        return null;
+    }
+
 
 }

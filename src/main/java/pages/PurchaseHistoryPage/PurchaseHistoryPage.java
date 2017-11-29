@@ -1,6 +1,5 @@
 package pages.PurchaseHistoryPage;
 
-
 import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
@@ -62,6 +61,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getOrderTimeAddressList() throws Exception;
     abstract List<WebElement> getProductTitleList() throws Exception;
     abstract MobileTextBox getProductTitle(String productTitle) throws Exception;
+    abstract MobileTextBox getProducttitle() throws Exception;
     abstract List<WebElement> getProductDescriptionList() throws Exception;
     abstract List<WebElement> getOrderTotalList() throws Exception;
     abstract List<WebElement> getOrderDetails(WebElement element) throws Exception;
@@ -471,6 +471,23 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     }
 
     //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
+
+    public Boolean assertProductTitleInPurchaseHistoryPageForTax(CustomizedItem customizedItem, String sItemName) throws Exception {
+        Logz.step( "Started asserting order details In Order Confirmation Page" );
+        Boolean Titleassert=false;
+        if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )) {
+            Assert.assertEquals( getProducttitle().getText(), sItemName );
+        } else {
+            Assert.assertEquals( getProducttitle().getText(), sItemName );
+            Titleassert=true ;
+        }
+
+        // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+        Logz.step( "Started asserting order details In Order Confirmation Page" );
+        return Titleassert;
+    }
+
+        //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
 //        try {
 //            Logz.step("##### Started setting actual purchase details in Purchase History Page #####");
 //            PurchaseHistoryDetails purchaseHistoryDetails = new PurchaseHistoryDetails();
