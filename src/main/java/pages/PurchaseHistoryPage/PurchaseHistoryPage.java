@@ -120,6 +120,8 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
 
     }
 
+
+
     public List<PurchaseHistoryDetails> getActualPurchaseHistoryList(CustomizedItem customizedItem) throws Exception {
         try {
             Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
@@ -142,6 +144,36 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
 
         }
     }
+
+
+    public List<PurchaseHistoryDetails> getActualPurchaseHistoryListForTax(CustomizedItem customizedItem,String sItemname) throws Exception {
+        try {
+            Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
+            List<PurchaseHistoryDetails> orderHistoryList = new ArrayList<>();
+            getOrderListText().isReady();
+            int webElementCount = getOrderList().size();
+            for (int i = 0; i < webElementCount; i++) {
+                List<WebElement> getOrderHistoryList =getOrderTimeAddressList();
+                getOrderHistoryList.get(i).click();
+               /* if (assertProductTitleInPurchaseHistoryPageForTax(customizedItem, sItemname)){
+                    orderHistoryList.add(getActualPurchaseHistory(i));
+                    break;
+                };*/
+                orderHistoryList.add(getActualPurchaseHistory(i));
+            }
+            Logz.step("##### Ended getting actual purchase details in Purchase History Page #####");
+
+            return orderHistoryList;
+
+        } catch (Exception ex) {
+            throw new Exception(("Failed to get actual purchase details in Purchase History Page\n" + ex.getMessage()));
+
+
+        }
+    }
+
+
+
     public List<PurchaseHistoryDetails> getActualPurchaseHistoryList() throws Exception {
         try {
             Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
@@ -249,6 +281,27 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
             OrderHistoryResponse order = remoteOrder.orderHistory(remoteOrderCustomer);
             OrderHistory[] results = order.getResults();
             for (OrderHistory result : results) {
+                historyDetailsList.add(getExpectedPurchaseHistory(remoteOrderCustomer, result));
+            }
+            Logz.step("##### Ended getting expected purchase details in Purchase History Page #####");
+            return historyDetailsList;
+
+        } catch (Exception ex) {
+            throw new Exception(("Failed to get expected purchase details from api\n" + ex.getMessage()));
+
+
+        }
+    }
+
+    public List<PurchaseHistoryDetails> getExpectedPurchaseHistoryListForTax(RemoteOrderCustomer remoteOrderCustomer) throws Exception {
+        try {
+            Logz.step("##### Started getting expected purchase details in Purchase History Page #####");
+            List<PurchaseHistoryDetails> historyDetailsList = new ArrayList<>();
+            RemoteOrder remoteOrder = new RemoteOrder(remoteOrderCustomer);
+            OrderHistoryResponse order = remoteOrder.orderHistory(remoteOrderCustomer);
+            OrderHistory[] results = order.getResults();
+            for (OrderHistory result : results)
+            {
                 historyDetailsList.add(getExpectedPurchaseHistory(remoteOrderCustomer, result));
             }
             Logz.step("##### Ended getting expected purchase details in Purchase History Page #####");
@@ -423,6 +476,22 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
         // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
         Logz.step( "Started asserting order details In Order Confirmation Page" );
 
+    }
+
+
+    public Boolean assertProductTitleInPurchaseHistoryPageForTax(CustomizedItem customizedItem, String sItemName) throws Exception {
+        Logz.step( "Started asserting order details In Order Confirmation Page" );
+        Boolean Titleassert=false;
+        if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )) {
+            Assert.assertEquals( getProductTitle().getText(), sItemName );
+        } else {
+            Assert.assertEquals( getProductTitle().getText(), sItemName );
+            Titleassert=true ;
+        }
+
+        // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+        Logz.step( "Started asserting order details In Order Confirmation Page" );
+        return Titleassert;
     }
 
         //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
