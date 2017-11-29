@@ -65,7 +65,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getProductDescriptionList() throws Exception;
     abstract List<WebElement> getOrderTotalList() throws Exception;
     abstract List<WebElement> getOrderDetails(WebElement element) throws Exception;
-
+    abstract WebElement getOrderNumber(WebElement element) throws Exception;
 
     abstract By getEarnedTokens() throws Exception;
     UserProfilePage userProfilePage;
@@ -192,18 +192,20 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             Logz.step("##### Started setting actual purchase details in Purchase History Page #####");
             PurchaseHistoryDetails purchaseHistoryDetails = new PurchaseHistoryDetails();
           //  List<WebElement> getOrderNumbers = commonElements.getElements(By.id(""), By.xpath("//android.widget.TextView[contains(@text,'Order')]"));
-            List<WebElement> getOrderNumbers = getOrderNumberList();
-            String orderNum = getOrderNumbers.get(index).getText();
-            Logz.step("Order number: " + orderNum);
+
           //  List<WebElement> getOrderTimeAddress = commonElements.getElements(By.id(""), By.id("order_time_address"));
             //List<WebElement> getOrderTimeAddress = getOrderTimeAddressList();
+            String orderNum = "";
 
             List<WebElement> orderDetail = getOrderDetails(eleOrder);
             if(driver instanceof IOSDriver){
+                orderNum = getOrderNumber(eleOrder).getText();
                 purchaseHistoryDetails.setStoreAddress(orderDetail.get(1).getText());
                 purchaseHistoryDetails.setPickupDateTime(orderDetail.get(2).getText() + " | " + orderDetail.get(3).getText());
                 orderNum = BaseTest.getStringfromBundleFile("Order") + " " + orderNum;
             }else {
+                List<WebElement> getOrderNumbers = getOrderNumberList();
+                orderNum = getOrderNumbers.get(index).getText();
                 String orderTimeAddress = orderDetail.get(0).getText();
                 String[] split = orderTimeAddress.split("\n");
                 purchaseHistoryDetails.setPickupDateTime(split[0]);
@@ -215,6 +217,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
                 purchaseHistoryDetails.setTotal(actualTotal);
                 //########### This block we are not asserting for iOS because on 'Purchase History' page unable to identify purchaser order details locators individually. ###################
             }
+            Logz.step("Order number: " + orderNum);
             purchaseHistoryDetails.setOrderNumber(orderNum);
             Logz.step("##### Ended setting actual purchase details in Purchase History Page #####");
             return purchaseHistoryDetails;
