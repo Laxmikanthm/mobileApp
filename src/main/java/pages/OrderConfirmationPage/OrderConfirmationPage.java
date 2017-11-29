@@ -56,7 +56,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
     abstract MobileButton getGotIt() throws Exception;
 
 
-    public HomePage assertOrderDetailsInOrderConfirmationPage(CustomizedItem customizedItem) throws Exception{
+    public HomePage assertOrderDetailsInOrderConfirmationPage(CustomizedItem customizedItem, String expectedTotal) throws Exception{
         Logz.step("Started asserting order details In Order Confirmation Page");
         Thread.sleep( 20000 );
        // getPickupTimeHeaderText().isReady();
@@ -68,23 +68,31 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
             Assert.assertEquals( getItemTitle().getText(), customizedItem.getProductDetail().getName() );
         }
         Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
-        // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+         Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+expectedTotal);
         Logz.step("Started asserting order details In Order Confirmation Page");
         getGotIt().click();
         return HomePage.get((AppiumDriver)driver);
     }
-    public HomePage assertSidesDrinksOrderDetailsInOrderConfirmationPage(CustomizedItem customizedItem) throws Exception{
+    public HomePage assertSidesDrinksOrderDetailsInOrderConfirmationPage(CustomizedItem customizedItem, String  expectedTotal) throws Exception{
         Logz.step("Started asserting order details In Order Confirmation Page");
         Thread.sleep( 20000 );
         // getPickupTimeHeaderText().isReady();
         getGotIt().isReady();
         commonElements.scroll( getPickupTimeHeader(), "down" );
         if (customizedItem.getMenuName().contains( "Drinks" )) {
-            if (customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Bottled Beverage" )) {
+           /* if (customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Bottled Beverage" )) {
                 Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
                 Assert.assertEquals( getFlavorItemTitle().getText().substring(2).trim(), customizedItem.getCustomizedProductDetail().getProductName() );
 
             } else {
+                Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+            }*/
+            if (customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Bottled Beverage" )) {
+                if (!customizedItem.getCustomizedProductDetail().getProductName().contains( "Dasani® Water" )) {
+                    Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
+                    Assert.assertEquals( getFlavorItemTitle().getText().substring(2).trim(), customizedItem.getCustomizedProductDetail().getProductName() );
+                }
+            }else {
                 Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
             }
         }else{
@@ -98,7 +106,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
 
         }
         Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
-         //Assert.assertEquals( getTotalText().getText(),  Utils.getExpectedPrice( customizedItem ));//$5.51
+         Assert.assertEquals( getTotalText().getText(), expectedTotal);//$5.51
         Logz.step("Started asserting order details In Order Confirmation Page");
         getGotIt().click();
         return HomePage.get((AppiumDriver)driver);

@@ -50,7 +50,7 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     }
 
     @Override
-    MobileTextBox getProductTitle() throws Exception {
+    List<WebElement> getProductTitle() throws Exception {
         return null;
     }
 

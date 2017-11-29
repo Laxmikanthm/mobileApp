@@ -94,11 +94,13 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         commonElements.scroll( getPickupTimeHeader(), "down" );
         Assert.assertEquals( getItemTitle().getText(), customizedItem.getProductDetail().getName() );
         Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
-     //   Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+      //Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
         Logz.step("Started asserting order details In Your Order Page");
         return YourOrderPage.get((AppiumDriver)driver);
     }
-
+public String getTotalPrice() throws Exception{
+    return getTotalText().getText().substring( 15 );
+}
 
     public YourOrderPage assertSidesDrinksOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
         Logz.step("Started asserting order details In Your Order Page");
@@ -107,7 +109,7 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         commonElements.scroll( getPickupTimeHeader(), "down" );
         if (customizedItem.getMenuName().contains( "Drinks" )){
             if(customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Bottled Beverage" )){
-                Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
+                Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
             }else {
                 Assert.assertEquals( getItemTitle().getText(), customizedItem.getProductDetail().getName() );
             }

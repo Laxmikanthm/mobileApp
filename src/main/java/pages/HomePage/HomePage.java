@@ -546,12 +546,12 @@ public abstract class HomePage<T extends AppiumDriver> extends MobileBasePage {
         return OrdersPage.get( (AndroidDriver) driver );
     }
 
-    public YourOrderPage goToYourOrderPage() throws Exception {
+ /*   public YourOrderPage goToYourOrderPage() throws Exception {
         Logz.step( "##### Navigating to your Order Page ...... #####" );
 
         Logz.step( "##### Navigated to your Order Page ...... #####" );
         return YourOrderPage.get( (AndroidDriver) driver );
-    }
+    }*/
 
     public MyWayRewards goToMyWayRewardsPage() throws Exception {
 

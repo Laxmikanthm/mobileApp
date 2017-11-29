@@ -4,6 +4,7 @@ import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
+import com.amazonaws.services.dynamodbv2.xspec.S;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -13,6 +14,7 @@ import org.testng.Assert;
 import pages.CommonElements.CommonElements;
 import pages.DrinksPage.DrinksPage;
 import pages.HomePage.HomePage;
+import pages.YourOrderPage.YourOrderPage;
 import pojos.CustomizedItem.CustomizedItem;
 import pojos.Orders.Order;
 import pojos.user.MobileUser;
@@ -53,12 +55,12 @@ abstract MobileTextBox getItemCountText() throws Exception;
     abstract List<WebElement> getSidesPriceCaloriesList() throws Exception;
     abstract  MobileTextBox getFlavorSidesTitleText() throws Exception;
     CommonElements commonElements = new CommonElements( (AppiumDriver) driver );
+    String SidesName = "";
 
-
-    public HomePage selectSidesOrder(CustomizedItem customizedItem) throws Exception {
+    public YourOrderPage selectSidesOrder(CustomizedItem customizedItem) throws Exception {
 //ToDo
-        int count = 0;
-        String SidesName = customizedItem.getCustomizedProductDetail().getProductClassName();
+       // int count = 0;
+         SidesName = customizedItem.getCustomizedProductDetail().getProductClassName();
         if (SidesName.equalsIgnoreCase( "Apple Slices" )) {
             Logz.step( SidesName + " is selected" );
 
@@ -67,7 +69,7 @@ abstract MobileTextBox getItemCountText() throws Exception;
                 if (!getSides().getText().contains( SidesName )) {
                     commonElements.swipe( (AppiumDriver) driver, "Left" );
                 }
-                count = i - 1;
+             //   count = i - 1;
             }
             Logz.step( SidesName + " is selected" );
             getSelectFlavor().click();
@@ -84,9 +86,9 @@ abstract MobileTextBox getItemCountText() throws Exception;
 
         }
         assertSidesDetails(customizedItem);
-        getAddToBag().get( count).click();
+        goToYourOrderPage(customizedItem);
 
-        return HomePage.get( (AppiumDriver) driver );
+        return YourOrderPage.get( (AppiumDriver) driver );
     }
 
 
@@ -119,6 +121,18 @@ abstract MobileTextBox getItemCountText() throws Exception;
     public int getItemCount() throws Exception{
         String[] strings = getItemCountText().getText().split( "OF " );
         return Integer.parseInt( strings[1] );
+    }
+    public void goToYourOrderPage( CustomizedItem customizedItem) throws Exception{
+        if (SidesName.equalsIgnoreCase( "Apple Slices" )) {
+            getAddToBag().get( 0 ).click();
+        }else {
+            if(customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Cookies" )){
+                commonElements.swipe( (AppiumDriver) driver, "Left" );
+            }
+            getAddToBag().get( 1 ).click();
+        }
+        Logz.step( "Navigating to your order page......" );
+
     }
 
 }
