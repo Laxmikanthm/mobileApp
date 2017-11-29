@@ -26,12 +26,12 @@ public class OrderConfirmationPageAndroid extends OrderConfirmationPage {
     }
 
     @Override
-    MobileTextBox getItemTitle() throws Exception {
+    MobileTextBox getItemTitle(String itemTitle) throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("item_title"), "getItemTitle");
     }
 
     @Override
-    MobileTextBox getItemPrice() throws Exception {
+    MobileTextBox getItemPrice(String price) throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("item_price"), "getItemPrice");
     }
 
@@ -41,7 +41,7 @@ public class OrderConfirmationPageAndroid extends OrderConfirmationPage {
     }
 
     @Override
-    MobileTextBox getTotalText() throws Exception {
+    MobileTextBox getTotalText(String price) throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("total"), "getTotalText");
     }
 

@@ -1,11 +1,16 @@
 package pages.MyWayRewards;
+import base.gui.controls.browser.Generic;
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.android.AndroidLabel;
+import base.gui.controls.mobile.android.AndroidWebElement;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.test.BaseTest;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 
 /**
@@ -37,5 +42,12 @@ public class MyWayRewardsAndroid extends MyWayRewards {
         return Certscount;
     }
 
+    List<WebElement> getRewardsList() throws Exception {
+        return new AndroidWebElement((AndroidDriver) driver, "Rewards List").getWebElements(By.id("rewards_item_layout"));
+    }
+
+    List<WebElement> getRewardsDetails(WebElement rewards) throws Exception {
+        return rewards.findElements(By.xpath("//android.widget.TextView"));
+    }
 
 }

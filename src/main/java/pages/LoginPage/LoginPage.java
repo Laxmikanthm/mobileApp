@@ -6,12 +6,14 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.generic.PasswordTextBox;
+import base.gui.controls.mobile.ios.IOSButton;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import pages.ForgotPasswordPage.ForgotYourPasswordPage;
 import pages.HomePage.HomePage;
 import pojos.user.MobileUser;
@@ -28,10 +30,12 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         super(driver);
     }
     abstract MobileTextBox getUserName() throws Exception;
-    abstract PasswordTextBox getPassword() throws Exception;
+    abstract MobileTextBox getPassword() throws Exception;
     abstract MobileButton getLogin() throws Exception;
     abstract MobileButton getSignUp() throws Exception;
-
+    abstract MobileButton getCloseBtn() throws Exception;
+    abstract MobileButton getShowIcon() throws Exception;
+    abstract MobileButton getAllowBtn() throws Exception;
     abstract MobileButton getForgotPassword() throws Exception;
 
     @Override
@@ -59,24 +63,51 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
         }
     }
 
+    private void setUserName(String emailAddress) throws Exception{
+        MobileTextBox userName = getUserName();
+        userName.isReady();
+        userName.getControl().click();
+        if(driver instanceof IOSDriver) {
+            getCloseBtn().click();
+            userName.setText(emailAddress);
+            driver.getKeyboard().pressKey(Keys.ENTER);
+        }else {
+            userName.setText(emailAddress);
+        }
+        //userName.getControl().clear();
+    }
 
+    private void setPassword(String pwd) throws Exception{
+        if(driver instanceof IOSDriver) {
+            getShowIcon().click();
+        }
+        MobileTextBox password = getPassword();
+        password.isReady();
+        password.getControl().click();
+        password.getControl().clear();
+        password.setText(pwd);
+    }
+    private void login() throws Exception{
+        MobileButton login = getLogin();
+        login.isReady();
+        login.click();
+    }
     public HomePage dlogin(MobileUser mobileUser) throws Exception {
         try {
             try {
-               Thread.sleep(15000);
+                Thread.sleep(15000);
                 driver.findElementByXPath("//android.widget.EditText[@resource-id='custom-signInName']");
-            }
-           catch (org.openqa.selenium.NoSuchElementException ex) {
+            } catch (org.openqa.selenium.NoSuchElementException ex) {
                 driver.findElementById("com.android.chrome:id/terms_accept").click();
                 driver.findElementById("com.android.chrome:id/negative_button").click();
             }
-           // getUserName().getControl().clear();
+            getUserName().isReady();
+            getUserName().getControl().click();
             getUserName().setText(mobileUser.getEmailAddress());
-            getPassword().isReady();
             getPassword().setText(mobileUser.getPassword());
             HideKeyboard();
             getLogin().click();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Logz.step("Unable to Login");
             throw new Exception("unable to Login");
         }
@@ -84,57 +115,59 @@ public abstract class LoginPage<T extends AppiumDriver> extends MobileBasePage {
 
     }
     public HomePage login(RemoteOrderCustomer mobileUser) throws Exception {
-        Logz.step("##### "+mobileUser.getEmailAddress()+" is logging in ##### ");
+        Logz.step("##### " + mobileUser.getEmailAddress() + " is logging in ##### ");
         try {
-            if((AppiumDriver)driver instanceof AndroidDriver) {
+            if (driver instanceof AndroidDriver) {
                 androidPopUpCheck();
             }
-            getUserName().isReady();
-            getUserName().setText(mobileUser.getEmailAddress());
-            getPassword().setText(mobileUser.getPassword());
+            setUserName(mobileUser.getEmailAddress());
+            setPassword(mobileUser.getPassword());
             HideKeyboard();
-            getLogin().isReady();
-            getLogin().click();
-            try{
-                Thread.sleep( 15000 );
-                //driver.findElement( By.id("profile") ).isDisplayed();
-                Logz.step( "User is in home page" );
-
-            }catch (org.openqa.selenium.NoSuchElementException exs) {
+            login();
+            try {
+                Thread.sleep(15000);
+                getProfile().getControl().isDisplayed();
+                Logz.step("User is in home page");
+            } catch (Exception exs) {
                 try {
-                    getSignUp().click();
-                    Logz.step( "User is in home page" );
+                    if (driver instanceof IOSDriver) {
+                        getAllowBtn().click();
+                    } else {
+                        getSignUp().click();
+                        Logz.step("User is in home page");
+                    }
                 } catch (org.openqa.selenium.NoSuchElementException ex) {
-                    Logz.step( "Pop up is not present" );
+                    Logz.step("Pop up is not present");
                 }
             }
 
-
-        }catch (Exception ex){
-            throw new Exception("Unable to Login\n" +ex.getMessage());
+        } catch (Exception ex) {
+            throw new Exception("Unable to Login\n" + ex.getMessage());
         }
 
         return HomePage.get((AppiumDriver) driver);
 
     }
 
-private void androidPopUpCheck() throws Exception{
-    try {
-        Thread.sleep( 30000 );
-        driver.findElementByXPath( "//android.widget.EditText[@resource-id='custom-signInName']" );
-        Logz.step( "Found user name" );
-    } catch (org.openqa.selenium.NoSuchElementException ex) {
-        Logz.step( "didnt Find user name" );
-        driver.findElementById( "com.android.chrome:id/terms_accept" ).click();
-        driver.findElementById( "com.android.chrome:id/negative_button" ).click();
-        Logz.step( "Clicked on terms" );
+    private void androidPopUpCheck() throws Exception{
+        try {
+            Thread.sleep( 30000 );
+            driver.findElementByXPath( "//android.widget.EditText[@resource-id='custom-signInName']" );
+            Logz.step( "Found user name" );
+        } catch (org.openqa.selenium.NoSuchElementException ex) {
+            Logz.step("didnt Find user name");
+            driver.findElementById("com.android.chrome:id/terms_accept").click();
+            driver.findElementById("com.android.chrome:id/negative_button").click();
+            Logz.step("Clicked on terms");
+        }
     }
-}
 
     public void HideKeyboard()
     {
-        AppiumDriver d=(AppiumDriver) driver;
-        d.hideKeyboard();
+        if(driver instanceof AndroidDriver) {
+            AppiumDriver d = (AppiumDriver) driver;
+            d.hideKeyboard();
+        }
     }
 
     public ForgotYourPasswordPage goToForgotPasswordPage() throws Exception

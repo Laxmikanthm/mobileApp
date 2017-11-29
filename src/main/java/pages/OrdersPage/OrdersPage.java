@@ -61,7 +61,7 @@ import java.lang.String;
 public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage {
 
     public OrdersPage(AppiumDriver driver) {
-        super( driver );
+        super(driver);
     }
 
     abstract MobileLabel getItems() throws Exception;
@@ -217,6 +217,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     abstract MobileLabel getFlavourDropDown() throws Exception;
 
+    abstract By getProductGroupHeader() throws Exception;
+
+    abstract MobileLabel getAddress1() throws Exception;
+
+    abstract MobileLabel getAddress2() throws Exception;
+
+    abstract MobileLabel getAlertTitle() throws Exception;
+
+    abstract MobileLabel getLoyaltyError() throws Exception;
+
     Dimension size;
 
     Random random = new Random();
@@ -228,32 +238,34 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     AddCardPage addCardPage;
     UserProfilePage userProfilePage;
     HomePage homePage;
-    TouchAction action = new TouchAction( (MobileDriver) driver );
-    CommonElements elements = new CommonElements( (AppiumDriver) driver );
+    TouchAction action = new TouchAction((MobileDriver) driver);
+    CommonElements elements = new CommonElements((AppiumDriver) driver);
     cardantApiFramework.pojos.Menu menu;
+    Store store = new Store();
+    OrdersPage ordersPage;
 
 
     /*This elements are for finding list of elements*/
-    By storeNamesLocator = By.id( "address" );
-    By categoryLocator = By.id( "product_group_header" );
-    By sidesOrDrinks = By.id( "product_title" );
-    By someThingElseLocator = By.id( "something_else_text" );
-    By ItemList = By.id( "item_options" );
-    By ItemFromSides = By.id( "side_title_1" );
-    By ItemFromDrinks = By.id( "drink_title" );
-    By specialInstructionsLabel = By.id( "instructions_header" );
-    By FavouriteIconLocator = By.id( "favorite_animation" );
-    By ManageLocator = By.id( "manage_rewards" );
-    By itemPrice = By.id( "item_price" );
-    By taxPriceLocator = By.id( "tax_amount" );
-    By customizeLocator = By.id( "customize" );
-    By rewardsAmt = By.id( "rewards_amount" );
-    By totalAmount = By.id( "ordertotal_amount" );
-    By coldCutCombo = By.partialLinkText( "Cold Cut Combo" );
-    By coffee12oz = By.partialLinkText( "12 oz Coffee" );
-    By moreDrinks = By.id( "drinks" );
-    By fullMenu = By.id( "view_full_menu_text" );
-    By makeItAMeal = By.id( "make_it_a_meal_header" );
+    By storeNamesLocator = By.id("address");
+    By categoryLocator = By.id("product_group_header");
+    By sidesOrDrinks = By.id("product_title");
+    By someThingElseLocator = By.id("something_else_text");
+    By ItemList = By.id("item_options");
+    By ItemFromSides = By.id("side_title_1");
+    By ItemFromDrinks = By.id("drink_title");
+    By specialInstructionsLabel = By.id("instructions_header");
+    By FavouriteIconLocator = By.id("favorite_animation");
+    By ManageLocator = By.id("manage_rewards");
+    By itemPrice = By.id("item_price");
+    By taxPriceLocator = By.id("tax_amount");
+    By customizeLocator = By.id("customize");
+    By rewardsAmt = By.id("rewards_amount");
+    By totalAmount = By.id("ordertotal_amount");
+    By coldCutCombo = By.partialLinkText("Cold Cut Combo");
+    By coffee12oz = By.partialLinkText("12 oz Coffee");
+    By moreDrinks = By.id("drinks");
+    By fullMenu = By.id("view_full_menu_text");
+    By makeItAMeal = By.id("make_it_a_meal_header");
 
 
     Random rn = new Random();
@@ -278,111 +290,111 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         String platform = SubwayAppBaseTest.platformName;
         switch (platform) {
             case "iOS":
-                return new OrdersPageIOS( (IOSDriver) driver );
+                return new OrdersPageIOS((IOSDriver) driver);
             case "Android":
-                return new OrdersPageAndroid( (AndroidDriver) driver );
+                return new OrdersPageAndroid((AndroidDriver) driver);
             default:
-                throw new Exception( "Unable to get Find A Store page for platform " + platform );
+                throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
 
     public void payWithGiftCardAndCreditCard(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            scrollAndClick( storeNamesLocator, storeName, "Up" );
-            scrollAndClick( storeNamesLocator, storeName, "Up" );
+            scrollAndClick(storeNamesLocator, storeName, "Up");
+            scrollAndClick(storeNamesLocator, storeName, "Up");
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
             String CategoryItem = order.getCart().getProductDetail().getProductGroup().getName();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             String subCategoryName = order.getCart().getProductDetail().getProductClass().getName();
-            swipe( sidesOrDrinks, subCategoryName, "Left" );
+            swipe(sidesOrDrinks, subCategoryName, "Left");
             getAddToBag().click();
             getPlaceOrder().isReady();
             getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void placeRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
             remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            HomePage homePage = scrollAndClick( storeNamesLocator, storeName, "Up" );
-            tokens = Integer.parseInt( homePage.tokenValue() );
+            HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens = Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().click();
             getOrderValue();
-            getTokens( remoteOrder );
+            getTokens(remoteOrder);
             getPlaceOrder().click();
             getGotIt().click();
-            Assert.assertEquals( homePage.tokenValue().toString(), String.valueOf( tokens ) );
+            Assert.assertEquals(homePage.tokenValue().toString(), String.valueOf(tokens));
 
 
             //return specific page-````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void placeRandomToastedKidsMeal(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
             remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            HomePage homePage = scrollAndClick( storeNamesLocator, storeName, "Up" );
-            tokens = Integer.parseInt( homePage.tokenValue() );
+            HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens = Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getCustomize().click();
             getCustomizebread().click();
             getToastIt().click();
             getlooksgoodbutton().click();
             getAddToBag().click();
-            scrollToElement( totalAmount, 0.9, 0.2 );
+            scrollToElement(totalAmount, 0.9, 0.2);
             verifyTaxCalculationInBag();
             getOrderValue();
-            Thread.sleep( 5000 );
-            getTokens( remoteOrder );
+            Thread.sleep(5000);
+            getTokens(remoteOrder);
             getPlaceOrder().click();
             getGotIt().click();
-            Assert.assertEquals( homePage.tokenValue().toString(), String.valueOf( tokens ) );
+            Assert.assertEquals(homePage.tokenValue().toString(), String.valueOf(tokens));
 
             //return specific page
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void placeRandomOrderKids(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
             remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            HomePage homePage = scrollAndClick( storeNamesLocator, storeName, "Up" );
-            tokens = Integer.parseInt( homePage.tokenValue() );
+            HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens = Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().isReady();
             getAddToBag().click();
             getToGo().isReady();
             getToGo().click();
-            scrollToElement( totalAmount, 0.9, 0.2 );
+            scrollToElement(totalAmount, 0.9, 0.2);
             verifyTaxCalculationInBag();
             // addCardPage = menuPage.gotoAddPaymentMethods();
             //addCardPage.addPayment(mobileUser, PaymentMethod.CREDITCARD);
@@ -392,34 +404,34 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getProfile().isReady();
             //return specific page
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void verifyTaxCalculationInBag() throws Exception {
         String taxVal = getTaxPrice().getText();
-        double taxPrice = Double.parseDouble( taxVal.substring( 1 ) );
-        Assert.assertEquals( 0.06, taxPrice );
+        double taxPrice = Double.parseDouble(taxVal.substring(1));
+        Assert.assertEquals(0.06, taxPrice);
     }
 
 
     public void placeRandomOrderFreshValueMeal(String menuItem, MobileUser mobileUser, String storeName, cardantApiFramework.pojos.Menu menu) throws Exception {
         try {
             remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( String.valueOf( menuItem ) );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(String.valueOf(menuItem));
             getDirections().isReady();
-            HomePage homePage = scrollAndClick( storeNamesLocator, storeName, "Up" );
-            tokens = Integer.parseInt( homePage.tokenValue() );
+            HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens = Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
-            String[] strMenuItemName = menu.getProductName().split( " ", 2 );
-            scrollAndClick( categoryLocator, menu.getProductClassGroupName(), "Up" );
-            scrollAndClick( categoryLocator, strMenuItemName[1], "Up" );
-            if ((!strMenuItemName[0].contains( "12" )) || (!strMenuItemName[0].contains( "FOOTLONG" ))) {
+            String[] strMenuItemName = menu.getProductName().split(" ", 2);
+            scrollAndClick(categoryLocator, menu.getProductClassGroupName(), "Up");
+            scrollAndClick(categoryLocator, strMenuItemName[1], "Up");
+            if ((!strMenuItemName[0].contains("12")) || (!strMenuItemName[0].contains("FOOTLONG"))) {
                 getSixInchOption().click();
             }
             getAddToBag().click();
-            scrollToElement( makeItAMeal, 0.9, 0.2 );
+            scrollToElement(makeItAMeal, 0.9, 0.2);
             getMakeItAMeal().click();
             String aValue = getDrinks().getText();
             getDrinksChange().click();
@@ -448,7 +460,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getProfile().isReady();*/
             //return specific page
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -456,59 +468,54 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void placeRandomOrderForInvalidBreakfastTime(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
             remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            HomePage homePage = scrollAndClick( storeNamesLocator, storeName, "Up" );
-            tokens = Integer.parseInt( homePage.tokenValue() );
+            HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens = Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().click();
             getErrorTitle().getText();
-            Assert.assertTrue( getErrorTitle().getText().equals( "Error" ) );
-            Assert.assertTrue( getErrorMessage().equals( "Could not add FOOTLONG™" + order.getCart().getProductDetail().getProductClass().getName() + "at this time" ) );
+            Assert.assertTrue(getErrorTitle().getText().equals("Error"));
+            Assert.assertTrue(getErrorMessage().equals("Could not add FOOTLONG™" + order.getCart().getProductDetail().getProductClass().getName() + "at this time"));
             getErrorOk().click();
 
             //return specific page
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
-
-
-
-
-
 
 
     public void addMoreItemsatCheckOut(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
             remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            scrollAndClick( storeNamesLocator, storeName, "Up" );
+            scrollAndClick(storeNamesLocator, storeName, "Up");
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().click();
             getMakeItAMeal().isReady();
-            scrollToElement( someThingElseLocator, 0.9, 0.5 );
+            scrollToElement(someThingElseLocator, 0.9, 0.5);
             getSomethingElse().isReady();
             getSomethingElse().click();
-            Order order1 = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order1 = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getItems().isReady();
-            scrollAndClick( categoryLocator, order1.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order1.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order1.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order1.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().click();
             getPlaceOrder().isReady();
             getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -516,19 +523,19 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
         try {
             remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            scrollAndClick( storeNamesLocator, storeName, "Up" );
+            scrollAndClick(storeNamesLocator, storeName, "Up");
             getStartOrderButton().click();
             getItems().isReady();
             String CategoryItem = order.getCart().getProductDetail().getProductClass().getName();
-            if (!CategoryItem.equalsIgnoreCase( "Sides" ) || !CategoryItem.equalsIgnoreCase( "Drinks" )) {
-                scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-                scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            if (!CategoryItem.equalsIgnoreCase("Sides") || !CategoryItem.equalsIgnoreCase("Drinks")) {
+                scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+                scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             } else {
-                scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
+                scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
                 String subCategoryName = order.getCart().getProductDetail().getProductClass().getName();
-                swipe( sidesOrDrinks, subCategoryName, "Left" );
+                swipe(sidesOrDrinks, subCategoryName, "Left");
             }
             getAddToBag().isReady();
             getAddToBag().click();
@@ -537,19 +544,19 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             /*getExpandArrow().isReady();
             getExpandArrow().click();*/
             getPlaceOrder().isReady();
-            assertTexts( ordersPage );
+            assertTexts(ordersPage);
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void assertTexts(OrdersPage ordersPage) throws Exception {
         try {
-            Assert.assertTrue( ordersPage.isElementPresent( ItemList ), "ItemList is present in Make It A Meal dropdown" );
-            Assert.assertTrue( ordersPage.isElementPresent( ItemFromSides ), "One item from Sides is present in Make It A Meal dropdown" );
-            Assert.assertTrue( ordersPage.isElementPresent( ItemFromDrinks ), "One item from Drinks is present in Make It A Meal dropdown" );
+            Assert.assertTrue(ordersPage.isElementPresent(ItemList), "ItemList is present in Make It A Meal dropdown");
+            Assert.assertTrue(ordersPage.isElementPresent(ItemFromSides), "One item from Sides is present in Make It A Meal dropdown");
+            Assert.assertTrue(ordersPage.isElementPresent(ItemFromDrinks), "One item from Drinks is present in Make It A Meal dropdown");
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -561,13 +568,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public boolean isElementPresent(By locator) throws Exception {
         try {
-            int x = ((AppiumDriver) driver).findElements( locator ).size();
+            int x = ((AppiumDriver) driver).findElements(locator).size();
             if (x > 0) {
                 return true;
             } else {
@@ -575,13 +582,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             }
 
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public String getOrderValue() throws Exception {
         String order1 = getOrderNumber().getText();
-        orderValue = order1.split( "|" )[1];
+        orderValue = order1.split("|")[1];
         return orderValue;
 
     }
@@ -603,22 +610,22 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public HomePage scrollAndClick(By locator, String itemName, String direction) throws Exception {
         boolean flag = false;
-        while (getItems( locator ).size() > 0) {
-            List<WebElement> allElements = getElements( locator );
+        while (getItems(locator).size() > 0) {
+            List<WebElement> allElements = getElements(locator);
             if (allElements.size() == 0) {
-                Logz.error( "no stores available" );
+                Logz.error("no stores available");
 
             }
 
             for (int i = 0; i < allElements.size(); i++) {
-                if (allElements.get( i ).getText().contains( itemName )) {
-                    allElements.get( i ).click();
+                if (allElements.get(i).getText().contains(itemName)) {
+                    allElements.get(i).click();
                     flag = true;
                     break;
                 }
             }
             if (flag == false) {
-                WebElement element = allElements.get( allElements.size() - 1 );
+                WebElement element = allElements.get(allElements.size() - 1);
                 MobileElement ele = (MobileElement) element;
                 int x = ele.getLocation().getX();
                 int y = ele.getLocation().getY();
@@ -638,15 +645,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 Double screenHeightEnd = dimensions.getHeight() * 0.5;
                 int scrollEnd = screenHeightEnd.intValue();
                 //driver.swipeAndClick(0,scrollStart,0,scrollEnd,2000);
-                for (int i = 0; i < getElements( locator ).size(); i++) {
-                    while (!(getElements( locator ).get( i ).getText().contains( itemName ))) {
-                        TouchAction action = new TouchAction( (MobileDriver) driver );
-                        action.longPress( 0, scrollStart ).moveTo( 0, scrollEnd ).release().perform();
+                for (int i = 0; i < getElements(locator).size(); i++) {
+                    while (!(getElements(locator).get(i).getText().contains(itemName))) {
+                        TouchAction action = new TouchAction((MobileDriver) driver);
+                        action.longPress(0, scrollStart).moveTo(0, scrollEnd).release().perform();
                         boolean elementflag = false;
-                        for (int j = 0; j < getElements( locator ).size(); j++) {
+                        for (int j = 0; j < getElements(locator).size(); j++) {
 
-                            if (getElements( locator ).get( j ).getText().contains( itemName )) {
-                                getElements( locator ).get( j ).click();
+                            if (getElements(locator).get(j).getText().contains(itemName)) {
+                                getElements(locator).get(j).click();
                                 elementflag = true;
                                 break;
                             }
@@ -656,7 +663,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                             break;
                         }
                     }
-                    i = getElements( locator ).size();
+                    i = getElements(locator).size();
                 }
 
 
@@ -665,7 +672,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 break;
             }
         }
-        return HomePage.get( (AppiumDriver) driver );
+        return HomePage.get((AppiumDriver) driver);
     }
 
 
@@ -673,26 +680,26 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         boolean flag = false;
         int match = 0;
 
-        while (getNames( locator ).size() > 0) {
-            List<WebElement> allElements = getNames( locator );
+        while (getNames(locator).size() > 0) {
+            List<WebElement> allElements = getNames(locator);
 
             for (int i = 0; i < allElements.size(); i++) {
-                if (allElements.get( i ).getText().equals( subProductName )) {
+                if (allElements.get(i).getText().equals(subProductName)) {
                     match++;
                 }
                 if (match > 0 && i == 0) {
                     flag = true;
                     break;
                 } else {
-                    WebElement element = allElements.get( 0 );
+                    WebElement element = allElements.get(0);
                     MobileElement ele = (MobileElement) element;
-                    Thread.sleep( 5000L );
-                    if (direction.equals( "Left" )) {
+                    Thread.sleep(5000L);
+                    if (direction.equals("Left")) {
                         size = driver.manage().window().getSize();
                         int width = element.getSize().getWidth();
                         int height = element.getSize().getHeight();
-                        TouchAction action = new TouchAction( (MobileDriver) driver );
-                        action.longPress( element.getLocation().getX() + (int) (width + 800), element.getLocation().getY() ).moveTo( 100, 1500 ).release().perform();
+                        TouchAction action = new TouchAction((MobileDriver) driver);
+                        action.longPress(element.getLocation().getX() + (int) (width + 800), element.getLocation().getY()).moveTo(100, 1500).release().perform();
 
                         //element.swipeAndClick(SwipeElementDirection.LEFT, 500);
                     } else {
@@ -709,18 +716,18 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
 
     public List<WebElement> getElements(By locator) {
-        List<WebElement> elementsList = ((AndroidDriver) driver).findElements( locator );
+        List<WebElement> elementsList = ((AndroidDriver) driver).findElements(locator);
 
         return elementsList;
     }
 
     public List<WebElement> getElementList(By locator) throws Exception {
-        return new Generic( (AndroidDriver) driver, By.id( "" ), "" ).getWebElements( By.linkText( "" ), "" );
+        return new Generic((AndroidDriver) driver, By.id(""), "").getWebElements(By.linkText(""), "");
 
     }
 
     public List<WebElement> getItems(By locator) {
-        List<WebElement> storesList = ((AndroidDriver) driver).findElements( locator );
+        List<WebElement> storesList = ((AndroidDriver) driver).findElements(locator);
         return storesList;
     }
 
@@ -737,15 +744,15 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void selectItemTypeAndClickCustomize(Order order) throws Exception {
         try {
             String FullName = order.getCart().getProductDetail().getName();
-            String[] Itemtype = FullName.split( " " );
-            if (!Itemtype[0].trim().equals( "FOOTLONG™" ))
+            String[] Itemtype = FullName.split(" ");
+            if (!Itemtype[0].trim().equals("FOOTLONG™"))
                 getCustomize().click();
             else {
                 getSixInchOption().isReady();
                 getSixInchOption().click();
             }
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -753,24 +760,24 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void placeRandomOrderSpecialInstructions(String menuItem, MobileUser mobileUser, String storeName, String specialInstructions) throws Exception {
         try {
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            scrollAndClick( storeNamesLocator, storeName, "Up" );
+            scrollAndClick(storeNamesLocator, storeName, "Up");
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().click();
             getPlaceOrder().isReady();
-            scrollToElement( specialInstructionsLabel, 0.9, 0.5 );
-            getSpecialInstructions().setText( specialInstructions );
+            scrollToElement(specialInstructionsLabel, 0.9, 0.5);
+            getSpecialInstructions().setText(specialInstructions);
             getDriver().hideKeyboard();
             getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
 
         }
     }
@@ -783,7 +790,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             // getAddIngredient().click();
             //  getAddIngredient().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -792,25 +799,25 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getBackButton().waitForClickable();
             getBackButton().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public String editCartAndPlaceAnOrder(String menuItem, RemoteOrder remoteOrder, String storeName) throws Exception {
         try {
 
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            scrollAndClick( storeNamesLocator, storeName, "Up" );
+            scrollAndClick(storeNamesLocator, storeName, "Up");
             //getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             String aSubItem = order.getCart().getProductDetail().getProductClass().getName();
             return aSubItem;
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -822,14 +829,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getEdit().click();
             getSubItem().isReady();
             String eSubCategoryItem = getSubItem().getText();
-            String[] itemName = eSubCategoryItem.split( " " );
+            String[] itemName = eSubCategoryItem.split(" ");
             String eSubItem = "";
             for (int i = 1; i < itemName.length; i++) {
                 eSubItem = eSubItem + itemName[i] + " ";
             }
             return eSubItem.trim();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -841,52 +848,52 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getGotIt().isReady();
             getGotIt().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public List<Integer> addAnotherSameItem() throws Exception {
         try {
             ArrayList<Integer> subItems = new ArrayList<Integer>();
-            int previousList = driver.findElements( By.id( "com.subway.mobile.subwayapp03:id/cart_item_name" ) ).size();
+            int previousList = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/cart_item_name")).size();
             getAddAnother().isReady();
             getAddAnother().click();
-            int afterList = driver.findElements( By.id( "com.subway.mobile.subwayapp03:id/cart_item_name" ) ).size();
-            subItems.add( previousList + 1 );
-            subItems.add( afterList );
+            int afterList = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/cart_item_name")).size();
+            subItems.add(previousList + 1);
+            subItems.add(afterList);
             return subItems;
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void addAnotherNewItem() throws Exception {
         try {
-            By someThingElseLocator = By.id( "com.subway.mobile.subwayapp03:id/something_else_text" );
+            By someThingElseLocator = By.id("com.subway.mobile.subwayapp03:id/something_else_text");
             getAddToBag().isReady();
             getAddToBag().click();
             getPlaceOrder().isReady();
-            scrollAndClick( someThingElseLocator, "Something Else", "Up" );
+            scrollAndClick(someThingElseLocator, "Something Else", "Up");
             getSomethingElse().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public List<Integer> removeItem() throws Exception {
         try {
             ArrayList<Integer> subItems = new ArrayList<Integer>();
-            int previousList = driver.findElements( By.id( "com.subway.mobile.subwayapp03:id/cart_item_name" ) ).size();
+            int previousList = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/cart_item_name")).size();
             getDeleteItem().isReady();
             getDeleteItem().click();
             getRemove().isReady();
             getRemove().click();
-            int afterList = driver.findElements( By.id( "com.subway.mobile.subwayapp03:id/cart_item_name" ) ).size();
-            subItems.add( previousList );
-            subItems.add( afterList + 1 );
+            int afterList = driver.findElements(By.id("com.subway.mobile.subwayapp03:id/cart_item_name")).size();
+            subItems.add(previousList);
+            subItems.add(afterList + 1);
             return subItems;
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -907,7 +914,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void getModifyList() throws Exception {
         try {
-            int modify = ((AndroidDriver) driver).findElements( By.xpath( "//android.widget.TextView[@text='Modify']" ) ).size();
+            int modify = ((AndroidDriver) driver).findElements(By.xpath("//android.widget.TextView[@text='Modify']")).size();
             if (modify > 0) {
                 getModify().click();
             }
@@ -918,9 +925,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void getQuantityOfItem(By quantityBy) throws Exception {
         try {
-            List<WebElement> quantity = driver.findElements( (quantityBy) );
+            List<WebElement> quantity = driver.findElements((quantityBy));
             if (quantity.size() > 0) {
-                quantity.get( rn.nextInt( quantity.size() ) ).click();
+                quantity.get(rn.nextInt(quantity.size())).click();
             }
         } catch (Exception ex) {
 
@@ -928,17 +935,17 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void selectRandomItems(List<WebElement> list, By locator) throws Exception {
-        firstrandnum = rn.nextInt( list.size() );
-        nextrandnum = rn.nextInt( list.size() );
+        firstrandnum = rn.nextInt(list.size());
+        nextrandnum = rn.nextInt(list.size());
         if (firstrandnum != nextrandnum) {
-            list.get( rn.nextInt( list.size() ) ).click();
+            list.get(rn.nextInt(list.size())).click();
             getModifyList();
-            getQuantityOfItem( locator );
+            getQuantityOfItem(locator);
         } else {
-            nextrandnum = rn.nextInt( list.size() );
-            list.get( rn.nextInt( list.size() ) ).click();
+            nextrandnum = rn.nextInt(list.size());
+            list.get(rn.nextInt(list.size())).click();
             getModifyList();
-            getQuantityOfItem( locator );
+            getQuantityOfItem(locator);
         }
 
     }
@@ -949,7 +956,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         String endTime = store.getBreakEndTime();
         String timeZone = store.getTimeZone();
         try {
-            if (startTime.equals( "00:00:00" ) && endTime.equals( "00:00:00" )) {
+            if (startTime.equals("00:00:00") && endTime.equals("00:00:00")) {
                 timePresent = true;
                 return timePresent;
             } else {
@@ -957,44 +964,44 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
                 Date today = new Date();
 
-                DateFormat df = new SimpleDateFormat( "dd-MM-yy HH:mm:ss" );
+                DateFormat df = new SimpleDateFormat("dd-MM-yy HH:mm:ss");
 
                 //dispalying date on PST timezone
-                if (timeZone.equals( "Pacific Standard Time" )) {
+                if (timeZone.equals("Pacific Standard Time")) {
                     timeZone = "America/Los_Angeles";
-                } else if (timeZone.equals( "Eastern Standard Time" )) {
+                } else if (timeZone.equals("Eastern Standard Time")) {
                     timeZone = "America/New_York";
-                } else if (timeZone.equals( "Central Standard Time" )) {
+                } else if (timeZone.equals("Central Standard Time")) {
                     timeZone = "America/Chicago";
                 }
-                df.setTimeZone( TimeZone.getTimeZone( timeZone ) );
-                String dateGmt = df.format( today );
-                System.out.println( "Date in  Timezone : " + dateGmt );
-                System.out.println( dateGmt );
-                String time = dateGmt.split( ":", 2 )[1];
+                df.setTimeZone(TimeZone.getTimeZone(timeZone));
+                String dateGmt = df.format(today);
+                System.out.println("Date in  Timezone : " + dateGmt);
+                System.out.println(dateGmt);
+                String time = dateGmt.split(":", 2)[1];
 
-                Date time1 = new SimpleDateFormat( "HH:mm:ss" ).parse( startTime );
+                Date time1 = new SimpleDateFormat("HH:mm:ss").parse(startTime);
                 Calendar calendar1 = Calendar.getInstance();
-                calendar1.setTime( time1 );
+                calendar1.setTime(time1);
 
-                Date time2 = new SimpleDateFormat( "HH:mm:ss" ).parse( endTime );
+                Date time2 = new SimpleDateFormat("HH:mm:ss").parse(endTime);
                 Calendar calendar2 = Calendar.getInstance();
-                calendar2.setTime( time2 );
-                calendar2.add( Calendar.DATE, 1 );
+                calendar2.setTime(time2);
+                calendar2.add(Calendar.DATE, 1);
 
-                Date d = new SimpleDateFormat( "HH:mm:ss" ).parse( time );
+                Date d = new SimpleDateFormat("HH:mm:ss").parse(time);
                 Calendar calendar3 = Calendar.getInstance();
-                calendar3.setTime( d );
-                calendar3.add( Calendar.DATE, 1 );
+                calendar3.setTime(d);
+                calendar3.add(Calendar.DATE, 1);
 
                 Date x = calendar3.getTime();
-                if (x.after( calendar1.getTime() ) && x.before( calendar2.getTime() )) {
+                if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
 
                     timePresent = true;
                 }
             }
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
         return timePresent;
 
@@ -1003,70 +1010,70 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public List<WebElement> findElements(By by) {
 
-        return driver.findElements( by );
+        return driver.findElements(by);
     }
 
     public void customizeOrder(MobileUser mobileUser, Order order) throws Exception {
         try {
             By extraIngredientsBy, InnerIngredientsBy, quantityBy = null;
             if (driver instanceof AndroidDriver) {
-                extraIngredientsBy = By.xpath( "//android.widget.HorizontalScrollView[@resource-id='com.subway.mobile.subwayapp03:id/category_tabs']//android.widget.TextView" );
-                InnerIngredientsBy = By.id( "ingredient_text" );
-                quantityBy = By.xpath( "//android.widget.RelativeLayout[@resource='com.subway.mobile.subwayapp03:id/bottom_sheet']" );
+                extraIngredientsBy = By.xpath("//android.widget.HorizontalScrollView[@resource-id='com.subway.mobile.subwayapp03:id/category_tabs']//android.widget.TextView");
+                InnerIngredientsBy = By.id("ingredient_text");
+                quantityBy = By.xpath("//android.widget.RelativeLayout[@resource='com.subway.mobile.subwayapp03:id/bottom_sheet']");
             } else {
                 extraIngredientsBy = null;
                 InnerIngredientsBy = null;
                 quantityBy = null;
             }
             addIngredient();
-            WebElement ele = driver.findElement( By.id( "category_tabs" ) );
+            WebElement ele = driver.findElement(By.id("category_tabs"));
             int width = ele.getSize().getWidth();
-            AndroidElement veggies = (AndroidElement) driver.findElement( By.xpath( "//android.widget.TextView[@text='Veggies']" ) );
+            AndroidElement veggies = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='Veggies']"));
             if (veggies.getLocation().getX() > width / 2) {
                 //veggies.swipeAndClick(SwipeElementDirection.LEFT, 500);
             } else {
 
                 //  veggies.swipeAndClick(SwipeElementDirection.RIGHT, 500);
             }
-            List<WebElement> extraIngredients = driver.findElements( (extraIngredientsBy) );
+            List<WebElement> extraIngredients = driver.findElements((extraIngredientsBy));
 
             for (int m = 0; m < order.getCart().getOptions().length; m++) {
 
                 for (int i = 0; i < extraIngredients.size(); i++) {
-                    String name = extraIngredients.get( i ).getText();
+                    String name = extraIngredients.get(i).getText();
 
-                    if (name.equalsIgnoreCase( order.getCart().getOptions()[m + 2].getOptionGroup() )) {
+                    if (name.equalsIgnoreCase(order.getCart().getOptions()[m + 2].getOptionGroup())) {
                         String optionGroup = order.getCart().getOptions()[m + 2].getOptionGroup();
-                        extraIngredients.get( i ).click();
+                        extraIngredients.get(i).click();
 
-                        ClickonItem( order.getCart().getOptions()[m + 2].getName(), order.getCart().getOptions()[m + 2].getValue(), InnerIngredientsBy, optionGroup );
+                        ClickonItem(order.getCart().getOptions()[m + 2].getName(), order.getCart().getOptions()[m + 2].getValue(), InnerIngredientsBy, optionGroup);
 
 
                         break;
                     }
                     try {
-                        if (extraIngredients.get( i ).getText().equalsIgnoreCase( "veggies" ) ||
-                                extraIngredients.get( i ).getText().equalsIgnoreCase( "sauces" ) ||
-                                extraIngredients.get( i ).getText().equalsIgnoreCase( "seasonings" )) ;
+                        if (extraIngredients.get(i).getText().equalsIgnoreCase("veggies") ||
+                                extraIngredients.get(i).getText().equalsIgnoreCase("sauces") ||
+                                extraIngredients.get(i).getText().equalsIgnoreCase("seasonings")) ;
                         // veggies.swipeAndClick(SwipeElementDirection.LEFT, 1200);
                     } catch (Exception e) {
-                        Logz.info( "End of screen" );
+                        Logz.info("End of screen");
                     }
 
                 }
             }
         } catch (Exception ex) {
 
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void ClickonItem(String name, String value, By InnerIngredientsBy, String optionGroup) {
 
-        By cheeseSubCategoryItem = By.id( "com.subway.mobile.subwayapp03:id/ingredient_text" );
+        By cheeseSubCategoryItem = By.id("com.subway.mobile.subwayapp03:id/ingredient_text");
         boolean flag = true;
         do {
-            List<WebElement> innerIngredients = driver.findElements( (InnerIngredientsBy) );
+            List<WebElement> innerIngredients = driver.findElements((InnerIngredientsBy));
             for (int i = 0; i <= innerIngredients.size(); i++) {
                 if (i == innerIngredients.size()) {
                     //scroll;
@@ -1074,18 +1081,18 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                     flag = false; //turn this on if you are not implementing scroll. if not it will go into infinite loop
                     break;
                 }
-                itemName = innerIngredients.get( i ).getText();
+                itemName = innerIngredients.get(i).getText();
                 By itemBy;
-                if (itemName.equalsIgnoreCase( name ) && !(value.equalsIgnoreCase( "None" )) && !(name.equalsIgnoreCase( "Tomatoes" )) && !(name.equalsIgnoreCase( "Cucumber" )) && !(name.equalsIgnoreCase( "Pepper" ))) {
+                if (itemName.equalsIgnoreCase(name) && !(value.equalsIgnoreCase("None")) && !(name.equalsIgnoreCase("Tomatoes")) && !(name.equalsIgnoreCase("Cucumber")) && !(name.equalsIgnoreCase("Pepper"))) {
                     if (driver instanceof AndroidDriver)
-                        itemBy = By.xpath( "//android.widget.TextView[@text ='" + itemName + "' ]/parent::android.widget.LinearLayout/parent::android.widget.RelativeLayout/following-sibling::android.widget.LinearLayout" );
+                        itemBy = By.xpath("//android.widget.TextView[@text ='" + itemName + "' ]/parent::android.widget.LinearLayout/parent::android.widget.RelativeLayout/following-sibling::android.widget.LinearLayout");
                     else
                         itemBy = null;
-                    innerIngredients.get( i ).click();
-                    if (driver.findElements( itemBy ).size() > 0 && !itemName.equalsIgnoreCase( "cheese" ))
-                        driver.findElement( itemBy ).click();
-                    if (!(optionGroup.equals( "Extras" ))) {
-                        getModifyMethod( value );
+                    innerIngredients.get(i).click();
+                    if (driver.findElements(itemBy).size() > 0 && !itemName.equalsIgnoreCase("cheese"))
+                        driver.findElement(itemBy).click();
+                    if (!(optionGroup.equals("Extras"))) {
+                        getModifyMethod(value);
                     }
 
                     flag = false;
@@ -1125,26 +1132,26 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
 
     public List<WebElement> getNames(By locator) {
-        List<WebElement> namesList = ((AndroidDriver) driver).findElements( locator );
+        List<WebElement> namesList = ((AndroidDriver) driver).findElements(locator);
         return namesList;
     }
 
 
     public void scrollToElement(By locator, double startpoint, double endpoint) {
-        while (getElements( locator ).size() == 0) {
+        while (getElements(locator).size() == 0) {
             boolean flag = false;
             Dimension dimensions = driver.manage().window().getSize();
             int StartPoint = (int) (dimensions.getHeight() * startpoint);//0.9
             int EndPoint = (int) (dimensions.getHeight() * endpoint);//0.5
             //((AppiumDriver) driver).swipeAndClick(200, Startpoint, 200, EndPoint, 2000);
-            action.longPress( 0, StartPoint ).moveTo( 0, EndPoint ).release().perform();
+            action.longPress(0, StartPoint).moveTo(0, EndPoint).release().perform();
 
 
         }
     }
 
     public void modify(String value, By quantityBy) {
-        List<WebElement> mod = driver.findElements( (quantityBy) );
+        List<WebElement> mod = driver.findElements((quantityBy));
         for (int i = 0; i <= mod.size(); i++) {
             if (i == mod.size()) {
 
@@ -1156,10 +1163,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void selectRestaurant(String storeName) throws Exception {
         try {
-            scrollAndClick( storeNamesLocator, storeName, "Up" );
+            scrollAndClick(storeNamesLocator, storeName, "Up");
             getSelectRestaurantButton().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -1175,85 +1182,85 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             getSelectRestaurantButton().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public String switchStoreName(String storeName1) throws Exception {
         try {
-            scrollAndClick( storeNamesLocator, storeName1, "Up" );
+            scrollAndClick(storeNamesLocator, storeName1, "Up");
             getSwitchStoreName().isReady();
             return getSwitchStoreName().getText();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public HomePage placeFavouriteRandomOrder(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            HomePage homePage = scrollAndClick( storeNamesLocator, storeName, "Up" );
-            tokens = Integer.parseInt( homePage.tokenValue() );
+            HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens = Integer.parseInt(homePage.tokenValue());
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().click();
-            Thread.sleep( 5000 );
-            getTokens( remoteOrder );
+            Thread.sleep(5000);
+            getTokens(remoteOrder);
             getPlaceOrder().click();
-            Thread.sleep( 10000 );
-            scrollToElement( FavouriteIconLocator, 0.9, 0.5 );
+            Thread.sleep(10000);
+            scrollToElement(FavouriteIconLocator, 0.9, 0.5);
             getFavouriteIcon().click();
             // getFavouriteText().click;
-            favoriteOrderName = "Subway" + random.nextInt( 10 );
-            getFavouriteText().setText( favoriteOrderName );
+            favoriteOrderName = "Subway" + random.nextInt(10);
+            getFavouriteText().setText(favoriteOrderName);
             getFavouriteSave().click();
             getpopupGotIt().click();
             getGotIt().click();
-            Assert.assertEquals( String.valueOf( tokens ), homePage.tokenValue().toString() );
-            return HomePage.get( (AppiumDriver) driver );
+            Assert.assertEquals(String.valueOf(tokens), homePage.tokenValue().toString());
+            return HomePage.get((AppiumDriver) driver);
 
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void placeCustomizeOrder(String menuItem, String storeName, Order order) throws Exception {
         try {
-            By storeNamesLocator = By.id( "com.subway.mobile.subwayapp03:id/address" );
-            By categoryLocator = By.id( "com.subway.mobile.subwayapp03:id/product_group_header" );
-            By sidesOrDrinks = By.id( "com.subway.mobile.subwayapp03:id/product_title" );
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
+            By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
+            By sidesOrDrinks = By.id("com.subway.mobile.subwayapp03:id/product_title");
             getDirections().isReady();
-            scrollAndClick( storeNamesLocator, storeName, "Up" );
+            scrollAndClick(storeNamesLocator, storeName, "Up");
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
 
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
 
     public void deleteToppings() {
         try {
-            By toppings = By.id( "com.subway.mobile.subwayapp03:id/item_image" );
-            By deleteToppingTextLocator = By.id( "com.subway.mobile.subwayapp03:id/ingredient_name_textview" );
+            By toppings = By.id("com.subway.mobile.subwayapp03:id/item_image");
+            By deleteToppingTextLocator = By.id("com.subway.mobile.subwayapp03:id/ingredient_name_textview");
 
             //Get count before deleting toppings
-            List<WebElement> toppingBeforeDelete = ((AndroidDriver) driver).findElements( toppings );
-            WebElement element = toppingBeforeDelete.get( 4 );
+            List<WebElement> toppingBeforeDelete = ((AndroidDriver) driver).findElements(toppings);
+            WebElement element = toppingBeforeDelete.get(4);
             MobileElement mobileElement = (MobileElement) element;
-            swipeLeft( element );
+            swipeLeft(element);
             //  mobileElement.swipeAndClick(SwipeElementDirection.LEFT,500);
             //Get count after deleting toppings
-            List<WebElement> toppingAfterDelete = ((AndroidDriver) driver).findElements( toppings );
-            Assert.assertEquals( toppingAfterDelete.size(), toppingBeforeDelete.size() - 1 );
+            List<WebElement> toppingAfterDelete = ((AndroidDriver) driver).findElements(toppings);
+            Assert.assertEquals(toppingAfterDelete.size(), toppingBeforeDelete.size() - 1);
 
 
         } catch (Exception e) {
@@ -1263,45 +1270,45 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void placeRandomOrder1(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
-            By storeNamesLocator = By.id( "com.subway.mobile.subwayapp03:id/address" );
-            By categoryLocator = By.id( "com.subway.mobile.subwayapp03:id/product_group_header" );
-            By sidesOrDrinks = By.id( "com.subway.mobile.subwayapp03:id/product_title" );
+            By storeNamesLocator = By.id("com.subway.mobile.subwayapp03:id/address");
+            By categoryLocator = By.id("com.subway.mobile.subwayapp03:id/product_group_header");
+            By sidesOrDrinks = By.id("com.subway.mobile.subwayapp03:id/product_title");
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             getDirections().isReady();
-            scrollToItemAndClick1( storeNamesLocator, storeName, driver.manage().window().getSize().getHeight() - 300 );
+            scrollToItemAndClick1(storeNamesLocator, storeName, driver.manage().window().getSize().getHeight() - 300);
             getSelectRestaurantButton().click();
             getStartOrderButton().click();
             getItems().isReady();
-            scrollToItemAndClick1( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), driver.manage().window().getSize().getHeight() - 300 );
-            scrollToItemAndClick1( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), driver.manage().window().getSize().getHeight() - 300 );
+            scrollToItemAndClick1(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), driver.manage().window().getSize().getHeight() - 300);
+            scrollToItemAndClick1(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), driver.manage().window().getSize().getHeight() - 300);
             getAddToBag().isReady();
             getAddToBag().click();
             getGotIt().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void scrollToItemAndClick1(By locator, String itemName, int endY) {
         boolean flag = false;
-        while (getItems( locator ).size() > 0) {
-            List<WebElement> allElements = getElements( locator );
+        while (getItems(locator).size() > 0) {
+            List<WebElement> allElements = getElements(locator);
 
             for (int i = 0; i < allElements.size(); i++) {
-                if (allElements.get( i ).getText().equals( itemName )) {
-                    allElements.get( i ).click();
+                if (allElements.get(i).getText().equals(itemName)) {
+                    allElements.get(i).click();
                     flag = true;
                     break;
                 }
             }
             if (flag == false) {
-                WebElement element = allElements.get( allElements.size() - 1 );
+                WebElement element = allElements.get(allElements.size() - 1);
                 MobileElement ele = (MobileElement) element;
                 int x = ele.getLocation().getX();
                 int y = ele.getLocation().getY();
                 // ((AppiumDriver) driver).swipeAndClick(x, y, x, y - endY, 3000);
-                swipeLeft( element );
+                swipeLeft(element);
             }
             if (flag == true) {
                 break;
@@ -1312,19 +1319,19 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void swipeLeft(WebElement element) {
         size = driver.manage().window().getSize();
         int x1 = (int) (size.width * 0.20);
-        TouchAction action = new TouchAction( (MobileDriver) driver );
-        action.longPress( element ).moveTo( x1, 580 ).release().perform();
+        TouchAction action = new TouchAction((MobileDriver) driver);
+        action.longPress(element).moveTo(x1, 580).release().perform();
 
     }
 
     public void validateManageLocator() throws Exception {
-        Logz.step( "Manage Button verification in rewards has started " );
-        scrollToElement( ManageLocator, 0.9, 0.5 );
-        Thread.sleep( 5000 );
-        if (getRewardsAmt().getText().contains( "$2 Reward" )) {
-            Logz.step( "Rewards are available" );
+        Logz.step("Manage Button verification in rewards has started ");
+        scrollToElement(ManageLocator, 0.9, 0.5);
+        Thread.sleep(5000);
+        if (getRewardsAmt().getText().contains("$2 Reward")) {
+            Logz.step("Rewards are available");
         } else {
-            Logz.error( "Rewards are not available to redeem/Zero rewards are getting displayed" );
+            Logz.error("Rewards are not available to redeem/Zero rewards are getting displayed");
         }
 
 
@@ -1334,7 +1341,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             getDirections().isReady();
         } catch (Exception ex) {
-            Logz.error( "no stores available" );
+            Logz.error("no stores available");
         }
 
     }
@@ -1343,28 +1350,28 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
 
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
             storesAvailable();
-            HomePage homePage = scrollAndClick( storeNamesLocator, storeName, "Up" );
-            tokens = Integer.parseInt( homePage.tokenValue() );
+            HomePage homePage = scrollAndClick(storeNamesLocator, storeName, "Up");
+            tokens = Integer.parseInt(homePage.tokenValue());
             homePage.apply();
             getStartOrderButton().click();
             getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+            scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
             getAddToBag().isReady();
             getAddToBag().click();
             getOrderValue();
-            Thread.sleep( 20000 );
-            getTokens( remoteOrder );
+            Thread.sleep(20000);
+            getTokens(remoteOrder);
             validateManageLocator();
             getPlaceOrder().waitForClickable();
             getPlaceOrder().click();
             getGotIt().isReady();
             getGotIt().click();
-            Assert.assertEquals( String.valueOf( tokens ), homePage.tokenValue().toString() );
+            Assert.assertEquals(String.valueOf(tokens), homePage.tokenValue().toString());
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -1377,15 +1384,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             getItems().isReady();
             getAllFavourites();
-            getFavouriteAddToBag().isReady();
             getFavouriteAddToBag().click();
-            getPlaceOrder().isReady();
             getPlaceOrder().click();
-            getGotIt().isReady();
             getGotIt().click();
 
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -1398,23 +1402,23 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             getRemoveFavourite().isReady();
             getRemoveFavourite().click();
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void getTokens(RemoteOrder remoteOrder) throws Exception {
-        Thread.sleep( 2000 );
-        scrollToElement( itemPrice, 0.9, 0.5 );
-        price = Double.parseDouble( getSubTotal().getText().substring( 1 ) );
-        tokens1 = remoteOrder.computeTokens( price );
+        Thread.sleep(2000);
+        scrollToElement(itemPrice, 0.9, 0.5);
+        price = Double.parseDouble(getSubTotal().getText().substring(1));
+        tokens1 = remoteOrder.computeTokens(price);
         tokens = tokens + tokens1;
     }
 
     public void assertProduct(String actualProductName, String expectedProductName) throws Exception {
         try {
-            Assert.assertEquals( actualProductName, expectedProductName );
+            Assert.assertEquals(actualProductName, expectedProductName);
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -1423,9 +1427,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
         try {
             List<Integer> sizeOfSubItems = addAnotherSameItem();
-            Assert.assertEquals( sizeOfSubItems.get( 1 ), sizeOfSubItems.get( 0 ) );
+            Assert.assertEquals(sizeOfSubItems.get(1), sizeOfSubItems.get(0));
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
@@ -1433,67 +1437,80 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             List<Integer> sizeOfSubItems = addAnotherSameItem();
             removeItem();
-            Assert.assertEquals( sizeOfSubItems.get( 0 ), sizeOfSubItems.get( 1 ) );
+            Assert.assertEquals(sizeOfSubItems.get(0), sizeOfSubItems.get(1));
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public void assertEditCartSomethingElseVerify(String actualProduct, String expectedProduct) throws Exception {
         try {
 
-            Assert.assertEquals( actualProduct, expectedProduct );
+            Assert.assertEquals(actualProduct, expectedProduct);
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
-    public void assertSwitchStore(String actualStoreName, String expectedStoreName) throws Exception {
+    public HomePage assertStoreDetails() throws Exception {
         try {
-
-            Assert.assertEquals( actualStoreName, expectedStoreName );
+            Logz.step("Getting the actual store value from UI");
+            String actualStoreName = getAddress1() + getAddress2().getText();
+            Logz.step(actualStoreName);
+            Logz.step("Getting the expected store value from database");
+            String expectedStoreName = store.getAddress1() + store.getAddress2();
+            Logz.step(expectedStoreName);
+            Assert.assertEquals(actualStoreName, expectedStoreName);
+            return HomePage.get((AppiumDriver) driver);
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
     }
 
     public int rewardsValue() throws Exception {
-        String amt[] = getRewardsAmt().getText().split( "\\." );
-        Rewards = Integer.parseInt( amt[0].substring( 2 ) );
-
+        String amt[] = getRewardsAmt().getText().split("\\.");
+        Rewards = Integer.parseInt(amt[0].substring(2));
         return Rewards;
     }
 
-    public UserProfilePage placeRandomOrderForSixTimes(String menuItem, MobileUser mobileUser, String storeName, int i, HomePage homePage) throws Exception {
+    public UserProfilePage placeRandomOrderForSixTimes(String menuItem, MobileUser mobileUser, String storeName, int i) throws Exception {
         try {
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
-            Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
-
-
-            if (i == 0) {
+            Order order = remoteOrder.placeRandomOrderWithSpecificProduct(menuItem);
+            /*if (i == 0) {
                 getDirections().isReady();
                 homePage = scrollAndClick( storeNamesLocator, storeName, "Up" );
                 tokens = Integer.parseInt( homePage.tokenValue() );
                 getStartOrderButton().click();
             } else {
-
                 tokens = Integer.parseInt( homePage.tokenValue() );
                 homePage.addSomethingElse();
+            }*/
+            if (i == 0) {
+                getItems().isReady();
+                scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+                scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
+                getAddToBag().click();
+                getOrderValue();
+                getPlaceOrder().click();
+                getTokens(remoteOrder);
+                getGotIt().click();
+                return UserProfilePage.get((AppiumDriver) driver);
             }
-            getItems().isReady();
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up" );
-            scrollAndClick( categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up" );
-            getAddToBag().click();
-            getOrderValue();
-            getPlaceOrder().isReady();
-            getPlaceOrder().click();
-            getTokens( remoteOrder );
-            getGotIt().isReady();
-            getGotIt().click();
-            return UserProfilePage.get( (AppiumDriver) driver );
+            if (i == 7) {
+                getItems().isReady();
+                scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductGroup().getName(), "Up");
+                scrollAndClick(categoryLocator, order.getCart().getProductDetail().getProductClass().getName(), "Up");
+                getAddToBag().click();
+                Assert.assertEquals(getAlertTitle().getText(), BaseTest.getStringfromBundleFile("LoyaltyErrorTitle"));
+                Assert.assertEquals(getLoyaltyError().getText(), BaseTest.getStringfromBundleFile("LoyaltyMessage"));
+                Logz.step("Loyalty error got displayed if order placed more than 6 times");
+
+            }
         } catch (Exception ex) {
-            throw new Exception( ex );
+            throw new Exception(ex);
         }
+        return UserProfilePage.get((AppiumDriver) driver);
     }
 
     public void placeRandomOrderwithRedeemMultipleCertificate(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
@@ -1585,6 +1602,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     public void placeRandomOrderwithExpiredCertificate(String menuItem, MobileUser mobileUser, String storeName) throws Exception {
         try {
+
             RemoteOrder remoteOrder = mobileUser.getCart().getRemoteOrder();
             Order order = remoteOrder.placeRandomOrderWithSpecificProduct( menuItem );
             getDirections().isReady();
@@ -1610,15 +1628,16 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void ValidatingPlacingOrderForSixTimes(MobileUser mobileUser, String Address, HomePage homePage) throws Exception {
-        for (int i = 0; i <= 6; i++) {
-            UserProfilePage userProfilePage = placeRandomOrderForSixTimes( "All Sandwiches", mobileUser, Address, i, homePage );//Plcaing order more than 6 times
-            homePage = userProfilePage.assertMobileOrderHistory( orderValue );
-            //Asserting each time token generation.
-            Assert.assertEquals( String.valueOf( tokens ), homePage.tokenValue().toString() );//verifying order in order History
-
-
+    public void validatingPlacingOrderForSixTimes(MobileUser mobileUser, String Address) throws Exception {
+        for (int i = 0; i < 7; i++) {
+                UserProfilePage userProfilePage = placeRandomOrderForSixTimes("All Sandwiches", mobileUser, Address, i);//Plcaing order more than 6 times
+                homePage.gotoMenuPage();
+                userProfilePage.assertMobileOrderHistory(orderValue);
+                selectBackButton();
+                userProfilePage.goHome();
+                Assert.assertEquals(String.valueOf(tokens), homePage.tokenValue().toString());//verifying order in order History
         }
+
     }
 
 
@@ -2001,8 +2020,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     //##########################################################################################################################
    // CustomizedItem customizedItem;
-    By productGroupHeaderAndroid = By.id( "product_group_header" );
-    By productGroupHeaderIOS = By.id( "product_group_header" );
+    //By productGroupHeaderAndroid = By.id( "product_group_header" );
+    //By productGroupHeaderIOS = By.id( "product_group_header" );
     By getProductGroupLayoutAndroid = By.id( "product_group_layout" );
     By getProductGroupLayoutIOS = By.id( "product_group_layout" );
     boolean customized = false;
@@ -2019,7 +2038,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception("Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage());
         }
-        return HomePage.get((AndroidDriver) driver);
+        return HomePage.get((AppiumDriver) driver);
 
     }
 
@@ -2034,7 +2053,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception( "Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage() );
         }
-        return HomePage.get( (AndroidDriver) driver );
+        return HomePage.get( (AppiumDriver) driver );
 
     }
 
@@ -2074,11 +2093,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 }
             }
             productDetailsPage.assertProductDetails( mobileUser, customizedItemDetails );
+            Logz.step("##### Started placing Order for certificates #####" + menuCategories);
+            addDefaultItemInCart( mobileUser, breadSize, customizedItemDetails );
+            placeOrderAndAssert(mobileUser, menuCategories, store, customizedItemDetails);
             Logz.step("##### Ended placing Default Order #####");
         } catch (Exception ex) {
             throw new Exception("Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage());
         }
-        return HomePage.get((AndroidDriver) driver);
+        return HomePage.get((AppiumDriver) driver);
 
     }
 
@@ -2093,7 +2115,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception( "Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage() );
         }
-        return HomePage.get( (AndroidDriver) driver );
+        return HomePage.get( (AppiumDriver) driver );
     }
     public HomePage placeFavouriteOrder(MobileUser mobileUser, String menuCategories, BreadSize breadSize, Store store) throws Exception {
         try {
@@ -2109,12 +2131,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         return HomePage.get( (AndroidDriver) driver );
     }
 
-    public HomePage placeRandomOrderMyLoyalty() throws Exception {
+    public HomePage placeRandomOrderMyLoyalty(int certRedeemCount) throws Exception {
         try {
             customized = false;
             Logz.step( "##### Started placing Random Order #####" );
             selectRandomItem();
-            placeLoyaltyOrderAndAssert();
+            placeLoyaltyOrderAndAssert(certRedeemCount);
             Logz.step( "##### Ended placing Random Order #####" );
         } catch (Exception ex) {
             throw new Exception( "Unable to place Random Order:\n" + ex.getMessage() );
@@ -2123,7 +2145,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    public HomePage placeSpecificOrderRedeemOffers(MobileUser mobileUser, String menuCategories, BreadSize breadSize) throws Exception {
+    public HomePage placeSpecificOrderRedeemOffers(MobileUser mobileUser, String menuCategories, BreadSize breadSize, int certRedeemCount) throws Exception {
         try {
             OffersPage offersPage = goToOfferPage();
             OfferDetails offerDetails = offersPage.getOfferItemDetails( mobileUser );
@@ -2134,12 +2156,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 //click on view item in your orderpage
             }
             //click on add to bag icon
-            placeLoyaltyOrderAndAssert();
+            placeLoyaltyOrderAndAssert(certRedeemCount);
             Logz.step( "##### Ended placing Random Order #####" );
         } catch (Exception ex) {
             throw new Exception( "Unable to place Random Order:\n" + ex.getMessage() );
         }
-        return HomePage.get( (AndroidDriver) driver );
+        return HomePage.get( (AppiumDriver) driver );
 
     }
 
@@ -2174,12 +2196,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void assertFavouriteOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage,CustomizedItem customizedItem) throws Exception {
 
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
-        scrollToElement(FavouriteIconLocator, 0.9, 0.5 );
-        getFavouriteIcon().click();
-        favoriteOrderName = "Subway" + random.nextInt( 10 );
-        getFavouriteText().setText( favoriteOrderName );
-        getFavouriteSave().click();
-        getpopupGotIt().click();
+        nameFavoriteItemAndClick();
         //Need to assert favoriteorder details through favopurite Object.
         HomePage homePage = orderConfirmationPage.assertFavouriteOrderDetailsInOrderConfirmationPage( mobileUser );
         FavouritePage favouritePage=homePage.goToFavouritePage();
@@ -2238,15 +2255,25 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
+    public void nameFavoriteItemAndClick() throws Exception{
+        elements.scrollToElement(null, FavouriteIconLocator, 0.9, 0.5);
+        getFavouriteIcon().click();
+        favoriteOrderName = "Subway" + random.nextInt( 10 );
+        getFavouriteText().setText( favoriteOrderName );
+        getFavouriteSave().click();
+        getpopupGotIt().click();
+        getGotIt().click();
+    }
+
     public HomePage goToHomePage() throws Exception {
         Logz.step( "going to home page..." );
-        return HomePage.get( (AndroidDriver) driver );
+        return HomePage.get( (AppiumDriver) driver );
 
     }
 
     private CustomizePage goToCustomizePage() throws Exception {
         getCustomize().click();
-        return CustomizePage.get( (AndroidDriver) driver );
+        return CustomizePage.get( (AppiumDriver) driver );
     }
 
     private YourOrderPage goToYourOrderPage(boolean customized) throws Exception {
@@ -2255,26 +2282,26 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } else {
             getAddToBag().click();
         }
-        return YourOrderPage.get( (AndroidDriver) driver );
+        return YourOrderPage.get( (AppiumDriver) driver );
     }
     private YourOrderPage goToYourOrderPage() throws Exception {
 
-        return YourOrderPage.get( (AndroidDriver) driver );
+        return YourOrderPage.get( (AppiumDriver) driver );
     }
 
     private SidesPage goToSidesPage(String menuName) throws Exception {
         selectSpecificMenu(menuName);
-        return SidesPage.get( (AndroidDriver) driver );
+        return SidesPage.get( (AppiumDriver) driver );
     }
 
     private DrinksPage goToDrinkPage(String menuName) throws Exception {
         selectSpecificMenu(menuName);
-        return DrinksPage.get( (AndroidDriver) driver );
+        return DrinksPage.get( (AppiumDriver) driver );
     }
 
     private OffersPage goToOfferPage() throws Exception {
 
-        return OffersPage.get( (AndroidDriver) driver );
+        return OffersPage.get( (AppiumDriver) driver );
     }
 
     public void addDefaultItemInCart(MobileUser mobileUser, BreadSize breadSize, CustomizedItem customizedItemDetails) throws Exception {
@@ -2365,7 +2392,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         } catch (Exception ex) {
             throw new Exception( "Unable to place Random Order:\n" + ex.getMessage() );
         }
-        return YourOrderPage.get( (AndroidDriver) driver );
+        return YourOrderPage.get( (AppiumDriver) driver );
 
     }
 
@@ -2384,7 +2411,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectRandomProduct(BreadSize breadSize) throws Exception {
         try {
             Logz.step( "##### Selecting a random product #####" );
-            List<WebElement> ProductList = elements.getElements( productGroupHeaderIOS, productGroupHeaderAndroid );//product_list
+            List<WebElement> ProductList = elements.getElements( getProductGroupHeader() );//product_list
             int getProductCount = ProductList.size();
             getProductCount = Utils.selectRandomItem( getProductCount );
             ProductList.get( getProductCount ).click();
@@ -2410,7 +2437,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectSpecificMenu(String itemName) throws Exception {
         try {
             Logz.step( "##### Selecting a " + itemName + " menu #####" );
-            elements.scrollAndClick( productGroupHeaderIOS, productGroupHeaderAndroid, itemName );
+            elements.scrollAndClick( getProductGroupHeader(), itemName );
             Logz.step( "##### Selected a " + itemName + " menu #####" );
         } catch (Exception ex) {
             throw new Exception( "Unable to select " + itemName + " menu\n" + ex.getMessage() );
@@ -2446,7 +2473,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             throw new Exception( "Unable to select: " + productName + "\n" + ex.getMessage() );
         }
 
-
     }
 
     private void selectSpecificProductfortax(MobileUser mobileUser, String productName,String fullProductname) throws Exception {
@@ -2465,21 +2491,24 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     private ProductDetailsPage goToProductDetailsPage(String productName) throws Exception {
-        elements.scrollAndClick( productGroupHeaderIOS, productGroupHeaderAndroid, productName );
+        elements.scrollAndClick( getProductGroupHeader(), productName );
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
+
     private ProductDetailsPage goToBreakfastProductDetailsPage(String productName) throws Exception {
-        elements.scrollAndClickBreakfast( productGroupHeaderIOS, productGroupHeaderAndroid, productName );
+        elements.scrollAndClickBreakfast( getProductGroupHeader(), productName );
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
-    private void placeLoyaltyOrderAndAssert() throws Exception {
+    private void placeLoyaltyOrderAndAssert(int certRedeemCount) throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage( customized );
-        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertLoyaltyDisplay();
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertLoyaltyDisplay(certRedeemCount);
         orderConfirmationPage.assertLoyaltyDisplay();
-
+        /*PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser );*/
     }
 
-   /* RemoteOrder remoteOrder = new RemoteOrder(user);
-    CustomizedItem customizedItem  = remoteOrder.getCustomizedItemDetail(menuName, breadSize); //All Sandwiches
-    //CustomizedItem customizedItem  = remoteOrder.getCustomizedSidesDrinksDetail(menuName);*/
+    public String getRewardsTxt() throws Exception{
+        return getRewardsAmt().getText();
+    }
+
 }

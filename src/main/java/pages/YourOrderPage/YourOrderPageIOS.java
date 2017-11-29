@@ -7,6 +7,10 @@ import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.ios.IOSButton;
 import base.gui.controls.mobile.ios.IOSLabel;
 import base.test.BaseTest;
+import base.gui.controls.mobile.ios.IOSTextBox;
+import base.gui.controls.mobile.ios.IOSWebElement;
+import base.test.BaseTest;
+import base.gui.controls.mobile.ios.IOSLabel;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -20,17 +24,17 @@ public class YourOrderPageIOS  extends YourOrderPage{
 
     @Override
     WebElement getPickupTimeHeader() throws Exception {
-        return null;
+        return new IOSWebElement((IOSDriver)driver, "Pickup Time Header text").getWebElement(   By.id(BaseTest.getStringfromBundleFile("PickingUpFrom")));
     }
 
     @Override
-    MobileTextBox getItemTitle() throws Exception {
-        return null;
+    MobileTextBox getItemTitle(String itemTitle) throws Exception {
+        return new IOSTextBox((IOSDriver) driver, By.id(itemTitle), "Item title text");
     }
 
     @Override
-    MobileTextBox getItemPrice() throws Exception {
-        return null;
+    MobileTextBox getItemPrice(String itemPrice) throws Exception {
+        return new IOSTextBox((IOSDriver) driver, By.id(itemPrice), "Item price text");
     }
 
      MobileLabel getTaxPrice() throws Exception{
@@ -44,14 +48,12 @@ public class YourOrderPageIOS  extends YourOrderPage{
 
     @Override
     MobileTextBox getPickupTimeHeaderText() throws Exception {
-        return null;
+        return new IOSTextBox((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("PickingUpFrom")), "Pickup Time Header text");
     }
-
-
 
     @Override
     MobileButton getPlaceOrder() throws Exception {
-        return null;
+        return new IOSButton((IOSDriver) driver, By.xpath("//XCUIElementTypeButton[contains(@name,'" + BaseTest.getStringfromBundleFile("PlaceOrderText") + "')]"), BaseTest.getStringfromBundleFile("PlaceOrderText"));
     }
 
 
@@ -63,6 +65,17 @@ public class YourOrderPageIOS  extends YourOrderPage{
         IOSButton tokenscount = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/toolbar_close"), "ToolBar Close Button");
         return null;
     }
+
+    public MobileButton getManage() throws Exception{
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("android:id/button1"), "Remove Favourites ");
+        return button;
+    }
+
+    public MobileLabel getRewardsAmt() throws Exception{
+        IOSLabel label = new IOSLabel((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/subtotal"), "Remove Favourites ");
+        return label;
+    }
+
     public WebElement getMakeitaMeal() throws Exception {
 
         IOSLabel button = new IOSLabel((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");

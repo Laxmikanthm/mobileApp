@@ -2,11 +2,15 @@ package pages.ManageRewardsPage;
 
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.android.AndroidLabel;
+import base.gui.controls.mobile.android.AndroidWebElement;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class ManageRewardsPageAndroid  extends ManageRewardsPage{
     public ManageRewardsPageAndroid(AppiumDriver driver) {
@@ -32,7 +36,7 @@ public class ManageRewardsPageAndroid  extends ManageRewardsPage{
         AndroidButton removeButton = new AndroidButton((AndroidDriver) driver, By.id("remove"),"RemoveButton)");
         return removeButton;
     }
-    public MobileButton getDoneButton  () throws Exception {
+    public MobileButton getDoneButton() throws Exception {
         AndroidButton doneButton = new AndroidButton((AndroidDriver) driver, By.id("done"),"Done Button");
         return doneButton;
     }
@@ -45,8 +49,17 @@ public class ManageRewardsPageAndroid  extends ManageRewardsPage{
         return doneButton;
     }
 
+    public MobileLabel getRewardsCount() throws Exception {
+        AndroidLabel count = new AndroidLabel((AndroidDriver) driver, By.xpath("//android.support.v7.widget.RecyclerView/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView[1]"), "Certificate amount");
+        return count;
+    }
+
     @Override
     protected void waitForPageToLoad() throws Exception {
 
+    }
+
+    List<WebElement> getRewardsList() throws Exception {
+        return new AndroidWebElement((AndroidDriver) driver, "Rewards List").getWebElements(By.id("certificate_view"));
     }
 }

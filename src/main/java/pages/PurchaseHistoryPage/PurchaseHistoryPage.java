@@ -2,34 +2,41 @@ package pages.PurchaseHistoryPage;
 
 import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
+import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
-import base.gui.controls.mobile.generic.MobileWebElement;
+import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
+import cardantApiFramework.serviceUtilities.cardantClientV2.data.OrderData;
+import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.CartSummary;
+import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.OrderDetailsResponse;
+import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.OrderHistory;
+import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.OrderHistoryResponse;
+import cardantApiFramework.pojos.SubwayCard;
 import com.amazonaws.services.opsworks.model.App;
 import enums.Country;
-import io.appium.java_client.MobileElement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import pages.CommonElements.CommonElements;
-import pages.HomePage.HomePage;
-import pojos.CartItemList;
-import pojos.CustomizedItem.CustomizedItem;
-import pojos.PurchaseHistoryDetails;
-import pojos.PaymentDetails;
-import base.gui.controls.mobile.generic.MobileLabel;
-import base.pages.mobile.MobileBasePage;
-import cardantApiFramework.serviceUtilities.cardantClientV2.data.OrderData;
-import cardantApiFramework.serviceUtilities.cardantClientV2.dto.storeDTO.*;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import pages.CommonElements.CommonElements;
+import pages.HomePage.HomePage;
+import pages.UserProfilePage.UserProfilePage;
+import pojos.CartItemList;
+import pojos.CustomizedItem.CustomizedItem;
+import pojos.PaymentDetails;
+import pojos.PurchaseHistoryDetails;
 import pojos.RemoteOrder;
+import pojos.user.MobileUser;
 import pojos.user.RemoteOrderCustomer;
 import util.Utils;
 import utils.Logz;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends MobileBasePage {
     public PurchaseHistoryPage(AppiumDriver driver) {
@@ -44,7 +51,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     String orderNumber;
     String dateTime;
 
-   abstract List<WebElement> getPaymentMethod() throws Exception;
+    abstract List<WebElement> getPaymentMethod() throws Exception;
     abstract List<WebElement> getEarnedTokensText() throws Exception;
     abstract List<WebElement> getReceiptHeaderText() throws Exception;
 
@@ -53,14 +60,15 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getOrderNumberList() throws Exception;
     abstract List<WebElement> getOrderTimeAddressList() throws Exception;
     abstract List<WebElement> getProductTitleList() throws Exception;
-    abstract MobileTextBox getProductTitle() throws Exception;
+    abstract MobileTextBox getProductTitle(String productTitle) throws Exception;
     abstract List<WebElement> getProductDescriptionList() throws Exception;
     abstract List<WebElement> getOrderTotalList() throws Exception;
+    abstract List<WebElement> getOrderDetails(WebElement element) throws Exception;
+
 
     abstract By getEarnedTokens() throws Exception;
-
-
-
+    UserProfilePage userProfilePage;
+    CustomizedItem customizedItem;
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -85,17 +93,24 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         }
     }
 
-public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem) throws Exception{
+    public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem) throws Exception{
 
 
         return PurchaseHistoryPage.get( (AppiumDriver)driver);
-}
+    }
+
+    public UserProfilePage assertOrderInPurchaseHostoryPage(MobileUser mobileUser) throws Exception{
+        userProfilePage.goToPurchaseHistoryPage();
+        assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        return UserProfilePage.get((AppiumDriver)driver);
+    }
+
 
     public void assertPlacedOrderDetailsInPurchaseHistoryPage(RemoteOrderCustomer mobileUser) throws Exception {
         try {
 
             List<PurchaseHistoryDetails> expectedOrderHistoryList = getExpectedPurchaseHistoryList(mobileUser);
-            List<PurchaseHistoryDetails> actualOrderHistoryList = getActualPurchaseHistoryList();
+            List<PurchaseHistoryDetails> actualOrderHistoryList = getActualPurchaseHistoryList(expectedOrderHistoryList);
             Logz.step("!!!!! Started asserting placed order details in Purchase History Page !!!!!");
             Assert.assertEquals(actualOrderHistoryList, expectedOrderHistoryList);
             Logz.step("!!!!! Ended asserting placed order details in Purchase History Page !!!!!");
@@ -107,7 +122,7 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
     }
     public void assertPlacedOrderDetailsInPurchaseHistoryPage(RemoteOrderCustomer mobileUser, CustomizedItem customizedItem) throws Exception {
         try {
-
+            this.customizedItem = customizedItem;
             List<PurchaseHistoryDetails> expectedOrderHistoryList = getExpectedPurchaseHistoryList(mobileUser);
             List<PurchaseHistoryDetails> actualOrderHistoryList = getActualPurchaseHistoryList(customizedItem);
             Logz.step("!!!!! Started asserting placed order details in Purchase History Page !!!!!");
@@ -120,46 +135,19 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
 
     }
 
-
-
-    public List<PurchaseHistoryDetails> getActualPurchaseHistoryList(CustomizedItem customizedItem) throws Exception {
+    List<PurchaseHistoryDetails> getActualPurchaseHistoryList(CustomizedItem customizedItem) throws Exception {
         try {
             Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
             List<PurchaseHistoryDetails> orderHistoryList = new ArrayList<>();
             getOrderListText().isReady();
-            int webElementCount = getOrderList().size();
-            for (int i = 0; i < webElementCount; i++) {
-                List<WebElement> getOrderHistoryList =getOrderTimeAddressList();
-                getOrderHistoryList.get(i).click();
-                assertProductTitleInPurchaseHistoryPage(customizedItem);
-                orderHistoryList.add(getActualPurchaseHistory(i));
-            }
-            Logz.step("##### Ended getting actual purchase details in Purchase History Page #####");
+            List<WebElement> orders = getOrderList();
+            for (int i = 0; i < orders.size(); i++) {
+                orders.get(i).click();
+                if (driver instanceof AndroidDriver) { //This we are not asserting for iOS because on 'Purchase History' page unable to identify purchaser order details individually.
+                    assertProductTitleInPurchaseHistoryPage(customizedItem);
+                }
+                orderHistoryList.add(getActualPurchaseHistory(orders.get(i), i));
 
-            return orderHistoryList;
-
-        } catch (Exception ex) {
-            throw new Exception(("Failed to get actual purchase details in Purchase History Page\n" + ex.getMessage()));
-
-
-        }
-    }
-
-
-    public List<PurchaseHistoryDetails> getActualPurchaseHistoryListForTax(CustomizedItem customizedItem,String sItemname) throws Exception {
-        try {
-            Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
-            List<PurchaseHistoryDetails> orderHistoryList = new ArrayList<>();
-            getOrderListText().isReady();
-            int webElementCount = getOrderList().size();
-            for (int i = 0; i < webElementCount; i++) {
-                List<WebElement> getOrderHistoryList =getOrderTimeAddressList();
-                getOrderHistoryList.get(i).click();
-               /* if (assertProductTitleInPurchaseHistoryPageForTax(customizedItem, sItemname)){
-                    orderHistoryList.add(getActualPurchaseHistory(i));
-                    break;
-                };*/
-                orderHistoryList.add(getActualPurchaseHistory(i));
             }
             Logz.step("##### Ended getting actual purchase details in Purchase History Page #####");
 
@@ -174,16 +162,16 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
 
 
 
-    public List<PurchaseHistoryDetails> getActualPurchaseHistoryList() throws Exception {
+    public List<PurchaseHistoryDetails> getActualPurchaseHistoryList(List<PurchaseHistoryDetails> expectedOrderHistoryList) throws Exception {
         try {
             Logz.step("##### Started getting actual purchase details in Purchase History Page #####");
             List<PurchaseHistoryDetails> orderHistoryList = new ArrayList<>();
             getOrderListText().isReady();
-            int webElementCount = getOrderList().size();
+            int webElementCount = expectedOrderHistoryList.size();
+            List<WebElement> getOrderHistoryList =getOrderTimeAddressList();
             for (int i = 0; i < webElementCount; i++) {
-                List<WebElement> getOrderHistoryList =getOrderTimeAddressList();
                 getOrderHistoryList.get(i).click();
-                orderHistoryList.add(getActualPurchaseHistory(i));
+                orderHistoryList.add(getActualPurchaseHistory(getOrderHistoryList.get(i), i));
             }
             Logz.step("##### Ended getting actual purchase details in Purchase History Page #####");
 
@@ -198,24 +186,35 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
 
 
 
-    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
+    public PurchaseHistoryDetails getActualPurchaseHistory(WebElement eleOrder, int index) throws Exception {
         try {
             Logz.step("##### Started setting actual purchase details in Purchase History Page #####");
             PurchaseHistoryDetails purchaseHistoryDetails = new PurchaseHistoryDetails();
           //  List<WebElement> getOrderNumbers = commonElements.getElements(By.id(""), By.xpath("//android.widget.TextView[contains(@text,'Order')]"));
             List<WebElement> getOrderNumbers = getOrderNumberList();
-            String orderNumber = getOrderNumbers.get(index).getText();
-            Logz.step("Order number: "+orderNumber);
+            String orderNum = getOrderNumbers.get(index).getText();
+            Logz.step("Order number: " + orderNum);
           //  List<WebElement> getOrderTimeAddress = commonElements.getElements(By.id(""), By.id("order_time_address"));
-            List<WebElement> getOrderTimeAddress = getOrderTimeAddressList();
-            String orderTimeAddress = getOrderTimeAddress.get(index).getText();
-            String[] split = orderTimeAddress.split("\n");
-            purchaseHistoryDetails.setPickupDateTime(split[0]);
-            purchaseHistoryDetails.setStoreAddress(split[1]);
-            purchaseHistoryDetails.setOrderNumber(orderNumber);
-            purchaseHistoryDetails.setCartItemList(getActualCartItemList(index));
-            purchaseHistoryDetails.setPaymentDetails(getActualPaymentDetails(index));
-            purchaseHistoryDetails.setTotal(actualTotal);
+            //List<WebElement> getOrderTimeAddress = getOrderTimeAddressList();
+
+            List<WebElement> orderDetail = getOrderDetails(eleOrder);
+            if(driver instanceof IOSDriver){
+                purchaseHistoryDetails.setStoreAddress(orderDetail.get(1).getText());
+                purchaseHistoryDetails.setPickupDateTime(orderDetail.get(2).getText() + " | " + orderDetail.get(3).getText());
+                orderNum = BaseTest.getStringfromBundleFile("Order") + " " + orderNum;
+            }else {
+                String orderTimeAddress = orderDetail.get(0).getText();
+                String[] split = orderTimeAddress.split("\n");
+                purchaseHistoryDetails.setPickupDateTime(split[0]);
+                purchaseHistoryDetails.setStoreAddress(split[1]);
+
+                //########### This block we are not asserting for iOS because on 'Purchase History' page unable to identify purchaser order details locators individually. ###################
+                purchaseHistoryDetails.setCartItemList(getActualCartItemList(index));
+                purchaseHistoryDetails.setPaymentDetails(getActualPaymentDetails(index));
+                purchaseHistoryDetails.setTotal(actualTotal);
+                //########### This block we are not asserting for iOS because on 'Purchase History' page unable to identify purchaser order details locators individually. ###################
+            }
+            purchaseHistoryDetails.setOrderNumber(orderNum);
             Logz.step("##### Ended setting actual purchase details in Purchase History Page #####");
             return purchaseHistoryDetails;
         } catch (Exception ex) {
@@ -293,27 +292,6 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
         }
     }
 
-    public List<PurchaseHistoryDetails> getExpectedPurchaseHistoryListForTax(RemoteOrderCustomer remoteOrderCustomer) throws Exception {
-        try {
-            Logz.step("##### Started getting expected purchase details in Purchase History Page #####");
-            List<PurchaseHistoryDetails> historyDetailsList = new ArrayList<>();
-            RemoteOrder remoteOrder = new RemoteOrder(remoteOrderCustomer);
-            OrderHistoryResponse order = remoteOrder.orderHistory(remoteOrderCustomer);
-            OrderHistory[] results = order.getResults();
-            for (OrderHistory result : results)
-            {
-                historyDetailsList.add(getExpectedPurchaseHistory(remoteOrderCustomer, result));
-            }
-            Logz.step("##### Ended getting expected purchase details in Purchase History Page #####");
-            return historyDetailsList;
-
-        } catch (Exception ex) {
-            throw new Exception(("Failed to get expected purchase details from api\n" + ex.getMessage()));
-
-
-        }
-    }
-
     private PurchaseHistoryDetails getExpectedPurchaseHistory(RemoteOrderCustomer mobileUser, OrderHistory result) throws Exception {
         try {
             Logz.step("##### Started setting expected purchase details from api #####");
@@ -323,7 +301,10 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
             for (CartSummary cartSummaryResult : cartSummaryResults) {
                 expectedTotal = cartSummaryResult.getTotal();
                 purchaseHistoryDetails = new PurchaseHistoryDetails();
-                dateTime = Utils.formatDateTime(cartSummaryResult.getPickupDate(), "yyyy-MM-dd hh:mm:ss a", "MMMM dd, yyyy | hh:mma");
+                if(driver instanceof AndroidDriver)
+                    dateTime = Utils.formatDateTime(cartSummaryResult.getPickupDate(), "yyyy-MM-dd hh:mm:ss a", "MMMM dd, yyyy | hh:mma");
+                else
+                    dateTime = Utils.formatDateTime(cartSummaryResult.getPickupDate(), "yyyy-MM-dd hh:mm:ss a", "MMMM dd, yyyy | h:mma");
                 if (dateTime.contains("PM")) {
                     dateTime = dateTime.replace("PM", "pm");
                 } else {
@@ -332,9 +313,11 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
                 purchaseHistoryDetails.setPickupDateTime(dateTime);//Utils.formatDateTime(cartSummaryResult.getPickupDate(), "yyyy-MM-dd hh:mm:ss a", "MMMM d, yyyy | h:m:a"),
                 purchaseHistoryDetails.setOrderNumber("Order " + cartSummaryResult.getOrderNumber());
                 purchaseHistoryDetails.setStoreAddress(cartSummaryResult.getStoreAddress());
-                purchaseHistoryDetails.setCartItemList(getExpectedCartItemList(cartSummaryResult));
-                purchaseHistoryDetails.setPaymentDetails(getExpectedPaymentDetails(cartSummaryResult, mobileUser));
-                purchaseHistoryDetails.setTotal(expectedTotal);
+                if(driver instanceof AndroidDriver) {
+                    purchaseHistoryDetails.setCartItemList(getExpectedCartItemList(cartSummaryResult));
+                    purchaseHistoryDetails.setPaymentDetails(getExpectedPaymentDetails(cartSummaryResult, mobileUser));
+                    purchaseHistoryDetails.setTotal(expectedTotal);
+                }
 
             }
             Logz.step("##### Ended setting expected purchase details from api #####");
@@ -354,7 +337,12 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
             CartSummary.CartItem[] cartItems = cartSummaryResult.getItems();  //cartSummaryResult.getCartItems();
             for (CartSummary.CartItem cartItem : cartItems) {
                 CartSummary.Option[] options = cartItem.getOptions();
-                CartItemList cart = new CartItemList(Utils.convert12inchToFootLong(cartItem.getName()), getOptions(options), cartItem.getIsFavorite());
+                CartItemList cart;
+                if(customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )){
+                     cart = new CartItemList(Utils.convert12inchToFootLong(cartItem.getName()), "", cartItem.getIsFavorite());
+                }else {
+                     cart = new CartItemList( Utils.convert12inchToFootLong( cartItem.getName() ), getOptions( options ), cartItem.getIsFavorite() );
+                }
                 cartItemList.add(cart);
             }
             ComparatorByIteName comparatorByIteName = new ComparatorByIteName();
@@ -468,9 +456,9 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
         Logz.step( "Started asserting order details In Order Confirmation Page" );
 
         if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )) {
-            Assert.assertEquals( getProductTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+            Assert.assertEquals( getProductTitle(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
         } else {
-            Assert.assertEquals( getProductTitle().getText(), customizedItem.getProductDetail().getName() );
+            Assert.assertEquals( getProductTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
         }
 
         // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
@@ -478,6 +466,7 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
 
     }
 
+    //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
 
     public Boolean assertProductTitleInPurchaseHistoryPageForTax(CustomizedItem customizedItem, String sItemName) throws Exception {
         Logz.step( "Started asserting order details In Order Confirmation Page" );
@@ -593,7 +582,5 @@ public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem
 //        }
 //
 //    }
-
-
 
 }

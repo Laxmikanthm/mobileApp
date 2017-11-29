@@ -46,10 +46,10 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         }
     }
     abstract WebElement getPickupTimeHeader() throws Exception;
-    abstract MobileTextBox getItemTitle() throws Exception;
-    abstract MobileTextBox getItemPrice() throws Exception;
+    abstract MobileTextBox getItemTitle(String itemTitle) throws Exception;
+    abstract MobileTextBox getItemPrice(String price) throws Exception;
     abstract MobileTextBox getFlavorItemTitle() throws Exception;
-    abstract MobileTextBox getTotalText() throws Exception;
+    abstract MobileTextBox getTotalText(String price) throws Exception;
     abstract MobileTextBox getPickupTimeHeaderText() throws Exception;
 
     CommonElements commonElements = new CommonElements((AppiumDriver)driver);
@@ -61,13 +61,18 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         Thread.sleep( 20000 );
        // getPickupTimeHeaderText().isReady();
         getGotIt().isReady();
-        commonElements.scroll( getPickupTimeHeader(), "down" );
+        if(driver instanceof AndroidDriver) {
+            commonElements.scroll(getPickupTimeHeader(), "down");
+        }else {
+            commonElements.scrollIOS(getPickupTimeHeader(), "up");
+        }
         if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )){
-            Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+            Assert.assertEquals( getItemTitle(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
         }else{
             Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+            Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
         }
-        Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
+        Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
         // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
         Logz.step("Started asserting order details In Order Confirmation Page");
         getGotIt().click();
@@ -103,27 +108,29 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         Thread.sleep( 20000 );
         // getPickupTimeHeaderText().isReady();
         getGotIt().isReady();
-        commonElements.scroll( getPickupTimeHeader(), "down" );
+        if(driver instanceof AndroidDriver) {
+            commonElements.scroll(getPickupTimeHeader(), "down");
+        }
         if (customizedItem.getMenuName().contains( "Drinks" )) {
             if (customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Bottled Beverage" )) {
-                Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
-                Assert.assertEquals( getFlavorItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+                Assert.assertEquals( getItemTitle(customizedItem.getCustomizedProductDetail().getProductClassName()).getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
+                Assert.assertEquals( getFlavorItemTitle().getText().substring(2).trim(), customizedItem.getCustomizedProductDetail().getProductName() );
 
             } else {
-                Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+                Assert.assertEquals( getItemTitle(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
             }
         }else{
             if (customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Apple Slices" )) {
-                Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
+                Assert.assertEquals( getItemTitle(customizedItem.getCustomizedProductDetail().getProductClassName()).getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
 
             } else {
-                Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
-                Assert.assertEquals( getFlavorItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+                Assert.assertEquals( getItemTitle(customizedItem.getCustomizedProductDetail().getProductClassName()).getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
+                Assert.assertEquals( getFlavorItemTitle().getText().substring(2).trim(), customizedItem.getCustomizedProductDetail().getProductName() );
             }
 
         }
-        Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
-         Assert.assertEquals( getTotalText().getText(),  Utils.getExpectedPrice( customizedItem ));//$5.51
+        Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
+        //Assert.assertEquals( getTotalText(Utils.getExpectedPrice( customizedItem )).getText(),  Utils.getExpectedPrice( customizedItem ));//$5.51
         Logz.step("Started asserting order details In Order Confirmation Page");
         getGotIt().click();
         return HomePage.get((AppiumDriver)driver);
@@ -168,7 +175,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
     public FavouriteDetails getActualFavourites(MobileUser mobileUser)throws Exception
     {
         FavouriteDetails actualfavouriteDetails=new FavouriteDetails();
-       commonElements.getElement(By.id(""),By.id("item_title"),(AppiumDriver) driver);
+        commonElements.getElement(By.id(""),By.id("item_title"),(AppiumDriver) driver);
         actualfavouriteDetails.setFavouriteName(commonElements.getElement(By.id(""),By.id("item_title"),(AppiumDriver) driver).getText());
         actualfavouriteDetails.setIngrediants(commonElements.getElement(By.id(""),By.id("item_options"),(AppiumDriver) driver).getText());
         actualfavouriteDetails.setPrice(commonElements.getElement(By.id(""),By.id("item_price"),(AppiumDriver) driver).getText());
