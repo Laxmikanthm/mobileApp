@@ -62,7 +62,6 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getProductTitleList() throws Exception;
     abstract List<WebElement> getProductTitle() throws Exception;
     abstract MobileTextBox getProductTitle(String productTitle) throws Exception;
-    abstract MobileTextBox getProducttitle() throws Exception;
     abstract List<WebElement> getProductDescriptionList() throws Exception;
     abstract List<WebElement> getOrderTotalList() throws Exception;
     abstract List<WebElement> getOrderDetails(WebElement element) throws Exception;
@@ -528,9 +527,9 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         Logz.step( "Started asserting order details In Order Confirmation Page" );
         Boolean Titleassert=false;
         if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )) {
-            Assert.assertEquals( getProducttitle().getText(), sItemName );
+            Assert.assertEquals( getProductTitle(sItemName).getText(), sItemName );
         } else {
-            Assert.assertEquals( getProducttitle().getText(), sItemName );
+            Assert.assertEquals( getProductTitle(sItemName).getText(), sItemName );
             Titleassert=true ;
         }
 

@@ -56,6 +56,11 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     }
 
     @Override
+    List<WebElement> getProductTitle() throws Exception {
+        return null;
+    }
+
+    @Override
     MobileTextBox getProductTitle(String productTitle) throws Exception {
         return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + productTitle + "']"), "PurchaseHistory button");
     }
@@ -97,9 +102,6 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
         return By.id("earned_tokens_text");
     }
 
-    MobileTextBox getProducttitle() throws Exception {
-        return null;
-    }
 
 
 }

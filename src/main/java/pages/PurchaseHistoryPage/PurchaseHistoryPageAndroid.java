@@ -54,6 +54,11 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
     }
 
     @Override
+    List<WebElement> getProductTitle() throws Exception {
+        return null;
+    }
+
+    @Override
     MobileTextBox getProductTitle(String productTitle) throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("product_title"), "getProductTitle");
     }
