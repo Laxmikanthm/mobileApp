@@ -286,7 +286,7 @@ public class TakeOut extends SubwayAppBaseTest {
     public void takeOutColdItemsCA() throws Exception {
         store = JdbcUtil.getStateSpecificStoreDetails("CA", true);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,false,false,false);
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,false,false,false,false);
     }
 
 
@@ -295,49 +295,99 @@ public class TakeOut extends SubwayAppBaseTest {
     public void takeOutHotItemsCA() throws Exception{
     store = JdbcUtil.getStateSpecificStoreDetails("CA", true);
     landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-    landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,true,false,false);
+    landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,true,false,false,false);
     }
 
     @Test
     public void takeOutHotItemsOH() throws Exception {
         store = JdbcUtil.getStateSpecificStoreDetails("OH", true);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-         landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,true,false,false);
+         landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,true,false,false,false);
     }
 
     @Test
     public void takeOutColdItemsOH() throws Exception {
         store = JdbcUtil.getStateSpecificStoreDetails("OH", true);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,false,false,false);
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,false,false,false,false);
     }
 
     @Test
-    public void Takeout_Tax_kidsValueMeal_CA() throws Exception {
+    public void TakeoutTaxkidsValueMealCA() throws Exception {
         store = JdbcUtil.getStateSpecificStoreDetails("CA", true);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("KidsMeal"), store,false,false,false);
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("KidsMeal"), store,false,false,false,false);
 
     }
 
     @Test
-    public void Takeout_Tax_kidsValueMeal_OH() throws Exception {
+    public void TakeoutTaxkidsValueMealOH() throws Exception {
         store = JdbcUtil.getStateSpecificStoreDetails("OH", true);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("KidsMeal"),store,false,false,false);
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("KidsMeal"),store,false,false,false,false);
     }
 
     @Test
-    public void TakeOut_Tax_KidsValueMeal_SandwichToy_Android_CA() throws Exception {
+    public void TakeOutTaxKidsValueMealSandwichToyAndroid_CA() throws Exception {
         store = JdbcUtil.getStateSpecificStoreDetails("CA", true);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("KidsMeal"), store,false,false,false);
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("KidsMeal"), store,false,false,false,false);
     }
 
     @Test
-    public void TakeOut_Tax_KidsValueMeal_SandwichToy_Android_OH() throws Exception {
+    public void TakeOutTaxKidsValueMealSandwichToyAndroid_OH() throws Exception {
         store = JdbcUtil.getStateSpecificStoreDetails("OH", true);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("KidsMeal"), store,false,false,false);
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("KidsMeal"), store,false,false,false,false);
     }
+
+    @Test
+    public void TakeOutNoTaxAndroid_CA() throws Exception {
+        store = JdbcUtil.getStateSpecificStoreDetails("CA", true);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandiwches"), store, false, false, false,false);
+    }
+
+    @Test
+    public void TakeOutNoTaxAndroid_OH() throws Exception {
+        store = JdbcUtil.getStateSpecificStoreDetails("OH", true);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandiwches"), store, false, false, false,false);
+    }
+
+    @Test
+    public void TakeOutNoTaxFreshValueMeal_CA() throws Exception {
+        store = JdbcUtil.getStateSpecificStoreDetails("CA", true);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandiwches"), store, false, false, true,false);
+    }
+
+    @Test
+    public void TakeOutTaxFreshValueMeal_CA() throws  Exception{
+        store = JdbcUtil.getStateSpecificStoreDetails("CA", true);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandiwches"), store, true, false, true,false);
+    }
+    @Test
+    public void TakeOutNoTaxFreshValueMeal_OH() throws  Exception{
+        store = JdbcUtil.getStateSpecificStoreDetails("OH", true);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandiwches"), store, false, false, true,false);
+    }
+
+
+    @Test
+    public void TakeOutTaxFreshValueMeal_OH() throws  Exception{
+        store = JdbcUtil.getStateSpecificStoreDetails("OH", true);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandiwches"), store, true, false, true,false);
+    }
+
+    @Test
+    public void TakeOutTaxFreshValueMealWithCoffee_CA() throws  Exception{
+        store = JdbcUtil.getStateSpecificStoreDetails("CA", true);
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandiwches"), store, true, false, true,true);
+    }
+
 }

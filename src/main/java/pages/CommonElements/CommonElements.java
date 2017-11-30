@@ -55,6 +55,7 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
     public HomePage scrollAndClick(By locator, String itemName) throws Exception {
         Logz.step( "Scrolling to element and get element list" );
         List<WebElement> allElements = getElements( locator);
+        Logz.step("Total elements found " + allElements.size());
         try {
             flag = false;
             if (allElements.size() == 0) {
@@ -64,10 +65,14 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
             for (int i = 0; i < allElements.size(); i++) {
                 if (allElements.get( i ).getText().toUpperCase().contains( itemName.toUpperCase() )) {
                     if(driver instanceof IOSDriver){
-                        int startX = allElements.get(i).getLocation().getX();
+                        if(!allElements.get( i ).isDisplayed()){
+                            scrollIOS(allElements.get( i ), "up");
+                        }
+                        allElements.get( i ).click();
+                        /*int startX = allElements.get(i).getLocation().getX();
                         int startY = allElements.get(i).getLocation().getY();
                         action = new TouchAction((AppiumDriver) driver);
-                        action.longPress(allElements.get(i),startX, startY).release().perform();
+                        action.longPress(allElements.get(i),startX, startY).release().perform();*/
                     }else {
                         allElements.get(i).click();
                     }

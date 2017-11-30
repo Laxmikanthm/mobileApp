@@ -32,7 +32,10 @@ public class YourOrderPageAndroid extends YourOrderPage{
     MobileTextBox getItemTitle() throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("item_title"), "getItemTitle");
     }
-
+    public MobileButton getFullMenu() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("view_full_menu_text"), "See Full menu");
+        return button;
+    }
     @Override
     MobileTextBox getItemPrice(String itemPrice) throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("item_price"), "getItemPrice");

@@ -1,5 +1,6 @@
 package pages.YourOrderPage;
 
+import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.android.AndroidLabel;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
@@ -47,6 +48,10 @@ public class YourOrderPageIOS  extends YourOrderPage{
 
      MobileLabel getTaxPrice() throws Exception{
         return  null;
+    }
+
+    public MobileButton getFullMenu() throws Exception {
+        return null;
     }
 
     @Override

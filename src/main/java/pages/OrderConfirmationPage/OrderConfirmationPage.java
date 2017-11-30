@@ -28,9 +28,15 @@ import utils.Logz;
 import java.util.List;
 
 public abstract class OrderConfirmationPage<T extends AppiumDriver> extends MobileBasePage {
+    String ProductPrice=null;
     public OrderConfirmationPage(AppiumDriver driver) {
         super(driver);
     }
+    public OrderConfirmationPage(AppiumDriver driver,String Price) {
+        super(driver);
+        ProductPrice=Price;
+    }
+
     public static OrderConfirmationPage get(AppiumDriver driver) throws Exception{
 
         String platform = SubwayAppBaseTest.platformName;
@@ -83,10 +89,9 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
     }
 
 
-    public HomePage assertOrderDetailsInOrderConfirmationPageforTax(String Productname,double Productprice) throws Exception{
+    public HomePage assertOrderDetailsInOrderConfirmationPageforTax(String Productname,double Productpriceyourorderpage) throws Exception{
         Logz.step("Started asserting order details In Order Confirmation Page");
         Thread.sleep( 20000 );
-        // getPickupTimeHeaderText().isReady();
         getGotIt().isReady();
         commonElements.scroll( getPickupTimeHeader(), "down" );
         if (Productname.contains( "Sides" ) || Productname.contains( "Drinks" )){
@@ -97,12 +102,9 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
             String Itemtitle=getItemTitlefortax().getText();
             String ItemTitle[]=Itemtitle.split(" ",2);
             Assert.assertEquals( ItemTitle[1], Prodsplitname[1]);
-            Assert.assertEquals(getItemTitlefortax().getText(),Double.toString(Productprice));
+            Assert.assertEquals(getItemPricetax().getText(),ProductPrice);
         }
-        //To be discussed with Marium on how to retrieve Item Price from Customized Item
-        // Class as Hot / Cold Item is retrieved using different method
-        //Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
-        // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+
         Logz.step("completed asserting order details In Order Confirmation Page");
         getGotIt().click();
         return HomePage.get((AppiumDriver)driver);
@@ -186,6 +188,8 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
 
         return actualfavouriteDetails;
     }
+
+
     public HomePage assertLoyaltyDisplay() throws Exception{
         getGotIt().click();
         return HomePage.get((AppiumDriver)driver);
