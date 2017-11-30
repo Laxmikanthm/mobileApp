@@ -129,7 +129,7 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         }
         Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
         Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
-       // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+        // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
         Logz.step("Started asserting order details In Your Order Page");
         return YourOrderPage.get((AppiumDriver)driver);
     }
@@ -139,23 +139,23 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         Thread.sleep( 20000 );
         getPickupTimeHeaderText().isReady();
         commonElements.scroll( getPickupTimeHeader(), "down" );
-       if(isDineIn){
-           getDineIn().click();
-       }
+        if(isDineIn){
+            getDineIn().click();
+        }
         String Prodname[]=Productname.split(" ",2);
         String Productnameui[]=getItemTitle().getText().split(" ",2);
         Assert.assertEquals( Productnameui[1],Prodname[1] );
         Logz.step("UI value of p.priceis "+getItemPrice().getText());
         String Productpriceyourorderpage=getItemPrice().getText();
         commonElements.scroll( getMakeitaMeal(), "down" );
-         if(isMakeitameal){
-           getMakeitaMeal().click();
-          }
+        if(isMakeitameal){
+            getMakeitaMeal().click();
+        }
         if(Mealwithcoffe){
 
-           // RemoteOrderCustomer remoteOrderCustomer=MobileApi.getSidesDrinksCustomizedItemDetails(mobileUser,"Drinks")
-             getFullMenu().click();
-           //goToProductDetailsPage("Coffee")
+            // RemoteOrderCustomer remoteOrderCustomer=MobileApi.getSidesDrinksCustomizedItemDetails(mobileUser,"Drinks")
+            getFullMenu().click();
+            //goToProductDetailsPage("Coffee")
         }
 
 
@@ -165,10 +165,9 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         return YourOrderPage.get((AppiumDriver)driver,Productpriceyourorderpage);
     }
 
-
-public String getTotalPrice() throws Exception{
-    return getTotalText().getText().substring( 15 );
-}
+    public String getTotalPrice() throws Exception{
+        return getTotalText().getText().substring( 15 );
+    }
 
     public YourOrderPage assertSidesDrinksOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
         Logz.step("Started asserting order details In Your Order Page");

@@ -68,7 +68,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
     public HomePage assertOrderDetailsInOrderConfirmationPage(CustomizedItem customizedItem, String expectedTotal) throws Exception{
         Logz.step("Started asserting order details In Order Confirmation Page");
         Thread.sleep( 20000 );
-       // getPickupTimeHeaderText().isReady();
+        // getPickupTimeHeaderText().isReady();
         getGotIt().isReady();
         if(driver instanceof AndroidDriver) {
             commonElements.scroll(getPickupTimeHeader(), "down");
@@ -153,19 +153,19 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         {
 
             FavouriteName= expectedApiFavourites.getResults()[i].getFavoriteName();
-               Price= expectedApiFavourites.getResults()[i].getPrice();
-               List<FavoriteOptions> favoriteOptionsList=expectedApiFavourites.getResults()[i].getOptions().subList(0,expectedApiFavourites.getResults()[i].getOptions().size()-1);
-               for(int k=0;k<favoriteOptionsList.size();k++)
-               {
+            Price= expectedApiFavourites.getResults()[i].getPrice();
+            List<FavoriteOptions> favoriteOptionsList=expectedApiFavourites.getResults()[i].getOptions().subList(0,expectedApiFavourites.getResults()[i].getOptions().size()-1);
+            for(int k=0;k<favoriteOptionsList.size();k++)
+            {
 
-                   if(k==0) {
-                       result=favoriteOptionsList.get(k).getName();
-                   }
-                   else
-                   {
-                       result+=","+favoriteOptionsList.get(k).getName();
-                   }
-               }
+                if(k==0) {
+                    result=favoriteOptionsList.get(k).getName();
+                }
+                else
+                {
+                    result+=","+favoriteOptionsList.get(k).getName();
+                }
+            }
 
         }
         expectedFavourites.setIngrediants(result);

@@ -58,7 +58,8 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
         //ToDo
 
         String drinksName = customizedItem.getCustomizedProductDetail().getProductClassName();
-         drinksFlavorName = customizedItem.getCustomizedProductDetail().getProductName();
+        drinksFlavorName = customizedItem.getCustomizedProductDetail().getProductName();
+
         if (drinksName.contains( "Bottled Beverage" )) {
             if (drinksFlavorName.contains( "Dasani® Water" )) {
                 for (int i = 0; i < getItemCount(); i++) { // get the count
@@ -106,10 +107,10 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
         return YourOrderPage.get( (AppiumDriver) driver );
     }
 
-public int getItemCount() throws Exception{
-    String[] strings = getItemCountText().getText().split( "OF " );
-    return Integer.parseInt( strings[1] );
-}
+    public int getItemCount() throws Exception{
+        String[] strings = getItemCountText().getText().split( "OF " );
+        return Integer.parseInt( strings[1] );
+    }
     public void assertDrinksDescriptions(CustomizedItem customizedItem) throws Exception {
         Logz.step( "Asserting drinks product title" );
         Assert.assertEquals( getDrinksDescriptionText().getText().trim(), customizedItem.getCustomizedProductDetail().getDescription().trim(), "Drink flavors title assertion is failed" );
@@ -118,11 +119,11 @@ public int getItemCount() throws Exception{
     public void assertDrinksPriceCalories(CustomizedItem customizedItem) throws Exception {
         Logz.step( "Asserting drinks product title" );
         for(WebElement element: getDrinksPriceCaloriesList()){
-           if( element.getText().contains( "$" )){
-               Assert.assertEquals( element.getText(), Utils.getExpectedPrice(customizedItem) , "Drink flavors title assertion is failed" );
-           }else if(element.getText().contains( "Cals" )){
-               Assert.assertEquals( element.getText().trim(), Utils.getExpectedCalories(customizedItem), "Drink flavors title assertion is failed" );
-           }
+            if( element.getText().contains( "$" )){
+                Assert.assertEquals( element.getText(), Utils.getExpectedPrice(customizedItem) , "Drink flavors title assertion is failed" );
+            }else if(element.getText().contains( "Cals" )){
+                Assert.assertEquals( element.getText().trim(), Utils.getExpectedCalories(customizedItem), "Drink flavors title assertion is failed" );
+            }
         }
         Logz.step( "Asserted drinks product title" );
     }

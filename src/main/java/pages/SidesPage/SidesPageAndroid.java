@@ -38,6 +38,7 @@ public class SidesPageAndroid extends SidesPage{
         return new AndroidWebElement((AndroidDriver) driver, "getItemFlavorList").getWebElements(By.id("flavor_text_item"));
     }
 
+
     @Override
     MobileTextBox getItemCountText() throws Exception {
         return  new AndroidTextBox((AndroidDriver) driver, By.id("page_count"), "page_count");

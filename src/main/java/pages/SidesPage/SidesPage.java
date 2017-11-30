@@ -46,7 +46,7 @@ public abstract class SidesPage<T extends AppiumDriver> extends MobileBasePage {
 
     abstract List<WebElement> getItemFlavorList() throws Exception;
 
-abstract MobileTextBox getItemCountText() throws Exception;
+    abstract MobileTextBox getItemCountText() throws Exception;
     abstract WebElement getSides() throws Exception;
     abstract WebElement getItemFlavor() throws Exception;
     abstract MobileTextBox getSidesDescriptionText() throws Exception;
@@ -57,10 +57,11 @@ abstract MobileTextBox getItemCountText() throws Exception;
     CommonElements commonElements = new CommonElements( (AppiumDriver) driver );
     String SidesName = "";
 
+
     public YourOrderPage selectSidesOrder(CustomizedItem customizedItem) throws Exception {
 //ToDo
-       // int count = 0;
-         SidesName = customizedItem.getCustomizedProductDetail().getProductClassName();
+        //int count = 0;
+        String SidesName = customizedItem.getCustomizedProductDetail().getProductClassName();
         if (SidesName.equalsIgnoreCase( "Apple Slices" )) {
             Logz.step( SidesName + " is selected" );
 
@@ -69,20 +70,20 @@ abstract MobileTextBox getItemCountText() throws Exception;
                 if (!getSides().getText().contains( SidesName )) {
                     commonElements.swipe( (AppiumDriver) driver, "Left" );
                 }
-             //   count = i - 1;
+                //count = i - 1;
             }
             Logz.step( SidesName + " is selected" );
             getSelectFlavor().click();
             commonElements.scroll(getItemFlavor(), "up");
 
-           for(WebElement webElement : getItemFlavorList()) {
-               if(webElement.getText().contains( customizedItem.getCustomizedProductDetail().getProductName() )){
-                   webElement.click();
-                   Logz.step( customizedItem.getCustomizedProductDetail().getProductName() + " is selected" );
-                   break;
-               }
+            for(WebElement webElement : getItemFlavorList()) {
+                if(webElement.getText().contains( customizedItem.getCustomizedProductDetail().getProductName() )){
+                    webElement.click();
+                    Logz.step( customizedItem.getCustomizedProductDetail().getProductName() + " is selected" );
+                    break;
+                }
 
-           }
+            }
 
         }
         assertSidesDetails(customizedItem);
@@ -134,5 +135,4 @@ abstract MobileTextBox getItemCountText() throws Exception;
         Logz.step( "Navigating to your order page......" );
 
     }
-
 }
