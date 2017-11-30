@@ -2057,7 +2057,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    public HomePage placeDefaultOrderforTax(MobileUser mobileUser, String menuCategories, Store store, cardantApiFramework.pojos.Menu menu, boolean isHot, boolean isDineIn, boolean isMakeitaMeal) throws Exception {
+    public HomePage placeDefaultOrderforTax(MobileUser mobileUser, String menuCategories, Store store, cardantApiFramework.pojos.Menu menu, boolean isHot, boolean isDineIn, boolean isMakeitaMeal,boolean Mealwithcoffe) throws Exception {
         try {
             customized = false;
             Logz.step( "##### Started placing Default Order #####" + menuCategories );
@@ -2067,10 +2067,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             else {
                 Logz.step( "##### Cold Item  to Select #####" +menu.getProductName() );
             }
-
             //CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, menuCategories, breadSize );
             addDefaultItemInCartForTax( mobileUser,menuCategories, menu.getProductName());
-            placeOrderAndAssertforTax( mobileUser, menuCategories, store,menu.getProductName(),menu.getProductPrice(),isDineIn,isMakeitaMeal);
+            placeOrderAndAssertforTax( mobileUser,menu.getProductName(),menu.getProductPrice(),isDineIn,isMakeitaMeal,Mealwithcoffe);
 
             Logz.step( "##### Ended placing Default Order #####" );
         } catch (Exception ex) {
@@ -2175,12 +2174,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    private void assertOrderDetailsforTax(MobileUser mobileUser, YourOrderPage yourOrderPage,String Productname,boolean isDineIn,boolean isMakeitameal,double Productprice) throws Exception {
+    private void assertOrderDetailsforTax(MobileUser mobileUser, YourOrderPage yourOrderPage,String Productname,boolean isDineIn,boolean isMakeitameal,boolean Mealwithcoffe,double Productprice) throws Exception {
 
-        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPagefortax(Productname,isDineIn,isMakeitameal,Productprice).goToOrderConfirmationPage();
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPagefortax(Productname,isDineIn,isMakeitameal,Mealwithcoffe,Productprice).goToOrderConfirmationPage();
         HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPageforTax(Productname,Productprice);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
-        // homePage.validateTokens(mobileUser);//have to work on this
+        // homePage.validateTokens(mobileUser);
         //purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage(  mobileUser ,customizedItem);
 
     }
@@ -2225,20 +2224,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
 
     }
-    private void placeOrderAndAssertforTax(MobileUser mobileUser, String menuCategories, Store store,String Productname, double Productprice,boolean isDineIn, boolean isMakeitameal) throws Exception {
+    private void placeOrderAndAssertforTax(MobileUser mobileUser,String Productname, double Productprice,boolean isDineIn, boolean isMakeitameal,boolean Mealwithcoffe) throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage( customized );
-        /*if (menuCategories.contains( "Breakfast" )) {
-            boolean time = Utils.getTime( store );
-            if (!time) {
-                assertBreakfastUnavailablePopUp( customizedItem, store );
-            } else {
-                assertOrderDetailsforTax( mobileUser, yourOrderPage, customizedItem,Productname,isDineIn,isMakeitameal,Productprice);
-            }
-        } else {
-            assertOrderDetailsforTax( mobileUser, yourOrderPage, customizedItem,Productname,isDineIn,isMakeitameal,Productprice );
-        }*/
-        assertOrderDetailsforTax( mobileUser, yourOrderPage,Productname,isDineIn,isMakeitameal,Productprice );
+
+        assertOrderDetailsforTax( mobileUser, yourOrderPage,Productname,isDineIn,isMakeitameal,Mealwithcoffe,Productprice );
     }
+
+
     private void placeFavouriteOrderAndAssert(MobileUser mobileUser, String menuCategories, Store store,CustomizedItem customizedItem) throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage(customized);
 
@@ -2314,8 +2306,6 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public void addDefaultItemInCartForTax(MobileUser mobileUser, String smenu, String sItemName) throws Exception {
         //String ProdName[] = sItemName.split(" ",2);
         String splitProdname = selectMenuGetProductNameForTax(sItemName);
-        Logz.step(smenu);
-        Logz.step(sItemName);
         selectSpecificProductfortax( mobileUser, splitProdname,sItemName);
     }
 

@@ -5,6 +5,7 @@ import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.pages.mobile.MobileBasePage;
+import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import io.appium.java_client.AppiumDriver;
@@ -14,6 +15,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.CommonElements.CommonElements;
+import pages.ProductDetailsPage.ProductDetailsPage;
+
 import pages.HomePage.HomePage;
 import pages.HomePage.HomePageAndroid;
 import pages.HomePage.HomePageIOS;
@@ -21,6 +24,7 @@ import pages.ManageRewardsPage.ManageRewardsPage;
 import pages.MyWayRewards.MyWayRewards;
 import pages.OrderConfirmationPage.OrderConfirmationPage;
 import pages.OrdersPage.OrdersPage;
+import pages.ProductDetailsPage.ProductDetailsPage;
 import pojos.CustomizedItem.CustomizedItem;
 import pojos.user.MobileUser;
 import pojos.user.RemoteOrderCustomer;
@@ -28,11 +32,26 @@ import util.MobileApi;
 import util.Utils;
 import utils.Logz;
 
+
 public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePage {
     public YourOrderPage(AppiumDriver driver) {
         super(driver);
     }
     public static YourOrderPage get(AppiumDriver driver) throws Exception {
+        String platform = SubwayAppBaseTest.platformName;
+        switch (platform) {
+            case "iOS":
+                return new YourOrderPageIOS((IOSDriver) driver);
+            case "Android":
+                return new YourOrderPageAndroid((AndroidDriver) driver);
+            default:
+                throw new Exception("Unable to get Find A Store page for platform " + platform);
+        }
+
+    }
+
+
+    public static YourOrderPage get(AppiumDriver driver,String Productpriceyourorderpage) throws Exception {
         String platform = SubwayAppBaseTest.platformName;
         switch (platform) {
             case "iOS":
@@ -55,7 +74,10 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     abstract MobileLabel getRewardsAmt() throws Exception;
     abstract MobileButton getManage() throws Exception;
     abstract MobileLabel getTaxPrice() throws Exception;
+    abstract MobileButton getFullMenu() throws Exception;
+    //abstract By getProductGroupHeader() throws Exception;
     abstract MobileButton getDineIn() throws Exception;
+    CommonElements elements = new CommonElements((AppiumDriver) driver);
 
 
     CommonElements commonElements = new CommonElements((AppiumDriver) driver);
@@ -112,7 +134,7 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         return YourOrderPage.get((AppiumDriver)driver);
     }
 
-    public YourOrderPage assertOrderDetailsInYourOrderPagefortax (String Productname,boolean isDineIn,boolean isMakeitameal,double Productprice) throws Exception{
+    public YourOrderPage assertOrderDetailsInYourOrderPagefortax ( String Productname,boolean isDineIn,boolean isMakeitameal,boolean Mealwithcoffe,double Productprice) throws Exception{
         Logz.step("Started asserting order details In Your Order Page");
         Thread.sleep( 20000 );
         getPickupTimeHeaderText().isReady();
@@ -120,26 +142,27 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
        if(isDineIn){
            getDineIn().click();
        }
-       String Prodname[]=Productname.split(" ",2);
-       String Productnameui[]=getItemTitle().getText().split(" ",2);
-       Logz.step(Productnameui[1]);
-        Logz.step(Prodname[1] );
+        String Prodname[]=Productname.split(" ",2);
+        String Productnameui[]=getItemTitle().getText().split(" ",2);
         Assert.assertEquals( Productnameui[1],Prodname[1] );
-        Logz.step("api value is p.price " +Double.toString(Productprice));
         Logz.step("UI value of p.priceis "+getItemPrice().getText());
-        //Assert.assertEquals(getItemPrice().getText(),Double.toString(Productprice));
-        //need to discuss with marium
-        //Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice() );
+        String Productpriceyourorderpage=getItemPrice().getText();
         commonElements.scroll( getMakeitaMeal(), "down" );
          if(isMakeitameal){
            getMakeitaMeal().click();
           }
+        if(Mealwithcoffe){
+
+           // RemoteOrderCustomer remoteOrderCustomer=MobileApi.getSidesDrinksCustomizedItemDetails(mobileUser,"Drinks")
+             getFullMenu().click();
+           //goToProductDetailsPage("Coffee")
+        }
+
+
         commonElements.scroll( ViewfullMenu(), "down" );
-        //commonElements.scrollToElement( null,getTotalText, 0.9,0.5);
         AssertTaxdetails();
-        // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
         Logz.step("ended asserting order details In Your Order Page");
-        return YourOrderPage.get((AppiumDriver)driver);
+        return YourOrderPage.get((AppiumDriver)driver,Productpriceyourorderpage);
     }
 
 
@@ -193,6 +216,10 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     }
 
 
+   /* private ProductDetailsPage goToProductDetailsPage(String productName) throws Exception {
+        elements.scrollAndClick( getProductGroupHeader(), productName );
+        return ProductDetailsPage.get( (AppiumDriver) driver );
+    }*/
 
 
     public  void AssertTaxdetails() throws  Exception

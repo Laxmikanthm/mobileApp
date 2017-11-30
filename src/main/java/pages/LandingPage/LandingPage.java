@@ -277,17 +277,15 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
     }
 
-    public void placeDefaultOrderForTax(String menuCategories, Store store,Boolean isHot,boolean isDinein,Boolean isMakeitmeal) throws Exception {
+    public void placeDefaultOrderForTax(String menuCategories, Store store,Boolean isHot,boolean isDinein,Boolean isMakeitmeal,Boolean Mealwithcoffe) throws Exception {
         //MobileUser mobileUser = registerUser("InessaCluett@qasubway.com");//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
         MobileUser mobileUser = registerUser();
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
-
-        //Menu menuItems = JdbcUtil.getHotColdMenuItem(store.getStoreNumber(),menuCategories,isHot,true);
         Menu menuItems = JdbcUtil.getHotColdMenuItem(store.getStoreNumber(),menuCategories,isHot,true);
 
             if (menuItems.getProductClassGroupName().contains(menuCategories)) {
                 OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
-                ordersPage.placeDefaultOrderforTax(mobileUser,menuCategories, store,menuItems,isHot,isDinein,isMakeitmeal);
+                ordersPage.placeDefaultOrderforTax(mobileUser,menuCategories, store,menuItems,isHot,isDinein,isMakeitmeal,Mealwithcoffe);
             }
             else
             {
