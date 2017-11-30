@@ -41,7 +41,8 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     @Override
     MobileButton getOrderListText() throws Exception {
         //return new IOSButton((IOSDriver) driver, By.xpath("//XCUIElementTypeNavigationBar[@name='" + BaseTest.getStringfromBundleFile("PurchaseHistoryTitle") + "']"), BaseTest.getStringfromBundleFile("PurchaseHistoryTitle") +" button");
-        return new IOSButton((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='ORDER']"), "Order list");
+        //return new IOSButton((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='ORDER']"), "Order list");
+        return new IOSButton((IOSDriver) driver, By.name("ORDER"), "Order list");
     }
 
     @Override
@@ -85,6 +86,10 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
 
     List<WebElement> getOrderDetails(WebElement element) throws Exception{
         return element.findElements(By.xpath("//XCUIElementTypeStaticText"));
+    }
+
+    WebElement getOrderNumber(WebElement element) throws Exception{
+        return element.findElement(By.className("XCUIElementTypeOther"));
     }
 
     @Override

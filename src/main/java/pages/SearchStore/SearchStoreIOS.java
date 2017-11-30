@@ -104,7 +104,7 @@ public class SearchStoreIOS extends SearchStore {
 
     public IOSButton getSearchKeyButton() throws Exception {
 
-        IOSButton searchBtn = new IOSButton((IOSDriver) driver, By.xpath("//XCUIElementTypeButton[@label='" + BaseTest.getStringfromBundleFile("SearchLabel") + "']"), "Search button");
+        IOSButton searchBtn = new IOSButton((IOSDriver) driver, By.name(BaseTest.getStringfromBundleFile("SearchLabel")), "Search button");
         return searchBtn;
     }
 

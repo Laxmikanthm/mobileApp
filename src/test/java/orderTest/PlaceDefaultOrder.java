@@ -20,7 +20,7 @@ import utils.Logz;
 
 public class PlaceDefaultOrder extends SubwayAppBaseTest {
 
-    Store store = JdbcUtil.getLoyaltyStoreDetails();
+   Store store = JdbcUtil.getLoyaltyStoreDetails();
     LandingPage landingPage;
     MobileUser mobileUser;
     OrdersPage ordersPage;
@@ -110,7 +110,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     @Test
     public void testPlaceDefaultOrderSides() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser("KasperIvers@qasubway.com");//DorolisaWiddup@qasubway.com
+        mobileUser = landingPage.registerUser("TeirtzaJanusik@qasubway.com");//DorolisaWiddup@qasubway.com
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"));
 
@@ -119,14 +119,14 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     @Test
     public void testPlaceDefaultOrderDrinks() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();//HerminaPadell@qasubway.com
+        mobileUser = landingPage.registerUser("WakefieldMercer@qasubway.com");//HerminaPadell@qasubway.com
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"));
     }
 
     //DFA-9165
     //Place Order for more than 6 times...R2
-    @Test
+    @Test(enabled = false)
     public void placeOrderForMoreThanSixTimes() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
