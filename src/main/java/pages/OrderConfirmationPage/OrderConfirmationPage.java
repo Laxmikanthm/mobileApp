@@ -69,7 +69,8 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         Logz.step("Started asserting order details In Order Confirmation Page");
         Thread.sleep( 20000 );
        // getPickupTimeHeaderText().isReady();
-        getGotIt().isReady();
+        MobileButton gotIt = getGotIt();
+        gotIt.isReady();
         if(driver instanceof AndroidDriver) {
             commonElements.scroll(getPickupTimeHeader(), "down");
         }else {
@@ -84,7 +85,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
         Assert.assertEquals( getTotalText(expectedTotal).getText(),  "$"+expectedTotal);
         Logz.step("Started asserting order details In Order Confirmation Page");
-        getGotIt().click();
+        gotIt.click();
         return HomePage.get((AppiumDriver)driver);
     }
 

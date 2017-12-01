@@ -16,11 +16,12 @@ import pages.UserProfilePage.UserProfilePage;
 import pojos.user.MobileUser;
 import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
+import util.JdbcUtil1;
 import utils.Logz;
 
 public class PlaceDefaultOrder extends SubwayAppBaseTest {
 
-   Store store = JdbcUtil.getLoyaltyStoreDetails();
+   Store store = JdbcUtil1.getLoyaltyStoreDetails();
     LandingPage landingPage;
     MobileUser mobileUser;
     OrdersPage ordersPage;

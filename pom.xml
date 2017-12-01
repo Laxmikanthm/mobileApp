@@ -79,15 +79,15 @@
                          <appWaitActivity>com.subway.mobile.subwayapp03.ui.landing.LandingActivity</appWaitActivity>-->
 
                         <!-- Android-TestObject  Asus_Google_Nexus_7_2013_real-->
-                        <!--  <spring.profiles.active>testObject</spring.profiles.active>-->
+                        <!--  <spring.profiles.active>testObject</spring.profiles.active>
                         <testObjectApiKey>D58560A590BA4E74BE305ABE7E702AA7</testObjectApiKey>
                         <testObjectDevice>Samsung_Galaxy_Note_4_5_real</testObjectDevice>
-                        <appName>mariums</appName>
+                        <appName>mariums</appName>-->
 
                         <!-- Android-Common-->
                         <!--<mobilePlatform>Android</mobilePlatform>
-                        <appPackage>com.subway.mobile.subwayapp03</appPackage>-->
-
+                        <appPackage>com.subway.mobile.subwayapp03</appPackage>
+-->
 
                         <!-- iOS-Local-->
                         <spring.profiles.active>local</spring.profiles.active>
@@ -95,7 +95,6 @@
                         <platformVersions>10.3.3</platformVersions>
                         <app>/Users/subway/Downloads/Subway_Client_Staging_11_AM.ipa</app>
                         <udid>fade3cc4f301c0da10d7e53b0dfcf23a7ccf6173</udid>
-
                         <!-- iOS-TestObject-->
                         <!-- <spring.profiles.active>testObject</spring.profiles.active>
                        <testObjectApiKey>A982DA797F3B4E699978B7E47156BF65</testObjectApiKey>
@@ -104,6 +103,7 @@
 
 
                         <!-- ios-Common-->
+                        <mobilePlatform>iOS</mobilePlatform>
                         <appPackage>com.subway.sandbox.mobile</appPackage>
 
                         <!-- ios&Android-Common-->
