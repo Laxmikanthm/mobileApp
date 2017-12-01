@@ -217,7 +217,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     abstract MobileLabel getFlavourDropDown() throws Exception;
 
-    abstract By getProductGroupHeader() throws Exception;
+    abstract By getProductGroupHeader(String product) throws Exception;
 
     abstract MobileLabel getAddress1() throws Exception;
 
@@ -2399,7 +2399,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectRandomProduct(BreadSize breadSize) throws Exception {
         try {
             Logz.step( "##### Selecting a random product #####" );
-            List<WebElement> ProductList = elements.getElements( getProductGroupHeader() );//product_list
+            List<WebElement> ProductList = elements.getElements( getProductGroupHeader(" ") );//product_list
             int getProductCount = ProductList.size();
             getProductCount = Utils.selectRandomItem( getProductCount );
             ProductList.get( getProductCount ).click();
@@ -2425,7 +2425,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectSpecificMenu(String itemName) throws Exception {
         try {
             Logz.step( "##### Selecting a " + itemName + " menu #####" );
-            elements.scrollAndClick( getProductGroupHeader(), itemName );
+            elements.scrollAndClick( getProductGroupHeader(itemName), itemName );
             Logz.step( "##### Selected a " + itemName + " menu #####" );
         } catch (Exception ex) {
             throw new Exception( "Unable to select " + itemName + " menu\n" + ex.getMessage() );
@@ -2479,12 +2479,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     private ProductDetailsPage goToProductDetailsPage(String productName) throws Exception {
-        elements.scrollAndClick( getProductGroupHeader(), productName );
+        elements.scrollAndClick( getProductGroupHeader(productName), productName );
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
 
     private ProductDetailsPage goToBreakfastProductDetailsPage(String productName) throws Exception {
-        elements.scrollAndClickBreakfast( getProductGroupHeader(), productName );
+        elements.scrollAndClickBreakfast( getProductGroupHeader(productName), productName );
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
     private void placeLoyaltyOrderAndAssert(int certRedeemCount) throws Exception {

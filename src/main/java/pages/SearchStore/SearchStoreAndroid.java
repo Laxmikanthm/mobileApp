@@ -3,11 +3,14 @@ package pages.SearchStore;
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.android.AndroidLabel;
 import base.gui.controls.mobile.android.AndroidTextBox;
+import base.gui.controls.mobile.android.AndroidWebElement;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
+import base.gui.controls.mobile.generic.MobileWebElement;
 import base.test.BaseTest;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * Created by E003705 on 17-03-2017.
@@ -58,9 +61,8 @@ public class SearchStoreAndroid extends SearchStore {
         return button;
     }
 
-    public MobileButton getToggleView() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("toggle_view"), "ToggleView button");
-        return button;
+    public WebElement getToggleView() throws Exception {
+        return new AndroidWebElement((AndroidDriver) driver, "ToggleView button").getWebElement(By.id("toggle_view"));
     }
 
     public MobileButton getOpenHours() throws Exception {
