@@ -55,7 +55,7 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
 
     @Override
     List<WebElement> getProductTitle() throws Exception {
-        return null;
+        return new AndroidWebElement((AndroidDriver) driver, "getProductTitle").getWebElements(By.id("product_title"));
     }
 
     @Override
