@@ -78,11 +78,11 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )){
             Assert.assertEquals( getItemTitle(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
         }else{
-            Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+          //  Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
             Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
         }
         Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
-        Assert.assertEquals( getTotalText("PLACE ORDER | "+expectedTotal).getText(),  "PLACE ORDER | "+expectedTotal);
+        Assert.assertEquals( getTotalText(expectedTotal).getText(),  "$"+expectedTotal);
         Logz.step("Started asserting order details In Order Confirmation Page");
         getGotIt().click();
         return HomePage.get((AppiumDriver)driver);
@@ -214,13 +214,6 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         getGotIt().isReady();
         commonElements.scroll( getPickupTimeHeader(), "down" );
         if (customizedItem.getMenuName().contains( "Drinks" )) {
-           /* if (customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Bottled Beverage" )) {
-                Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
-                Assert.assertEquals( getFlavorItemTitle().getText().substring(2).trim(), customizedItem.getCustomizedProductDetail().getProductName() );
-
-            } else {
-                Assert.assertEquals( getItemTitle().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
-            }*/
             if (customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Bottled Beverage" )) {
                 if (!customizedItem.getCustomizedProductDetail().getProductName().contains( "Dasani® Water" )) {
                     Assert.assertEquals( getItemTitle(customizedItem.getCustomizedProductDetail().getProductClassName()).getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );

@@ -2445,12 +2445,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 productDetailsPage = goToProductDetailsPage( productName );
             }
 
-            productDetailsPage.assertProductNameInProductDetailsPage( customizedItem );
+
             if (!(customizedItem.getCustomizedProductDetail().getBreadSize().contains( "FOOTLONG™" ) || breadSize.toString().contains( "none" ))) {
                 if (MobileApi.getBreadOptionCount( customizedItem, mobileUser ) > 1) {
                     getSixInchOption().click();
                 }
             }
+            productDetailsPage.assertProductNameInProductDetailsPage( customizedItem );
 
             if (customized) {
                 CustomizePage customizePage = productDetailsPage.goToCustomizePage();

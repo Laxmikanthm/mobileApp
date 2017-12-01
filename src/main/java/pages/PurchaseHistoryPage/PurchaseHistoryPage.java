@@ -147,7 +147,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             for (int i = 0; i < orders.size(); i++) {
                 orders.get(i).click();
                 if (driver instanceof AndroidDriver) { //This we are not asserting for iOS because on 'Purchase History' page unable to identify purchaser order details individually.
-                    assertProductTitleInPurchaseHistoryPage(customizedItem);
+                    assertProductTitleInPurchaseHistoryPage(customizedItem, i, expectedTotalText);
                 }
                 orderHistoryList.add(getActualPurchaseHistory(orders.get(i), i));
 
@@ -458,7 +458,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             return sortItemName;
         }
     }
-    public void assertProductTitleInPurchaseHistoryPage(CustomizedItem customizedItem) throws Exception {
+  /*  public void assertProductTitleInPurchaseHistoryPage(CustomizedItem customizedItem) throws Exception {
         Logz.step( "Started asserting order details In Order Confirmation Page" );
 
         if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )) {
@@ -470,7 +470,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
         Logz.step( "Started asserting order details In Order Confirmation Page" );
 
-    }
+    }*/
 
     public void assertProductTitleInPurchaseHistoryPage(CustomizedItem customizedItem, int index, String expectedTotalText) throws Exception {
         Logz.step( "Started asserting order details In Order Confirmation Page" );
@@ -498,7 +498,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             Assert.assertEquals( getProductTitle().get(index).getText(), customizedItem.getProductDetail().getName() );
         }
 
-        Assert.assertEquals( Utils.getConnectionString( getOrderTotalList().get(index).getText(), 0, " paid" ),  expectedTotalText);
+        Assert.assertEquals( Utils.getConnectionString( getOrderTotalList().get(index).getText(), 0, " paid" ),  "$"+expectedTotalText);
         Logz.step( "Started asserting order details In Order Confirmation Page" );
 
     }
