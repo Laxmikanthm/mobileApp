@@ -62,7 +62,6 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
     abstract List<WebElement> getProductTitleList() throws Exception;
     abstract List<WebElement> getProductTitle() throws Exception;
     abstract MobileTextBox getProductTitle(String productTitle) throws Exception;
-    //abstract MobileTextBox getProducttitle() throws Exception;
     abstract List<WebElement> getProductDescriptionList() throws Exception;
     abstract List<WebElement> getOrderTotalList() throws Exception;
     abstract List<WebElement> getOrderDetails(WebElement element) throws Exception;
@@ -194,13 +193,12 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         try {
             Logz.step("##### Started setting actual purchase details in Purchase History Page #####");
             PurchaseHistoryDetails purchaseHistoryDetails = new PurchaseHistoryDetails();
-            //  List<WebElement> getOrderNumbers = commonElements.getElements(By.id(""), By.xpath("//android.widget.TextView[contains(@text,'Order')]"));
+          //  List<WebElement> getOrderNumbers = commonElements.getElements(By.id(""), By.xpath("//android.widget.TextView[contains(@text,'Order')]"));
 
-
-
-            //  List<WebElement> getOrderTimeAddress = commonElements.getElements(By.id(""), By.id("order_time_address"));
+          //  List<WebElement> getOrderTimeAddress = commonElements.getElements(By.id(""), By.id("order_time_address"));
             //List<WebElement> getOrderTimeAddress = getOrderTimeAddressList();
             String orderNum = "";
+
             List<WebElement> orderDetail = getOrderDetails(eleOrder);
             if(driver instanceof IOSDriver){
                 orderNum = getOrderNumber(eleOrder).getText();
@@ -238,12 +236,12 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             Logz.step("##### Started setting actual cart item list in Purchase History Page #####");
             List<CartItemList> cartItemList = new ArrayList<>();
             assertReceiptHeaderText(index);
-            CartItemList cart = new CartItemList();
-            List<WebElement> getProductTitle = getProductTitleList();
-            cart.setItemName(getProductTitle.get(index).getText());
-            List<WebElement> getProductDescription = getProductDescriptionList();
-            cart.setIngredients(getProductDescription.get(index).getText());
-            cartItemList.add(cart);
+                CartItemList cart = new CartItemList();
+                List<WebElement> getProductTitle = getProductTitleList();
+                cart.setItemName(getProductTitle.get(index).getText());
+                List<WebElement> getProductDescription = getProductDescriptionList();
+                cart.setIngredients(getProductDescription.get(index).getText());
+                cartItemList.add(cart);
             ComparatorByIteName comparatorByIteName = new ComparatorByIteName();
             cartItemList = comparatorByIteName.getSortItemName(cartItemList);
             Logz.step("##### Ended setting actual cart item list in Purchase History Page #####");
@@ -347,9 +345,9 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
                 CartSummary.Option[] options = cartItem.getOptions();
                 CartItemList cart;
                 if(customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )){
-                    cart = new CartItemList(Utils.convert12inchToFootLong(cartItem.getName()), "", cartItem.getIsFavorite());
+                     cart = new CartItemList(Utils.convert12inchToFootLong(cartItem.getName()), "", cartItem.getIsFavorite());
                 }else {
-                    cart = new CartItemList( Utils.convert12inchToFootLong( cartItem.getName() ), getOptions( options ), cartItem.getIsFavorite() );
+                     cart = new CartItemList( Utils.convert12inchToFootLong( cartItem.getName() ), getOptions( options ), cartItem.getIsFavorite() );
                 }
                 cartItemList.add(cart);
             }
@@ -417,13 +415,13 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
 
     private void assertReceiptHeaderText(int index) throws Exception{
         try{
-            String actualReceiptHeaderText = getReceiptHeaderText().get(index).getText();
-            String expectedReceiptHeaderText = BaseTest.getStringfromBundleFile("ReceiptHeaderText");
-            Assert.assertEquals(actualReceiptHeaderText, expectedReceiptHeaderText);
-        }catch (Exception ex) {
-            throw new Exception(("Failed to assert item text\n" + ex.getMessage()));
-        }
+        String actualReceiptHeaderText = getReceiptHeaderText().get(index).getText();
+        String expectedReceiptHeaderText = BaseTest.getStringfromBundleFile("ReceiptHeaderText");
+        Assert.assertEquals(actualReceiptHeaderText, expectedReceiptHeaderText);
+    }catch (Exception ex) {
+        throw new Exception(("Failed to assert item text\n" + ex.getMessage()));
     }
+}
 
 
     private void assertEarnedTokensText(int index) throws Exception{
@@ -437,12 +435,12 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             else{
                 Logz.step("There is no earned my way token text");
             }
-        }catch (Exception ex) {
-            throw new Exception(("Failed to assert Earned my way Tokens Text\n" + ex.getMessage()));
-        }
+    }catch (Exception ex) {
+        throw new Exception(("Failed to assert Earned my way Tokens Text\n" + ex.getMessage()));
     }
+}
 
-    public static class ComparatorByIteName implements Comparator<CartItemList> {
+  public static class ComparatorByIteName implements Comparator<CartItemList> {
         List<CartItemList> sortItemName = new ArrayList<CartItemList>();
 
         //@Override
@@ -473,6 +471,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         Logz.step( "Started asserting order details In Order Confirmation Page" );
 
     }
+
     public void assertProductTitleInPurchaseHistoryPage(CustomizedItem customizedItem, int index, String expectedTotalText) throws Exception {
         Logz.step( "Started asserting order details In Order Confirmation Page" );
 
@@ -528,9 +527,9 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         Logz.step( "Started asserting order details In Order Confirmation Page" );
         Boolean Titleassert=false;
         if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )) {
-            //Assert.assertEquals( getProducttitle().getText(), sItemName );
+            Assert.assertEquals( getProductTitle(sItemName).getText(), sItemName );
         } else {
-           // Assert.assertEquals( getProducttitle().getText(), sItemName );
+            Assert.assertEquals( getProductTitle(sItemName).getText(), sItemName );
             Titleassert=true ;
         }
 
@@ -539,7 +538,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         return Titleassert;
     }
 
-    //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
+        //    private PurchaseHistoryDetails getActualPurchaseHistory(int index) throws Exception {
 //        try {
 //            Logz.step("##### Started setting actual purchase details in Purchase History Page #####");
 //            PurchaseHistoryDetails purchaseHistoryDetails = new PurchaseHistoryDetails();

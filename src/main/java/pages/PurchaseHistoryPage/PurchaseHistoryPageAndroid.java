@@ -55,7 +55,7 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
 
     @Override
     List<WebElement> getProductTitle() throws Exception {
-        return new AndroidWebElement((AndroidDriver) driver, "product title").getWebElements(By.id("product_title"));
+        return null;
     }
 
     @Override
@@ -63,10 +63,10 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
         return new AndroidTextBox((AndroidDriver) driver, By.id("product_title"), "getProductTitle");
     }
 
-   /* public MobileTextBox getProducttitle() throws Exception {
+    public MobileTextBox getProducttitle() throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("product_title"), "getProductTitle");
     }
-*/
+
 
 
 

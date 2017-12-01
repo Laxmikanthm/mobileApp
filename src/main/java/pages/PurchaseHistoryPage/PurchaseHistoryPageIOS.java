@@ -1,14 +1,12 @@
 package pages.PurchaseHistoryPage;
 
 
-import base.gui.controls.mobile.android.AndroidWebElement;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.gui.controls.mobile.ios.IOSButton;
 import base.gui.controls.mobile.ios.IOSTextBox;
 import base.gui.controls.mobile.ios.IOSWebElement;
 import base.test.BaseTest;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -58,6 +56,11 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     }
 
     @Override
+    List<WebElement> getProductTitle() throws Exception {
+        return null;
+    }
+
+    @Override
     MobileTextBox getProductTitle(String productTitle) throws Exception {
         return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + productTitle + "']"), "PurchaseHistory button");
     }
@@ -73,10 +76,7 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
     List<WebElement> getProductDescriptionList() throws Exception {
         return new IOSWebElement((IOSDriver) driver, "product description list").getWebElements(By.id("product_description"));
     }
-    @Override
-    List<WebElement> getProductTitle() throws Exception {
-        return new AndroidWebElement((AndroidDriver) driver, "product title").getWebElements(By.id("product_title"));
-    }
+
 
     @Override
     List<WebElement> getOrderTotalList() throws Exception {
@@ -97,15 +97,11 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
         return element.findElement(By.className("XCUIElementTypeOther"));
     }
 
-
     @Override
     By getEarnedTokens() throws Exception {
         return By.id("earned_tokens_text");
     }
 
-   /* MobileTextBox getProducttitle() throws Exception {
-        return null;
-    }
-*/
+
 
 }
