@@ -265,7 +265,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public void placeDefaultOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
-        MobileUser mobileUser = registerUser("AlicdeClerq@qasubway.com");//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
+        MobileUser mobileUser = registerUser();//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
         logAllMenuCategoriesName(productGroups, store);

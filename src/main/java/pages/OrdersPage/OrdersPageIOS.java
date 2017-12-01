@@ -261,7 +261,7 @@ public class OrdersPageIOS extends OrdersPage {
 
     public IOSButton getSixInchOption() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.name(BaseTest.bundle.getString("SIXINCH")), "Six INCH button");
 
         return button;
     }
