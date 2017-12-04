@@ -15,8 +15,8 @@ public class PickerPageAndroid extends PickerPage{
     }
 
     @Override
-    MobileTextBox getTitleText() throws Exception {
-        return null;
+    MobileTextBox getTitleText(String title) throws Exception {
+        return new AndroidTextBox((AndroidDriver)driver, By.id("title"), "Click title");
     }
 
     @Override

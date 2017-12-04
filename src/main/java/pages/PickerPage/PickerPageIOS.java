@@ -10,7 +10,7 @@ public class PickerPageIOS extends PickerPage {
     }
 
     @Override
-    MobileTextBox getTitleText() throws Exception {
+    MobileTextBox getTitleText(String title) throws Exception {
         return null;
     }
 

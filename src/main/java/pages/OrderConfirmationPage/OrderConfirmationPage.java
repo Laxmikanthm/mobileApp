@@ -65,7 +65,7 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
     abstract MobileButton getGotIt() throws Exception;
 
 
-    public HomePage assertOrderDetailsInOrderConfirmationPage(CustomizedItem customizedItem, String expectedTotal) throws Exception{
+    public HomePage assertOrderDetailsInOrderConfirmationPage(CustomizedItem customizedItem, String expectedTotal, boolean customized) throws Exception{
         Logz.step("Started asserting order details In Order Confirmation Page");
         Thread.sleep( 20000 );
        // getPickupTimeHeaderText().isReady();
@@ -81,7 +81,10 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
           //  Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
             Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
         }
-        Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
+        if(!customized){
+            Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
+        }
+
         Assert.assertEquals( getTotalText(expectedTotal).getText(),  "$"+expectedTotal);
         Logz.step("Started asserting order details In Order Confirmation Page");
         getGotIt().click();

@@ -597,6 +597,10 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
     protected void waitForPageToLoad() throws Exception {
 
     }
-
+    public void swipeNumberOfTime(AppiumDriver driver, String direction, int count) throws Exception{
+        for(int i =0; i<count; i++) {
+            swipe( driver, direction );
+        }
+    }
 
 }

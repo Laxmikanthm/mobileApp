@@ -2164,10 +2164,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    private void assertOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem) throws Exception {
+    private void assertOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem, boolean customized) throws Exception {
        String expectedTotal =  yourOrderPage.getTotalPrice();
-        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
-        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem , expectedTotal);
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem , customized).goToOrderConfirmationPage();
+        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem , expectedTotal, customized);
        // homePage.validateTokens(mobileUser);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem, expectedTotal);
@@ -2194,7 +2194,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
     private void assertFavouriteOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage,CustomizedItem customizedItem) throws Exception {
         String expectedTotal =  yourOrderPage.getTotalPrice();
-        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem, false ).goToOrderConfirmationPage();
         nameFavoriteItemAndClick();
         //Need to assert favoriteorder details through favopurite Object.
         HomePage homePage = orderConfirmationPage.assertFavouriteOrderDetailsInOrderConfirmationPage( mobileUser );
@@ -2212,14 +2212,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void placeOrderAndAssert(MobileUser mobileUser, String menuCategories, Store store, CustomizedItem customizedItem) throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage( customized );
         if (menuCategories.contains( "Breakfast" )) {
-            boolean time = Utils.getTime( store );
+           boolean time = Utils.getTime( store );
             if (!time) {
                 assertBreakfastUnavailablePopUp( customizedItem, store );
             } else {
-                assertOrderDetails( mobileUser, yourOrderPage, customizedItem );
+                assertOrderDetails( mobileUser, yourOrderPage, customizedItem, customized );
             }
         } else {
-            assertOrderDetails( mobileUser, yourOrderPage, customizedItem);
+            assertOrderDetails( mobileUser, yourOrderPage, customizedItem, customized);
         }
 
     }

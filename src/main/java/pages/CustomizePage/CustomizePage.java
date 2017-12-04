@@ -117,7 +117,9 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
     }
 
     private PickerPage goToPickerPage() throws Exception{
+        //Thread.sleep( 10000 );
         getAddTopping().click();
+        Thread.sleep( 10000 );
         return PickerPage.get( (AppiumDriver)driver );
     }
 
@@ -135,12 +137,11 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
                     int breadCount = customizedItem.getProductDetail().getOptionGroups()[0].getOptions()[0].getAttributes().length;
                     for (int i = 0; i < breadCount; i++) {
                         breadNameText = customizerDetails.get( 0 ).getModifierName().trim();
-                        Logz.step( "Bread Name: " + breadNameText);
                         if (!getBreadTitle().getText().contains( breadNameText )) {
                             commonElements.swipe( (AppiumDriver) driver, "Left" );
                         }
                     }
-
+                    Logz.step( "Bread Name: " + breadNameText);
                     if (!customizerDetails.get( 0 ).getModifierName().trim().contains( "Wrap" )) {
                         Assert.assertEquals( getToastIt().getText(), BaseTest.getStringfromBundleFile( "ToastItText" ) );
                         if (!customizerDetails.get( 1 ).getModifierName().contains( "Not Toasted" )) {
