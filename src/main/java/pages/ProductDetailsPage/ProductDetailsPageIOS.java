@@ -61,6 +61,11 @@ public class ProductDetailsPageIOS extends ProductDetailsPage {
     }
 
     @Override
+    MobileButton getPriceOneOption(String price) throws Exception {
+        return null;
+    }
+
+    @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
     }

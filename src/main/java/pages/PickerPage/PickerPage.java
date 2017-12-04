@@ -47,7 +47,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
     String androidPickerList = "android.widget.TextView";
     By modifierList = By.id( "modify_layout" );
 
-    abstract MobileTextBox getTitleText() throws Exception;//title
+    abstract MobileTextBox getTitleText(String title) throws Exception;//title
 
     abstract MobileTextBox getIngredientText() throws Exception;//ingredient_text
 
@@ -159,6 +159,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
                         || customizerDetail.getPickerName().contains( "Extra Cheese" )
                         || customizerDetail.getPickerName().contains( "Double Meat" ))) {
                     selectIngredient( customizerDetail.getPickerName() );
+
                 }
 
             }
@@ -236,21 +237,22 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void selectCustomizerIngredients(CustomizedItem customizedItem) throws Exception {
-        assertProductNameInPickerPage();
+        assertProductNameInPickerPage(customizedItem);
 
         List<Customizer> customizers = customizedItem.getCustomizedProductDetail().getCustomizer();
         int i = 0;
-        while (i < 3) {
+        while (i < 2) {
             int index = Utils.selectRandomItem( customizers.subList( 1, customizers.size() ).size() );
             List<CustomizerDetails> customizerDetails = customizers.get( index ).getCustomizerDetails();
+            Logz.step( "picker name " + customizers.get( index ).getCustomizerName() );
             switch (customizers.get( index ).getCustomizerName()) {
                 case "Meat":
-                    commonElements.swipe( (AppiumDriver) driver, "Right" );
+                    commonElements.swipeNumberOfTime((AppiumDriver) driver, "Right", 1);
                     getMeatText().click();
                     selectMeatIngredient( customizedItem, customizerDetails );
                     break;
                 case "Extras":
-                    commonElements.swipe( (AppiumDriver) driver, "Left" );
+                    commonElements.swipeNumberOfTime((AppiumDriver) driver, "Left", 3);
                     getExtrasText().click();
                     selectExtrasIngredient( customizerDetails );
                     break;
@@ -356,11 +358,11 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    private PickerPage assertProductNameInPickerPage() throws Exception {
+    private PickerPage assertProductNameInPickerPage(CustomizedItem customizedItem) throws Exception {
 
         try {
             Logz.step( "##### Started asserting product name in Product Details page #####" );
-           // Assert.assertEquals(getTitleText().getText(), customizedItem.getCustomizedProductDetail().getProductName());
+            Assert.assertEquals(getTitleText(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName());
             Logz.step( "##### Ended asserting product name in Product Details page #####" );
 
         } catch (Exception ex) {
@@ -370,5 +372,6 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
 
         return PickerPage.get( (AppiumDriver) driver );
     }
+
 
 }

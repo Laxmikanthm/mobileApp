@@ -66,4 +66,10 @@ public class ProductDetailsPageAndroid extends ProductDetailsPage {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+ BaseTest.bundle.getString("Customize")+"']"), "Customize button");
         return button;
     }
+
+    @Override
+    MobileButton getPriceOneOption(String price) throws Exception {
+        return new AndroidButton((AndroidDriver)driver, By.id("price_one_option"), "price_one_option");
+
+    }
 }

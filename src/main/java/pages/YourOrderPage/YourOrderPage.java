@@ -118,7 +118,7 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
         return OrderConfirmationPage.get((AppiumDriver)driver);
     }
-    public YourOrderPage assertOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
+    public YourOrderPage assertOrderDetailsInYourOrderPage(CustomizedItem customizedItem, boolean customized) throws Exception{
         Logz.step("Started asserting order details In Your Order Page");
         Thread.sleep( 20000 );
         getPickupTimeHeaderText().isReady();
@@ -128,7 +128,10 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
             commonElements.scrollIOS( getPickupTimeHeader(), "up" );
         }
         Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
-        Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
+        if(!customized){
+            Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
+        }
+
        // Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
         Logz.step("Started asserting order details In Your Order Page");
         return YourOrderPage.get((AppiumDriver)driver);

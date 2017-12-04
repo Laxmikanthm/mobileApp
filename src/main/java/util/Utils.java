@@ -184,4 +184,29 @@ public class Utils {
         int rewards = Integer.parseInt( amt[0].substring( 2 ) );
         return rewards;
     }
+    public static String getProductName(String menuName, String productName) throws Exception {
+        Logz.step( "Product Name is: " + productName );
+
+        if (menuName.contains( "Chopped Salads" )) {
+            if(productName.contains( "Chopped Salad" )) {
+                return Utils.getConnectionString( productName, 0, "Chopped Salad" ).trim();
+            }else {
+                return productName.trim();
+            }
+        } else if (menuName.contains( "Kids" )) {
+            if(productName.contains( "Kid" )) {
+                return Utils.getConnectionString( productName, 0, "Kids" ).trim();
+            }else {
+                return productName.trim();
+            }
+        } else {
+
+            if (productName.contains( "Sandwich" )) {
+                productName = productName.replaceAll( "Sandwich", "" );
+            }
+            return productName.trim();
+        }
+
+
+    }
 }

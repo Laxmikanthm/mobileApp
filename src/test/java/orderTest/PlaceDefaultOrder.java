@@ -4,6 +4,7 @@ import Base.SubwayAppBaseTest;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
+import cardantApiFramework.utils.NumberUtil;
 import enums.PaymentMethod;
 import org.testng.annotations.Test;
 import Enums.BreadSize;
@@ -18,9 +19,13 @@ import pojos.user.RegisterUser;
 import pojos.user.RemoteOrderCustomer;
 import utils.Logz;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlaceDefaultOrder extends SubwayAppBaseTest {
 
-   Store store = JdbcUtil.getLoyaltyStoreDetails();
+    Store store = new Store( );
+   //Store store = JdbcUtil.getLoyaltyStoreDetails();
     LandingPage landingPage;
     MobileUser mobileUser;
     OrdersPage ordersPage;
@@ -96,7 +101,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     }
 
     @Test
-    public void testPlaceDefaultOrderPersonalPizzaFootLong() throws Exception {
+    public void testPlaceDefaultOrderPersonalPizza() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("PersonalPizza"), BreadSize.NONE, store);
     }
@@ -110,7 +115,8 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     @Test
     public void testPlaceDefaultOrderSides() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser("TeirtzaJanusik@qasubway.com");//DorolisaWiddup@qasubway.com
+
+        mobileUser = landingPage.registerUser();//DorolisaWiddup@qasubway.com
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"));
 
@@ -119,7 +125,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     @Test
     public void testPlaceDefaultOrderDrinks() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser("WakefieldMercer@qasubway.com");//HerminaPadell@qasubway.com
+        mobileUser = landingPage.registerUser();//HerminaPadell@qasubway.com
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
         ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"));
     }
@@ -278,4 +284,5 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         homePage.validateTokens(mobileUser);
         //Assertion yet to be implemented. (i) Asserting Order History, (ii) Email verification
     }*/
+
 }
