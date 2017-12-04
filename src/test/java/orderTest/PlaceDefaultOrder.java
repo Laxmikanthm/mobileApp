@@ -4,24 +4,17 @@ import Base.SubwayAppBaseTest;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
-import enums.PaymentMethod;
 import org.testng.annotations.Test;
 import Enums.BreadSize;
-import Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.OrdersPage.OrdersPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
-import pages.UserProfilePage.UserProfilePage;
 import pojos.user.MobileUser;
-import pojos.user.RegisterUser;
-import pojos.user.RemoteOrderCustomer;
-import util.JdbcUtil1;
-import utils.Logz;
 
 public class PlaceDefaultOrder extends SubwayAppBaseTest {
 
-   Store store = JdbcUtil1.getLoyaltyStoreDetails();
+   Store store = JdbcUtil.getLoyaltyStoreDetails();
     LandingPage landingPage;
     MobileUser mobileUser;
     OrdersPage ordersPage;
