@@ -5,6 +5,7 @@ import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
 import base.gui.controls.mobile.generic.MobileTextBox;
+import base.gui.controls.mobile.generic.MobileWebElement;
 import base.pages.mobile.MobileBasePage;
 import cardantApiFramework.pojos.Store;
 import io.appium.java_client.*;
@@ -42,7 +43,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
 
     abstract MobileButton getOkPopupButton() throws Exception;
 
-    abstract MobileButton getToggleView() throws Exception;
+    //abstract MobileButton getToggleView() throws Exception;
 
     abstract MobileButton getMobileOrdering() throws Exception;
 
@@ -65,6 +66,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     abstract MobileButton getLocaion() throws Exception;
     abstract MobileLabel getMapView() throws Exception;
     abstract By getAddressLocation(String address) throws Exception;
+    abstract WebElement getToggleView() throws Exception;
 
     OrdersPage ordersPage;
     HomePage homePage;
@@ -110,7 +112,7 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
         setSearchByZipCode(store.getZipCode());
         getSearchKeyButton().click();
         Logz.step("Store Address is: " + store.getAddress1());
-        commonElements.scrollAndClick(getAddressLocation(store.getAddress1()), store.getAddress1());
+        commonElements.scrollAndSelectStore(getAddressLocation(store.getAddress1()), store.getAddress1());//commonElements.scrollAndClick(getAddressLocation(store.getAddress1()), store.getAddress1());
     }
     public void searchStoreByZipCode(String  store) throws Exception {
         okPopUp();
@@ -169,18 +171,24 @@ public abstract class SearchStore<T extends AppiumDriver> extends MobileBasePage
     }
 
     public void toggleView() throws Exception {
-        MobileButton toggleBtn = null;
-        int size = 0;
+        WebElement toggleBtn = null;
+        //int size = 0;
         try {
-            if (driver instanceof AndroidDriver)
-                size = ((AndroidDriver) driver).findElements(By.id("toggle_view")).size();
-            else
-                size = ((IOSDriver) driver).findElements(By.name("icListView")).size();
-            if (size > 0) {
-                toggleBtn = getToggleView();
-                toggleBtn.isReady();
+            toggleBtn = getToggleView();
+            if(toggleBtn != null){
+                toggleBtn.isDisplayed();
                 toggleBtn.click();
             }
+
+//            if (driver instanceof AndroidDriver)
+//                size = ((AndroidDriver) driver).findElements(By.id("toggle_view")).size();
+//            else
+//                size = ((IOSDriver) driver).findElements(By.name("icListView")).size();
+//            if (size > 0) {
+//                toggleBtn = getToggleView();
+//                toggleBtn.isReady();
+//                toggleBtn.click();
+//            }
         } catch (Exception ex) {
             throw new Exception(ex);
         }

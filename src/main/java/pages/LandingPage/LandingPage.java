@@ -82,7 +82,9 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             getSkipButton().click();
             Logz.error("Skip button clicked");
         }
-
+        if ((driver instanceof IOSDriver) && (System.getProperty("spring.profiles.active").equalsIgnoreCase("testObject"))) {
+            getSkipButton().click();
+        }
         /*try {
             Thread.sleep( 7000 );
             getLoginButton();
@@ -94,7 +96,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             Logz.error("Skip button clicked");
         }*/
         //this.getLoginButton().click();
-        getLoginButton().click();
+        //getLoginButton().click();
         Logz.step("##### Navigating to login page .......##### ");
         return LoginPage.get((AppiumDriver) driver);
     }

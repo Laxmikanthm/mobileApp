@@ -23,6 +23,7 @@ import sun.rmi.runtime.Log;
 import utils.Logz;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
     String platform = SubwayAppBaseTest.platformName;
@@ -73,6 +74,60 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
                         int startY = allElements.get(i).getLocation().getY();
                         action = new TouchAction((AppiumDriver) driver);
                         action.longPress(allElements.get(i),startX, startY).release().perform();*/
+                    }else {
+                        allElements.get(i).click();
+                    }
+                    flag = true;
+                    break;
+                }
+            }
+            int count = 0;
+            while (flag == false) {
+                WebElement element = allElements.get( allElements.size() - 1 );
+                MobileElement ele = (MobileElement) element;
+                int startY = ele.getLocation().getY();
+                int endY = (int) (startY * 0.3);
+                action.longPress( 0, startY ).moveTo( 0, endY ).release().perform();
+                allElements = getElements( locator );
+                for (int j = 0; j < allElements.size(); j++) {
+                    if (allElements.get( j ).getText().toUpperCase().contains( itemName.toUpperCase() )) {
+                        allElements.get( j ).click();
+                        flag = true;
+                        break;
+                    }
+                }
+                count++;
+                Logz.step( "count:" + count );
+                if (count > 6) {
+                    flag = false;
+                    //break;
+                    throw new Exception( "Unable to scroll and click element \n" );
+                }
+            }
+
+        } catch (Exception ex) {
+            throw new Exception( "Unable to scroll and click element \n" + ex.getMessage() );
+        }
+        Logz.step( "Scrolled to element and get element list" );
+        return HomePage.get( (AppiumDriver) driver );
+    }
+    public HomePage scrollAndSelectStore(By locator, String itemName) throws Exception {
+        Logz.step( "Scrolling to element and get element list" );
+        List<WebElement> allElements = getElements( locator);
+        Logz.step("Total elements found " + allElements.size());
+        try {
+            flag = false;
+            if (allElements.size() == 0) {
+                throw new Exception( "No element is available\n" + allElements.size() );
+            }
+            //allElements = getElements( locator );
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get( i ).getText().toUpperCase().contains( itemName.toUpperCase() )) {
+                    if(driver instanceof IOSDriver){
+                        int startX = allElements.get(i).getLocation().getX();
+                        int startY = allElements.get(i).getLocation().getY();
+                        action = new TouchAction((AppiumDriver) driver);
+                        action.longPress(allElements.get(i),startX, startY).release().perform();
                     }else {
                         allElements.get(i).click();
                     }
@@ -297,7 +352,7 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         try {
             switch (platform) {
                 case "iOS":
-                    if (exits( SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locator )) {
+                    if (presence( SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locator )) {
                         return ((IOSDriver) driver).findElements( locator );
 
                     }
@@ -320,7 +375,7 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         try {
             switch (platform) {
                 case "iOS":
-                    if (exits( SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locatorIOS )) {
+                    if (presence( SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locatorIOS )) {
                         return ((IOSDriver) driver).findElements( locatorIOS );
 
                     }
@@ -343,6 +398,15 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
     protected boolean exits(int seconds, AppiumDriver driver, By by) {
         try {
             (new WebDriverWait( driver, (long) seconds )).until( ExpectedConditions.visibilityOfElementLocated( by ) );
+            return true;
+        } catch (Exception var3) {
+            return false;
+        }
+    }
+
+    protected boolean presence(int seconds, AppiumDriver driver, By by) {
+        try {
+            (new WebDriverWait( driver, (long) seconds )).until( ExpectedConditions.presenceOfAllElementsLocatedBy( by ) );
             return true;
         } catch (Exception var3) {
             return false;

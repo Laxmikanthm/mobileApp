@@ -412,7 +412,7 @@ public class OrdersPageAndroid extends OrdersPage {
         return button;
     }
 
-    protected By getProductGroupHeader() throws Exception{
+    protected By getProductGroupHeader(String product) throws Exception{
         return By.id( "product_group_header" );
     }
     public MobileLabel getAddress1() throws Exception{

@@ -519,7 +519,12 @@ public class OrdersPageIOS extends OrdersPage {
         return label;
     }
 
-    protected By getProductGroupHeader() throws Exception{
-        return By.xpath( "//XCUIElementTypeCollectionView//XCUIElementTypeStaticText" );
+    protected By getProductGroupHeader(String product) throws Exception{
+        String xpath = "";
+        if(product.length() > 0)
+            xpath = "//XCUIElementTypeStaticText[contains(@name, '" + product.toUpperCase() + "')]";
+        else
+            xpath = "//XCUIElementTypeStaticText";
+        return By.xpath( xpath );
     }
 }

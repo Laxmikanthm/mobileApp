@@ -55,8 +55,8 @@ public class YourOrderPageIOS  extends YourOrderPage{
     }
 
     @Override
-    MobileTextBox getTotalText() throws Exception {
-        return null;
+    MobileButton getTotalText() throws Exception {
+        return getPlaceOrder();
     }
 
     @Override

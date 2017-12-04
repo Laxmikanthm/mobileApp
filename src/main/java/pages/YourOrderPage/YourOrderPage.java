@@ -69,7 +69,7 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     abstract MobileTextBox getItemPrice() throws Exception;
     abstract MobileTextBox getItemTitle(String itemTitle) throws Exception;
     abstract MobileTextBox getItemPrice(String itemPrice) throws Exception;
-    abstract MobileTextBox getTotalText() throws Exception;
+    abstract MobileButton getTotalText() throws Exception;
     abstract MobileTextBox getPickupTimeHeaderText() throws Exception;
     abstract MobileLabel getRewardsAmt() throws Exception;
     abstract MobileButton getManage() throws Exception;
@@ -170,7 +170,7 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
 
 
 public String getTotalPrice() throws Exception{
-    return getTotalText().getText().substring( 15 );
+    return getTotalText().getText().split("|")[1];
 }
 
     public YourOrderPage assertSidesDrinksOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
