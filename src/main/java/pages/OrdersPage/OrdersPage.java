@@ -2084,7 +2084,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             customized = false;
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, menuCategories, breadSize );
-            String productName = selectMenuGetProductName( customizedItemDetails );
+            String productName = selectMenuGetProductName( customizedItemDetails , breadSize);
             ProductDetailsPage productDetailsPage = goToProductDetailsPage( productName );
             if (!(customizedItemDetails.getCustomizedProductDetail().getBreadSize().contains( "FOOTLONG™" ) || breadSize.toString().contains( "none" ))) {
                 if (MobileApi.getBreadOptionCount( customizedItemDetails, mobileUser ) > 1) {
@@ -2294,7 +2294,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void addDefaultItemInCart(MobileUser mobileUser, BreadSize breadSize, CustomizedItem customizedItemDetails) throws Exception {
-        String productName = selectMenuGetProductName( customizedItemDetails );
+        String productName = selectMenuGetProductName( customizedItemDetails, breadSize );
         selectSpecificProduct( mobileUser, productName, breadSize, false, customizedItemDetails );
     }
 
@@ -2337,17 +2337,23 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void addCustomizedItemInCart(MobileUser mobileUser,  BreadSize breadSize, CustomizedItem customizedItemDetails) throws Exception {
-        String productName = selectMenuGetProductName( customizedItemDetails );
+        String productName = selectMenuGetProductName( customizedItemDetails , breadSize);
         selectSpecificProduct( mobileUser, productName, breadSize, true, customizedItemDetails );
     }
     public void addCustomizedItemInCart(MobileUser mobileUser,  BreadSize breadSize,Boolean customize, CustomizedItem customizedItemDetails) throws Exception {
-        String productName = selectMenuGetProductName( customizedItemDetails );
+        String productName = selectMenuGetProductName( customizedItemDetails , breadSize);
         selectSpecificProduct( mobileUser, productName, breadSize, customize, customizedItemDetails );
     }
 
-    public String selectMenuGetProductName(CustomizedItem customizedItem) throws Exception {
+    public String selectMenuGetProductName(CustomizedItem customizedItem, BreadSize breadSize) throws Exception {
         selectSpecificMenu( customizedItem.getMenuName() );
-        return getProductName(  customizedItem.getMenuName() , customizedItem.getCustomizedProductDetail().getProductName() );
+        if(breadSize == BreadSize.NONE){
+            return getProductName(  customizedItem.getMenuName() , customizedItem.getProductDetail().getName() );
+        }else {
+            return getProductName(  customizedItem.getMenuName() , customizedItem.getCustomizedProductDetail().getProductName() );
+        }
+
+
     }
 
     public String selectMenuGetProductNameForTax(String sItemName) throws Exception {

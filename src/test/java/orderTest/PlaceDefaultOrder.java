@@ -24,8 +24,8 @@ import java.util.List;
 
 public class PlaceDefaultOrder extends SubwayAppBaseTest {
 
-    Store store = new Store( );
-   //Store store = JdbcUtil.getLoyaltyStoreDetails();
+   // Store store = new Store( );
+   Store store = JdbcUtil.getLoyaltyStoreDetails();
     LandingPage landingPage;
     MobileUser mobileUser;
     OrdersPage ordersPage;

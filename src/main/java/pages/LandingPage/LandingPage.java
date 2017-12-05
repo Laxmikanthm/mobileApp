@@ -96,7 +96,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             Logz.error("Skip button clicked");
         }*/
         //this.getLoginButton().click();
-        //getLoginButton().click();
+        getLoginButton().click();
         Logz.step("##### Navigating to login page .......##### ");
         return LoginPage.get((AppiumDriver) driver);
     }
@@ -265,10 +265,10 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public void placeDefaultOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
-        store.setStoreNumber( "54588" );
+     /*   store.setStoreNumber( "54588" );
         store.setZipCode( "06460" );
-        store.setAddress1( "I-95 East Northbound 1" );
-        MobileUser mobileUser = registerUser();//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
+        store.setAddress1( "I-95 East Northbound 1" );*/
+        MobileUser mobileUser = registerUser("BrenOlphert@qasubway.com");//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
         logAllMenuCategoriesName(productGroups, store);
