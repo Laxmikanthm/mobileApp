@@ -103,9 +103,9 @@ public class PurchaseHistoryPageAndroid extends PurchaseHistoryPage {
     WebElement getOrderNumber(WebElement element) throws Exception{
         return null;
     }
-//    @Override
-//    MobileTextBox getPaymentRewardsHeaderText() throws Exception {
-//        return null;
-//    }
+    @Override
+    MobileButton getBackBtn() throws Exception {
+        return null;
+    }
 
 }

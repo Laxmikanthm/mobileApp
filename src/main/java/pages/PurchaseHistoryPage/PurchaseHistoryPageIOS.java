@@ -102,6 +102,9 @@ public class PurchaseHistoryPageIOS extends PurchaseHistoryPage {
         return By.id("earned_tokens_text");
     }
 
-
+    @Override
+    MobileButton getBackBtn() throws Exception {
+        return new IOSButton((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("Back")), "Back button");
+    }
 
 }
