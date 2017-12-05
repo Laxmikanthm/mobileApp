@@ -62,7 +62,7 @@ public class ProductDetailsPageIOS extends ProductDetailsPage {
 
     @Override
     MobileButton getPriceOneOption(String price) throws Exception {
-        return null;
+        return new IOSButton((IOSDriver) driver, By.name(price), price + " price");
     }
 
     @Override
