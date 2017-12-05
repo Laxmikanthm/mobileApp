@@ -53,7 +53,7 @@ public class OrderConfirmationPageIOS  extends OrderConfirmationPage{
 
     @Override
     MobileTextBox getTotalText(String price) throws Exception {
-        return new IOSTextBox((IOSDriver) driver, By.xpath("//XCUIElementTypeStaticText[@name='" + price + "']/following-sibling::XCUIElementTypeStaticText[2]"), price + " text");
+        return new IOSTextBox((IOSDriver) driver, By.name("$" + price), price + " text");
     }
 
     @Override

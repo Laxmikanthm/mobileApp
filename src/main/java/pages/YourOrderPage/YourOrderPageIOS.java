@@ -108,4 +108,8 @@ public class YourOrderPageIOS  extends YourOrderPage{
         return null;
     }
 
+    public String getTotalPrice() throws Exception{
+        return getTotalText().getText().split(" ")[3].trim().substring(1);
+    }
+
 }
