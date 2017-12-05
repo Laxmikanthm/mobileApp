@@ -2268,6 +2268,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     private YourOrderPage goToYourOrderPage(boolean customized) throws Exception {
+        Thread.sleep( 10000 );
         if (customized) {
             getAddBag().click();
         } else {

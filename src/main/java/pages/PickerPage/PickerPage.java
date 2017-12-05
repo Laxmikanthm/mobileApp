@@ -247,7 +247,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
             Logz.step( "picker name " + customizers.get( index ).getCustomizerName() );
             switch (customizers.get( index ).getCustomizerName()) {
                 case "Meat":
-                    commonElements.swipeNumberOfTime((AppiumDriver) driver, "Right", 1);
+                    commonElements.swipeNumberOfTime((AppiumDriver) driver, "Right", 3);
                     getMeatText().click();
                     selectMeatIngredient( customizedItem, customizerDetails );
                     break;
@@ -261,6 +261,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
                     selectOtherIngredient( customizerDetails );
                     break;
                 case "Veggies":
+                    commonElements.swipeNumberOfTime((AppiumDriver) driver, "Right", 2);
                     getVeggiesText().click();
                     selectOtherIngredient( customizerDetails );
                     break;
@@ -269,10 +270,12 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
                     selectOtherIngredient( customizerDetails );
                     break;
                 case "Cheese":
+                    commonElements.swipeNumberOfTime((AppiumDriver) driver, "Right", 3);
                     getCheeseText().click();
                     selectCheeseIngredient(customizedItem, customizerDetails);
                     break;
                 case "Egg":
+                    commonElements.swipeNumberOfTime((AppiumDriver) driver, "Right", 3);
                     getEggText().click();
                     selectOtherIngredient( customizerDetails );
 
@@ -315,7 +318,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
             Logz.step( "##### Selecting Modifier Option #####" );
             if (customizedItem.getMenuName().contains( BaseTest.getStringfromBundleFile( "KidsMeal" ) )) {
                 for(CustomizerDetails customizerDetail: customizerDetails) {
-                    if (customizerDetail.getPickerName().contains( "Cheese" ) || customizerDetail.getPickerName().contains( "Meat" )) {
+                    if (customizerDetail.getPickerName().contains( "Meat" )) { //customizerDetail.getPickerName().contains( "Cheese" ) ||
                         if (commonElements.isAvailable( modifierList, modifierList )) {
                             throw new Exception( "Modify button is present in " + customizerDetail.getPickerName() + " option - Kids Meal menu " );
                         }
