@@ -71,27 +71,28 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
        // getPickupTimeHeaderText().isReady();
         MobileButton gotIt = getGotIt();
         gotIt.isReady();
-        if(driver instanceof AndroidDriver) {
-            commonElements.scroll(getPickupTimeHeader(), "down");
-        }else {
-            commonElements.scrollIOS(getPickupTimeHeader(), "up");
-        }
+        scrollToElement();
         if (customizedItem.getMenuName().contains( "Sides" ) || customizedItem.getMenuName().contains( "Drinks" )){
             Assert.assertEquals( getItemTitle(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
         }else{
-          //  Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
             Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
         }
         if(!customized){
             Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
         }
-
+        scrollToElement();
         Assert.assertEquals( getTotalText(expectedTotal).getText(),  "$"+expectedTotal);
         Logz.step("Started asserting order details In Order Confirmation Page");
         gotIt.click();
         return HomePage.get((AppiumDriver)driver);
     }
-
+private void scrollToElement() throws Exception{
+    if(driver instanceof AndroidDriver) {
+        commonElements.scroll(getPickupTimeHeader(), "down");
+    }else {
+        commonElements.scrollIOS(getPickupTimeHeader(), "up");
+    }
+}
 
     public HomePage assertOrderDetailsInOrderConfirmationPageforTax(String Productname,double Productpriceyourorderpage) throws Exception{
         Logz.step("Started asserting order details In Order Confirmation Page");
