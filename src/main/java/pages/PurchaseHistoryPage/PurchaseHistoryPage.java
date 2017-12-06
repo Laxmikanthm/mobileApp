@@ -490,7 +490,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
 
                 Assert.assertEquals( getProductTitle().get( index ).getText(), customizedItem.getCustomizedProductDetail().getProductClassName() );
             }
-            assertSidesDrinksTotal( index );
+            assertSidesDrinksTotal( index,  expectedTotalText );
         } else if (customizedItem.getMenuName().contains( "Drinks" )) {
             if (customizedItem.getCustomizedProductDetail().getProductClassName().contains( "Bottled Beverage" )) {
                 if (!customizedItem.getCustomizedProductDetail().getProductName().contains( "Dasani® Water" )) {
@@ -500,7 +500,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             } else {
                 Assert.assertEquals( getProductTitle().get( index ).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
             }
-            assertSidesDrinksTotal( index );
+            assertSidesDrinksTotal( index , expectedTotalText);
             // Assert.assertEquals( Utils.getConnectionString( getOrderTotalList().get(index).getText(), 0, " paid" ),  expectedTotalText);
         } else if (customizedItem.getMenuName().contains( "Personal Pizza" )) {
             String productName = Utils.getProductName( customizedItem.getMenuName(), customizedItem.getProductDetail().getName() );
@@ -520,7 +520,7 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         Assert.assertEquals( Utils.getConnectionString( getOrderTotalList().get( index ).getText(), 0, " paid" ), "$" + expectedTotalText );
     }
 
-    private void assertSidesDrinksTotal(int index) throws Exception {
+    private void assertSidesDrinksTotal(int index, String expectedTotalText) throws Exception {
         Assert.assertEquals( Utils.getConnectionString( getOrderTotalList().get( index ).getText(), 0, " paid" ), expectedTotalText );
     }
 

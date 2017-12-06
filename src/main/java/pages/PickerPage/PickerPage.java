@@ -216,7 +216,11 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
         try {
             Random random = new Random();
             int index = random.nextInt( customizerDetails.size() );
-            selectIngredient( customizerDetails.get( index ).getPickerName());
+            if(customizerDetails.get( index ).getModifierName().contains( "Egg" )) {
+                selectIngredient( customizerDetails.get( index ).getModifierName() );
+            }else {
+                selectIngredient( customizerDetails.get( index ).getPickerName());
+            }
            /* int i = 0;
             while (i < 2) {
                 if (customizerDetails.size() > 5) {
@@ -365,7 +369,12 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
 
         try {
             Logz.step( "##### Started asserting product name in Product Details page #####" );
-            Assert.assertEquals(getTitleText(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName());
+            if (!(customizedItem.getMenuName().contains( BaseTest.getStringfromBundleFile( "KidsMeal" ) )
+                    || customizedItem.getMenuName().contains( BaseTest.getStringfromBundleFile( "ChoppedSalads" ) ))) {
+                Assert.assertEquals( getTitleText( customizedItem.getCustomizedProductDetail().getProductName() ).getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+            }else{
+                Assert.assertEquals( getTitleText( customizedItem.getCustomizedProductDetail().getProductName() ).getText(), customizedItem.getProductDetail().getName() );
+            }
             Logz.step( "##### Ended asserting product name in Product Details page #####" );
 
         } catch (Exception ex) {

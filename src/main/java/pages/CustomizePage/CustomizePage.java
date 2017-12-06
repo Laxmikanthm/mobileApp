@@ -108,8 +108,11 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
     By breadName = By.id( "bread_top" );
     String breadNameText = "";
     public CustomizePage randomCustomization(CustomizedItem customizedItem) throws Exception {
+       // Thread.sleep( 10000 );
+        if(!customizedItem.getMenuName().contains( "Chopped Salads" )){
+            selectBreads( customizedItem );
+        }
 
-        selectBreads( customizedItem );
         PickerPage pickerPage = goToPickerPage();
         pickerPage.selectCustomizerIngredients( customizedItem );
         getDoneButton().click();

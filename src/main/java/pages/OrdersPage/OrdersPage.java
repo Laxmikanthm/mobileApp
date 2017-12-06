@@ -2027,11 +2027,17 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     boolean customized = false;
 
 
-    public HomePage placeSidesDrinksDefaultOrderThenAssert(MobileUser mobileUser, String menuCategories) throws Exception {
+    public HomePage placeSidesDrinksDefaultOrderThenAssert(MobileUser mobileUser, String menuCategories, Store store) throws Exception {
         try {
 
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             CustomizedItem customizedItemDetails = MobileApi.getSidesDrinksCustomizedItemDetails( mobileUser, menuCategories );
+            Logz.step(" \nProduct Menu Name: "
+                    + menuCategories + " \n Product Name:"
+                    + customizedItemDetails.getProductDetail().getName()+  " \n Store Number: "
+                    + store.getStoreNumber() +  " \n Store ZipCode: "
+                    + store.getZipCode() + " \n Store Address: "
+                    + store.getAddress1() );
             YourOrderPage yourOrderPage =  addDefaultSidesDrinksItemInCart(menuCategories, customizedItemDetails);
             placeSidesDrinksOrderAndAssert(mobileUser, yourOrderPage, customizedItemDetails);
             Logz.step("##### Ended placing Default Order #####");
@@ -2047,6 +2053,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             customized = false;
             Logz.step( "##### Started placing Default Order #####" + menuCategories );
             CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, menuCategories, breadSize );
+            Logz.step(" \nProduct Menu Name: "
+                    + menuCategories + " \n Product Name:"
+                    + customizedItemDetails.getProductDetail().getName()+  " \n Store Number: "
+                    + store.getStoreNumber() +  " \n Store ZipCode: "
+                    + store.getZipCode() + " \n Store Address: "
+                    + store.getAddress1() );
             addDefaultItemInCart( mobileUser, breadSize, customizedItemDetails );
             placeOrderAndAssert( mobileUser, menuCategories, store, customizedItemDetails );
             Logz.step( "##### Ended placing Default Order #####" );
@@ -2108,6 +2120,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             customized = true;
             Logz.step( "##### Started placing Customized Order #####" + menuCategories );
             CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, menuCategories, breadSize );
+            Logz.step(" \nProduct Menu Name: "
+                    + menuCategories + " \n Product Name:"
+                    + customizedItemDetails.getProductDetail().getName()+  " \n Store Number: "
+                    + store.getStoreNumber() +  " \n Store ZipCode: "
+                    + store.getZipCode() + " \n Store Address: "
+                    + store.getAddress1() );
             addCustomizedItemInCart( mobileUser,  breadSize, customizedItemDetails );
             placeOrderAndAssert( mobileUser, menuCategories, store, customizedItemDetails );
             Logz.step( "##### Ended placing Customized Order #####" );
@@ -2506,5 +2524,22 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     public String getRewardsTxt() throws Exception{
         return getRewardsAmt().getText();
     }
+    public ProductDetailsPage selectProductThenGoToProductDetailsPage(MobileUser mobileUser, String menuCategories, BreadSize breadSize, CustomizedItem customizedItemDetails) throws Exception {
+        try {
+            customized = false;
+            Logz.step("##### Started placing Default Order #####" + menuCategories);
 
+            String productName = selectMenuGetProductName( customizedItemDetails , breadSize);
+            goToProductDetailsPage( productName );
+            if (!(customizedItemDetails.getCustomizedProductDetail().getBreadSize().contains( "FOOTLONG™" ) || breadSize.toString().contains( "none" ))) {
+                if (MobileApi.getBreadOptionCount( customizedItemDetails, mobileUser ) > 1) {
+                    getSixInchOption().click();
+                }
+            }
+        } catch (Exception ex) {
+            throw new Exception("Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage());
+        }
+        return ProductDetailsPage.get((AppiumDriver) driver);
+
+    }
 }

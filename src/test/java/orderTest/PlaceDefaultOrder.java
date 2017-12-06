@@ -106,7 +106,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();//DorolisaWiddup@qasubway.com
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"));
+        ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"), store);
 
     }
 
@@ -115,7 +115,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();//HerminaPadell@qasubway.com
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"));
+        ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"), store);
     }
 
     //DFA-9165
