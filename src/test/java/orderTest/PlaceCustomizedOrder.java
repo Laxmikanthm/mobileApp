@@ -23,8 +23,8 @@ import pojos.user.RemoteOrderCustomer;
 
 public class PlaceCustomizedOrder extends SubwayAppBaseTest {
 
-
-    Store store = JdbcUtil.getLoyaltyStoreDetails();
+//Store store = new Store(  );
+ Store store = JdbcUtil.getLoyaltyStoreDetails();
     LandingPage landingPage;
 
 

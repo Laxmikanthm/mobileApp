@@ -261,7 +261,7 @@ public class OrdersPageIOS extends OrdersPage {
 
     public IOSButton getSixInchOption() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.name(BaseTest.bundle.getString("SIXINCH")), "Six INCH button");
 
         return button;
     }
@@ -519,7 +519,13 @@ public class OrdersPageIOS extends OrdersPage {
         return label;
     }
 
-    protected By getProductGroupHeader() throws Exception{
-        return By.xpath( "//XCUIElementTypeCollectionView//XCUIElementTypeStaticText" );
+    protected By getProductGroupHeader(String product) throws Exception{
+//        String xpath = "";
+//        if(product.length() > 0)
+//            xpath = "//XCUIElementTypeStaticText[contains(@name, '" + product.toUpperCase() + "')]";
+//        else
+//            xpath = "//XCUIElementTypeStaticText";
+//        return By.xpath( xpath );
+        return By.name(product.toUpperCase());
     }
 }

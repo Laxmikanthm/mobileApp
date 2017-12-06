@@ -217,7 +217,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     abstract MobileLabel getFlavourDropDown() throws Exception;
 
-    abstract By getProductGroupHeader() throws Exception;
+    abstract By getProductGroupHeader(String product) throws Exception;
 
     abstract MobileLabel getAddress1() throws Exception;
 
@@ -2084,7 +2084,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             customized = false;
             Logz.step("##### Started placing Default Order #####" + menuCategories);
             CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, menuCategories, breadSize );
-            String productName = selectMenuGetProductName( customizedItemDetails );
+            String productName = selectMenuGetProductName( customizedItemDetails , breadSize);
             ProductDetailsPage productDetailsPage = goToProductDetailsPage( productName );
             if (!(customizedItemDetails.getCustomizedProductDetail().getBreadSize().contains( "FOOTLONG™" ) || breadSize.toString().contains( "none" ))) {
                 if (MobileApi.getBreadOptionCount( customizedItemDetails, mobileUser ) > 1) {
@@ -2164,10 +2164,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    private void assertOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem) throws Exception {
+    private void assertOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem, boolean customized) throws Exception {
        String expectedTotal =  yourOrderPage.getTotalPrice();
-        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
-        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem , expectedTotal);
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem , customized).goToOrderConfirmationPage();
+        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem , expectedTotal, customized);
        // homePage.validateTokens(mobileUser);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem, expectedTotal);
@@ -2194,7 +2194,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
     private void assertFavouriteOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage,CustomizedItem customizedItem) throws Exception {
         String expectedTotal =  yourOrderPage.getTotalPrice();
-        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem ).goToOrderConfirmationPage();
+        OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertOrderDetailsInYourOrderPage( customizedItem, false ).goToOrderConfirmationPage();
         nameFavoriteItemAndClick();
         //Need to assert favoriteorder details through favopurite Object.
         HomePage homePage = orderConfirmationPage.assertFavouriteOrderDetailsInOrderConfirmationPage( mobileUser );
@@ -2212,14 +2212,14 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void placeOrderAndAssert(MobileUser mobileUser, String menuCategories, Store store, CustomizedItem customizedItem) throws Exception {
         YourOrderPage yourOrderPage = goToYourOrderPage( customized );
         if (menuCategories.contains( "Breakfast" )) {
-            boolean time = Utils.getTime( store );
+           boolean time = Utils.getTime( store );
             if (!time) {
                 assertBreakfastUnavailablePopUp( customizedItem, store );
             } else {
-                assertOrderDetails( mobileUser, yourOrderPage, customizedItem );
+                assertOrderDetails( mobileUser, yourOrderPage, customizedItem, customized );
             }
         } else {
-            assertOrderDetails( mobileUser, yourOrderPage, customizedItem);
+            assertOrderDetails( mobileUser, yourOrderPage, customizedItem, customized);
         }
 
     }
@@ -2268,6 +2268,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     private YourOrderPage goToYourOrderPage(boolean customized) throws Exception {
+        Thread.sleep( 10000 );
         if (customized) {
             getAddBag().click();
         } else {
@@ -2294,7 +2295,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void addDefaultItemInCart(MobileUser mobileUser, BreadSize breadSize, CustomizedItem customizedItemDetails) throws Exception {
-        String productName = selectMenuGetProductName( customizedItemDetails );
+        String productName = selectMenuGetProductName( customizedItemDetails, breadSize );
         selectSpecificProduct( mobileUser, productName, breadSize, false, customizedItemDetails );
     }
 
@@ -2337,17 +2338,23 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void addCustomizedItemInCart(MobileUser mobileUser,  BreadSize breadSize, CustomizedItem customizedItemDetails) throws Exception {
-        String productName = selectMenuGetProductName( customizedItemDetails );
+        String productName = selectMenuGetProductName( customizedItemDetails , breadSize);
         selectSpecificProduct( mobileUser, productName, breadSize, true, customizedItemDetails );
     }
     public void addCustomizedItemInCart(MobileUser mobileUser,  BreadSize breadSize,Boolean customize, CustomizedItem customizedItemDetails) throws Exception {
-        String productName = selectMenuGetProductName( customizedItemDetails );
+        String productName = selectMenuGetProductName( customizedItemDetails , breadSize);
         selectSpecificProduct( mobileUser, productName, breadSize, customize, customizedItemDetails );
     }
 
-    public String selectMenuGetProductName(CustomizedItem customizedItem) throws Exception {
+    public String selectMenuGetProductName(CustomizedItem customizedItem, BreadSize breadSize) throws Exception {
         selectSpecificMenu( customizedItem.getMenuName() );
-        return getProductName(  customizedItem.getMenuName() , customizedItem.getCustomizedProductDetail().getProductName() );
+        if(breadSize == BreadSize.NONE){
+            return getProductName(  customizedItem.getMenuName() , customizedItem.getProductDetail().getName() );
+        }else {
+            return getProductName(  customizedItem.getMenuName() , customizedItem.getCustomizedProductDetail().getProductName() );
+        }
+
+
     }
 
     public String selectMenuGetProductNameForTax(String sItemName) throws Exception {
@@ -2399,7 +2406,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectRandomProduct(BreadSize breadSize) throws Exception {
         try {
             Logz.step( "##### Selecting a random product #####" );
-            List<WebElement> ProductList = elements.getElements( getProductGroupHeader() );//product_list
+            List<WebElement> ProductList = elements.getElements( getProductGroupHeader(" ") );//product_list
             int getProductCount = ProductList.size();
             getProductCount = Utils.selectRandomItem( getProductCount );
             ProductList.get( getProductCount ).click();
@@ -2425,7 +2432,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectSpecificMenu(String itemName) throws Exception {
         try {
             Logz.step( "##### Selecting a " + itemName + " menu #####" );
-            elements.scrollAndClick( getProductGroupHeader(), itemName );
+            elements.scrollAndClick( getProductGroupHeader(itemName), itemName, true );
             Logz.step( "##### Selected a " + itemName + " menu #####" );
         } catch (Exception ex) {
             throw new Exception( "Unable to select " + itemName + " menu\n" + ex.getMessage() );
@@ -2445,12 +2452,13 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 productDetailsPage = goToProductDetailsPage( productName );
             }
 
-            productDetailsPage.assertProductNameInProductDetailsPage( customizedItem );
+
             if (!(customizedItem.getCustomizedProductDetail().getBreadSize().contains( "FOOTLONG™" ) || breadSize.toString().contains( "none" ))) {
                 if (MobileApi.getBreadOptionCount( customizedItem, mobileUser ) > 1) {
                     getSixInchOption().click();
                 }
             }
+            productDetailsPage.assertProductNameInProductDetailsPage( customizedItem );
 
             if (customized) {
                 CustomizePage customizePage = productDetailsPage.goToCustomizePage();
@@ -2479,12 +2487,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     private ProductDetailsPage goToProductDetailsPage(String productName) throws Exception {
-        elements.scrollAndClick( getProductGroupHeader(), productName );
+        elements.scrollAndClick( getProductGroupHeader(productName), productName, true );
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
 
     private ProductDetailsPage goToBreakfastProductDetailsPage(String productName) throws Exception {
-        elements.scrollAndClickBreakfast( getProductGroupHeader(), productName );
+        elements.scrollAndClickBreakfast( getProductGroupHeader(productName), productName );
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
     private void placeLoyaltyOrderAndAssert(int certRedeemCount) throws Exception {

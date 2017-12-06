@@ -55,8 +55,8 @@ public class YourOrderPageIOS  extends YourOrderPage{
     }
 
     @Override
-    MobileTextBox getTotalText() throws Exception {
-        return null;
+    MobileButton getTotalText() throws Exception {
+        return getPlaceOrder();
     }
 
     @Override
@@ -106,6 +106,10 @@ public class YourOrderPageIOS  extends YourOrderPage{
     @Override
     MobileButton getDineIn() throws Exception {
         return null;
+    }
+
+    public String getTotalPrice() throws Exception{
+        return getTotalText().getText().split(" ")[3].trim().substring(1);
     }
 
 }

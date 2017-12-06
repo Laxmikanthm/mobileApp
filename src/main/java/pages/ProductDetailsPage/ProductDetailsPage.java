@@ -45,7 +45,7 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
     abstract MobileButton getSingleProductPrice() throws Exception;
     abstract MobileButton getSingleProductCalories() throws Exception;
     abstract MobileButton getCustomize() throws Exception;
-
+    abstract MobileButton getPriceOneOption(String price) throws Exception;
     public CustomizePage goToCustomizePage() throws Exception {
         getCustomize().click();
         return CustomizePage.get((AndroidDriver) driver);
@@ -54,9 +54,16 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
 
         try {
             Logz.step("##### Started asserting product name in Product Details page #####");
-           Assert.assertTrue(customizedItem.getCustomizedProductDetail().getProductName().toUpperCase().contains(getProductName(customizedItem.getCustomizedProductDetail().getProductName()).getText().toUpperCase()));
-           Assert.assertEquals( getProductPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem));
-            Logz.step("##### Ended asserting product name in Product Details page #####");
+
+         if(customizedItem.getMenuName().contains( "Chopped Salads" ) ||  customizedItem.getMenuName().contains( "Kids" ) || customizedItem.getMenuName().contains( "Personal Pizza" )) {
+             String productName = Utils.getProductName( customizedItem.getMenuName(), customizedItem.getProductDetail().getName() );
+             Assert.assertEquals( productName.toUpperCase(), getProductName( productName ).getText().toUpperCase());
+             Assert.assertEquals( getPriceOneOption(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem));
+         }else {
+             Assert.assertTrue(customizedItem.getCustomizedProductDetail().getProductName().toUpperCase().contains(getProductName(customizedItem.getCustomizedProductDetail().getProductName()).getText().toUpperCase()));
+             Assert.assertEquals( getProductPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem));
+         }
+           Logz.step("##### Ended asserting product name in Product Details page #####");
 
         }catch (Exception ex) {
             throw new Exception("Unable to assert product name in Product Details page\n"+ ex.getMessage());

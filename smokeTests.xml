@@ -12,7 +12,7 @@
         <classes>
             <class name="orderTest.PlaceDefaultOrder">
                 <methods>
-                    <include name="testPlaceDefaultOrderAllSandwichesFootLong"/>
+                    <include name="testPlaceDefaultOrderSubwayFreshFitSixInch"/>
                     <!--<include name="testPlaceDefaultOrderSubwayFreshFitFootLong"/>-->
                 </methods>
             </class>

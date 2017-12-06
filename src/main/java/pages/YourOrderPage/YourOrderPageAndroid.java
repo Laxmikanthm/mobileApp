@@ -46,8 +46,8 @@ public class YourOrderPageAndroid extends YourOrderPage{
     }
 
     @Override
-    MobileTextBox getTotalText() throws Exception {
-        return new AndroidTextBox((AndroidDriver) driver, By.id("submit_order"), "getTotalText");
+    MobileButton getTotalText() throws Exception {
+        return new AndroidButton((AndroidDriver) driver, By.id("submit_order"), "getTotalText");
     }
 
     public MobileLabel getTaxPrice() throws Exception{
