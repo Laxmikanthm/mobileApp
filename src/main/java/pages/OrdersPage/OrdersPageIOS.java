@@ -520,11 +520,12 @@ public class OrdersPageIOS extends OrdersPage {
     }
 
     protected By getProductGroupHeader(String product) throws Exception{
-        String xpath = "";
-        if(product.length() > 0)
-            xpath = "//XCUIElementTypeStaticText[contains(@name, '" + product.toUpperCase() + "')]";
-        else
-            xpath = "//XCUIElementTypeStaticText";
-        return By.xpath( xpath );
+//        String xpath = "";
+//        if(product.length() > 0)
+//            xpath = "//XCUIElementTypeStaticText[contains(@name, '" + product.toUpperCase() + "')]";
+//        else
+//            xpath = "//XCUIElementTypeStaticText";
+//        return By.xpath( xpath );
+        return By.name(product.toUpperCase());
     }
 }

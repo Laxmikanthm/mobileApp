@@ -2450,7 +2450,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectSpecificMenu(String itemName) throws Exception {
         try {
             Logz.step( "##### Selecting a " + itemName + " menu #####" );
-            elements.scrollAndClick( getProductGroupHeader(itemName), itemName );
+            elements.scrollAndClick( getProductGroupHeader(itemName), itemName, true );
             Logz.step( "##### Selected a " + itemName + " menu #####" );
         } catch (Exception ex) {
             throw new Exception( "Unable to select " + itemName + " menu\n" + ex.getMessage() );
@@ -2505,7 +2505,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     private ProductDetailsPage goToProductDetailsPage(String productName) throws Exception {
-        elements.scrollAndClick( getProductGroupHeader(productName), productName );
+        elements.scrollAndClick( getProductGroupHeader(productName), productName, true );
         return ProductDetailsPage.get( (AppiumDriver) driver );
     }
 

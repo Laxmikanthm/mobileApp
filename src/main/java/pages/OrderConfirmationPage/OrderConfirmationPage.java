@@ -80,17 +80,20 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
         if(!customized){
             Assert.assertEquals( getItemPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem) );
         }
-        scrollToElement();
+        if(driver instanceof AndroidDriver) {
+            scrollToElement();
+        }
         Assert.assertEquals( getTotalText(expectedTotal).getText(),  "$"+expectedTotal);
         Logz.step("Started asserting order details In Order Confirmation Page");
         gotIt.click();
+
         return HomePage.get((AppiumDriver)driver);
     }
 private void scrollToElement() throws Exception{
     if(driver instanceof AndroidDriver) {
         commonElements.scroll(getPickupTimeHeader(), "down");
     }else {
-        commonElements.scrollIOS(getPickupTimeHeader(), "up");
+        commonElements.scrollIOS(getPickupTimeHeader(), "up", false);
     }
 }
 

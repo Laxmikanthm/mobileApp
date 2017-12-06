@@ -53,7 +53,7 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         Logz.step( "Clicked the " + controlButton + " button" );
     }
 
-    public HomePage scrollAndClick(By locator, String itemName) throws Exception {
+    public HomePage scrollAndClick(By locator, String itemName, boolean isMenuPage) throws Exception {
         Logz.step( "Scrolling to element and get element list" );
         List<WebElement> allElements = getElements( locator);
         Logz.step("Total elements found " + allElements.size());
@@ -67,7 +67,8 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
                 if (allElements.get( i ).getText().toUpperCase().contains( itemName.toUpperCase() )) {
                     if(driver instanceof IOSDriver){
                         if(!allElements.get( i ).isDisplayed()){
-                            scrollIOS(allElements.get( i ), "up");
+                            scrollIOS(allElements.get( i ), "up", isMenuPage);
+                            allElements = getElements( locator);
                         }
                         allElements.get( i ).click();
                         /*int startX = allElements.get(i).getLocation().getX();
@@ -641,12 +642,15 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         }
 
     }
-    public void scrollIOS(WebElement element, String direction) throws Exception{
+    public void scrollIOS(WebElement element, String direction, boolean isMenuPage) throws Exception{
         int startX = element.getLocation().getX();
         int startY = element.getLocation().getY();
 
         if(direction.contains( "up" )) {
-            action.press( element ).moveTo( startX, -startY ).release().perform();
+            if(isMenuPage)
+                action.press( element ).moveTo(element, startX, -startY +10 ).release().perform();
+            else
+                action.press( element ).moveTo(startX, -startY +10 ).release().perform();
         }else{
             action.press( element ).moveTo( startX, startY + startY ).release().perform();
         }

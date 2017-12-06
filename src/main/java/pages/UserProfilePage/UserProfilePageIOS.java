@@ -33,14 +33,14 @@ public class UserProfilePageIOS extends UserProfilePage {
 
     public MobileButton getLogOut() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id(BaseTest.bundle.getString("LogOutIOSBtn")), "");
 
         return button;
     }
 
     public MobileButton getLogOutButtonInPopUp() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogoutBtn") + "']"), "");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id(BaseTest.bundle.getString("LogOutPopupBtn")), "");
 
         return button;
     }
@@ -75,7 +75,7 @@ public class UserProfilePageIOS extends UserProfilePage {
 
     public MobileButton getHelp() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//android.widget.Button[@text='" + BaseTest.bundle.getString("LogOut") + "']"), "");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("HelpIOS")), "");
 
         return button;
     }

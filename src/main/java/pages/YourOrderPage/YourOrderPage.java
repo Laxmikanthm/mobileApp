@@ -125,7 +125,7 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         if(driver instanceof AndroidDriver) {
             commonElements.scroll( getPickupTimeHeader(), "down" );
         }else {
-            commonElements.scrollIOS( getPickupTimeHeader(), "up" );
+            commonElements.scrollIOS( getPickupTimeHeader(), "up", false );
         }
         Assert.assertEquals( getItemTitle(customizedItem.getProductDetail().getName()).getText(), customizedItem.getProductDetail().getName() );
         if(!customized){

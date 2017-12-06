@@ -81,6 +81,8 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
 
     abstract By getEarnedTokens() throws Exception;
 
+    abstract MobileButton getBackBtn() throws Exception;
+
     UserProfilePage userProfilePage;
     CustomizedItem customizedItem;
     String expectedTotalText;
@@ -107,6 +109,11 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
             default:
                 throw new Exception( "Unable to get PurchaseHistoryPage for platform " + platform );
         }
+    }
+
+    public UserProfilePage goToUserProfilePage() throws Exception{
+        getBackBtn().click();
+        return UserProfilePage.get( (AppiumDriver) driver );
     }
 
     public PurchaseHistoryPage assertProductTitlePrice(CustomizedItem customizedItem) throws Exception {

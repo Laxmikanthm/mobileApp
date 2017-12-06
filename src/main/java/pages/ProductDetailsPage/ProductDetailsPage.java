@@ -57,7 +57,7 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
 
          if(customizedItem.getMenuName().contains( "Chopped Salads" ) ||  customizedItem.getMenuName().contains( "Kids" ) || customizedItem.getMenuName().contains( "Personal Pizza" )) {
              String productName = Utils.getProductName( customizedItem.getMenuName(), customizedItem.getProductDetail().getName() );
-             Assert.assertEquals( productName, getProductName( customizedItem.getProductDetail().getName()).getText() );
+             Assert.assertEquals( productName.toUpperCase(), getProductName( productName ).getText().toUpperCase());
              Assert.assertEquals( getPriceOneOption(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem));
          }else {
              Assert.assertTrue(customizedItem.getCustomizedProductDetail().getProductName().toUpperCase().contains(getProductName(customizedItem.getCustomizedProductDetail().getProductName()).getText().toUpperCase()));
