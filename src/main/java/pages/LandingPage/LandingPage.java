@@ -267,9 +267,9 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public void placeDefaultOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
-     /*   store.setStoreNumber( "54588" );
-        store.setZipCode( "06460" );
-        store.setAddress1( "I-95 East Northbound 1" );*/
+       /* store.setStoreNumber( "10808" );
+        store.setZipCode( "95932" );
+        store.setAddress1( "1031 Bridge St" );*/
         MobileUser mobileUser = registerUser("BrenOlphert@qasubway.com");//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
@@ -302,7 +302,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
 
-    public void placeDefaultOrderRedeemCertificateAndAssert(String menuCategories, BreadSize breadSize, Store store, int certRedeemCount) throws Exception {
+   /* public void placeDefaultOrderRedeemCertificateAndAssert(String menuCategories, BreadSize breadSize, Store store, int certRedeemCount) throws Exception {
         MobileUser mobileUser = registerUser();//HaydenHinemoor@qasubway.com
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
@@ -315,14 +315,14 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
                 Logz.step("##### Product menu: " + menuCategories + " is not present at this store: " + store.getStoreNumber() + " #####");
             }
         }
-    }
+    }*/
 
 
     public void placeCustomizedOrderThenAssert(String menuCategories, BreadSize breadSize, Store store, boolean specificPickerSelection) throws Exception {
-    /*        store.setStoreNumber( "10808" );
+        store.setStoreNumber( "10808" );
         store.setZipCode( "95932" );
-        store.setAddress1( "1031 Bridge St" );*/
-        MobileUser mobileUser = registerUser();//"OatesJodlkowski@qasubway.com"
+        store.setAddress1( "1031 Bridge St" );
+        MobileUser mobileUser = registerUser("ConnyLeacy@qasubway.com");//"OatesJodlkowski@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
         logAllMenuCategoriesName(productGroups, store);

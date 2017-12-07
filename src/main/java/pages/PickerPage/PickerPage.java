@@ -221,8 +221,14 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
 
     private void selectOtherIngredient(List<CustomizerDetails> customizerDetails) throws Exception {
         try {
+            int index;
             if (dataAssertion) {
-                int index = Utils.getRandomeNumber( customizerDetails.subList( 0, 5 ).size() );
+                if(customizerDetails.size()>5){
+                     index = Utils.getRandomeNumber( customizerDetails.subList( 0, 5 ).size() );
+                }else {
+                    index = Utils.getRandomeNumber( customizerDetails.subList( 0, 3 ).size() );
+                }
+
 
                 if (customizerDetails.get( index ).getModifierName().contains( "Egg" )) {
                     selectIngredient( customizerDetails.get( index ).getModifierName() );
