@@ -1077,7 +1077,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
             for (int i = 0; i <= innerIngredients.size(); i++) {
                 if (i == innerIngredients.size()) {
                     //scroll;
-                    //scrollToItemAndClick(cheeseSubCategoryItem, name, 1600,3000);
+                  //  scrollToItemAndClick(cheeseSubCategoryItem, name, 1600,3000);
                     flag = false; //turn this on if you are not implementing scroll. if not it will go into infinite loop
                     break;
                 }
@@ -2341,6 +2341,9 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         Logz.step( "Product Name is: " + productName );
 
         if (menuName.contains( "Chopped Salads" )) {
+            if(productName.contains( "The" )){
+                productName =  productName.substring( 4 );
+            }
             return Utils.getConnectionString( productName, 0, "Chopped Salad" ).trim();
         } else if (menuName.contains( "Kids" )) {
             return Utils.getConnectionString( productName, 0, "Kids" ).trim();

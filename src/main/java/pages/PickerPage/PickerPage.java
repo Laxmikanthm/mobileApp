@@ -215,7 +215,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectOtherIngredient(List<CustomizerDetails> customizerDetails) throws Exception {
         try {
             Random random = new Random();
-            int index = random.nextInt( customizerDetails.size() );
+            int index = random.nextInt( customizerDetails.subList( 0, 5 ).size() );
             if(customizerDetails.get( index ).getModifierName().contains( "Egg" )) {
                 selectIngredient( customizerDetails.get( index ).getModifierName() );
             }else {
@@ -270,6 +270,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
                     selectOtherIngredient( customizerDetails );
                     break;
                 case "Seasonings":
+                    commonElements.swipeNumberOfTime((AppiumDriver) driver, "Left", 1);
                     getSeasoningsText().click();
                     selectOtherIngredient( customizerDetails );
                     break;

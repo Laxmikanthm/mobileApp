@@ -56,6 +56,7 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
             Logz.step("##### Started asserting product name in Product Details page #####");
 
          if(customizedItem.getMenuName().contains( "Chopped Salads" ) ||  customizedItem.getMenuName().contains( "Kids" ) || customizedItem.getMenuName().contains( "Personal Pizza" )) {
+
              String productName = Utils.getProductName( customizedItem.getMenuName(), customizedItem.getProductDetail().getName() );
              Assert.assertEquals( productName.toUpperCase(), getProductName( productName ).getText().toUpperCase());
              Assert.assertEquals( getPriceOneOption(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem));
