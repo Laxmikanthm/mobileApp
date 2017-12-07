@@ -235,6 +235,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     RemoteOrder remoteOrder;
     RemoteOrderCustomer customer;
     public int Rewards = 0;
+    boolean specificPickerSelection;
     AddCardPage addCardPage;
     UserProfilePage userProfilePage;
     HomePage homePage;
@@ -2115,9 +2116,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    public HomePage placeCustomizedOrder(MobileUser mobileUser, String menuCategories, BreadSize breadSize, Store store) throws Exception {
+    public HomePage placeCustomizedOrder(MobileUser mobileUser, String menuCategories, BreadSize breadSize, Store store, boolean specificPickerSelection) throws Exception {
         try {
             customized = true;
+            this.specificPickerSelection = specificPickerSelection;
             Logz.step( "##### Started placing Customized Order #####" + menuCategories );
             CustomizedItem customizedItemDetails = MobileApi.getCustomizedItemDetails( mobileUser, menuCategories, breadSize );
             Logz.step(" \nProduct Menu Name: "
@@ -2462,7 +2464,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    private void selectSpecificProduct(MobileUser mobileUser, String productName, BreadSize breadSize, boolean customized, CustomizedItem customizedItem) throws Exception {
+    private void selectSpecificProduct(MobileUser mobileUser, String productName, BreadSize breadSize, boolean customized, CustomizedItem customizedItem ) throws Exception {
         try {
             Logz.step( "##### Selecting: " + productName + " #####" );
             ProductDetailsPage productDetailsPage;
@@ -2483,7 +2485,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
             if (customized) {
                 CustomizePage customizePage = productDetailsPage.goToCustomizePage();
-                customizePage.randomCustomization( customizedItem );
+                customizePage.randomCustomization( customizedItem, specificPickerSelection );
             }
             Logz.step( "##### Selected: " + productName + " #####" );
         } catch (Exception ex) {
