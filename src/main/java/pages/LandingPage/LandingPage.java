@@ -319,10 +319,10 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
 
 
     public void placeCustomizedOrderThenAssert(String menuCategories, BreadSize breadSize, Store store, boolean specificPickerSelection) throws Exception {
-        store.setStoreNumber( "10808" );
-        store.setZipCode( "95932" );
-        store.setAddress1( "1031 Bridge St" );
-        MobileUser mobileUser = registerUser("ConnyLeacy@qasubway.com");//"OatesJodlkowski@qasubway.com"
+        store.setStoreNumber( "54588" );
+        store.setZipCode( "06460" );
+        store.setAddress1( "I-95 East Northbound 1" );
+        MobileUser mobileUser = registerUser("DorotheeYousef@qasubway.com");//"OatesJodlkowski@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
         logAllMenuCategoriesName(productGroups, store);

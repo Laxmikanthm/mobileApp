@@ -50,31 +50,31 @@ public class PickerPageAndroid extends PickerPage{
 
     @Override
     MobileButton getVeggiesText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Veggies" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Veggies" )+"']"),"Veggies ");
 
     }
 
     @Override
     MobileButton getEggText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Egg" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Egg" )+"']"),"Egg ");
 
     }
 
     @Override
     MobileButton getMeatText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Meat" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Meat" )+"']"),"Meat ");
 
     }
 
     @Override
     MobileButton getExtrasText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Extras" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Extras" )+"']"),"Extras ");
 
     }
 
     @Override
     MobileButton getSeasoningsText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Seasonings" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Seasonings" )+"']"),"Seasonings ");
 
     }
 
