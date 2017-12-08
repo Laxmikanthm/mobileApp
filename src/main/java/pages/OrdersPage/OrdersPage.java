@@ -2039,8 +2039,12 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                     + store.getStoreNumber() +  " \n Store ZipCode: "
                     + store.getZipCode() + " \n Store Address: "
                     + store.getAddress1() );
-            YourOrderPage yourOrderPage =  addDefaultSidesDrinksItemInCart(menuCategories, customizedItemDetails);
-            placeSidesDrinksOrderAndAssert(mobileUser, yourOrderPage, customizedItemDetails);
+            //cookies add to bag button is not clickable,
+            if(!customizedItemDetails.getCustomizedProductDetail().getProductClassName().contains( BaseTest.getStringfromBundleFile(  "Cookies" ))){
+                YourOrderPage yourOrderPage =  addDefaultSidesDrinksItemInCart(menuCategories, customizedItemDetails);
+                placeSidesDrinksOrderAndAssert(mobileUser, yourOrderPage, customizedItemDetails);
+            }
+
             Logz.step("##### Ended placing Default Order #####");
         } catch (Exception ex) {
             throw new Exception("Unable to place Default Order: " + menuCategories + "\n" + ex.getMessage());

@@ -88,7 +88,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    boolean dataAssertion;
+    boolean specificPickerSelection;
 
     public void selectIngredients(Customizer customizer) throws Exception {
         List<CustomizerDetails> customizerDetails = customizer.getCustomizerDetails();
@@ -125,7 +125,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
 
     private void selectCheeseIngredient(CustomizedItem customizedItem, List<CustomizerDetails> customizerDetails) throws Exception {
         try {
-            if (dataAssertion) {
+            if (specificPickerSelection) {
                 for (CustomizerDetails customizerDetail : customizerDetails) { //"Monterey Cheddar (shredded)"
                     if (customizerDetail.getModifierName().contains( "No Cheese" )) {
                         Logz.step( "Cheese is Not Selected" + customizerDetail.getModifierName() );
@@ -156,7 +156,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
 
     private void selectExtrasIngredient(List<CustomizerDetails> customizerDetails) throws Exception {
         try {
-            if (dataAssertion) {
+            if (specificPickerSelection) {
                 for (CustomizerDetails customizerDetail : customizerDetails) {
                     if (!(customizerDetail.getPickerName().contains( "Deluxe" )
                             || customizerDetail.getPickerName().contains( "Extra Cheese" )
@@ -222,7 +222,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
     private void selectOtherIngredient(List<CustomizerDetails> customizerDetails) throws Exception {
         try {
             int index;
-            if (dataAssertion) {
+            if (specificPickerSelection) {
                 if(customizerDetails.size()>5){
                      index = Utils.getRandomeNumber( customizerDetails.subList( 0, 5 ).size() );
                 }else {
@@ -237,7 +237,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
                 }
                 selectModifier();
             } else {
-                selectRandomIngredient( 3 );
+                selectRandomIngredient( 1 );
             }
 
         } catch (Exception ex) {
@@ -245,9 +245,9 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
         }
     }
 
-    public void selectCustomizerIngredients(CustomizedItem customizedItem, boolean dataAssertion) throws Exception {
+    public void selectCustomizerIngredients(CustomizedItem customizedItem, boolean specificPickerSelection) throws Exception {
         assertProductNameInPickerPage( customizedItem );
-        this.dataAssertion = dataAssertion;
+        this.specificPickerSelection = specificPickerSelection;
         List<Customizer> customizers = customizedItem.getCustomizedProductDetail().getCustomizer();
         int i = 0;
         while (i < 2) {
@@ -258,7 +258,7 @@ public abstract class PickerPage<T extends AppiumDriver> extends MobileBasePage 
                 case "Meat":
                     commonElements.swipeNumberOfTime( (AppiumDriver) driver, "Right", 3 );
                     getMeatText().click();
-                    if (dataAssertion) {
+                    if (specificPickerSelection) {
                         selectMeatIngredient( customizedItem, customizerDetails );
                     }
                     break;

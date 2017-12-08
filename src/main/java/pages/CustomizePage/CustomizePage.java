@@ -122,10 +122,11 @@ public abstract class CustomizePage<T extends AppiumDriver> extends MobileBasePa
     String breadNameText = "";
 
     public CustomizePage randomCustomization(CustomizedItem customizedItem, boolean specificPickerSelection) throws Exception {
-if(specificPickerSelection){
-        if (!customizedItem.getMenuName().contains( "Chopped Salads" )) {
-            selectBreads( customizedItem );
-        }}
+        if (specificPickerSelection) {
+            if (!customizedItem.getMenuName().contains( "Chopped Salads" )) {
+                selectBreads( customizedItem );
+            }
+        }
 
         PickerPage pickerPage = goToPickerPage();
         pickerPage.selectCustomizerIngredients( customizedItem, specificPickerSelection );
