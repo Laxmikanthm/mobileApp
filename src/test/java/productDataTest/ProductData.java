@@ -108,7 +108,7 @@ public class ProductData extends SubwayAppBaseTest {
         productDetailsPage =   landingPage.logInSelectProductThenGoToProductDetailsPage(mobileUser,
                 BaseTest.getStringfromBundleFile("ChoppedSalads"), BreadSize.NONE, store, customizedItem);
         productDetailsPage.assertProductDetails(mobileUser, customizedItem);
-        
+
     }
    /* @Test
     public void testProductDetailsSides() throws Exception{
