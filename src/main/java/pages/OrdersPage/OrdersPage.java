@@ -2334,24 +2334,26 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     }
 
-    private void assertEditOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem) throws Exception {
+    private void assertEditOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem, boolean customized) throws Exception {
+        String expectedTotal =  yourOrderPage.getTotalPrice();
         assertProduct(editAndAssertAnOrder1(customizedItem),getSubItemInfo());
         //placeAnOrder();
         selectBackButton();
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertEditOrderDetailsInYourOrderPage(customizedItem ).goToOrderConfirmationPage();
-        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem );
+        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem , expectedTotal, customized);
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         //homePage.validateTokens(mobileUser);
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem);
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem, expectedTotal);
 
     }
 
     private void assertEditInOrderDetails(MobileUser mobileUser, YourOrderPage yourOrderPage, CustomizedItem customizedItem) throws Exception {
+        String expectedTotal =  yourOrderPage.getTotalPrice();
         OrderConfirmationPage orderConfirmationPage = yourOrderPage.assertEditOrderDetailsInYourOrderPage(customizedItem ).goToOrderConfirmationPage();
-        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem );
+        HomePage homePage = orderConfirmationPage.assertOrderDetailsInOrderConfirmationPage( customizedItem, expectedTotal, customized );
         PurchaseHistoryPage purchaseHistoryPage = homePage.goToPurchaseHistoryPage();
         homePage.validateTokens(mobileUser);
-        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser , customizedItem);
+        purchaseHistoryPage.assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser);
 
     }
 
@@ -2406,7 +2408,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
                 assertOrderDetails( mobileUser, yourOrderPage, customizedItem ,customized);
             }
         } else {
-            assertEditOrderDetails(mobileUser, yourOrderPage, customizedItem);
+            assertEditOrderDetails(mobileUser, yourOrderPage, customizedItem, customized);
         }
 
     }
