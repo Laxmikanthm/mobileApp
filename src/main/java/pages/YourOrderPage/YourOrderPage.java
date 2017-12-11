@@ -22,6 +22,7 @@ import pages.MyWayRewards.MyWayRewards;
 import pages.OrderConfirmationPage.OrderConfirmationPage;
 import pages.OrdersPage.OrdersPage;
 import pojos.CustomizedItem.CustomizedItem;
+import pojos.Orders.Order;
 import pojos.user.MobileUser;
 import pojos.user.RemoteOrderCustomer;
 import util.MobileApi;
@@ -50,6 +51,8 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     abstract MobileTextBox getPickupTimeHeaderText() throws Exception;
     abstract MobileLabel getRewardsAmt() throws Exception;
     abstract MobileButton getManage() throws Exception;
+    abstract MobileTextBox getItemName() throws Exception;
+    abstract MobileTextBox getItemCost() throws Exception;
 
 
     CommonElements commonElements = new CommonElements((AppiumDriver) driver);
@@ -94,8 +97,18 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         commonElements.scroll( getPickupTimeHeader(), "down" );
         Assert.assertEquals( getItemTitle().getText(), customizedItem.getProductDetail().getName() );
         Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
-        Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
+        //Assert.assertEquals( getTotalText().getText(),  "PLACE ORDER | "+Utils.getExpectedPrice( customizedItem ));
         Logz.step("Started asserting order details In Your Order Page");
+        return YourOrderPage.get((AppiumDriver)driver);
+    }
+
+    public YourOrderPage assertEditOrderDetailsInYourOrderPage(CustomizedItem customizedItem) throws Exception{
+        Logz.step("Started asserting order details In Edit Order Page");
+        Thread.sleep( 20000 );
+        commonElements.scroll( getPickupTimeHeader(), "down" );
+        Assert.assertEquals( getItemTitle().getText(), customizedItem.getProductDetail().getName());
+        Assert.assertEquals( getItemPrice().getText(), Utils.getExpectedPrice(customizedItem) );
+        Logz.step("Started asserting order details In Edit Order Page");
         return YourOrderPage.get((AppiumDriver)driver);
     }
 

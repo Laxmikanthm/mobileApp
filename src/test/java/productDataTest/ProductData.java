@@ -27,73 +27,78 @@ public class ProductData extends SubwayAppBaseTest {
         landingPage.productDetailsAssertion(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.FOOTLONG, store);
     }
 
-    /*@Test
+    @Test
     public void testProductDetailsAllSandwichesSixInch() throws Exception{
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+        /*mobileUser = landingPage.registerUser();
         homePage = landingPage.logInSelectStore(mobileUser, store);
         productDetailsPage =  homePage.goToProductDetailsPage(mobileUser, BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.SIXINCH);
-        productDetailsPage.assertProductDetails( mobileUser);
+        productDetailsPage.assertProductDetails( mobileUser);*/
+        landingPage.productDetailsAssertion(BaseTest.getStringfromBundleFile("AllSandwiches"), BreadSize.SIXINCH, store);
     }
     @Test
     public void testProductDetailsSubwayFreshFitFootLong() throws Exception{
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+        /*mobileUser = landingPage.registerUser();
         homePage = landingPage.logInSelectStore(mobileUser, store);
         productDetailsPage =  homePage.goToProductDetailsPage(mobileUser, BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.FOOTLONG);
-        productDetailsPage.assertProductDetails( mobileUser);
+        productDetailsPage.assertProductDetails( mobileUser);*/
+        landingPage.productDetailsAssertion(BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.FOOTLONG, store);
 
     }
     @Test
     public void testProductDetailsSubwayFreshFitSixInch() throws Exception{
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+        /*mobileUser = landingPage.registerUser();
         homePage = landingPage.logInSelectStore(mobileUser, store);
         productDetailsPage =  homePage.goToProductDetailsPage(mobileUser, BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.SIXINCH);
-        productDetailsPage.assertProductDetails( mobileUser);
-
+        productDetailsPage.assertProductDetails( mobileUser);*/
+        landingPage.productDetailsAssertion(BaseTest.getStringfromBundleFile("SUBWAYFreshFit"), BreadSize.SIXINCH, store);
     }
     @Test
     public void testProductDetailsBreakfastFootLongFootLong() throws Exception{
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+        /*mobileUser = landingPage.registerUser();
         homePage = landingPage.logInSelectStore(mobileUser, store);
         productDetailsPage =  homePage.goToProductDetailsPage(mobileUser, BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.FOOTLONG);
-        productDetailsPage.assertProductDetails( mobileUser);
-
+        productDetailsPage.assertProductDetails( mobileUser);*/
+        landingPage.productDetailsAssertion(BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.SIXINCH, store);
     }
     @Test
     public void testProductDetailsBreakfastSixInch() throws Exception{
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+        /*mobileUser = landingPage.registerUser();
         homePage = landingPage.logInSelectStore(mobileUser, store);
         productDetailsPage =  homePage.goToProductDetailsPage(mobileUser, BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.SIXINCH);
-        productDetailsPage.assertProductDetails( mobileUser);
-
+        productDetailsPage.assertProductDetails( mobileUser);*/
+        landingPage.productDetailsAssertion(BaseTest.getStringfromBundleFile("Breakfast"), BreadSize.SIXINCH, store);
     }
     @Test
     public void testProductDetailsKidsMeal() throws Exception{
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+        /*mobileUser = landingPage.registerUser();
         homePage = landingPage.logInSelectStore(mobileUser, store);
         productDetailsPage =  homePage.goToProductDetailsPage(mobileUser, BaseTest.getStringfromBundleFile("KidsMeal"), BreadSize.NONE);
-        productDetailsPage.assertProductDetails( mobileUser);
+        productDetailsPage.assertProductDetails( mobileUser);*/
+        landingPage.productDetailsAssertion(BaseTest.getStringfromBundleFile("KidsMeal"), BreadSize.NONE, store);
+
     }
     @Test
     public void testProductDetailsChoppedSalad() throws Exception{
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser();
+        /*mobileUser = landingPage.registerUser();
         homePage = landingPage.logInSelectStore(mobileUser, store);
         productDetailsPage =  homePage.goToProductDetailsPage(mobileUser, BaseTest.getStringfromBundleFile("ChoppedSalads"), BreadSize.SIXINCH);
-        productDetailsPage.assertProductDetails( mobileUser);
-    }*/
-   /* @Test
+        productDetailsPage.assertProductDetails( mobileUser);*/
+        landingPage.productDetailsAssertion(BaseTest.getStringfromBundleFile("ChoppedSalads"), BreadSize.SIXINCH, store);
+    }
+    @Test
     public void testProductDetailsSides() throws Exception{
 
     }
     @Test
     public void testProductDetailsDrinks() throws Exception{
 
-    }*/
+    }
 
 }

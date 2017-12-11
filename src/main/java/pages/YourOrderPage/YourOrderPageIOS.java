@@ -65,4 +65,12 @@ public class YourOrderPageIOS  extends YourOrderPage{
         return label;
     }
 
+    MobileTextBox getItemName() throws Exception {
+        return null;
+    }
+
+    MobileTextBox getItemCost() throws Exception {
+        return null;
+    }
+
 }

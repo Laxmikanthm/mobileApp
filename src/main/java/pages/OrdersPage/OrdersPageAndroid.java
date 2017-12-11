@@ -34,7 +34,7 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getStartOrderButton() throws Exception {
-        AndroidButton startOrder = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+BaseTest.bundle.getString("StartOrder")+"']"), "Start Order button");
+        AndroidButton startOrder = new AndroidButton((AndroidDriver) driver, By.id("start_order"), "Start Order button");
         return startOrder;
     }
 
@@ -177,8 +177,15 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileButton getBackButton() throws Exception {
-        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id(BaseTest.bundle.getString("Backbutton")), "Back button");
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("toolbar_close"), "Back button");
         return button;
+
+    }
+
+    public MobileButton getBackArrowButton() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("back_icon"), "Back button");
+        return button;
+
     }
 
     public MobileButton getSixInchOption() throws Exception {
@@ -423,7 +430,7 @@ public class OrdersPageAndroid extends OrdersPage {
     }
 
     public MobileLabel getLoyaltyError() throws Exception{
-        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("alertTitle"), "Loyalty Error");
+        AndroidLabel label = new AndroidLabel((AndroidDriver) driver, By.id("message"), "Loyalty Error");
         return label;
     }
 

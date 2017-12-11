@@ -518,4 +518,9 @@ public class OrdersPageIOS extends OrdersPage {
         IOSLabel label = new IOSLabel((IOSDriver) driver, By.id(BaseTest.bundle.getString("orderTotalAmount")), "OrderTotalAmountInConfirmationPage");
         return label;
     }
+
+    public MobileButton getBackArrowButton() throws Exception {
+        IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/view_full_menu_text"), "See FullMenu Details");
+        return button;
+    }
 }

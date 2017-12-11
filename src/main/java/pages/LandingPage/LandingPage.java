@@ -251,7 +251,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
     }
 
     public void placeDefaultOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
-        MobileUser mobileUser = registerUser("InessaCluett@qasubway.com");//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
+        MobileUser mobileUser = registerUser();//HaydenHinemoor@qasubway.com"PetrAshpole@qasubway.com"
         mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
         List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
         logAllMenuCategoriesName(productGroups, store);
@@ -264,6 +264,22 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
         }
         }
      }
+
+
+    public void placeEditOrderThenAssert(String menuCategories, BreadSize breadSize, Store store) throws Exception {
+        MobileUser mobileUser = registerUser();
+        mobileUser.setStoreID(Integer.parseInt(store.getStoreNumber()));
+        List<ProductGroup> productGroups = LocationData.getStoreMenu(mobileUser, mobileUser.getStoreID());
+        logAllMenuCategoriesName(productGroups, store);
+        for (ProductGroup productGroup : productGroups) {
+            if (productGroup.getName().contains(menuCategories)) {
+                OrdersPage ordersPage = logInSelectStore(mobileUser, store).goToOrderPage();
+                ordersPage.placeEditOrder(mobileUser,menuCategories,breadSize,store);
+            }else {
+                Logz.step("##### Product menu: " + menuCategories + " is not present at this store: " + store.getStoreNumber() + " #####");
+            }
+        }
+    }
 
     public void placeDefaultOrderRedeemCertificateAndAssert(String menuCategories, BreadSize breadSize, Store store, int certRedeemCount) throws Exception {
         MobileUser mobileUser = registerUser();//HaydenHinemoor@qasubway.com
