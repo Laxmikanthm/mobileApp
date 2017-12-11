@@ -313,7 +313,7 @@ public abstract class LandingPage<T extends AppiumDriver> extends MobileBasePage
             Logz.step("##### Product menu: " + menuCategories + " is not present at this store: " + store.getStoreNumber() + " #####");
         }
     }
-}
+
 
 
    /* public void placeDefaultOrderRedeemCertificateAndAssert(String menuCategories, BreadSize breadSize, Store store, int certRedeemCount) throws Exception {
