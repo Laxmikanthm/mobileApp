@@ -20,7 +20,7 @@ public class ProductDetailsPageAndroid extends ProductDetailsPage {
 
     @Override
     MobileButton getProductIngredientsText() throws Exception {
-        return new AndroidButton((AndroidDriver)driver, By.id("product_items"), "product_items");
+        return new AndroidButton((AndroidDriver)driver, By.xpath( "//android.widget.TextView[contains(@text, '"+BaseTest.getStringfromBundleFile( "Ingredients" )+"')]" ), "Ingredients");
     }
 
     @Override

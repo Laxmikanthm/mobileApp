@@ -56,6 +56,7 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
             Logz.step("##### Started asserting product name in Product Details page #####");
 
          if(customizedItem.getMenuName().contains( "Chopped Salads" ) ||  customizedItem.getMenuName().contains( "Kids" ) || customizedItem.getMenuName().contains( "Personal Pizza" )) {
+
              String productName = Utils.getProductName( customizedItem.getMenuName(), customizedItem.getProductDetail().getName() );
              Assert.assertEquals( productName.toUpperCase(), getProductName( productName ).getText().toUpperCase());
              Assert.assertEquals( getPriceOneOption(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem));
@@ -82,9 +83,9 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
     public ProductDetailsPage assertProductDetails(MobileUser mobileUser, CustomizedItem customizedItem) throws Exception{
         Logz.step("##### Started asserting Product Details #####");
         try {
-
-            Assert.assertEquals(getProductName(customizedItem.getCustomizedProductDetail().getProductName()).getText(), customizedItem.getCustomizedProductDetail().getProductName());
-            Assert.assertEquals(getProductIngredientsText().getText(), BaseTest.getStringfromBundleFile("Ingredient"));
+            String productName = Utils.getProductName( customizedItem.getMenuName(), customizedItem.getCustomizedProductDetail().getProductName() );
+            Assert.assertEquals(getProductName(customizedItem.getCustomizedProductDetail().getProductName()).getText(), productName);
+            Assert.assertEquals(getProductIngredientsText().getText(), BaseTest.getStringfromBundleFile("Ingredients"));
             Assert.assertTrue( assertIngredients(getProductIngredientsList().getText(), MobileApi.getExpectedDefaultIngredients(customizedItem.getProductDetail())) );
             Assert.assertEquals(getProductDisclaimer().getText(), customizedItem.getProductDetail().getPromoDisclaimer());
             if (MobileApi.getBreadOptionCount(customizedItem, mobileUser) > 1) {

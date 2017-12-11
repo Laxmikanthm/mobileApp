@@ -205,9 +205,7 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
                     throw new Exception( "Unable to scroll and click element \n" );
                 }
             }
-
-
-            /*if(flag == false) {
+ /*if(flag == false) {
 
                 allElements.get(3).click();
                     Logz.step("selected random " +allElements.get(3).getText());

@@ -2,12 +2,16 @@ package pages.PickerPage;
 
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.android.AndroidTextBox;
+import base.gui.controls.mobile.android.AndroidWebElement;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import base.test.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class PickerPageAndroid extends PickerPage{
     public PickerPageAndroid(AppiumDriver driver) {
@@ -46,31 +50,31 @@ public class PickerPageAndroid extends PickerPage{
 
     @Override
     MobileButton getVeggiesText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Veggies" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Veggies" )+"']"),"Veggies ");
 
     }
 
     @Override
     MobileButton getEggText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Egg" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Egg" )+"']"),"Egg ");
 
     }
 
     @Override
     MobileButton getMeatText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Meat" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Meat" )+"']"),"Meat ");
 
     }
 
     @Override
     MobileButton getExtrasText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Extras" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Extras" )+"']"),"Extras ");
 
     }
 
     @Override
     MobileButton getSeasoningsText() throws Exception {
-        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Seasonings" )+"']"),"Cheese ");
+        return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Seasonings" )+"']"),"Seasonings ");
 
     }
 
@@ -78,5 +82,10 @@ public class PickerPageAndroid extends PickerPage{
     MobileButton getSaucesText() throws Exception {
         return new AndroidButton(((AndroidDriver)driver), By.xpath("//android.widget.TextView[@text='"+ BaseTest.getStringfromBundleFile( "Sauces" )+"']"),"Sauces ");
 
+    }
+
+    @Override
+    List<WebElement> getIngredientList() throws Exception {
+        return new AndroidWebElement((AndroidDriver) driver, "getIngredientList").getWebElements(By.id("ingredient_text"));
     }
 }

@@ -209,4 +209,8 @@ public class Utils {
 
 
     }
+    public static int getRandomeNumber(int size) throws Exception{
+        Random random = new Random();
+        return  random.nextInt( size );
+    }
 }
