@@ -125,7 +125,7 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        ordersPage.validatingPlacingOrderForSixTimes(mobileUser, store.getAddress1());
+        ordersPage.validatePlacingOrderForSixTimes(mobileUser);
 
     }
 

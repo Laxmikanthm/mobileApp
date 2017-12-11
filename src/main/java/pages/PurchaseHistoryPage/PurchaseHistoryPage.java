@@ -122,10 +122,10 @@ public abstract class PurchaseHistoryPage<T extends AppiumDriver> extends Mobile
         return PurchaseHistoryPage.get( (AppiumDriver) driver );
     }
 
-    public UserProfilePage assertOrderInPurchaseHostoryPage(MobileUser mobileUser) throws Exception {
-        userProfilePage.goToPurchaseHistoryPage();
-        assertPlacedOrderDetailsInPurchaseHistoryPage( mobileUser );
-        return UserProfilePage.get( (AppiumDriver) driver );
+    public UserProfilePage assertOrderInPurchaseHostoryPage(MobileUser mobileUser) throws Exception{
+        PurchaseHistoryPage purchaseHistoryPage = userProfilePage.goToPurchaseHistoryPage();
+        assertPlacedOrderDetailsInPurchaseHistoryPage(mobileUser);
+        return UserProfilePage.get((AppiumDriver)driver);
     }
 
 

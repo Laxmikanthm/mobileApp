@@ -40,6 +40,7 @@ public class ProductData extends SubwayAppBaseTest {
         productDetailsPage.assertProductDetails(mobileUser, customizedItem);
 
     }
+
     @Test
     public void testProductDetailsAllSandwichesSixInch() throws Exception{
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");

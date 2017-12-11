@@ -112,4 +112,12 @@ public class YourOrderPageIOS  extends YourOrderPage{
         return getTotalText().getText().split(" ")[3].trim().substring(1);
     }
 
+    MobileTextBox getItemName() throws Exception {
+        return null;
+    }
+
+    MobileTextBox getItemCost() throws Exception {
+        return null;
+    }
+
 }
