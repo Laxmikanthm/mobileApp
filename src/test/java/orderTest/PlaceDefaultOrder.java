@@ -4,23 +4,17 @@ import Base.SubwayAppBaseTest;
 import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
-import enums.PaymentMethod;
 import org.testng.annotations.Test;
 import Enums.BreadSize;
-import Enums.Menu;
 import pages.HomePage.HomePage;
 import pages.LandingPage.LandingPage;
 import pages.OrdersPage.OrdersPage;
 import pages.PurchaseHistoryPage.PurchaseHistoryPage;
-import pages.UserProfilePage.UserProfilePage;
 import pojos.user.MobileUser;
-import pojos.user.RegisterUser;
-import pojos.user.RemoteOrderCustomer;
-import utils.Logz;
 
 public class PlaceDefaultOrder extends SubwayAppBaseTest {
 
-    Store store = JdbcUtil.getLoyaltyStoreDetails();
+   Store store = JdbcUtil.getLoyaltyStoreDetails();
     LandingPage landingPage;
     MobileUser mobileUser;
     OrdersPage ordersPage;
@@ -96,11 +90,11 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     }
 
     @Test
-    public void testPlaceDefaultOrderPersonalPizzaFootLong() throws Exception {
+    public void testPlaceDefaultOrderPersonalPizza() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("PersonalPizza"), BreadSize.NONE, store);
     }
-    @Test
+    @Test(enabled = false)//Flatizzas should not display in mobile
     public void testPlaceDefaultOrderFlatizzas() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         landingPage.placeDefaultOrderThenAssert(BaseTest.getStringfromBundleFile("Flatizzas"), BreadSize.NONE, store);
@@ -110,23 +104,23 @@ public class PlaceDefaultOrder extends SubwayAppBaseTest {
     @Test
     public void testPlaceDefaultOrderSides() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser("DorolisaWiddup@qasubway.com");//DorolisaWiddup@qasubway.com
+        mobileUser = landingPage.registerUser("HerminaBilbery@qasubway.com");//DorolisaWiddup@qasubway.com
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"));
+        ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("SidesMenu"), store);
 
     }
 
     @Test
     public void testPlaceDefaultOrderDrinks() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
-        mobileUser = landingPage.registerUser("OsmondOrred@qasubway.com");//HerminaPadell@qasubway.com
+        mobileUser = landingPage.registerUser("HerminaBilbery@qasubway.com");//HerminaPadell@qasubway.com
         ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
-        ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"));
+        ordersPage.placeSidesDrinksDefaultOrderThenAssert(mobileUser, BaseTest.getStringfromBundleFile("DrinksMenu"), store);
     }
 
     //DFA-9165
     //Place Order for more than 6 times...R2
-    @Test
+    @Test(enabled = false)
     public void placeOrderForMoreThanSixTimes() throws Exception {
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         mobileUser = landingPage.registerUser();

@@ -36,16 +36,16 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
                 throw new Exception("Unable to get Find A Store page for platform " + platform);
         }
     }
-    abstract MobileButton getProductName() throws Exception;
+    abstract MobileButton getProductName(String productName) throws Exception;
     abstract MobileButton getProductIngredientsText() throws Exception;
     abstract MobileButton getProductIngredientsList() throws Exception;
     abstract MobileButton getProductDisclaimer() throws Exception;
-    abstract MobileButton getProductPrice() throws Exception;
+    abstract MobileButton getProductPrice(String price) throws Exception;
     abstract MobileButton getProductCalories() throws Exception;
     abstract MobileButton getSingleProductPrice() throws Exception;
     abstract MobileButton getSingleProductCalories() throws Exception;
     abstract MobileButton getCustomize() throws Exception;
-
+    abstract MobileButton getPriceOneOption(String price) throws Exception;
     public CustomizePage goToCustomizePage() throws Exception {
         getCustomize().click();
         return CustomizePage.get((AndroidDriver) driver);
@@ -54,9 +54,17 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
 
         try {
             Logz.step("##### Started asserting product name in Product Details page #####");
-           Assert.assertEquals(getProductName().getText(), customizedItem.getCustomizedProductDetail().getProductClassName());
-           Assert.assertEquals(getProductPrice().getText(), Utils.getExpectedPrice(customizedItem));
-            Logz.step("##### Ended asserting product name in Product Details page #####");
+
+         if(customizedItem.getMenuName().contains( "Chopped Salads" ) ||  customizedItem.getMenuName().contains( "Kids" ) || customizedItem.getMenuName().contains( "Personal Pizza" )) {
+
+             String productName = Utils.getProductName( customizedItem.getMenuName(), customizedItem.getProductDetail().getName() );
+             Assert.assertEquals( productName.toUpperCase(), getProductName( productName ).getText().toUpperCase());
+             Assert.assertEquals( getPriceOneOption(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem));
+         }else {
+             Assert.assertTrue(customizedItem.getCustomizedProductDetail().getProductName().toUpperCase().contains(getProductName(customizedItem.getCustomizedProductDetail().getProductName()).getText().toUpperCase()));
+             Assert.assertEquals( getProductPrice(Utils.getExpectedPrice(customizedItem)).getText(), Utils.getExpectedPrice(customizedItem));
+         }
+           Logz.step("##### Ended asserting product name in Product Details page #####");
 
         }catch (Exception ex) {
             throw new Exception("Unable to assert product name in Product Details page\n"+ ex.getMessage());
@@ -75,13 +83,13 @@ public abstract class ProductDetailsPage<T extends AppiumDriver> extends MobileB
     public ProductDetailsPage assertProductDetails(MobileUser mobileUser, CustomizedItem customizedItem) throws Exception{
         Logz.step("##### Started asserting Product Details #####");
         try {
-
-            Assert.assertEquals(getProductName().getText(), customizedItem.getCustomizedProductDetail().getProductName());
-            Assert.assertEquals(getProductIngredientsText().getText(), BaseTest.getStringfromBundleFile("Ingredient"));
+            String productName = Utils.getProductName( customizedItem.getMenuName(), customizedItem.getCustomizedProductDetail().getProductName() );
+            Assert.assertEquals(getProductName(customizedItem.getCustomizedProductDetail().getProductName()).getText(), productName);
+            Assert.assertEquals(getProductIngredientsText().getText(), BaseTest.getStringfromBundleFile("Ingredients"));
             Assert.assertTrue( assertIngredients(getProductIngredientsList().getText(), MobileApi.getExpectedDefaultIngredients(customizedItem.getProductDetail())) );
             Assert.assertEquals(getProductDisclaimer().getText(), customizedItem.getProductDetail().getPromoDisclaimer());
             if (MobileApi.getBreadOptionCount(customizedItem, mobileUser) > 1) {
-                Assert.assertEquals(getProductPrice().getText(), Utils.getExpectedPrice( customizedItem ));
+                Assert.assertEquals(getProductPrice(Utils.getExpectedPrice( customizedItem )).getText(), Utils.getExpectedPrice( customizedItem ));
                 Assert.assertEquals(getProductCalories().getText(), Utils.getExpectedCalories( customizedItem ));
             }else{
                 Assert.assertEquals(getSingleProductPrice().getText(), Utils.getExpectedPrice( customizedItem ));

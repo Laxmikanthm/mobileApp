@@ -26,14 +26,26 @@ public class OrderConfirmationPageAndroid extends OrderConfirmationPage {
     }
 
     @Override
-    MobileTextBox getItemTitle() throws Exception {
+    MobileTextBox getItemTitle(String itemTitle) throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("item_title"), "getItemTitle");
     }
 
     @Override
-    MobileTextBox getItemPrice() throws Exception {
+    MobileTextBox getItemPrice(String price) throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("item_price"), "getItemPrice");
     }
+
+
+    MobileTextBox getItemTitlefortax() throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("item_title"), "getItemTitle");
+    }
+
+    MobileTextBox getItemPricetax() throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("item_price"), "getItemPrice");
+    }
+
+
+
 
     @Override
     MobileTextBox getFlavorItemTitle() throws Exception {
@@ -41,7 +53,7 @@ public class OrderConfirmationPageAndroid extends OrderConfirmationPage {
     }
 
     @Override
-    MobileTextBox getTotalText() throws Exception {
+    MobileTextBox getTotalText(String price) throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("total"), "getTotalText");
     }
 
@@ -49,4 +61,6 @@ public class OrderConfirmationPageAndroid extends OrderConfirmationPage {
     MobileTextBox getPickupTimeHeaderText() throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("total"), "ready_today_at");
     }
+
+
 }

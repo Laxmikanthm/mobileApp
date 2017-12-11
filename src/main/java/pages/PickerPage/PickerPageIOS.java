@@ -3,6 +3,9 @@ package pages.PickerPage;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileTextBox;
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class PickerPageIOS extends PickerPage {
     public PickerPageIOS(AppiumDriver driver) {
@@ -10,7 +13,7 @@ public class PickerPageIOS extends PickerPage {
     }
 
     @Override
-    MobileTextBox getTitleText() throws Exception {
+    MobileTextBox getTitleText(String title) throws Exception {
         return null;
     }
 
@@ -66,6 +69,11 @@ public class PickerPageIOS extends PickerPage {
 
     @Override
     MobileButton getSaucesText() throws Exception {
+        return null;
+    }
+
+    @Override
+    List<WebElement> getIngredientList() throws Exception {
         return null;
     }
 

@@ -4,7 +4,6 @@ import Base.SubwayAppBaseTest;
 import base.gui.controls.mobile.android.AndroidButton;
 import base.gui.controls.mobile.generic.MobileButton;
 import base.gui.controls.mobile.generic.MobileLabel;
-import base.gui.controls.mobile.ios.IOSButton;
 import base.pages.mobile.MobileBasePage;
 import base.test.BaseTest;
 import io.appium.java_client.*;
@@ -24,6 +23,7 @@ import sun.rmi.runtime.Log;
 import utils.Logz;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
     String platform = SubwayAppBaseTest.platformName;
@@ -53,7 +53,119 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         Logz.step( "Clicked the " + controlButton + " button" );
     }
 
+    public HomePage scrollAndClick(By locator, String itemName, boolean isMenuPage) throws Exception {
+        Logz.step( "Scrolling to element and get element list" );
+        List<WebElement> allElements = getElements( locator);
+        Logz.step("Total elements found " + allElements.size());
+        try {
+            flag = false;
+            if (allElements.size() == 0) {
+                throw new Exception( "No element is available\n" + allElements.size() );
+            }
+            //allElements = getElements( locator );
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get( i ).getText().toUpperCase().contains( itemName.toUpperCase() )) {
+                    if(driver instanceof IOSDriver){
+                        if(!allElements.get( i ).isDisplayed()){
+                            scrollIOS(allElements.get( i ), "up", isMenuPage);
+                            allElements = getElements( locator);
+                        }
+                        allElements.get( i ).click();
+                        /*int startX = allElements.get(i).getLocation().getX();
+                        int startY = allElements.get(i).getLocation().getY();
+                        action = new TouchAction((AppiumDriver) driver);
+                        action.longPress(allElements.get(i),startX, startY).release().perform();*/
+                    }else {
+                        allElements.get(i).click();
+                    }
+                    flag = true;
+                    break;
+                }
+            }
+            int count = 0;
+            while (flag == false) {
+                WebElement element = allElements.get( allElements.size() - 1 );
+                MobileElement ele = (MobileElement) element;
+                int startY = ele.getLocation().getY();
+                int endY = (int) (startY * 0.3);
+                action.longPress( 0, startY ).moveTo( 0, endY ).release().perform();
+                allElements = getElements( locator );
+                for (int j = 0; j < allElements.size(); j++) {
+                    if (allElements.get( j ).getText().toUpperCase().contains( itemName.toUpperCase() )) {
+                        allElements.get( j ).click();
+                        flag = true;
+                        break;
+                    }
+                }
+                count++;
+                Logz.step( "count:" + count );
+                if (count > 6) {
+                    flag = false;
+                    //break;
+                    throw new Exception( "Unable to scroll and click element \n" );
+                }
+            }
 
+        } catch (Exception ex) {
+            throw new Exception( "Unable to scroll and click element \n" + ex.getMessage() );
+        }
+        Logz.step( "Scrolled to element and get element list" );
+        return HomePage.get( (AppiumDriver) driver );
+    }
+    public HomePage scrollAndSelectStore(By locator, String itemName) throws Exception {
+        Logz.step( "Scrolling to element and get element list" );
+        List<WebElement> allElements = getElements( locator);
+        Logz.step("Total elements found " + allElements.size());
+        try {
+            flag = false;
+            if (allElements.size() == 0) {
+                throw new Exception( "No element is available\n" + allElements.size() );
+            }
+            //allElements = getElements( locator );
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get( i ).getText().toUpperCase().contains( itemName.toUpperCase() )) {
+                    if(driver instanceof IOSDriver){
+                        int startX = allElements.get(i).getLocation().getX();
+                        int startY = allElements.get(i).getLocation().getY();
+                        action = new TouchAction((AppiumDriver) driver);
+                        action.longPress(allElements.get(i),startX, startY).release().perform();
+                    }else {
+                        allElements.get(i).click();
+                    }
+                    flag = true;
+                    break;
+                }
+            }
+            int count = 0;
+            while (flag == false) {
+                WebElement element = allElements.get( allElements.size() - 1 );
+                MobileElement ele = (MobileElement) element;
+                int startY = ele.getLocation().getY();
+                int endY = (int) (startY * 0.3);
+                action.longPress( 0, startY ).moveTo( 0, endY ).release().perform();
+                allElements = getElements( locator );
+                for (int j = 0; j < allElements.size(); j++) {
+                    if (allElements.get( j ).getText().toUpperCase().contains( itemName.toUpperCase() )) {
+                        allElements.get( j ).click();
+                        flag = true;
+                        break;
+                    }
+                }
+                count++;
+                Logz.step( "count:" + count );
+                if (count > 6) {
+                    flag = false;
+                    //break;
+                    throw new Exception( "Unable to scroll and click element \n" );
+                }
+            }
+
+        } catch (Exception ex) {
+            throw new Exception( "Unable to scroll and click element \n" + ex.getMessage() );
+        }
+        Logz.step( "Scrolled to element and get element list" );
+        return HomePage.get( (AppiumDriver) driver );
+    }
     public HomePage scrollAndClick(By locatorIOS, By locatorAndroid, String itemName) throws Exception {
         Logz.step( "Scrolling to element and get element list" );
         List<WebElement> allElements = getElements( locatorIOS, locatorAndroid );
@@ -80,6 +192,58 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
                 allElements = getElements( locatorIOS, locatorAndroid );
                 for (int j = 0; j < allElements.size(); j++) {
                     if (allElements.get( j ).getText().contains( itemName )) {
+                        allElements.get( j ).click();
+                        flag = true;
+                        break;
+                    }
+                }
+                count++;
+                Logz.step( "count:" + count );
+                if (count > 6) {
+                    flag = false;
+                    //break;
+                    throw new Exception( "Unable to scroll and click element \n" );
+                }
+            }
+ /*if(flag == false) {
+
+                allElements.get(3).click();
+                    Logz.step("selected random " +allElements.get(3).getText());
+            }*/
+
+
+        } catch (Exception ex) {
+            throw new Exception( "Unable to scroll and click element \n" + ex.getMessage() );
+        }
+        Logz.step( "Scrolled to element and get element list" );
+        return HomePage.get( (AppiumDriver) driver );
+    }
+    public HomePage scrollAndClickBreakfast(By locator, String itemName) throws Exception {
+        Logz.step( "Scrolling to element and get element list" );
+        List<WebElement> allElements = getElements( locator );
+        try {
+            flag = false;
+            if (allElements.size() == 0) {
+                throw new Exception( "No element is available\n" + allElements.size() );
+            }
+            allElements = getElements( locator );
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get( i ).getText().equalsIgnoreCase( itemName )) {
+                    allElements.get( i ).click();
+                    flag = true;
+                    break;
+                }
+            }
+            int count = 0;
+            while (flag == false) {
+                WebElement element = allElements.get( allElements.size() - 1 );
+                MobileElement ele = (MobileElement) element;
+                int startY = ele.getLocation().getY();
+                int endY = (int) (startY * 0.3);
+                action.longPress( 0, startY ).moveTo( 0, endY ).release().perform();
+                allElements = getElements( locator );
+                for (int j = 0; j < allElements.size(); j++) {
+                    if (allElements.get( j ).getText().equalsIgnoreCase( itemName )) {
                         allElements.get( j ).click();
                         flag = true;
                         break;
@@ -183,11 +347,34 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
 
     }
 
+    public List<WebElement> getElements(By locator) throws Exception {
+        try {
+            switch (platform) {
+                case "iOS":
+                    if (presence( SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locator )) {
+                        return ((IOSDriver) driver).findElements( locator );
+
+                    }
+
+                case "Android":
+                    if (exits( SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locator )) {
+                        return ((AndroidDriver) driver).findElements( locator);
+
+                    }
+
+                default:
+                    throw new Exception( "Unable to get element for platform " + platform );
+            }
+        } catch (Exception ex) {
+            throw new Exception( "Unable to get element list\n" + ex.getMessage() );
+        }
+
+    }
     public List<WebElement> getElements(By locatorIOS, By locatorAndroid) throws Exception {
         try {
             switch (platform) {
                 case "iOS":
-                    if (exits( SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locatorIOS )) {
+                    if (presence( SubwayAppBaseTest.EXPLICIT_WAIT_TIME, (AppiumDriver) driver, locatorIOS )) {
                         return ((IOSDriver) driver).findElements( locatorIOS );
 
                     }
@@ -210,6 +397,15 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
     protected boolean exits(int seconds, AppiumDriver driver, By by) {
         try {
             (new WebDriverWait( driver, (long) seconds )).until( ExpectedConditions.visibilityOfElementLocated( by ) );
+            return true;
+        } catch (Exception var3) {
+            return false;
+        }
+    }
+
+    protected boolean presence(int seconds, AppiumDriver driver, By by) {
+        try {
+            (new WebDriverWait( driver, (long) seconds )).until( ExpectedConditions.presenceOfAllElementsLocatedBy( by ) );
             return true;
         } catch (Exception var3) {
             return false;
@@ -444,6 +640,20 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         }
 
     }
+    public void scrollIOS(WebElement element, String direction, boolean isMenuPage) throws Exception{
+        int startX = element.getLocation().getX();
+        int startY = element.getLocation().getY();
+
+        if(direction.contains( "up" )) {
+            if(isMenuPage)
+                action.press( element ).moveTo(element, startX, -startY +10 ).release().perform();
+            else
+                action.press( element ).moveTo(startX, -startY +10 ).release().perform();
+        }else{
+            action.press( element ).moveTo( startX, startY + startY ).release().perform();
+        }
+
+    }
     @Override
     public MobileLabel getPageLabel() throws Exception {
         return null;
@@ -453,6 +663,10 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
     protected void waitForPageToLoad() throws Exception {
 
     }
-
+    public void swipeNumberOfTime(AppiumDriver driver, String direction, int count) throws Exception{
+        for(int i =0; i<count; i++) {
+            swipe( driver, direction );
+        }
+    }
 
 }

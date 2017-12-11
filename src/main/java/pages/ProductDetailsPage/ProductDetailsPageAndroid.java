@@ -14,13 +14,13 @@ public class ProductDetailsPageAndroid extends ProductDetailsPage {
     }
 
     @Override
-    MobileButton getProductName() throws Exception {
+    MobileButton getProductName(String productName) throws Exception {
      return new AndroidButton((AndroidDriver) driver, By.id("product_name"), "product_name");
     }
 
     @Override
     MobileButton getProductIngredientsText() throws Exception {
-        return new AndroidButton((AndroidDriver)driver, By.id("product_items"), "product_items");
+        return new AndroidButton((AndroidDriver)driver, By.xpath( "//android.widget.TextView[contains(@text, '"+BaseTest.getStringfromBundleFile( "Ingredients" )+"')]" ), "Ingredients");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ProductDetailsPageAndroid extends ProductDetailsPage {
     }
 
     @Override
-    MobileButton getProductPrice() throws Exception {
+    MobileButton getProductPrice(String price) throws Exception {
         return new AndroidButton((AndroidDriver)driver, By.id("two_option_price"), "two_option_price");
     }
 
@@ -65,5 +65,11 @@ public class ProductDetailsPageAndroid extends ProductDetailsPage {
     public MobileButton getCustomize() throws Exception {
         AndroidButton button = new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+ BaseTest.bundle.getString("Customize")+"']"), "Customize button");
         return button;
+    }
+
+    @Override
+    MobileButton getPriceOneOption(String price) throws Exception {
+        return new AndroidButton((AndroidDriver)driver, By.id("price_one_option"), "price_one_option");
+
     }
 }

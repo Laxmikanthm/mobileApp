@@ -146,9 +146,13 @@ public abstract  class UserProfilePage<T extends AppiumDriver> extends MobileBas
     {
         try {
             CommonElements commonElements = new CommonElements( (AppiumDriver)driver );
-            commonElements.scroll( getHelp().getControl(), "up");
-            getLogOut().isReady();
-            getLogOut().click();
+            if(driver instanceof AndroidDriver)
+                commonElements.scroll( getHelp().getControl(), "up");
+            else
+                commonElements.scrollIOS( getHelp().getControl(), "up", false);
+            MobileButton logout = getLogOut();
+            logout.isReady();
+            logout.click();
             logOutInpopupButton();
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -160,8 +164,9 @@ public abstract  class UserProfilePage<T extends AppiumDriver> extends MobileBas
     public void logOutInpopupButton() throws Exception
 
     {
-        getLogOutButtonInPopUp().waitForClickable();
-        getLogOutButtonInPopUp().click();
+        MobileButton logOutButtonInPopUp = getLogOutButtonInPopUp();
+        logOutButtonInPopUp.waitForClickable();
+        logOutButtonInPopUp.click();
     }
 
 

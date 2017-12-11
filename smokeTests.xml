@@ -13,6 +13,7 @@
             <class name="orderTest.PlaceDefaultOrder">
                 <methods>
                     <include name="testPlaceDefaultOrderSubwayFreshFitSixInch"/>
+                    <!--<include name="testPlaceDefaultOrderSubwayFreshFitFootLong"/>-->
                 </methods>
             </class>
            <!-- <class name="myLoyaltyTest.Offers">

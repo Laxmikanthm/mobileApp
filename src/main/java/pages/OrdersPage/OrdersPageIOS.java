@@ -62,14 +62,14 @@ public class OrdersPageIOS extends OrdersPage {
 
     public IOSButton getAddToBag() throws Exception {
 
-        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("AddToBagText").toUpperCase()), "AddToBagText button");
 
         return addToBag;
     }
 
     public IOSButton getCustomize() throws Exception {
 
-        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.xpath("//UIAStaticText[@label='"+BaseTest.bundle.getString("SignInButtoniOS")), "Login button");
+        IOSButton addToBag = new IOSButton((IOSDriver) driver, By.id(BaseTest.getStringfromBundleFile("CustomizeText").toUpperCase()), "CustomizeText button");
 
         return addToBag;
     }
@@ -261,7 +261,7 @@ public class OrdersPageIOS extends OrdersPage {
 
     public IOSButton getSixInchOption() throws Exception {
 
-        IOSButton button = new IOSButton((IOSDriver) driver, By.xpath("//*[@content-desc='"+ BaseTest.bundle.getString("Login")+"']"), "Login button");
+        IOSButton button = new IOSButton((IOSDriver) driver, By.name(BaseTest.bundle.getString("SIXINCH")), "Six INCH button");
 
         return button;
     }
@@ -522,5 +522,15 @@ public class OrdersPageIOS extends OrdersPage {
     public MobileButton getBackArrowButton() throws Exception {
         IOSButton button = new IOSButton((IOSDriver) driver, By.id("com.subway.mobile.subwayapp03:id/view_full_menu_text"), "See FullMenu Details");
         return button;
+    }
+
+    protected By getProductGroupHeader(String product) throws Exception{
+//        String xpath = "";
+//        if(product.length() > 0)
+//            xpath = "//XCUIElementTypeStaticText[contains(@name, '" + product.toUpperCase() + "')]";
+//        else
+//            xpath = "//XCUIElementTypeStaticText";
+//        return By.xpath( xpath );
+        return By.name(product.toUpperCase());
     }
 }

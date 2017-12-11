@@ -25,18 +25,46 @@ public class YourOrderPageAndroid extends YourOrderPage{
     }
 
     @Override
-    MobileTextBox getItemTitle() throws Exception {
+    MobileTextBox getItemTitle(String itemTitle) throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("item_title"), "getItemTitle");
     }
 
+    MobileTextBox getItemTitle() throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("item_title"), "getItemTitle");
+    }
+    public MobileButton getFullMenu() throws Exception {
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("view_full_menu_text"), "See Full menu");
+        return button;
+    }
     @Override
+    MobileTextBox getItemPrice(String itemPrice) throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("item_price"), "getItemPrice");
+    }
+
     MobileTextBox getItemPrice() throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("item_price"), "getItemPrice");
     }
 
     @Override
-    MobileTextBox getTotalText() throws Exception {
-        return new AndroidTextBox((AndroidDriver) driver, By.id("submit_order"), "getTotalText");
+    MobileButton getTotalText() throws Exception {
+        return new AndroidButton((AndroidDriver) driver, By.id("submit_order"), "getTotalText");
+    }
+
+    public MobileLabel getTaxPrice() throws Exception{
+        AndroidLabel button = new AndroidLabel((AndroidDriver) driver, By.id("tax_amount"), "Tax Price ");
+        return button;
+    }
+    WebElement getMakeitaMeal() throws Exception {
+        return new AndroidWebElement((AndroidDriver)driver, "getPickupTimeHeader").getWebElement(   By.id( "com.subway.mobile.subwayapp03:id/make_it_a_meal_header" ));
+    }
+
+    WebElement ViewfullMenu() throws Exception {
+        return new AndroidWebElement((AndroidDriver)driver, "getPickupTimeHeader").getWebElement(   By.id( "com.subway.mobile.subwayapp03:id/view_full_menu_text" ));
+    }
+
+    public MobileButton getDineIn() throws Exception{
+        AndroidButton button = new AndroidButton((AndroidDriver) driver, By.id("dine_in_button"), "DineIn Button");
+        return button;
     }
 
     @Override
@@ -48,6 +76,8 @@ public class YourOrderPageAndroid extends YourOrderPage{
     MobileButton getPlaceOrder() throws Exception {
         return new AndroidButton((AndroidDriver) driver, By.xpath("//android.widget.Button[@resource-id='"+ BaseTest.bundle.getString("PlaceOrder")+"']"), "Place Order button");
     }
+
+
 
     public MobileLabel getcertificatemessage() throws Exception {
         AndroidLabel certsamount = new AndroidLabel((AndroidDriver) driver, By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout[3]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.TextView[1]"), "Certificate amount");

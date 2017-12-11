@@ -10,6 +10,7 @@ import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.CommonElements.CommonElements;
+import pages.YourOrderPage.YourOrderPage;
 import pojos.CustomizedItem.CustomizedItem;
 import pojos.user.MobileUser;
 import util.Utils;
@@ -48,16 +49,16 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
     abstract MobileTextBox getDrinksCaloriesText() throws Exception;
     abstract List<WebElement> getDrinksPriceCaloriesList() throws Exception;
     abstract MobileTextBox getItemCountText() throws Exception;
+    abstract List<WebElement> getAddToBag() throws Exception;
 
 
     CommonElements commonElements = new CommonElements( (AppiumDriver) driver );
-
-    public DrinksPage selectDrinksOrder(CustomizedItem customizedItem) throws Exception {
+    String drinksFlavorName;
+    public YourOrderPage selectDrinksOrder(CustomizedItem customizedItem) throws Exception {
         //ToDo
 
         String drinksName = customizedItem.getCustomizedProductDetail().getProductClassName();
-        String drinksFlavorName = customizedItem.getCustomizedProductDetail().getProductName();
-
+         drinksFlavorName = customizedItem.getCustomizedProductDetail().getProductName();
         if (drinksName.contains( "Bottled Beverage" )) {
             if (drinksFlavorName.contains( "Dasani® Water" )) {
                 for (int i = 0; i < getItemCount(); i++) { // get the count
@@ -101,7 +102,8 @@ public abstract class DrinksPage<T extends AppiumDriver> extends MobileBasePage 
             assertDrinksDetails(customizedItem);
 
         }
-        return DrinksPage.get( (AppiumDriver) driver );
+        goToYourOrderPage();
+        return YourOrderPage.get( (AppiumDriver) driver );
     }
 
 public int getItemCount() throws Exception{
@@ -132,11 +134,21 @@ public int getItemCount() throws Exception{
     }
     public void assertDrinksDetails(CustomizedItem customizedItem) throws Exception {
         Logz.step( "Asserting drinks product title" );
-        Assert.assertEquals( getDrinksText().getText(), customizedItem.getCustomizedProductDetail().getProductClassName(), "Drink Product title assertion is failed" );
-        Assert.assertEquals( getFlavorDrinksTitleText().getText(), customizedItem.getCustomizedProductDetail().getProductName(), "Drink Product title assertion is failed" );
+        Assert.assertEquals( getDrinksText().getText(), customizedItem.getCustomizedProductDetail().getProductName(), "Drink Product title assertion is failed" );
         assertDrinksDescriptions(customizedItem);
         assertDrinksPriceCalories(customizedItem);
         Logz.step( "Asserted drinks product title" );
+    }
+
+    public void goToYourOrderPage( ) throws Exception{
+
+        if (drinksFlavorName.contains( "21oz Fountain Drink" )) {
+            getAddToBag().get( 0 ).click();
+        }else {
+            getAddToBag().get( 1 ).click();
+        }
+        Logz.step( "Navigating to our order page......" );
+
     }
     //quantity_more
     //quantity

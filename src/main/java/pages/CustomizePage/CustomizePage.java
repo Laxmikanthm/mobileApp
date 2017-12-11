@@ -63,27 +63,40 @@ public abstract class CustomizePage<T extends AppiumDriver> extends MobileBasePa
     abstract MobileButton getLooksGood() throws Exception;
 
     abstract MobileTextBox getBreadTitle() throws Exception;
+
     //CustomizerPage
     abstract MobileButton getBackIcon() throws Exception;//toolbar_close
+
     abstract MobileTextBox getTitleText() throws Exception;//title
+
     abstract MobileTextBox getBreadSizeText() throws Exception;//subtitle_size
+
     abstract MobileTextBox getBreadCalorieText() throws Exception;//subtitle_size 	| 790.0*
 
-   //click on ? scroll assert 3 tultip
+    //click on ? scroll assert 3 tultip
     abstract MobileButton getHelpIcon() throws Exception;//ftue_help_icon
+
     abstract MobileTextBox getBreadFtue() throws Exception; //breadftue //class android.widget.RelativeLayout
+
     abstract MobileTextBox getaddFtue() throws Exception; //addftue
+
     abstract MobileTextBox getIngredientFtueText() throws Exception; //ingredientftuetext
+
     abstract MobileTextBox getDisclaimerText() throws Exception;//nutritional_disclaimer
+
     abstract MobileTextBox getIngredientNameText() throws Exception;//ingredient_name_textview
+
     abstract MobileTextBox getIngredientCaloriesText() throws Exception;//ingredient_calories_textview
+
     abstract MobileButton getAddToBagButton() throws Exception;//addToBag Add to Bag | $7.75
+
     //click on ingredient  ingredient_selected_text, remove, done
     // option1_image, option1_text
     //option2_image, option2_text(dx , 2x)
     //option3_image, option3_text
 //Calories breakdown page
-abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
+    abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
+
     //abstract MobileTextBox getIngredientNameText() throws Exception;//ingredient_name_textview (list)
     //abstract MobileTextBox getIngredientCaloriesText() throws Exception;//ingredient_calories_textview
     abstract MobileTextBox getDisclaimer() throws Exception;//disclaimer_textview
@@ -93,13 +106,13 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
     //assert title -getTitleText
     //getDisclaimerText assert
     abstract MobileButton getDoneButton() throws Exception;//done / looks good
+
     //get customizernames list by class name - android.widget.TextView
     abstract MobileTextBox getIngredientText() throws Exception;//ingredient_text
+
     abstract MobileTextBox getCalorieCountText() throws Exception;//calorie_count 160 Cals
+
     abstract MobileTextBox getModifyText() throws Exception; // ist by class name - android.widget.TextView
-
-
-
 
 
     //Assert badge is slected -- badge
@@ -107,27 +120,34 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
     By customizerPciker = By.id( "ingredient_text" );
     By breadName = By.id( "bread_top" );
     String breadNameText = "";
-    public CustomizePage randomCustomization(CustomizedItem customizedItem) throws Exception {
 
-        selectBreads( customizedItem );
+    public CustomizePage randomCustomization(CustomizedItem customizedItem, boolean specificPickerSelection) throws Exception {
+        if (specificPickerSelection) {
+            if (!customizedItem.getMenuName().contains( "Chopped Salads" )) {
+                selectBreads( customizedItem );
+            }
+        }
+
         PickerPage pickerPage = goToPickerPage();
-        pickerPage.selectCustomizerIngredients( customizedItem );
+        pickerPage.selectCustomizerIngredients( customizedItem, specificPickerSelection );
         getDoneButton().click();
         return CustomizePage.get( (AppiumDriver) driver );
     }
 
-    private PickerPage goToPickerPage() throws Exception{
+    private PickerPage goToPickerPage() throws Exception {
+        //Thread.sleep( 10000 );
         getAddTopping().click();
-        return PickerPage.get( (AppiumDriver)driver );
+        Thread.sleep( 10000 );
+        return PickerPage.get( (AppiumDriver) driver );
     }
 
     private void selectBreads(CustomizedItem customizedItem) throws Exception {
         try {
             Logz.step( "##### Started selecting a bread #####" );
-          //  getBread().click();
-          List<WebElement> breadElement =   commonElements.getElements( By.id( "data_layout" ), By.id( "data_layout" )  );
-          int index = breadElement.size();
-          breadElement.get( index-1 ).click();
+            //  getBread().click();
+            List<WebElement> breadElement = commonElements.getElements( By.id( "data_layout" ), By.id( "data_layout" ) );
+            int index = breadElement.size();
+            breadElement.get( index - 1 ).click();
             List<Customizer> customizers = customizedItem.getCustomizedProductDetail().getCustomizer();
             for (Customizer customizer : customizers) {
                 if (customizer.getCustomizerName().contains( "Breads" )) {
@@ -135,12 +155,11 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
                     int breadCount = customizedItem.getProductDetail().getOptionGroups()[0].getOptions()[0].getAttributes().length;
                     for (int i = 0; i < breadCount; i++) {
                         breadNameText = customizerDetails.get( 0 ).getModifierName().trim();
-                        Logz.step( "Bread Name: " + breadNameText);
                         if (!getBreadTitle().getText().contains( breadNameText )) {
                             commonElements.swipe( (AppiumDriver) driver, "Left" );
                         }
                     }
-
+                    Logz.step( "Bread Name: " + breadNameText );
                     if (!customizerDetails.get( 0 ).getModifierName().trim().contains( "Wrap" )) {
                         Assert.assertEquals( getToastIt().getText(), BaseTest.getStringfromBundleFile( "ToastItText" ) );
                         if (!customizerDetails.get( 1 ).getModifierName().contains( "Not Toasted" )) {
@@ -151,31 +170,31 @@ abstract MobileTextBox getCalorieInfoIcon() throws Exception; //calorie_info
                 }
             }
             Logz.step( "##### Ended selecting " + breadNameText + " #####" );
-        }catch(Exception ex){
-            throw new Exception( "Unable to select " + breadNameText + "\n"+ex.getMessage());
+        } catch (Exception ex) {
+            throw new Exception( "Unable to select " + breadNameText + "\n" + ex.getMessage() );
         }
     }
 
 
-
-    private void clickLooksGoodButton() throws Exception{
-        Assert.assertEquals( getLooksGood().getText(), BaseTest.bundle.getString("LooksGood") );
+    private void clickLooksGoodButton() throws Exception {
+        Assert.assertEquals( getLooksGood().getText(), BaseTest.bundle.getString( "LooksGood" ) );
         getLooksGood().click();
     }
 
-    public void assertCustomizePageDetails() throws Exception{
-        commonElements.getElementListCount( By.id( "data_layout"), By.id( "data_layout"), (AppiumDriver)driver) ;
+    public void assertCustomizePageDetails() throws Exception {
+        commonElements.getElementListCount( By.id( "data_layout" ), By.id( "data_layout" ), (AppiumDriver) driver );
     }
-    private void assertProductNameInCustomizerPage(CustomizedItem customizedItem) throws Exception{
+
+    private void assertProductNameInCustomizerPage(CustomizedItem customizedItem) throws Exception {
 
         try {
-            Logz.step("##### Started asserting product name in Product Details page #####");
-            Assert.assertEquals(getTitleText().getText(), customizedItem.getCustomizedProductDetail().getProductName());
-            Assert.assertEquals( getAddToBagButton().getText(), BaseTest.getStringfromBundleFile( "AddToBagText" ) + " | $"+customizedItem.getCustomizedProductDetail().getPrice() );
-            Logz.step("##### Ended asserting product name in Product Details page #####");
+            Logz.step( "##### Started asserting product name in Product Details page #####" );
+            Assert.assertEquals( getTitleText().getText(), customizedItem.getCustomizedProductDetail().getProductName() );
+            Assert.assertEquals( getAddToBagButton().getText(), BaseTest.getStringfromBundleFile( "AddToBagText" ) + " | $" + customizedItem.getCustomizedProductDetail().getPrice() );
+            Logz.step( "##### Ended asserting product name in Product Details page #####" );
 
-        }catch (Exception ex) {
-            throw new Exception("Unable to assert product name in Product Details page\n"+ ex.getMessage());
+        } catch (Exception ex) {
+            throw new Exception( "Unable to assert product name in Product Details page\n" + ex.getMessage() );
         }
 
     }
