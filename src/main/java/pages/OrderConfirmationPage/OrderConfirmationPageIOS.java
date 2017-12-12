@@ -29,6 +29,9 @@ public class OrderConfirmationPageIOS  extends OrderConfirmationPage{
     MobileTextBox getItemTitle(String itemTitle) throws Exception {
         return new IOSTextBox((IOSDriver) driver, By.id(itemTitle), itemTitle + " text");
     }
+    MobileTextBox getTotalPrice() throws Exception {
+        return null;
+    }
 
     @Override
     MobileTextBox getItemPrice(String price) throws Exception {

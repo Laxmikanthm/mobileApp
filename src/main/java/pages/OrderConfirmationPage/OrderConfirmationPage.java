@@ -58,6 +58,8 @@ public abstract class OrderConfirmationPage<T extends AppiumDriver> extends Mobi
     abstract MobileTextBox getItemTitlefortax() throws Exception;
     abstract MobileTextBox getItemPricetax() throws Exception;
     abstract MobileTextBox getTotalText(String price) throws Exception;
+    abstract MobileTextBox getTotalPrice() throws Exception;
+
     abstract MobileTextBox getPickupTimeHeaderText() throws Exception;
 
 
@@ -110,7 +112,9 @@ private void scrollToElement() throws Exception{
             String Itemtitle=getItemTitlefortax().getText();
             String ItemTitle[]=Itemtitle.split(" ",2);
             Assert.assertEquals( ItemTitle[1], Prodsplitname[1]);
-            Assert.assertEquals(getItemPricetax().getText(),ProductPrice);
+            String TotalPrice[]=getTotalPrice().getText().toString().split(".",2);
+            Logz.step(TotalPrice[1]);
+            Assert.assertEquals(TotalPrice[1],OrderConfirmationPage.this.ProductPrice);
         }
 
         Logz.step("completed asserting order details In Order Confirmation Page");

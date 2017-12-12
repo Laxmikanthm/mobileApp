@@ -15,6 +15,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.CommonElements.CommonElements;
+import pages.OrderConfirmationPage.OrderConfirmationPageAndroid;
 import pages.ProductDetailsPage.ProductDetailsPage;
 
 import pages.HomePage.HomePage;
@@ -52,17 +53,6 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     }
 
 
-    public static YourOrderPage get(AppiumDriver driver,String Productpriceyourorderpage) throws Exception {
-        String platform = SubwayAppBaseTest.platformName;
-        switch (platform) {
-            case "iOS":
-                return new YourOrderPageIOS((IOSDriver) driver);
-            case "Android":
-                return new YourOrderPageAndroid((AndroidDriver) driver);
-            default:
-                throw new Exception("Unable to get Find A Store page for platform " + platform);
-        }
-    }
     abstract WebElement getPickupTimeHeader() throws Exception;
     abstract WebElement getMakeitaMeal()throws  Exception;
     abstract WebElement ViewfullMenu()throws  Exception;
@@ -162,23 +152,22 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
         String Productnameui[]=getItemTitle().getText().split(" ",2);
         Assert.assertEquals( Productnameui[1],Prodname[1] );
         Logz.step("UI value of p.priceis "+getItemPrice().getText());
-        String Productpriceyourorderpage=getItemPrice().getText();
-        commonElements.scroll( getMakeitaMeal(), "down" );
-         if(isMakeitameal){
-           getMakeitaMeal().click();
-          }
-        if(Mealwithcoffe){
 
+        commonElements.scroll( getMakeitaMeal(), "down" );
+        if(isMakeitameal){
+            getMakeitaMeal().click();
+            Thread.sleep(5000);
+        }
+        if(Mealwithcoffe){
            // RemoteOrderCustomer remoteOrderCustomer=MobileApi.getSidesDrinksCustomizedItemDetails(mobileUser,"Drinks")
              getFullMenu().click();
            //goToProductDetailsPage("Coffee")
         }
-
-
         commonElements.scroll( ViewfullMenu(), "down" );
+        if(isMakeitameal){Logz.step("UI value of Product Price after making a meal is"+getTotalPrice().toString());}
         AssertTaxdetails();
         Logz.step("ended asserting order details In Your Order Page");
-        return YourOrderPage.get((AppiumDriver)driver,Productpriceyourorderpage);
+        return YourOrderPage.get((AppiumDriver)driver);
     }
 
 
@@ -207,13 +196,15 @@ public abstract class YourOrderPage<T extends AppiumDriver> extends MobileBasePa
     }
 
 
-
     public OrderConfirmationPage goToOrderConfirmationPage() throws Exception{
         Logz.step("Navigating to Order Confirmation Page......");
         MobileButton placeOrder = getPlaceOrder();
         placeOrder.isReady();
+        String TotalPrice=getTotalPrice().toString();
         placeOrder.click();
-        return OrderConfirmationPage.get((AppiumDriver)driver);
+        return new OrderConfirmationPageAndroid( (AppiumDriver)driver,TotalPrice) {
+        };
+        //OrderConfirmationPage(((AppiumDriver)driver,"string")) ;
     }
     public ManageRewardsPage goToManageRewardPage() throws Exception{
         Logz.step("Click on Manage locator in Your Order page");

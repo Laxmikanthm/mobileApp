@@ -112,6 +112,34 @@ public class CommonElements<T extends AppiumDriver> extends MobileBasePage {
         Logz.step( "Scrolled to element and get element list" );
         return HomePage.get( (AppiumDriver) driver );
     }
+
+    public HomePage scrollAndClicktax(By locatorIOS, By locatorAndroid, String Menuname) throws Exception {
+        Logz.step( "Scrolling to element and get element list" );
+        List<WebElement> allElements = getElements( locatorIOS, locatorAndroid );
+        try {
+            flag = false;
+            if (allElements.size() == 0) {
+                throw new Exception( "No element is available\n" + allElements.size() );
+            }
+            Logz.step(allElements.get( 0 ).getText());
+            allElements = getElements( locatorIOS, locatorAndroid );
+            for (int i = 0; i < allElements.size(); i++) {
+                if (allElements.get( i ).getText().contains( Menuname )) {
+                    allElements.get( i ).click();
+                    flag = true;
+                    break;
+                }
+            }
+
+
+        } catch (Exception ex) {
+            throw new Exception( "Unable to scroll and click element \n" + ex.getMessage() );
+        }
+        Logz.step( "Scrolled to element and get element list" );
+        return HomePage.get( (AppiumDriver) driver );
+    }
+
+
     public HomePage scrollAndSelectStore(By locator, String itemName) throws Exception {
         Logz.step( "Scrolling to element and get element list" );
         List<WebElement> allElements = getElements( locator);

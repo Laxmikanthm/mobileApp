@@ -16,6 +16,11 @@ public class OrderConfirmationPageAndroid extends OrderConfirmationPage {
         super(driver);
     }
 
+    public OrderConfirmationPageAndroid(AppiumDriver driver,String Price) {
+        super(driver, Price);
+        ProductPrice=Price;
+    }
+
     @Override
     MobileButton getGotIt() throws Exception {
         return new AndroidButton((AndroidDriver) driver, By.id("got_it"), "GotIt button");
@@ -54,6 +59,10 @@ public class OrderConfirmationPageAndroid extends OrderConfirmationPage {
 
     @Override
     MobileTextBox getTotalText(String price) throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("total"), "getTotalText");
+    }
+
+    MobileTextBox getTotalPrice() throws Exception {
         return new AndroidTextBox((AndroidDriver) driver, By.id("total"), "getTotalText");
     }
 

@@ -233,7 +233,7 @@ public class DineIn extends SubwayAppBaseTest{
     @Test
     public void dineMealsOH() throws Exception {
 
-        store = JdbcUtil.getStateSpecificStoreDetails("CA",true);
+        store = JdbcUtil.getStateSpecificStoreDetails("OH",true);
         landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
         landingPage.placeDefaultOrderForTax(BaseTest.getStringfromBundleFile("AllSandwiches"), store,false,true,true,false);
 

@@ -2118,8 +2118,8 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
     //##########################################################################################################################
    // CustomizedItem customizedItem;
-    //By productGroupHeaderAndroid = By.id( "product_group_header" );
-    //By productGroupHeaderIOS = By.id( "product_group_header" );
+    By productGroupHeaderAndroid = By.id( "product_group_header" );
+    By productGroupHeaderIOS = By.id( "product_group_header" );
     By getProductGroupLayoutAndroid = By.id( "product_group_layout" );
     By getProductGroupLayoutIOS = By.id( "product_group_layout" );
     boolean customized = false;
@@ -2490,7 +2490,7 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
     }
 
     public void addDefaultItemInCartForTax(MobileUser mobileUser, String smenu, String sItemName) throws Exception {
-        //String ProdName[] = sItemName.split(" ",2);
+        selectMenuforTax( smenu );
         String splitProdname = selectMenuGetProductNameForTax(sItemName);
         selectSpecificProductfortax( mobileUser, splitProdname,sItemName);
     }
@@ -2528,6 +2528,10 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
         }
 
 
+    }
+
+    public void selectMenuforTax(String Menuname) throws Exception {
+        selectSpecificMenuscrolltax( Menuname );
     }
 
     public void addCustomizedItemInCart(MobileUser mobileUser,  BreadSize breadSize, CustomizedItem customizedItemDetails) throws Exception {
@@ -2633,6 +2637,19 @@ public abstract class OrdersPage<T extends AppiumDriver> extends MobileBasePage 
 
 
     }
+
+    private void selectSpecificMenuscrolltax(String Menuname) throws Exception {
+        try {
+            Logz.step( "##### Selecting a " + Menuname + " menu #####" );
+            elements.scrollAndClicktax( productGroupHeaderIOS, productGroupHeaderAndroid, Menuname );
+            Logz.step( "##### Selected a " + Menuname + " menu #####" );
+        } catch (Exception ex) {
+            throw new Exception( "Unable to select " + Menuname + " menu\n" + ex.getMessage() );
+        }
+
+
+    }
+
 
     private void selectSpecificProduct(MobileUser mobileUser, String productName, BreadSize breadSize, boolean customized, CustomizedItem customizedItem ) throws Exception {
         try {
