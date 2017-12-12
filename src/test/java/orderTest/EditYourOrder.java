@@ -1,6 +1,8 @@
 package orderTest;
 
 import Base.SubwayAppBaseTest;
+import Enums.BreadSize;
+import base.test.BaseTest;
 import cardantApiFramework.pojos.Store;
 import cardantApiFramework.utils.JdbcUtil;
 import enums.PaymentMethod;
@@ -13,8 +15,11 @@ import pages.LandingPage.LandingPage;
 import pages.LoginPage.LoginPage;
 import pages.MobileOrderHistoryPage.MobileOrderHistoryPage;
 import pages.OrdersPage.OrdersPage;
+import pages.PurchaseHistoryPage.PurchaseHistoryPage;
 import pages.SearchStore.SearchStore;
 import pages.UserProfilePage.UserProfilePage;
+import pages.YourOrderPage.YourOrderPage;
+import pojos.CustomizedItem.CustomizedItem;
 import pojos.Orders.Order;
 import pojos.RemoteOrder;
 import pojos.user.MobileUser;
@@ -25,13 +30,21 @@ public class EditYourOrder extends SubwayAppBaseTest {
 
     RemoteOrder remoteOrder;
     RemoteOrderCustomer remoteOrderCustomer;
-    @Autowired
-    Base.Order ord;
+
     Store store= JdbcUtil.getLoyaltyStoreDetails();
     MobileUser mobileUser;
-    Base.Order order;
 
-    @Test
+    LandingPage landingPage;
+    OrdersPage ordersPage;
+    PurchaseHistoryPage purchaseHistoryPage;
+    UserProfilePage userProfilePage;
+    YourOrderPage yourOrderPage;
+
+    /*@Autowired
+    Base.Order ord;
+    Base.Order order;*/
+
+   /* @Test
     public void placeRandomOrderAndDeleteToppings() throws Exception
     {
         mobileUser=setCountryName();
@@ -46,7 +59,7 @@ public class EditYourOrder extends SubwayAppBaseTest {
         ordersPage.selectItemTypeAndClickCustomize(order);
         ordersPage.deleteToppings();
 
-    }
+    }*/
     //After clicking on  edit check whether selected product is displayed or not
     @Test
     @DirtiesContext
@@ -144,7 +157,7 @@ public class EditYourOrder extends SubwayAppBaseTest {
 
     }
 
-    @Test
+    /*@Test
     @DirtiesContext
     public void OrderSpecialInstructions() throws Exception
     {
@@ -154,21 +167,50 @@ public class EditYourOrder extends SubwayAppBaseTest {
         HomePage homePage=landingPage.getUserLoginAndAddingCard(mobileUser,PaymentMethod.CREDITCARD);
         OrdersPage ordersPage=homePage.findStore(store.getZipCode());
         ordersPage.placeRandomOrderSpecialInstructions("All Sandwiches", mobileUser, store.getAddress1(), order.getSpecialInstructions());
-    }
+    }*/
 
-    /*@Test
+    @Test
     public void testCancelRemoveItemFromEditYourOrderPage() throws Exception{
 
     }
+
     @Test
+    //Verify item from Edit order page
+    public void testItemFromEditYourOrderPage() throws Exception{
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        landingPage.placeEditOrderThenAssert(BaseTest.getStringfromBundleFile("AllSandwiches"),BreadSize.NONE,store);
+    }
+
+    @Test
+    //Add item from Edit order page
+    public void testAddItemFromEditYourOrderPage() throws Exception{
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        ordersPage.assertEditFunctionalityInEditOrder(mobileUser,BaseTest.getStringfromBundleFile("AllSandwiches"),BreadSize.NONE,"AddSameItem");
+
+    }
+
+    @Test
+    //Delete the item which is already added
     public void testRemoveItemFromEditYourOrderPage() throws Exception{
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        ordersPage.assertEditFunctionalityInEditOrder(mobileUser,BaseTest.getStringfromBundleFile("AllSandwiches"),BreadSize.NONE,"DeleteItem");
 
     }
 
     @Test
+    //Add another item by clicking on Something Else button
     public void testAddAnotherItemFromEditYourOrderPage() throws Exception{
+        landingPage = goToHomePage(LandingPage.getLandingPageClass(), "MobileApp");
+        mobileUser = landingPage.registerUser();
+        ordersPage = landingPage.logInSelectStore(mobileUser, store).goToOrderPage();
+        ordersPage.assertEditFunctionalityInEditOrder(mobileUser,BaseTest.getStringfromBundleFile("AllSandwiches"),BreadSize.NONE,"AddOtherItem");
 
     }
+
     @Test
     public void testCancelRemoveSidesFromEditYourOrderPage() throws Exception{
 
@@ -185,5 +227,5 @@ public class EditYourOrder extends SubwayAppBaseTest {
     @Test
     public void testEditCreditCardFromEditYourOrderPage() throws Exception{
 
-    }*/
+    }
 }

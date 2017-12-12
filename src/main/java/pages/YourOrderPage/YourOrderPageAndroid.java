@@ -95,4 +95,13 @@ public class YourOrderPageAndroid extends YourOrderPage{
     }
 
 
+    MobileTextBox getItemName() throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("cart_item_name"), "getItemName in Edit screen");
+    }
+
+
+    MobileTextBox getItemCost() throws Exception {
+        return new AndroidTextBox((AndroidDriver) driver, By.id("cart_item_price"), "getItemPrice in Edit screen");
+    }
+
 }
